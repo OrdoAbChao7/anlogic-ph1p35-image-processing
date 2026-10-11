@@ -262,3 +262,55 @@
   status: locally_reviewed
   accessed_at: 2026-10-11
   notes: 第20页风格化原图用于本地模型预览；第21页简单目标检测；第26页要求最终整合到同一固化设计。预览不是摄像头实测。
+
+- id: github_amd_mini_isp
+  title: amd/mini-isp — AMD Mini ISP Pipeline
+  url_or_path: https://github.com/amd/mini-isp
+  type: github
+  platform: xilinx
+  related_goals: [2, 3, 4]
+  priority: medium
+  license: MIT
+  adapt_level: B
+  status: evaluated_20261011
+  accessed_at: 2026-10-11
+  notes: SystemVerilog + Python 双轨仿真框架；Malvar-He-Cutler 拜耳解码算法可参考；AMD 原语/XDC 不可移植安路。禁止直接导入 SV 文件。
+
+- id: github_maojinxiang_anlu_prize
+  title: maojinxiang/FPGA-ANLU-National-First-Prize — 安路竞赛一等奖
+  url_or_path: https://github.com/maojinxiang/FPGA-ANLU-National-First-Prize
+  type: github
+  platform: anlogic
+  related_goals: [1, 3, 4, 6]
+  priority: medium
+  license: NONE
+  adapt_level: C
+  status: evaluated_20261011
+  accessed_at: 2026-10-11
+  notes: "同安路赛题最贴近参考；摄像头为OV5640 DVP（非MIPI）；帧缓存为SDRAM（非DDR2）；无 License 文件。禁止复制任何代码——仅阅读架构和模式切换思路。"
+
+- id: github_xilinx_finn
+  title: Xilinx/finn — FPGA Neural Network Inference
+  url_or_path: https://github.com/Xilinx/finn
+  type: github
+  platform: xilinx
+  related_goals: [5, 7]
+  priority: medium
+  license: BSD-3-Clause
+  adapt_level: C
+  status: evaluated_20261011
+  accessed_at: 2026-10-11
+  notes: INT8量化/Brevitas QAT/BN Folding思想可借鉴；Streaming Dataflow架构参考；整个工具链不可在安路TD运行，禁止导入finn生成IP。
+
+- id: github_yolo_fastestv2
+  title: dog-qiuqiu/Yolo-FastestV2 — 超轻量 YOLO
+  url_or_path: https://github.com/dog-qiuqiu/Yolo-FastestV2
+  type: github
+  platform: generic
+  related_goals: [5, 7]
+  priority: medium
+  license: MIT_UNCONFIRMED
+  adapt_level: C
+  status: evaluated_20261011
+  accessed_at: 2026-10-11
+  notes: "~941 Stars；纯PyTorch训练框架；ShuffleNetV2架构与本项目YOLO-tiny不同，不可直接替代。轻量化设计思路（解耦头/LightFPN）可参考；需直接确认仓库LICENSE文件。"

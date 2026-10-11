@@ -62,12 +62,30 @@ SC520CS RAW10 → MIPI D-PHY/CSI-2 → ISP（拜耳解码、白平衡）→ DDR2
 
 所有安路题目二任务开始前，必须先读取：
 
-- `docs/research/INDEX.md`
-- `docs/research/sources.yaml`
-- `docs/research/known-gaps.md`
+- `docs/project/PROJECT_GOAL.md` — 稳定比赛目标与功能边界（变更须提案审批）
+- `docs/project/STATUS.md` — 当前实现状态、阻塞清单和证据
+- `docs/project/PHASES.md` — 阶段依赖与验收门入口
+- `docs/research/INDEX.md` — 资料库总索引
+- `docs/research/OPEN_SOURCE.md` — 开源参考候选与许可证状态
+- `docs/research/known-gaps.md` — 未确认项与阻塞
 - 当前 Goal 对应的 `docs/research/goal-reading/goal-N.md`
+- `docs/verification/acceptance-matrix.md` — 对应阶段验收条件
 
 如果任务跨越多个 Goal，读取所有受影响 Goal 的清单。用户没有指定 Goal 时，先根据任务目标选择最直接相关的 Goal；若工作依赖尚未通过的前置 Goal，优先暴露依赖，不得静默跨越阶段门。
+
+**文档变更权限**：
+
+| 文档 | 可自动更新 | 需用户批准 |
+|---|---|---|
+| `STATUS.md` | ✅ 可根据真实证据更新 | 修改目标/降低验收标准 |
+| `known-gaps.md` | ✅ 可添加新缺口；关闭须有证据 | — |
+| `OPEN_SOURCE.md` | ✅ 可添加新评估候选 | — |
+| `docs/experiments/` | ✅ 可创建新实验记录 | — |
+| `docs/evidence/` | ✅ 可追加真实上板证据 | — |
+| `PROJECT_GOAL.md` | ❌ | 任何内容改变 |
+| `PHASES.md` | ❌ | 阶段依赖或验收条件改变 |
+| `acceptance-matrix.md` | ❌ | 放宽通过条件 |
+| `AGENTS.md` 本文 | ❌ | 执行规则变更 |
 
 ### 5.2 工作区审计
 
