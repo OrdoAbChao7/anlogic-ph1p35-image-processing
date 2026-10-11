@@ -1,0 +1,23 @@
+Location         : E:\Projects\FPGA\work\td_cartoon\td_project\camera_to_dsi_display_Runs\syn_1
+Running with     : Tang Dynasty v6.2.168116
+                   Copyright (c) 2012-2025 Anlogic Inc.
+Top Model        : design_top_wrapper
+Device           : PH1P35MDG324
+Speed            : 3
+
+Timing Mode      : basic
+Setup            : WNS   860ps  TNS        0ps  NUM_FEPS     0
+Hold             : WNS   114ps  TNS        0ps  NUM_FEPS     0
+
+Flow Statistics  :
+--------------------------------------------------------------------------------------------------
+     command     |  #calls  |  wall time  |  cpu time(s)  |  used memory(mb)  |  peak memory(mb)  
+--------------------------------------------------------------------------------------------------
+  optimize_gate  |    1     |  36s(50%)   |    35(50%)    |       1112        |       1112        
+  optimize_rtl   |    1     |  34s(47%)   |    34(48%)    |        818        |        869        
+  import_device  |    1     |   1s(1%)    |     1(1%)     |        326        |        326        
+    read_adc     |    1     |   0s(0%)    |     0(0%)     |        593        |        594        
+    read_sdc     |    3     |   0s(0%)    |     0(0%)     |        589        |        594        
+--------------------------------------------------------------------------------------------------
+      total      |    7     |    1m11s    |      70       |       1112        |       1112        
+--------------------------------------------------------------------------------------------------
