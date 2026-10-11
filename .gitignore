@@ -9,8 +9,13 @@
 /安路HX1P35A比赛文档2026/
 /SC520CS摄像头资料/
 
+# Local TD project bundle and generated implementation results.
+# Keep source notes and reproducible documentation in the repository instead.
+/HX1P35A2026/
+
 # Generated outputs and local scratch data
 preboard/output/
+work/output/
 preboard/inbox/*
 !preboard/inbox/README.md
 __pycache__/

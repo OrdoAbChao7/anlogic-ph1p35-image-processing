@@ -1,3 +1,14 @@
+- id: team_hx1p35a2026_20261011
+  title: 组员 HX1P35A2026 工程与卡通化候选版本
+  url_or_path: HX1P35A2026/
+  type: project
+  platform: PH1P35MDG324
+  related_goals: [1, 2, 3, 4]
+  priority: high
+  status: imported_audited_not_rebuilt
+  accessed_at: 2026-10-11
+  notes: 11 个工程，605 个显式文件引用存在；卡通版附带报告时序失败，源码有待修复问题。证据见 docs/setup/team-sync-2026-10-11.md；用户反馈原图可显示，成功位流待绑定。
+
 - id: local_sc520_lab1
   title: 本机 SC520CS Lab1 原图工程及传感器资料
   url_or_path: SC520CS摄像头资料/

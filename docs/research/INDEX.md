@@ -14,6 +14,8 @@
 | L4 | GitHub 参考工程 | 学习结构和验证方法 |
 | L5 | 本项目实验记录 | 当前工程事实 |
 
+执行前同时查看 [方案与计划验收表](../verification/acceptance-matrix.md)，按测试条件与证据判断阶段是否通过。
+
 ## 当前 Goal 阅读入口
 
 - [Goal 1：视频硬件闭环](goal-reading/goal-1.md)
@@ -26,6 +28,8 @@
 - [Goal 8：发布和答辩](goal-reading/goal-8.md)
 
 ## 资料入口
+
+- [2026-10-11 组员工程同步与卡通版审计](../setup/team-sync-2026-10-11.md)
 
 - [比赛要求](competition/topic2-requirements.md)
 - [安路官方资料索引](anlogic/official-index.md)
@@ -45,7 +49,9 @@
 ## 可信度标记
 
 - `official`：安路官方或比赛正式资料。
-- `verified`：已结合当前硬件或工程验证。
+- `project`：当前工程代码、配置或报告直接证明。
+- `measured`：当前板卡或仪器实测；必须说明测量对象与条件。
+- 历史 `verified` 标记应按实际证据区分为 `project` 或 `measured`，不能直接视为硬件验证。
 - `reference`：第三方原理或参考工程，只能借鉴。
 - `inferred`：根据多个来源推断，必须在硬件上验证。
 - `unknown`：当前缺少可靠来源，不允许作为实现结论。
