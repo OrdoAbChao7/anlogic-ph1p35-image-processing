@@ -1,0 +1,745 @@
+{
+  "size": 128,
+  "parameters": 6988,
+  "checkpoint_sha256": "227cf6a57ff6d53a4457d44ce9eecedb3834a972dd37f964fe5e197ce594387c",
+  "conv_parameters": 6444,
+  "conv_mac_per_frame": 3159040,
+  "peak_adjacent_input_output_bytes": 98304,
+  "largest_single_feature_bytes": 49152,
+  "32_dsp_100mhz_one_mac_per_cycle_lower_bound_ms": 0.9872,
+  "layers": [
+    {
+      "name": "stem.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        3,
+        128,
+        128
+      ],
+      "output": [
+        1,
+        12,
+        64,
+        64
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 1,
+      "parameters": 324,
+      "mac": 1327104,
+      "input_int8_bytes": 49152,
+      "output_int8_bytes": 49152,
+      "input_plus_output_bytes": 98304
+    },
+    {
+      "name": "stem.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        12,
+        64,
+        64
+      ],
+      "output": [
+        1,
+        12,
+        64,
+        64
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 24,
+      "mac": 0,
+      "input_int8_bytes": 49152,
+      "output_int8_bytes": 49152,
+      "input_plus_output_bytes": 98304
+    },
+    {
+      "name": "stem.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        12,
+        64,
+        64
+      ],
+      "output": [
+        1,
+        12,
+        64,
+        64
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 49152,
+      "output_int8_bytes": 49152,
+      "input_plus_output_bytes": 98304
+    },
+    {
+      "name": "block1.dw.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        12,
+        64,
+        64
+      ],
+      "output": [
+        1,
+        12,
+        32,
+        32
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 12,
+      "parameters": 108,
+      "mac": 110592,
+      "input_int8_bytes": 49152,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 61440
+    },
+    {
+      "name": "block1.dw.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        12,
+        32,
+        32
+      ],
+      "output": [
+        1,
+        12,
+        32,
+        32
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 24,
+      "mac": 0,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block1.dw.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        12,
+        32,
+        32
+      ],
+      "output": [
+        1,
+        12,
+        32,
+        32
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block1.pw.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        12,
+        32,
+        32
+      ],
+      "output": [
+        1,
+        20,
+        32,
+        32
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "parameters": 240,
+      "mac": 245760,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 20480,
+      "input_plus_output_bytes": 32768
+    },
+    {
+      "name": "block1.pw.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        20,
+        32,
+        32
+      ],
+      "output": [
+        1,
+        20,
+        32,
+        32
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 40,
+      "mac": 0,
+      "input_int8_bytes": 20480,
+      "output_int8_bytes": 20480,
+      "input_plus_output_bytes": 40960
+    },
+    {
+      "name": "block1.pw.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        20,
+        32,
+        32
+      ],
+      "output": [
+        1,
+        20,
+        32,
+        32
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 20480,
+      "output_int8_bytes": 20480,
+      "input_plus_output_bytes": 40960
+    },
+    {
+      "name": "block2.dw.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        20,
+        32,
+        32
+      ],
+      "output": [
+        1,
+        20,
+        16,
+        16
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 20,
+      "parameters": 180,
+      "mac": 46080,
+      "input_int8_bytes": 20480,
+      "output_int8_bytes": 5120,
+      "input_plus_output_bytes": 25600
+    },
+    {
+      "name": "block2.dw.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        20,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        20,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 40,
+      "mac": 0,
+      "input_int8_bytes": 5120,
+      "output_int8_bytes": 5120,
+      "input_plus_output_bytes": 10240
+    },
+    {
+      "name": "block2.dw.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        20,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        20,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 5120,
+      "output_int8_bytes": 5120,
+      "input_plus_output_bytes": 10240
+    },
+    {
+      "name": "block2.pw.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        20,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "parameters": 640,
+      "mac": 163840,
+      "input_int8_bytes": 5120,
+      "output_int8_bytes": 8192,
+      "input_plus_output_bytes": 13312
+    },
+    {
+      "name": "block2.pw.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 64,
+      "mac": 0,
+      "input_int8_bytes": 8192,
+      "output_int8_bytes": 8192,
+      "input_plus_output_bytes": 16384
+    },
+    {
+      "name": "block2.pw.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 8192,
+      "output_int8_bytes": 8192,
+      "input_plus_output_bytes": 16384
+    },
+    {
+      "name": "block3.dw.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 32,
+      "parameters": 288,
+      "mac": 73728,
+      "input_int8_bytes": 8192,
+      "output_int8_bytes": 8192,
+      "input_plus_output_bytes": 16384
+    },
+    {
+      "name": "block3.dw.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 64,
+      "mac": 0,
+      "input_int8_bytes": 8192,
+      "output_int8_bytes": 8192,
+      "input_plus_output_bytes": 16384
+    },
+    {
+      "name": "block3.dw.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 8192,
+      "output_int8_bytes": 8192,
+      "input_plus_output_bytes": 16384
+    },
+    {
+      "name": "block3.pw.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "parameters": 1536,
+      "mac": 393216,
+      "input_int8_bytes": 8192,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 20480
+    },
+    {
+      "name": "block3.pw.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 96,
+      "mac": 0,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block3.pw.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block4.dw.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 48,
+      "parameters": 432,
+      "mac": 110592,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block4.dw.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 96,
+      "mac": 0,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block4.dw.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block4.pw.0",
+      "type": "Conv2d",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "parameters": 2304,
+      "mac": 589824,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block4.pw.1",
+      "type": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 96,
+      "mac": 0,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "block4.pw.2",
+      "type": "ReLU6",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "kernel": null,
+      "stride": null,
+      "groups": null,
+      "parameters": 0,
+      "mac": 0,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 12288,
+      "input_plus_output_bytes": 24576
+    },
+    {
+      "name": "head",
+      "type": "Conv2d",
+      "input": [
+        1,
+        48,
+        16,
+        16
+      ],
+      "output": [
+        1,
+        8,
+        16,
+        16
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "parameters": 392,
+      "mac": 98304,
+      "input_int8_bytes": 12288,
+      "output_int8_bytes": 2048,
+      "input_plus_output_bytes": 14336
+    }
+  ],
+  "memory_assumption": "INT8 bytes, adjacent layer input+output only; no video buffers, line buffers, NMS, scales, or parallel branch overhead"
+}

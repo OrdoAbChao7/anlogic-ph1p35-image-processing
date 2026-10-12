@@ -16,6 +16,7 @@
 # Generated outputs and local scratch data
 preboard/output/
 work/output/
+work/algorithm_lab/cache/
 preboard/inbox/*
 !preboard/inbox/README.md
 __pycache__/

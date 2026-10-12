@@ -1,0 +1,10 @@
+# Versions observed in the Windows Y1 reproduction environment.
+# torch CPU wheels may require the official PyTorch index for a clean install.
+torch==2.14.0
+onnxruntime==1.29.0
+opencv-python==4.13.0.92
+numpy==2.4.3
+PyYAML==6.0.3
+fastapi==0.128.0
+uvicorn==0.40.0
+python-multipart==0.0.21

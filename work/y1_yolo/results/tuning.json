@@ -1,0 +1,107 @@
+[
+  {
+    "threshold": 0.15,
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 31,
+        "fn": 11
+      },
+      "cup": {
+        "tp": 4,
+        "fp": 18,
+        "fn": 23
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 4
+      }
+    },
+    "micro_f1": 0.1
+  },
+  {
+    "threshold": 0.25,
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 17,
+        "fn": 11
+      },
+      "cup": {
+        "tp": 4,
+        "fp": 9,
+        "fn": 23
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 4
+      }
+    },
+    "micro_f1": 0.1299
+  },
+  {
+    "threshold": 0.4,
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 9,
+        "fn": 11
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 26
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 4
+      }
+    },
+    "micro_f1": 0.069
+  },
+  {
+    "threshold": 0.55,
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 12
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 26
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4
+      }
+    },
+    "micro_f1": 0.0426
+  },
+  {
+    "threshold": 0.65,
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 12
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 26
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4
+      }
+    },
+    "micro_f1": 0.0435
+  }
+]

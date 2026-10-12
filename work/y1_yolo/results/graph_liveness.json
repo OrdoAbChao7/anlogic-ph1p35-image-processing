@@ -1,0 +1,30 @@
+{
+  "352": {
+    "resolution": 352,
+    "graph_nodes": 700,
+    "peak_graph_live_int8_bytes_conservative": 1486848,
+    "peak_after_node": "batch_norm",
+    "assumption": "Each tensor graph output uses separate INT8 storage, even views; graph execution order fixed; parameter tensors excluded. Does not include line buffers, DDR controller or NMS scratch."
+  },
+  "160": {
+    "resolution": 160,
+    "graph_nodes": 700,
+    "peak_graph_live_int8_bytes_conservative": 307200,
+    "peak_after_node": "batch_norm",
+    "assumption": "Each tensor graph output uses separate INT8 storage, even views; graph execution order fixed; parameter tensors excluded. Does not include line buffers, DDR controller or NMS scratch."
+  },
+  "128": {
+    "resolution": 128,
+    "graph_nodes": 700,
+    "peak_graph_live_int8_bytes_conservative": 196608,
+    "peak_after_node": "batch_norm",
+    "assumption": "Each tensor graph output uses separate INT8 storage, even views; graph execution order fixed; parameter tensors excluded. Does not include line buffers, DDR controller or NMS scratch."
+  },
+  "96": {
+    "resolution": 96,
+    "graph_nodes": 700,
+    "peak_graph_live_int8_bytes_conservative": 110592,
+    "peak_after_node": "batch_norm",
+    "assumption": "Each tensor graph output uses separate INT8 storage, even views; graph execution order fixed; parameter tensors excluded. Does not include line buffers, DDR controller or NMS scratch."
+  }
+}

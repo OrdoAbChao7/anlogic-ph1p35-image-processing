@@ -1,0 +1,9 @@
+.venv/
+FastestDet/
+Yolo-FastestV2/
+TinyissimoYOLO/
+datasets/
+official_result.png
+results/annotated_*/
+results/lab/
+

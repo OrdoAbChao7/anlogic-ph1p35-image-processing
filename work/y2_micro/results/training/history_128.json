@@ -1,0 +1,93 @@
+{
+  "size": 128,
+  "epochs": 12,
+  "batch": 16,
+  "init": "E:\\Projects\\FPGA\\work\\y2_micro\\checkpoints\\microdet_160.pth",
+  "seed": 20261012,
+  "history": [
+    {
+      "epoch": 1,
+      "size": 128,
+      "loss": 5.215039111472465,
+      "collision_annotations": 129,
+      "learning_rate": 0.0009829629131445341
+    },
+    {
+      "epoch": 2,
+      "size": 128,
+      "loss": 5.095045154159133,
+      "collision_annotations": 129,
+      "learning_rate": 0.0009330127018922195
+    },
+    {
+      "epoch": 3,
+      "size": 128,
+      "loss": 5.00964559091104,
+      "collision_annotations": 129,
+      "learning_rate": 0.0008535533905932737
+    },
+    {
+      "epoch": 4,
+      "size": 128,
+      "loss": 4.93343126451647,
+      "collision_annotations": 129,
+      "learning_rate": 0.00075
+    },
+    {
+      "epoch": 5,
+      "size": 128,
+      "loss": 4.958699651666589,
+      "collision_annotations": 129,
+      "learning_rate": 0.0006294095225512604
+    },
+    {
+      "epoch": 6,
+      "size": 128,
+      "loss": 4.906639949695484,
+      "collision_annotations": 129,
+      "learning_rate": 0.0005
+    },
+    {
+      "epoch": 7,
+      "size": 128,
+      "loss": 4.8563841098063705,
+      "collision_annotations": 129,
+      "learning_rate": 0.0003705904774487397
+    },
+    {
+      "epoch": 8,
+      "size": 128,
+      "loss": 4.822401240065291,
+      "collision_annotations": 129,
+      "learning_rate": 0.0002500000000000001
+    },
+    {
+      "epoch": 9,
+      "size": 128,
+      "loss": 4.837676795753273,
+      "collision_annotations": 129,
+      "learning_rate": 0.00014644660940672628
+    },
+    {
+      "epoch": 10,
+      "size": 128,
+      "loss": 4.8148840504723625,
+      "collision_annotations": 129,
+      "learning_rate": 6.698729810778065e-05
+    },
+    {
+      "epoch": 11,
+      "size": 128,
+      "loss": 4.795228732598795,
+      "collision_annotations": 129,
+      "learning_rate": 1.70370868554659e-05
+    },
+    {
+      "epoch": 12,
+      "size": 128,
+      "loss": 4.790043766434128,
+      "collision_annotations": 129,
+      "learning_rate": 0.0
+    }
+  ]
+}

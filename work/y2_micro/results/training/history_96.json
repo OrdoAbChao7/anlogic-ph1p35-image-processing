@@ -1,0 +1,93 @@
+{
+  "size": 96,
+  "epochs": 12,
+  "batch": 16,
+  "init": "E:\\Projects\\FPGA\\work\\y2_micro\\checkpoints\\microdet_160.pth",
+  "seed": 20261012,
+  "history": [
+    {
+      "epoch": 1,
+      "size": 96,
+      "loss": 6.484816718745876,
+      "collision_annotations": 180,
+      "learning_rate": 0.0009829629131445341
+    },
+    {
+      "epoch": 2,
+      "size": 96,
+      "loss": 6.193442061140731,
+      "collision_annotations": 180,
+      "learning_rate": 0.0009330127018922195
+    },
+    {
+      "epoch": 3,
+      "size": 96,
+      "loss": 6.073076905430974,
+      "collision_annotations": 180,
+      "learning_rate": 0.0008535533905932737
+    },
+    {
+      "epoch": 4,
+      "size": 96,
+      "loss": 5.990132370510617,
+      "collision_annotations": 180,
+      "learning_rate": 0.00075
+    },
+    {
+      "epoch": 5,
+      "size": 96,
+      "loss": 6.026098418880153,
+      "collision_annotations": 180,
+      "learning_rate": 0.0006294095225512604
+    },
+    {
+      "epoch": 6,
+      "size": 96,
+      "loss": 5.94504874461406,
+      "collision_annotations": 180,
+      "learning_rate": 0.0005
+    },
+    {
+      "epoch": 7,
+      "size": 96,
+      "loss": 5.9142654006545605,
+      "collision_annotations": 180,
+      "learning_rate": 0.0003705904774487397
+    },
+    {
+      "epoch": 8,
+      "size": 96,
+      "loss": 5.829212691332843,
+      "collision_annotations": 180,
+      "learning_rate": 0.0002500000000000001
+    },
+    {
+      "epoch": 9,
+      "size": 96,
+      "loss": 5.813840698551488,
+      "collision_annotations": 180,
+      "learning_rate": 0.00014644660940672628
+    },
+    {
+      "epoch": 10,
+      "size": 96,
+      "loss": 5.801589321445775,
+      "collision_annotations": 180,
+      "learning_rate": 6.698729810778065e-05
+    },
+    {
+      "epoch": 11,
+      "size": 96,
+      "loss": 5.816557832666345,
+      "collision_annotations": 180,
+      "learning_rate": 1.70370868554659e-05
+    },
+    {
+      "epoch": 12,
+      "size": 96,
+      "loss": 5.789637372300431,
+      "collision_annotations": 180,
+      "learning_rate": 0.0
+    }
+  ]
+}

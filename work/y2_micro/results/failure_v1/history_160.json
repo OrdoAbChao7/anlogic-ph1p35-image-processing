@@ -1,0 +1,121 @@
+{
+  "size": 160,
+  "epochs": 16,
+  "batch": 16,
+  "init": null,
+  "seed": 20261012,
+  "history": [
+    {
+      "epoch": 1,
+      "size": 160,
+      "loss": 5.280752942368791,
+      "collision_annotations": 104,
+      "learning_rate": 0.0019807852804032307
+    },
+    {
+      "epoch": 2,
+      "size": 160,
+      "loss": 4.346368229067004,
+      "collision_annotations": 104,
+      "learning_rate": 0.001923879532511287
+    },
+    {
+      "epoch": 3,
+      "size": 160,
+      "loss": 4.125172801919885,
+      "collision_annotations": 104,
+      "learning_rate": 0.0018314696123025458
+    },
+    {
+      "epoch": 4,
+      "size": 160,
+      "loss": 4.093294298326647,
+      "collision_annotations": 104,
+      "learning_rate": 0.0017071067811865479
+    },
+    {
+      "epoch": 5,
+      "size": 160,
+      "loss": 4.061863789687285,
+      "collision_annotations": 104,
+      "learning_rate": 0.0015555702330196026
+    },
+    {
+      "epoch": 6,
+      "size": 160,
+      "loss": 4.056639226707253,
+      "collision_annotations": 104,
+      "learning_rate": 0.0013826834323650901
+    },
+    {
+      "epoch": 7,
+      "size": 160,
+      "loss": 3.9045780736046867,
+      "collision_annotations": 104,
+      "learning_rate": 0.0011950903220161286
+    },
+    {
+      "epoch": 8,
+      "size": 160,
+      "loss": 3.93987327008634,
+      "collision_annotations": 104,
+      "learning_rate": 0.0010000000000000002
+    },
+    {
+      "epoch": 9,
+      "size": 160,
+      "loss": 3.904731537844684,
+      "collision_annotations": 104,
+      "learning_rate": 0.000804909677983872
+    },
+    {
+      "epoch": 10,
+      "size": 160,
+      "loss": 3.874623930132067,
+      "collision_annotations": 104,
+      "learning_rate": 0.0006173165676349105
+    },
+    {
+      "epoch": 11,
+      "size": 160,
+      "loss": 3.8640428298228495,
+      "collision_annotations": 104,
+      "learning_rate": 0.0004444297669803982
+    },
+    {
+      "epoch": 12,
+      "size": 160,
+      "loss": 3.8139843811859957,
+      "collision_annotations": 104,
+      "learning_rate": 0.0002928932188134526
+    },
+    {
+      "epoch": 13,
+      "size": 160,
+      "loss": 3.8245647469082393,
+      "collision_annotations": 104,
+      "learning_rate": 0.0001685303876974547
+    },
+    {
+      "epoch": 14,
+      "size": 160,
+      "loss": 3.819686954085891,
+      "collision_annotations": 104,
+      "learning_rate": 7.612046748871328e-05
+    },
+    {
+      "epoch": 15,
+      "size": 160,
+      "loss": 3.8024214473930567,
+      "collision_annotations": 104,
+      "learning_rate": 1.9214719596769575e-05
+    },
+    {
+      "epoch": 16,
+      "size": 160,
+      "loss": 3.745677458273398,
+      "collision_annotations": 104,
+      "learning_rate": 0.0
+    }
+  ]
+}

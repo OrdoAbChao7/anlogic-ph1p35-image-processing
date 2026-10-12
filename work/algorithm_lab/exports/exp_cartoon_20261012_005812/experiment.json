@@ -1,0 +1,26 @@
+{
+  "algorithm_id": "cartoon",
+  "sample_filename": "sample_city.png",
+  "sample_sha256": "9fb6c7098fe7d3d3",
+  "parameters": {
+    "variant": "s3_luma",
+    "quant_levels": "8",
+    "sobel_threshold": 240,
+    "smooth_passes": "1",
+    "edge_source": "smoothed"
+  },
+  "ref_metrics": {
+    "model": "Visual Gold (Bilateral Filter + Adaptive Threshold)",
+    "levels": 8,
+    "edge_method": "Adaptive Mean"
+  },
+  "hw_metrics": {
+    "variant": "s3_luma",
+    "model_desc": "FPGA s3_luma (8 levels, Sobel Th=240)",
+    "edge_pixels": 35649,
+    "hardware_multiplier_needed": false,
+    "line_buffer_rows": 3
+  },
+  "timestamp": "20261012_005812",
+  "note": "Software-first protocol experiment export"
+}

@@ -154,3 +154,21 @@
 > [!CAUTION]
 > `maojinxiang/FPGA-ANLU-National-First-Prize` 无 License，禁止复制任何代码，仅供阅读参考架构思路。  
 > 许可证未确认前，所有代码仅用于研究思想，禁止直接复制粘贴进入比赛工程。
+
+## 2026-10-12 实时视频卡通化专项：5 个 GitHub 参考
+
+本轮只实现 Algorithm Lab 软件效果对比；硬件适配栏为结构判断，未代表 PH1P35 实测。评价同时看可复现入口、许可和逐像素流水线成本。没有复制任何仓库源码。
+
+| 仓库 | 可复现与许可 | 卡通化可借鉴点 | FPGA 适配判断 |
+|---|---|---|---|
+| [opencv/opencv](https://github.com/opencv/opencv) | 成熟库、文档和测试；Apache-2.0 | 双边滤波、自适应阈值、色阶处理的软件画质基线 | 仅软件参考；双边滤波每像素多邻域权重与归一化，硬件成本高 |
+| [opencv/opencv_contrib](https://github.com/opencv/opencv_contrib) | 扩展模块与示例；仓库 LICENSE 为 Apache-2.0，模块依赖仍须逐项核查 | ximgproc 边缘保留滤波等替代画质路线 | 暂不优先；相应滤波需另做定点化与吞吐评估 |
+| [NhanPhamThanh-IT/Cartoonify-Images-OpenCV](https://github.com/NhanPhamThanh-IT/Cartoonify-Images-OpenCV) | Gradio、模块化 Python、示例；README 标注 MIT | K-Means 量化、双边平滑、局部阈值组合及交互对比 | K-Means 需全图迭代/聚类，不能直接逐像素流式移植；仅用于视觉方案 |
+| [amd/mini-isp](https://github.com/amd/mini-isp) | ISP 代码、文档；MIT | 流式图像处理结构、软件与 RTL 验证方法 | 结构可借鉴；AMD 原语、IP 与约束不能直接用于安路 |
+| [georgeyhere/FPGA-Video-Processing](https://github.com/georgeyhere/FPGA-Video-Processing) | RTL、testbench、演示说明；仓库未见 LICENSE，代码仅供阅读 | 3×3 Gaussian、Sobel、行缓存、阈值控制 | 运算结构可借鉴；Artix-7/OV7670/RGB444/640×480，与本项目接口不同 |
+
+**本轮三效果**：A 保色亮度分层（较适合 FPGA），B RGB 色阶量化（较适合 FPGA），C 双边滤波+自适应描边（画质参考、暂不优先）。A/B 为本项目已有软件模型的参数变体，C 为现有 OpenCV 视觉模型；均不是直接移植上述仓库源码。用户选择前状态为 VISUAL_REVIEW_PENDING。
+
+## 2026-10-12 Y1 三个目标检测原始仓库复核
+
+固定 Commit、许可证、预训练权重、检测头、算子和硬件成本见 [Y1 实验报告](../experiments/2026-10-12-y1-fastestdet.md)。FastestDet@50473cd155cb088aa4a99e64ff6a4b3c24fa07e1 为 BSD-3-Clause，仓库有 COCO 80 类权重与 ONNX；Yolo-FastestV2@ac2a5e3060bff76dd1e45f9b921dd77bfbeb194d 仓库无许可证文件但有 COCO 权重；TinyissimoYOLO@19bea4bd1ea1e2c29a6ee6b14bd7494ce8c6ba25 仓库无顶层许可证和可直接使用的预训练权重，含基于 Ultralytics 的代码与 AGPL 声明。后两者只作结构参考。FastestDet 软件复现结果表明原模型直接移植 PH1P35 为 NO-GO；Y2 应先研究三类微型网络训练。

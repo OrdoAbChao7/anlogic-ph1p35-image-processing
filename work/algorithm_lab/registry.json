@@ -1,0 +1,182 @@
+[
+  {
+    "algorithm_id": "cartoon",
+    "display_name": "Cartoonization (卡通化算法套件)",
+    "category": "Stylization",
+    "status": "VISUAL_APPROVED",
+    "source_reference": "amd/mini-isp & work/models/cartoon_luma_reference.py",
+    "license": "MIT",
+    "user_approved_version": "v1.0-test",
+    "software_model_path": "work/models/cartoon_luma_reference.py",
+    "hardware_model_path": "work/algorithm_lab/plugins/cartoon.py",
+    "rtl_source_path": "work/rtl/video_cartoon_luma.v",
+    "testbench_path": "work/tests/tb_video_cartoon.v",
+    "recommended_params": {
+      "variant": "s3_luma",
+      "quant_levels": "8",
+      "sobel_threshold": 240,
+      "smooth_passes": "1",
+      "edge_source": "smoothed"
+    },
+    "hardware_resources_estimate": {
+      "multipliers": 0,
+      "line_buffers": 3,
+      "pipeline_latency_cycles": 4
+    },
+    "history": [
+      {
+        "timestamp": "2026-10-11",
+        "action": "Built candidate s3_luma.bit; waiting for user visual approval",
+        "status": "VISUAL_REVIEW_PENDING"
+      },
+      {
+        "timestamp": "2026-10-12 00:58:16",
+        "action": "User visually approved version v1.0-test",
+        "params": {
+          "variant": "s3_luma",
+          "quant_levels": "8",
+          "sobel_threshold": 240,
+          "smooth_passes": "1",
+          "edge_source": "smoothed"
+        }
+      }
+    ],
+    "frozen_params": {
+      "variant": "s3_luma",
+      "quant_levels": "8",
+      "sobel_threshold": 240,
+      "smooth_passes": "1",
+      "edge_source": "smoothed"
+    }
+  },
+  {
+    "algorithm_id": "sobel",
+    "display_name": "Sobel Edge Detection (Sobel 边缘检测)",
+    "category": "Feature Extraction",
+    "status": "VISUAL_REVIEW_PENDING",
+    "source_reference": "work/models/reference_model.py",
+    "license": "MIT",
+    "user_approved_version": null,
+    "software_model_path": "work/models/reference_model.py",
+    "hardware_model_path": "work/algorithm_lab/plugins/sobel.py",
+    "rtl_source_path": "work/rtl/sobel_edge.v",
+    "testbench_path": "work/tests/test_cartoon.py",
+    "recommended_params": {
+      "edge_threshold": 128,
+      "output_mode": "binary"
+    },
+    "hardware_resources_estimate": {
+      "multipliers": 0,
+      "line_buffers": 3,
+      "pipeline_latency_cycles": 3
+    },
+    "history": [
+      {
+        "timestamp": "2026-10-12",
+        "action": "Integrated into Algorithm Lab",
+        "status": "VISUAL_REVIEW_PENDING"
+      }
+    ]
+  },
+  {
+    "algorithm_id": "threshold",
+    "display_name": "Binarization / Threshold (二值化)",
+    "category": "Preprocessing",
+    "status": "VISUAL_REVIEW_PENDING",
+    "source_reference": "work/models/reference_model.py",
+    "license": "MIT",
+    "user_approved_version": null,
+    "software_model_path": "work/models/reference_model.py",
+    "hardware_model_path": "work/algorithm_lab/plugins/threshold.py",
+    "rtl_source_path": null,
+    "testbench_path": null,
+    "recommended_params": {
+      "threshold_value": 128,
+      "invert": "no"
+    },
+    "hardware_resources_estimate": {
+      "multipliers": 0,
+      "line_buffers": 0,
+      "pipeline_latency_cycles": 1
+    },
+    "history": [
+      {
+        "timestamp": "2026-10-12",
+        "action": "Integrated into Algorithm Lab",
+        "status": "VISUAL_REVIEW_PENDING"
+      }
+    ]
+  },
+  {
+    "algorithm_id": "grayscale",
+    "display_name": "Grayscale Conversion (灰度化)",
+    "category": "Preprocessing",
+    "status": "VISUAL_REVIEW_PENDING",
+    "source_reference": "ITU-R BT.601 / FPGA Video IP standard",
+    "license": "MIT",
+    "user_approved_version": null,
+    "software_model_path": "work/algorithm_lab/plugins/grayscale.py",
+    "hardware_model_path": "work/algorithm_lab/plugins/grayscale.py",
+    "rtl_source_path": null,
+    "testbench_path": null,
+    "recommended_params": {
+      "method": "shift_212"
+    },
+    "hardware_resources_estimate": {
+      "multipliers": 0,
+      "line_buffers": 0,
+      "pipeline_latency_cycles": 1
+    },
+    "history": [
+      {
+        "timestamp": "2026-10-12",
+        "action": "Integrated into Algorithm Lab",
+        "status": "VISUAL_REVIEW_PENDING"
+      }
+    ]
+  },
+  {
+    "algorithm_id": "fastestdet_y1",
+    "display_name": "FastestDet COCO 三类筛选（Y1）",
+    "category": "Detection",
+    "status": "VISUAL_REVIEW_PENDING",
+    "source_reference": "dog-qiuqiu/FastestDet@50473cd155cb088aa4a99e64ff6a4b3c24fa07e1",
+    "license": "BSD-3-Clause",
+    "user_approved_version": null,
+    "software_model_path": "work/y1_yolo/fastestdet_runtime.py",
+    "hardware_model_path": null,
+    "rtl_source_path": null,
+    "testbench_path": null,
+    "recommended_params": {
+      "resolution": 352,
+      "confidence": 0.25,
+      "nms_iou": 0.45
+    },
+    "history": [
+      {
+        "timestamp": "2026-10-12",
+        "action": "Y1 independent software reproduction and visual review pending"
+      }
+    ]
+  },
+  {
+    "algorithm_id": "microdet_y2",
+    "display_name": "MicroDet 三类微型检测（Y2，效果未达标）",
+    "category": "Detection",
+    "status": "SOFTWARE_IMPLEMENTED",
+    "source_reference": "Project Y2 COCO val2017 software study",
+    "license": "Project-authored code; COCO annotations CC BY 4.0; images retain source licenses",
+    "user_approved_version": null,
+    "software_model_path": "work/y2_micro/microdet.py",
+    "hardware_model_path": null,
+    "rtl_source_path": null,
+    "testbench_path": null,
+    "recommended_params": null,
+    "history": [
+      {
+        "timestamp": "2026-10-12",
+        "action": "Trained 96/128/160 models; new 55-image holdout found only two bottle matches at 128 with 822 false positives; visual and hardware gates remain closed"
+      }
+    ]
+  }
+]

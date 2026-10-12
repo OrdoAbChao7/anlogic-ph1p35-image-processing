@@ -1,0 +1,1353 @@
+{
+  "size": 96,
+  "checkpoint_sha256": "40a11f02e4c74fb3eecd9efbd223f16d24f1fa894df1425b6f03f55d435bf238",
+  "quantization": "PyTorch FX static PTQ x86; calibrated on tuning split; output dequantized FP32",
+  "quantized_modules": [
+    "stem.0",
+    "block1.dw.0",
+    "block1.pw.0",
+    "block2.dw.0",
+    "block2.pw.0",
+    "block3.dw.0",
+    "block3.pw.0",
+    "block4.dw.0",
+    "block4.pw.0",
+    "head"
+  ],
+  "quantized_layers": [
+    {
+      "name": "stem.0",
+      "weight_shape": [
+        12,
+        3,
+        3,
+        3
+      ],
+      "weight_bytes": 324,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 12,
+      "bias_fp32_bytes": 48,
+      "output_scale": 0.10064252465963364,
+      "output_zero_point": 60
+    },
+    {
+      "name": "block1.dw.0",
+      "weight_shape": [
+        12,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 108,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 12,
+      "bias_fp32_bytes": 48,
+      "output_scale": 0.12863758206367493,
+      "output_zero_point": 62
+    },
+    {
+      "name": "block1.pw.0",
+      "weight_shape": [
+        20,
+        12,
+        1,
+        1
+      ],
+      "weight_bytes": 240,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 20,
+      "bias_fp32_bytes": 80,
+      "output_scale": 0.09553629159927368,
+      "output_zero_point": 63
+    },
+    {
+      "name": "block2.dw.0",
+      "weight_shape": [
+        20,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 180,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 20,
+      "bias_fp32_bytes": 80,
+      "output_scale": 0.14072521030902863,
+      "output_zero_point": 55
+    },
+    {
+      "name": "block2.pw.0",
+      "weight_shape": [
+        32,
+        20,
+        1,
+        1
+      ],
+      "weight_bytes": 640,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 32,
+      "bias_fp32_bytes": 128,
+      "output_scale": 0.11869728565216064,
+      "output_zero_point": 58
+    },
+    {
+      "name": "block3.dw.0",
+      "weight_shape": [
+        32,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 288,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 32,
+      "bias_fp32_bytes": 128,
+      "output_scale": 0.11348623037338257,
+      "output_zero_point": 67
+    },
+    {
+      "name": "block3.pw.0",
+      "weight_shape": [
+        48,
+        32,
+        1,
+        1
+      ],
+      "weight_bytes": 1536,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 48,
+      "bias_fp32_bytes": 192,
+      "output_scale": 0.09556259959936142,
+      "output_zero_point": 64
+    },
+    {
+      "name": "block4.dw.0",
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 432,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 48,
+      "bias_fp32_bytes": 192,
+      "output_scale": 0.10061018913984299,
+      "output_zero_point": 67
+    },
+    {
+      "name": "block4.pw.0",
+      "weight_shape": [
+        48,
+        48,
+        1,
+        1
+      ],
+      "weight_bytes": 2304,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 48,
+      "bias_fp32_bytes": 192,
+      "output_scale": 0.08259115368127823,
+      "output_zero_point": 66
+    },
+    {
+      "name": "head",
+      "weight_shape": [
+        8,
+        48,
+        1,
+        1
+      ],
+      "weight_bytes": 384,
+      "weight_scheme": "torch.per_channel_affine",
+      "weight_scale_count": 8,
+      "bias_fp32_bytes": 32,
+      "output_scale": 0.058362580835819244,
+      "output_zero_point": 91
+    }
+  ],
+  "quantized_conv_weight_bytes": 6436,
+  "quantized_bias_fp32_bytes": 1120,
+  "tune_threshold_sweep": [
+    {
+      "threshold": 0.005,
+      "macro_f1": 0.0006903250818902655
+    },
+    {
+      "threshold": 0.01,
+      "macro_f1": 0.0006977795830667436
+    },
+    {
+      "threshold": 0.02,
+      "macro_f1": 0.0007603957594673693
+    },
+    {
+      "threshold": 0.03,
+      "macro_f1": 0.0008347592156561327
+    },
+    {
+      "threshold": 0.05,
+      "macro_f1": 0.0010035212904410634
+    },
+    {
+      "threshold": 0.1,
+      "macro_f1": 0.0008863846663622504
+    },
+    {
+      "threshold": 0.15,
+      "macro_f1": 0.00046072333563695
+    },
+    {
+      "threshold": 0.2,
+      "macro_f1": 0.0002769699487605595
+    },
+    {
+      "threshold": 0.25,
+      "macro_f1": 0.0006816632583503749
+    },
+    {
+      "threshold": 0.3,
+      "macro_f1": 0.0019782393669634025
+    },
+    {
+      "threshold": 0.4,
+      "macro_f1": 0.0
+    },
+    {
+      "threshold": 0.5,
+      "macro_f1": 0.0
+    }
+  ],
+  "chosen_threshold": 0.3,
+  "test_quant_counts": {
+    "bottle": {
+      "tp": 0,
+      "fp": 36,
+      "fn": 25,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "cup": {
+      "tp": 0,
+      "fp": 9,
+      "fn": 47,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "cell phone": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 12,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  },
+  "test_float_at_same_threshold": {
+    "bottle": {
+      "tp": 0,
+      "fp": 30,
+      "fn": 25,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "cup": {
+      "tp": 0,
+      "fp": 8,
+      "fn": 47,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "cell phone": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 12,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  },
+  "test_output_mean_absolute_error": 0.0890810517915364,
+  "test_samples": [
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 7,
+          "fn": 9
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 7
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.32698705792427063,
+          "box": [
+            125.12372394402823,
+            69.83760468040903,
+            138.4338023265203,
+            100.1101717663308
+          ]
+        },
+        {
+          "class": "cup",
+          "confidence": 0.32272833585739136,
+          "box": [
+            228.73673915863037,
+            246.09035061051446,
+            249.70736980438232,
+            273.24083739270765
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.32024988532066345,
+          "box": [
+            66.70953273773193,
+            103.64711803073683,
+            90.1813268661499,
+            141.17693469549218
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3180285692214966,
+          "box": [
+            61.88583850860596,
+            208.38038455694914,
+            102.77127742767334,
+            257.1674423292279
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.31147706508636475,
+          "box": [
+            229.04205004374188,
+            320.99737093473476,
+            252.51384417215985,
+            352.95250673467916
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3058779239654541,
+          "box": [
+            276.2976002693176,
+            218.28226873961586,
+            301.12531423568726,
+            240.06973438275355
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3052728772163391,
+          "box": [
+            285.176575978597,
+            326.4916747653236,
+            306.14720662434894,
+            349.5176079527785
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3037329316139221,
+          "box": [
+            165.70494095484418,
+            307.5051124518116,
+            213.82561604181927,
+            364.37834532310563
+          ]
+        }
+      ],
+      "image_id": 31296
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 8
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 80340
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3179728388786316,
+          "box": [
+            547.9601144790649,
+            138.949376180768,
+            568.9307451248169,
+            184.26251263916492
+          ]
+        }
+      ],
+      "image_id": 80949
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 92660
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3341929018497467,
+          "box": [
+            51.03102885186672,
+            120.45717937871814,
+            73.96897114813328,
+            155.37655958905816
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.32241860032081604,
+          "box": [
+            257.28866675247747,
+            157.90798841044307,
+            284.37799991418916,
+            187.66377540305257
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.307367205619812,
+          "box": [
+            217.10517878333727,
+            125.29127905145288,
+            238.79913861552873,
+            155.04706604406238
+          ]
+        }
+      ],
+      "image_id": 105912
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3341485559940338,
+          "box": [
+            251.2067562590043,
+            68.39144843320052,
+            286.8215410659711,
+            117.80226203302543
+          ]
+        },
+        {
+          "class": "cup",
+          "confidence": 0.33150187134742737,
+          "box": [
+            384.53957345336676,
+            49.998630702495575,
+            413.16375229507685,
+            82.7858569920063
+          ]
+        },
+        {
+          "class": "cup",
+          "confidence": 0.316849023103714,
+          "box": [
+            390.3152806063493,
+            174.93151445686817,
+            400.135846187671,
+            196.26860289275646
+          ]
+        }
+      ],
+      "image_id": 119233
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "predictions": [
+        {
+          "class": "cup",
+          "confidence": 0.3423178493976593,
+          "box": [
+            297.95439292987186,
+            124.47198573499918,
+            322.20402856667835,
+            155.86635936051607
+          ]
+        }
+      ],
+      "image_id": 119828
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3062661588191986,
+          "box": [
+            297.37978521734476,
+            0.0,
+            327.62021478265524,
+            34.900282975286245
+          ]
+        }
+      ],
+      "image_id": 120777
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "predictions": [],
+      "image_id": 166478
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.33160528540611267,
+          "box": [
+            172.75941173235577,
+            336.5805789890388,
+            199.0180305639903,
+            376.40633737916744
+          ]
+        },
+        {
+          "class": "cup",
+          "confidence": 0.3067970275878906,
+          "box": [
+            381.06999953587854,
+            221.3470592920979,
+            426.656924088796,
+            275.8541242455443
+          ]
+        }
+      ],
+      "image_id": 215072
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 1
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "cup",
+          "confidence": 0.3580136299133301,
+          "box": [
+            302.47464884693426,
+            155.7662586191048,
+            314.1305783453087,
+            174.27278825951117
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3460220992565155,
+          "box": [
+            416.6742792973916,
+            240.5965140685439,
+            452.2890641043584,
+            276.0342047587037
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.314692884683609,
+          "box": [
+            173.63188633074364,
+            114.62564167131978,
+            194.1464322929581,
+            150.06333236147958
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3142363429069519,
+          "box": [
+            141.44174257914224,
+            154.15798495709896,
+            159.77908174196878,
+            178.5124330073595
+          ]
+        }
+      ],
+      "image_id": 231822
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "predictions": [],
+      "image_id": 231831
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 248111
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 4,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3457234799861908,
+          "box": [
+            71.2349271774292,
+            27.092708498239517,
+            93.4221887588501,
+            56.145632833242416
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3119446933269501,
+          "box": [
+            549.1407148043314,
+            55.39876040816307,
+            573.968428770701,
+            77.62238612771034
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.31106171011924744,
+          "box": [
+            470.46256860097253,
+            173.80397242307663,
+            536.6735442479452,
+            217.71173506975174
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3032303750514984,
+          "box": [
+            176.43993933995563,
+            34.23756222426891,
+            187.64964183171588,
+            51.14130611717701
+          ]
+        },
+        {
+          "class": "cup",
+          "confidence": 0.301506370306015,
+          "box": [
+            381.2667636076609,
+            124.52536422014236,
+            414.0761236349741,
+            162.2331342101097
+          ]
+        }
+      ],
+      "image_id": 259597
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3013733923435211,
+          "box": [
+            329.48404113451636,
+            362.8361850976944,
+            362.2934011618296,
+            405.22280156612396
+          ]
+        }
+      ],
+      "image_id": 287714
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 293625
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3011704087257385,
+          "box": [
+            251.81775748729706,
+            58.2682204246521,
+            262.3870521783829,
+            106.3888955116272
+          ]
+        }
+      ],
+      "image_id": 324927
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 13
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 329219
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3298075795173645,
+          "box": [
+            42.348647102092706,
+            370.56700785954797,
+            59.786011169975005,
+            418.68768294652307
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.326874315738678,
+          "box": [
+            113.09574960420528,
+            321.8283836046854,
+            128.68248789260784,
+            369.9490586916605
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.31432798504829407,
+          "box": [
+            155.7254211162217,
+            333.37619940439856,
+            161.99136999202892,
+            356.84799353281653
+          ]
+        }
+      ],
+      "image_id": 338304
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 356432
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "cup",
+          "confidence": 0.341145783662796,
+          "box": [
+            156.0475428899129,
+            187.8282117843628,
+            229.5151122411092,
+            262.44200229644775
+          ]
+        }
+      ],
+      "image_id": 356531
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 364126
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 8,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 4
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "cup",
+          "confidence": 0.3471313416957855,
+          "box": [
+            175.86591521898907,
+            315.2802449464798,
+            202.1245340506236,
+            353.36765229701996
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3293780982494354,
+          "box": [
+            120.9816082318624,
+            234.19607996940613,
+            150.3421743710836,
+            289.29675698280334
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.32821014523506165,
+          "box": [
+            339.2799631754557,
+            206.9971200823784,
+            360.25059382120764,
+            233.0028799176216
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.32666054368019104,
+          "box": [
+            120.81439852714539,
+            320.0522819161415,
+            136.6085159778595,
+            347.5314936041832
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.31870242953300476,
+          "box": [
+            217.63362407684326,
+            158.7642753124237,
+            260.81048488616943,
+            205.88364243507385
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3146820366382599,
+          "box": [
+            164.3000904719035,
+            278.16118359565735,
+            195.3396240870158,
+            318.34598183631897
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.3089050054550171,
+          "box": [
+            63.0334440867106,
+            266.1595106124878,
+            106.21030489603677,
+            340.77330112457275
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.30759570002555847,
+          "box": [
+            63.595319986343384,
+            230.05597710609436,
+            96.40468001365662,
+            291.1109435558319
+          ]
+        },
+        {
+          "class": "bottle",
+          "confidence": 0.30329397320747375,
+          "box": [
+            381.51018142700195,
+            146.7225980758667,
+            424.6870422363281,
+            221.33638858795166
+          ]
+        }
+      ],
+      "image_id": 376093
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.30591750144958496,
+          "box": [
+            254.24045013884705,
+            182.72782769054174,
+            289.85523494581383,
+            228.04966662079096
+          ]
+        }
+      ],
+      "image_id": 398377
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [
+        {
+          "class": "bottle",
+          "confidence": 0.3154018819332123,
+          "box": [
+            115.66249787807465,
+            143.2652811706066,
+            123.5595566034317,
+            155.56879118084908
+          ]
+        }
+      ],
+      "image_id": 404484
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 469246
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 502136
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "predictions": [],
+      "image_id": 541773
+    },
+    {
+      "counts": {
+        "bottle": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cup": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "cell phone": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "predictions": [],
+      "image_id": 563882
+    }
+  ],
+  "limitation": "x86 INT8 operators and scales are not hardware-equivalent PH1P35 arithmetic"
+}

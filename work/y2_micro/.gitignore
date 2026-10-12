@@ -1,0 +1,8 @@
+data/images/
+data/download.log
+checkpoints/
+results/preview/
+results/dev_diagnostics/preview/
+results/lab/
+results/lab_server.log
+__pycache__/

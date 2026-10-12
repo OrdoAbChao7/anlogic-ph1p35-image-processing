@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FPGA Algorithm Lab (统一算法预览与验证平台)</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --code-bg: #0b0f19;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .header-title h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-title p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-pending { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+    .badge-approved { background: rgba(16, 185, 129, 0.2); color: var(--accent); border: 1px solid var(--accent); }
+    
+    .layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 1024px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .sidebar {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: fit-content;
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 12px;
+      border-left: 3px solid var(--primary);
+      padding-left: 8px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    select, input[type="text"], input[type="number"] {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 8px 12px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    select:focus, input:focus {
+      border-color: var(--primary);
+    }
+    .range-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+    }
+    .range-val {
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 40px;
+      text-align: right;
+      color: var(--primary);
+    }
+    .btn {
+      background: var(--primary);
+      color: #0b0f19;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover { background: var(--primary-hover); }
+    .btn:active { transform: scale(0.98); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    .btn-outline:hover {
+      background: rgba(56, 189, 248, 0.1);
+    }
+    .btn-success {
+      background: var(--accent);
+      color: #042f1a;
+    }
+    .btn-success:hover { background: #059669; }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    .upload-zone {
+      border: 2px dashed var(--card-border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      background: var(--code-bg);
+    }
+    .upload-zone:hover {
+      border-color: var(--primary);
+    }
+    .upload-zone p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .main-view {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .status-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    .status-info {
+      font-size: 13px;
+    }
+    .status-info strong {
+      color: var(--primary);
+    }
+    .view-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .image-panel {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .image-header {
+      padding: 8px 12px;
+      background: #131d31;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .image-header .tag {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #25334d;
+      color: var(--primary);
+    }
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      overflow: hidden;
+    }
+    .image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .image-metrics {
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--card-border);
+      background: #101726;
+      font-family: monospace;
+    }
+    .collage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .collage-item {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .collage-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .collage-desc {
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: #141c2e;
+    }
+    .diff-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .diff-table th, .diff-table td {
+      border: 1px solid var(--card-border);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .diff-table th { background: #131d31; color: var(--primary); }
+    .diff-table tr:nth-child(even) { background: #131d31; }
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #0b0f19;
+    }
+    .video-preview {
+      width: 100%;
+      max-height: 480px;
+      border-radius: 8px;
+      background: #000;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title">
+      <h1>⚡ FPGA Algorithm Lab <span style="font-size:14px; color:var(--text-muted); font-weight:normal;">v1.0 (Software-First)</span></h1>
+      <p>面向安路 PH1P35 的图像与智能算法软件先行研发、多轨效果对比与门禁验收平台</p>
+    </div>
+    <div>
+      <span id="global-status-badge" class="badge badge-pending">VISUAL_REVIEW_PENDING</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- 左侧控制面板 -->
+    <div class="sidebar">
+      <div>
+        <div class="section-title">1. 选择算法插件</div>
+        <div class="form-group">
+          <label for="algo-select">当前算法：</label>
+          <select id="algo-select" onchange="onAlgorithmChange()"></select>
+        </div>
+        <p id="algo-desc" style="font-size: 12px; color: var(--text-muted); line-height: 1.4;"></p>
+      </div>
+
+      <div>
+        <div class="section-title">2. 输入图像 / 视频</div>
+        <div class="form-group">
+          <label>示例样本图：</label>
+          <select id="sample-select" onchange="onSampleSelect()"></select>
+        </div>
+        <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+          <span style="font-size: 20px;">📁</span>
+          <div style="font-size: 13px; font-weight: 600; color: var(--primary);">上传自定义图片或视频</div>
+          <p>支持 PNG, JPG, BMP, PGM, MP4, AVI</p>
+          <input type="file" id="file-input" style="display:none;" accept="image/*,video/*" onchange="onFileUpload(event)">
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">3. 动态参数微调</div>
+        <div id="dynamic-params-container">
+          <!-- 动态渲染参数组件 -->
+        </div>
+        <button class="btn" style="width: 100%; margin-top: 8px;" onclick="runProcessing()">
+          <span>🔄 刷新运算效果</span>
+        </button>
+      </div>
+
+      <div>
+        <div class="section-title">4. 成果导出与用户验收</div>
+        <div class="btn-group" style="flex-direction: column;">
+          <button class="btn btn-outline" onclick="exportExperiment()">
+            <span>💾 导出实验记录与参数 JSON</span>
+          </button>
+          <button class="btn btn-success" onclick="approveAlgorithm()">
+            <span>✅ 批准此版本 (VISUAL_APPROVED)</span>
+          </button>
+        </div>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+          注：根据《AGENTS.md》协议，只有经您批准的版本，方允许推进 RTL 编写及 TangDynasty 综合。
+        </p>
+      </div>
+    </div>
+
+    <!-- 右侧主预览区 -->
+    <div class="main-view">
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('multi-view')">三轨并排对比 (Three-Track View)</button>
+        <button class="tab-btn" onclick="switchTab('candidate-gallery')">卡通化多候选对比画廊 (Candidate Gallery)</button>
+        <button class="tab-btn" onclick="switchTab('yolo-review')">Y1 三类真实检测</button>
+        <button class="tab-btn" onclick="switchTab('video-stream')">视频流动态处理 (Video Player)</button>
+        <button class="tab-btn" onclick="switchTab('registry-view')">算法生命周期档案 (Registry Matrix)</button>
+      </div>
+
+      <!-- 选项卡 1：三轨并排对比 -->
+      <div id="tab-multi-view" class="card">
+        <div class="status-banner">
+          <div class="status-info">
+            算法状态: <strong id="banner-status">VISUAL_REVIEW_PENDING</strong> | 
+            架构参考: <span id="banner-source" style="color:var(--text-muted);">amd/mini-isp</span> | 
+            License: <span id="banner-license" style="color:var(--text-muted);">MIT</span>
+          </div>
+          <div id="banner-latency" style="font-size:12px; color:var(--text-muted);">流式延迟: 3 cycles</div>
+        </div>
+
+        <div class="view-grid">
+          <!-- 原始输入 -->
+          <div class="image-panel">
+            <div class="image-header">
+              <span>原始输入 (Original Input)</span>
+              <span class="tag" id="tag-orig-size">720p RGB</span>
+            </div>
+            <div class="image-container">
+              <img id="img-original" src="" alt="Original">
+            </div>
+            <div class="image-metrics" id="metrics-original">RAW 8-bit RGB888</div>
+          </div>
+
+          <!-- 视觉参考 -->
+          <div class="image-panel">
+            <div class="image-header">
+              <span>视觉参考 (Visual Reference)</span>
+              <span class="tag">PC 理论基准</span>
+            </div>
+            <div class="image-container">
+              <img id="img-reference" src="" alt="Visual Reference">
+            </div>
+            <div class="image-metrics" id="metrics-reference">计算中...</div>
+          </div>
+
+          <!-- 硬件等价模型 -->
+          <div class="image-panel">
+            <div class="image-header">
+              <span style="color:var(--accent);">硬件等价模型 (FPGA Equivalent)</span>
+              <span class="tag" style="background:#064e3b; color:#34d399;">定点/LineBuffer</span>
+            </div>
+            <div class="image-container">
+              <img id="img-hardware" src="" alt="Hardware Equivalent">
+            </div>
+            <div class="image-metrics" id="metrics-hardware">计算中...</div>
+          </div>
+
+          <!-- 误差热力图 -->
+          <div class="image-panel">
+            <div class="image-header">
+              <span>定点误差放大图 (Diff Heatmap 4x)</span>
+              <span class="tag" style="background:#451a03; color:#fbbf24;">误差评估</span>
+            </div>
+            <div class="image-container">
+              <img id="img-diff" src="" alt="Diff Heatmap">
+            </div>
+            <div class="image-metrics" id="metrics-diff">PSNR / SSIM 量化</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 选项卡 2：卡通化多候选对比画廊 -->
+      <div id="tab-candidate-gallery" class="card" style="display:none;">
+        <div class="section-title">卡通化多参数横向效果对比 (Tuning & Quantization Comparison)</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
+          同一输入、同一参数下即时生成 3 种软件效果。前两种是流式 FPGA 候选，第三种是画质参考。此处的适配判断尚无本板资源与时序实测。
+        </p>
+        <div class="collage-grid" id="gallery-container">
+          <!-- 动态加载画廊 -->
+        </div>
+      </div>
+
+      <div id="tab-yolo-review" class="card" style="display:none;">
+        <div class="section-title">三类目标检测 · Y1 / Y2 软件对比</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">
+          Y1 是原始 COCO 80 类模型，仅筛选三类输出；Y2 是重新训练的三类微型模型。
+          两者均为 PC 软件预览，尚未获得视觉验收或硬件验证。
+        </p>
+        <div class="btn-group" style="flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+          <select id="yolo-model" aria-label="检测模型" onchange="onYoloModelChange()">
+            <option value="fastestdet_y1">Y1 FastestDet 80 类</option>
+            <option value="microdet_y2">Y2 MicroDet 三类</option>
+          </select>
+          <select id="yolo-sample" aria-label="Y1 测试图"></select>
+          <input id="yolo-upload" type="file" accept="image/*,.mp4,.avi" onchange="uploadYolo(event)">
+          <select id="yolo-size" aria-label="网络输入尺寸">
+            <option value="352">352×352 官方尺寸（仅 Y1）</option>
+            <option value="160">160×160</option>
+            <option value="128">128×128</option>
+            <option value="96">96×96</option>
+          </select>
+        </div>
+        <div class="range-container" style="margin-bottom:12px;">
+          <label for="yolo-confidence">置信度</label>
+          <input id="yolo-confidence" type="range" min="0.05" max="0.95" step="0.05" value="0.25"
+                 oninput="document.getElementById('yolo-confidence-value').textContent=this.value"
+                 onchange="processYolo()">
+          <span id="yolo-confidence-value" class="range-val">0.25</span>
+          <button class="btn" onclick="processYolo()">运行检测</button>
+          <a id="yolo-export" class="btn btn-outline" style="display:none;" download>导出结果</a>
+        </div>
+        <p id="yolo-status" style="font-size:13px;color:var(--text-muted);margin-bottom:10px;"></p>
+        <img id="yolo-image" alt="真实检测结果" style="max-width:100%;display:none;">
+        <video id="yolo-video" class="video-preview" controls style="display:none;"></video>
+        <pre id="yolo-results" style="white-space:pre-wrap;margin-top:12px;font-size:12px;"></pre>
+      </div>
+
+      <!-- 选项卡 3：视频流动态处理 -->
+      <div id="tab-video-stream" class="card" style="display:none;">
+        <div class="section-title">视频流 / 摄像头剪辑连续处理预览</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
+          上传或选取 MP4/AVI 视频流，验证算法在连续帧之间的平稳度（无闪烁、无行缓冲断裂）。
+        </p>
+        <div class="btn-group">
+          <button class="btn" onclick="processSampleVideo()">▶ 运行示例 720p 视频连续帧渲染</button>
+        </div>
+        <div style="margin-top: 14px;">
+          <video id="video-player" class="video-preview" controls></video>
+        </div>
+      </div>
+
+      <!-- 选项卡 4：算法生命周期档案 -->
+      <div id="tab-registry-view" class="card" style="display:none;">
+        <div class="section-title">全局算法生命周期矩阵 (Algorithm Registry)</div>
+        <table class="diff-table">
+          <thead>
+            <tr>
+              <th>算法 ID</th>
+              <th>名称</th>
+              <th>当前状态</th>
+              <th>开源参考</th>
+              <th>硬件模型</th>
+              <th>RTL 源码</th>
+              <th>批准版本</th>
+            </tr>
+          </thead>
+          <tbody id="registry-table-body">
+            <!-- 动态渲染 -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let algorithms = [];
+    let samples = [];
+    let currentAlgo = null;
+    let currentSample = "";
+    let activeTab = "multi-view";
+    let yoloSample = "";
+    let yoloLoaded = false;
+
+    async function loadYoloSamples() {
+      const res = await fetch('/api/yolo/samples');
+      const samples = await res.json();
+      const select = document.getElementById('yolo-sample');
+      select.innerHTML = '';
+      samples.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.label + ' · ' + (item.classes.join(', ') || '无三类目标');
+        select.appendChild(option);
+      });
+      select.value = samples.some(item => item.id === '563882') ? '563882' : (samples[0]?.id || '');
+      yoloSample = select.value;
+      select.onchange = () => { yoloSample = select.value; processYolo(); };
+      yoloLoaded = true;
+      if (yoloSample) processYolo();
+    }
+
+    async function uploadYolo(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const body = new FormData();
+      body.append('file', file);
+      const res = await fetch('/api/yolo/upload', { method:'POST', body });
+      const data = await res.json();
+      if (!res.ok) {
+        document.getElementById('yolo-status').textContent = data.detail || '上传失败';
+        return;
+      }
+      yoloSample = data.sample_id;
+      document.getElementById('yolo-status').textContent = '已上传：' + data.filename;
+      processYolo();
+    }
+
+    function onYoloModelChange() {
+      const y2 = document.getElementById('yolo-model').value === 'microdet_y2';
+      const size = document.getElementById('yolo-size');
+      size.querySelector('option[value="352"]').disabled = y2;
+      if (y2 && size.value === '352') size.value = '160';
+      processYolo();
+    }
+
+    async function processYolo() {
+      if (!yoloSample) return;
+      const status = document.getElementById('yolo-status');
+      status.textContent = '检测中…';
+      const res = await fetch('/api/yolo/process', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          sample_id:yoloSample,
+          confidence:Number(document.getElementById('yolo-confidence').value),
+          resolution:Number(document.getElementById('yolo-size').value),
+          model:document.getElementById('yolo-model').value
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) { status.textContent = data.detail || '检测失败'; return; }
+      const img = document.getElementById('yolo-image');
+      const video = document.getElementById('yolo-video');
+      img.style.display = data.kind === 'image' ? 'block' : 'none';
+      video.style.display = data.kind === 'video' ? 'block' : 'none';
+      if (data.kind === 'image') img.src = data.annotated_url;
+      else video.src = data.annotated_url;
+      const detections = data.kind === 'image' ? data.detections : data.frames.flatMap(f => f.detections);
+      status.textContent = '显示目标：' + detections.length + ' · ' + data.model + ' · 网络前向 ' +
+        (data.forward_ms ?? '逐帧记录') + ' ms';
+      document.getElementById('yolo-results').textContent = JSON.stringify(
+        data.kind === 'image' ? data.detections : {frames:data.frames.length, first_frames:data.frames.slice(0,5)},
+        null, 2);
+      const link = document.getElementById('yolo-export');
+      link.href = data.export_url;
+      link.style.display = 'inline-flex';
+    }
+
+    async function init() {
+      // 1. 获取算法列表
+      const algoRes = await fetch('/api/algorithms');
+      algorithms = await algoRes.json();
+      const algoSelect = document.getElementById('algo-select');
+      algoSelect.innerHTML = '';
+      algorithms.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a.algorithm_id;
+        opt.textContent = a.display_name;
+        algoSelect.appendChild(opt);
+      });
+
+      // 2. 获取样本列表
+      const sampleRes = await fetch('/api/samples');
+      samples = await sampleRes.json();
+      const sampleSelect = document.getElementById('sample-select');
+      sampleSelect.innerHTML = '';
+      samples.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.filename;
+        opt.textContent = s.label;
+        sampleSelect.appendChild(opt);
+      });
+      if (samples.length > 0) {
+        currentSample = samples[0].filename;
+      }
+
+      // 默认选择 cartoon
+      algoSelect.value = "cartoon";
+      onAlgorithmChange();
+      loadGallery();
+      loadRegistry();
+    }
+
+    function onAlgorithmChange() {
+      const id = document.getElementById('algo-select').value;
+      currentAlgo = algorithms.find(a => a.algorithm_id === id);
+      document.getElementById('algo-desc').textContent = currentAlgo.description;
+      document.getElementById('banner-status').textContent = currentAlgo.status;
+      document.getElementById('global-status-badge').textContent = currentAlgo.status;
+      document.getElementById('banner-source').textContent = currentAlgo.source_reference;
+      document.getElementById('banner-license').textContent = currentAlgo.license;
+      
+      const badge = document.getElementById('global-status-badge');
+      if (currentAlgo.status === 'VISUAL_APPROVED') {
+        badge.className = 'badge badge-approved';
+      } else {
+        badge.className = 'badge badge-pending';
+      }
+
+      // 渲染动态参数面板
+      renderParameterControls(currentAlgo.parameters);
+      runProcessing();
+    }
+
+    function renderParameterControls(params) {
+      const container = document.getElementById('dynamic-params-container');
+      container.innerHTML = '';
+
+      params.forEach(p => {
+        const group = document.createElement('div');
+        group.className = 'form-group';
+
+        const label = document.createElement('label');
+        label.textContent = p.label;
+        group.appendChild(label);
+
+        if (p.type === 'int' || p.type === 'float') {
+          const rangeContainer = document.createElement('div');
+          rangeContainer.className = 'range-container';
+
+          const slider = document.createElement('input');
+          slider.type = 'range';
+          slider.id = `param-${p.id}`;
+          slider.min = p.min;
+          slider.max = p.max;
+          slider.step = p.step || 1;
+          slider.value = p.default;
+
+          const valSpan = document.createElement('span');
+          valSpan.className = 'range-val';
+          valSpan.id = `val-${p.id}`;
+          valSpan.textContent = p.default;
+
+          slider.oninput = () => {
+            valSpan.textContent = slider.value;
+          };
+          slider.onchange = () => {
+            runProcessing();
+          };
+
+          rangeContainer.appendChild(slider);
+          rangeContainer.appendChild(valSpan);
+          group.appendChild(rangeContainer);
+        } else if (p.type === 'select') {
+          const select = document.createElement('select');
+          select.id = `param-${p.id}`;
+          p.options.forEach(opt => {
+            const o = document.createElement('option');
+            o.value = opt.value;
+            o.textContent = opt.label;
+            if (opt.value === p.default) o.selected = true;
+            select.appendChild(o);
+          });
+          select.onchange = () => runProcessing();
+          group.appendChild(select);
+        }
+
+        container.appendChild(group);
+      });
+    }
+
+    function getParamValues() {
+      const res = {};
+      if (!currentAlgo) return res;
+      currentAlgo.parameters.forEach(p => {
+        const el = document.getElementById(`param-${p.id}`);
+        if (el) {
+          if (p.type === 'int') res[p.id] = parseInt(el.value);
+          else if (p.type === 'float') res[p.id] = parseFloat(el.value);
+          else res[p.id] = el.value;
+        }
+      });
+      return res;
+    }
+
+    function onSampleSelect() {
+      currentSample = document.getElementById('sample-select').value;
+      runProcessing();
+      if (activeTab === 'candidate-gallery') loadGallery();
+    }
+
+    async function onFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData
+      });
+      const data = await res.json();
+      currentSample = data.filename;
+      alert(`已成功导入：${file.name}`);
+      runProcessing();
+    }
+
+    async function runProcessing() {
+      if (!currentAlgo) return;
+      const params = getParamValues();
+
+      const payload = {
+        algorithm_id: currentAlgo.algorithm_id,
+        sample_filename: currentSample,
+        parameters: params
+      };
+
+      document.getElementById('metrics-reference').textContent = "计算中...";
+      document.getElementById('metrics-hardware').textContent = "计算中...";
+
+      const res = await fetch('/api/process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json();
+
+      // 更新图像与指标
+      document.getElementById('img-original').src = result.original_url + '?t=' + Date.now();
+      document.getElementById('img-reference').src = result.reference_url + '?t=' + Date.now();
+      document.getElementById('img-hardware').src = result.hardware_url + '?t=' + Date.now();
+      document.getElementById('img-diff').src = result.diff_url + '?t=' + Date.now();
+
+      document.getElementById('metrics-original').textContent = `${result.dimensions} | 原图色彩空间`;
+      document.getElementById('metrics-reference').textContent = JSON.stringify(result.ref_metrics);
+      document.getElementById('metrics-hardware').textContent = JSON.stringify(result.hw_metrics);
+      document.getElementById('metrics-diff').textContent = `PSNR: ${result.psnr} dB | MAE: ${result.mae}`;
+    }
+
+    async function loadGallery() {
+      if (!currentSample || !currentAlgo || currentAlgo.algorithm_id !== 'cartoon') return;
+      const container = document.getElementById('gallery-container');
+      container.textContent = '正在生成同图候选…';
+      const res = await fetch('/api/cartoon_compare', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sample_filename: currentSample, parameters: getParamValues() })
+      });
+      if (!res.ok) {
+        container.textContent = '生成失败：请检查样本是否为可解码图片。';
+        return;
+      }
+      const data = await res.json();
+      container.innerHTML = '';
+      data.items.forEach(it => {
+        const div = document.createElement('div');
+        div.className = 'collage-item';
+        const img = document.createElement('img');
+        img.src = it.url + '?t=' + Date.now();
+        img.alt = it.title;
+        const desc = document.createElement('div');
+        desc.className = 'collage-desc';
+        desc.textContent = it.title + ' · ' + it.suitability;
+        div.append(img, desc);
+        container.appendChild(div);
+      });
+    }
+
+    async function loadRegistry() {
+      const res = await fetch('/api/registry');
+      const data = await res.json();
+      const tbody = document.getElementById('registry-table-body');
+      tbody.innerHTML = '';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        const badgeClass = row.status === 'VISUAL_APPROVED' ? 'badge-approved' : 'badge-pending';
+        tr.innerHTML = `
+          <td><strong>${row.algorithm_id}</strong></td>
+          <td>${row.display_name}</td>
+          <td><span class="badge ${badgeClass}">${row.status}</span></td>
+          <td>${row.source_reference}</td>
+          <td><code>${row.hardware_model_path || '-'}</code></td>
+          <td><code>${row.rtl_source_path || '-'}</code></td>
+          <td>${row.user_approved_version || '未冻结'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function exportExperiment() {
+      const params = getParamValues();
+      const payload = {
+        algorithm_id: currentAlgo.algorithm_id,
+        sample_filename: currentSample,
+        parameters: params
+      };
+      const res = await fetch('/api/export', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      alert(`实验记录与参数包已成功保存到工作区：\n${data.export_path}`);
+    }
+
+    async function approveAlgorithm() {
+      if (!confirm(`确认要将当前算法 [${currentAlgo.display_name}] 及其当前参数批准为 VISUAL_APPROVED 吗？\n这将锁定参数版本作为后续 RTL 开发的 Golden 标准。`)) {
+        return;
+      }
+      const params = getParamValues();
+      const payload = {
+        algorithm_id: currentAlgo.algorithm_id,
+        approved_version: "v1.0-approved",
+        params: params
+      };
+      const res = await fetch('/api/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      alert(`已成功批准！\n状态已更新为 VISUAL_APPROVED\n版本：${data.approved_version}\n已记录至 registry.json`);
+      init();
+    }
+
+    async function processSampleVideo() {
+      alert("正在生成连续帧处理视频... 请稍候！");
+      const res = await fetch('/api/process_video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          algorithm_id: currentAlgo.algorithm_id,
+          parameters: getParamValues()
+        })
+      });
+      const data = await res.json();
+      const player = document.getElementById('video-player');
+      player.src = data.video_url + '?t=' + Date.now();
+      player.play();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-bar .tab-btn').forEach(btn => {
+        if (btn.getAttribute('onclick').includes(tabId)) btn.classList.add('active');
+      });
+      activeTab = tabId;
+      if (tabId === 'candidate-gallery') loadGallery();
+      document.getElementById('tab-multi-view').style.display = tabId === 'multi-view' ? 'block' : 'none';
+      document.getElementById('tab-candidate-gallery').style.display = tabId === 'candidate-gallery' ? 'block' : 'none';
+      document.getElementById('tab-yolo-review').style.display = tabId === 'yolo-review' ? 'block' : 'none';
+      if (tabId === 'yolo-review' && !yoloLoaded) loadYoloSamples();
+      document.getElementById('tab-video-stream').style.display = tabId === 'video-stream' ? 'block' : 'none';
+      document.getElementById('tab-registry-view').style.display = tabId === 'registry-view' ? 'block' : 'none';
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>

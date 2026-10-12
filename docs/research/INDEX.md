@@ -29,6 +29,8 @@
 
 ## 资料入口
 
+- [Y1 FastestDet 软件复现与硬件适配预研](../experiments/2026-10-12-y1-fastestdet.md)
+
 - [2026-10-11 组员工程同步与卡通版审计](../setup/team-sync-2026-10-11.md)
 
 - [比赛要求](competition/topic2-requirements.md)

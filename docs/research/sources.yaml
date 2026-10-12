@@ -314,3 +314,53 @@
   status: evaluated_20261011
   accessed_at: 2026-10-11
   notes: "~941 Stars；纯PyTorch训练框架；ShuffleNetV2架构与本项目YOLO-tiny不同，不可直接替代。轻量化设计思路（解耦头/LightFPN）可参考；需直接确认仓库LICENSE文件。"
+
+- id: cartoon_research_20261012
+  title: 实时卡通化五仓库专项评估
+  url_or_path: docs/research/OPEN_SOURCE.md
+  type: research
+  platform: software_and_generic_fpga
+  related_goals: [3, 4]
+  priority: high
+  status: visual_review_pending
+  accessed_at: 2026-10-12
+  notes: OpenCV、opencv_contrib、Cartoonify-Images-OpenCV、amd/mini-isp、FPGA-Video-Processing；见 OPEN_SOURCE.md 专项表。
+
+- id: y1_fastestdet_20261012
+  title: FastestDet 原始仓库 Y1 固定版本
+  url_or_path: https://github.com/dog-qiuqiu/FastestDet
+  type: github
+  platform: generic
+  related_goals: [5]
+  priority: high
+  license: BSD-3-Clause
+  commit: 50473cd155cb088aa4a99e64ff6a4b3c24fa07e1
+  status: software_reproduced_hardware_no_go
+  accessed_at: 2026-10-12
+  notes: COCO 80 类权重及官方 ONNX 已复现；见 docs/experiments/2026-10-12-y1-fastestdet.md。
+
+- id: y1_yolo_fastestv2_20261012
+  title: Yolo-FastestV2 原始仓库 Y1 固定版本
+  url_or_path: https://github.com/dog-qiuqiu/Yolo-FastestV2
+  type: github
+  platform: generic
+  related_goals: [5]
+  priority: medium
+  license: NONE_FOUND
+  commit: ac2a5e3060bff76dd1e45f9b921dd77bfbeb194d
+  status: evaluated_reference_only
+  accessed_at: 2026-10-12
+  notes: 双尺度带 anchor 检测头；有 COCO 权重但无许可证文件，仅供结构研究。
+
+- id: y1_tinyissimoyolo_20261012
+  title: TinyissimoYOLO 原始仓库 Y1 固定版本
+  url_or_path: https://github.com/eth-pbl/tinyissimoyolo
+  type: github
+  platform: generic
+  related_goals: [5]
+  priority: medium
+  license: NONE_FOUND_ULTRALYTICS_DERIVATIVE
+  commit: 19bea4bd1ea1e2c29a6ee6b14bd7494ce8c6ba25
+  status: evaluated_reference_only
+  accessed_at: 2026-10-12
+  notes: 无顶层许可证和随仓库可直接运行的预训练权重；部分配置标 AGPL-3.0，使用前须厘清授权。
