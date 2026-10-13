@@ -1,0 +1,278 @@
+{
+  "diagnostic60_yolov8n_640": {
+    "classes": {
+      "bottle": {
+        "tp": 17,
+        "fp": 17,
+        "fn": 35,
+        "precision": 0.5,
+        "recall": 0.3269230769230769
+      },
+      "cup": {
+        "tp": 34,
+        "fp": 15,
+        "fn": 26,
+        "precision": 0.6938775510204082,
+        "recall": 0.5666666666666667
+      },
+      "cell phone": {
+        "tp": 12,
+        "fp": 1,
+        "fn": 10,
+        "precision": 0.9230769230769231,
+        "recall": 0.5454545454545454
+      }
+    },
+    "size_bins": {
+      "small_lt32": {
+        "gt": 54,
+        "tp": 13,
+        "recall": 0.24074074074074073
+      },
+      "medium_32_96": {
+        "gt": 61,
+        "tp": 37,
+        "recall": 0.6065573770491803
+      },
+      "large_ge96": {
+        "gt": 19,
+        "tp": 13,
+        "recall": 0.6842105263157895
+      }
+    },
+    "negative_images": 15,
+    "negative_images_with_fp": 1,
+    "parameters": 3157200,
+    "median_cpu_total_ms": 24.360100003832486
+  },
+  "diagnostic60_yolov8n_960": {
+    "classes": {
+      "bottle": {
+        "tp": 19,
+        "fp": 23,
+        "fn": 33,
+        "precision": 0.4523809523809524,
+        "recall": 0.36538461538461536
+      },
+      "cup": {
+        "tp": 38,
+        "fp": 19,
+        "fn": 22,
+        "precision": 0.6666666666666666,
+        "recall": 0.6333333333333333
+      },
+      "cell phone": {
+        "tp": 12,
+        "fp": 3,
+        "fn": 10,
+        "precision": 0.8,
+        "recall": 0.5454545454545454
+      }
+    },
+    "size_bins": {
+      "small_lt32": {
+        "gt": 54,
+        "tp": 17,
+        "recall": 0.3148148148148148
+      },
+      "medium_32_96": {
+        "gt": 61,
+        "tp": 39,
+        "recall": 0.639344262295082
+      },
+      "large_ge96": {
+        "gt": 19,
+        "tp": 13,
+        "recall": 0.6842105263157895
+      }
+    },
+    "negative_images": 15,
+    "negative_images_with_fp": 1,
+    "parameters": 3157200,
+    "median_cpu_total_ms": 48.57579999952577
+  },
+  "diagnostic60_yolov8m_640": {
+    "classes": {
+      "bottle": {
+        "tp": 27,
+        "fp": 19,
+        "fn": 25,
+        "precision": 0.5869565217391305,
+        "recall": 0.5192307692307693
+      },
+      "cup": {
+        "tp": 45,
+        "fp": 17,
+        "fn": 15,
+        "precision": 0.7258064516129032,
+        "recall": 0.75
+      },
+      "cell phone": {
+        "tp": 17,
+        "fp": 5,
+        "fn": 5,
+        "precision": 0.7727272727272727,
+        "recall": 0.7727272727272727
+      }
+    },
+    "size_bins": {
+      "small_lt32": {
+        "gt": 54,
+        "tp": 21,
+        "recall": 0.3888888888888889
+      },
+      "medium_32_96": {
+        "gt": 61,
+        "tp": 51,
+        "recall": 0.8360655737704918
+      },
+      "large_ge96": {
+        "gt": 19,
+        "tp": 17,
+        "recall": 0.8947368421052632
+      }
+    },
+    "negative_images": 15,
+    "negative_images_with_fp": 2,
+    "parameters": 25902640,
+    "median_cpu_total_ms": 132.02450000244426
+  },
+  "diagnostic60_yolov8m_960": {
+    "classes": {
+      "bottle": {
+        "tp": 32,
+        "fp": 25,
+        "fn": 20,
+        "precision": 0.5614035087719298,
+        "recall": 0.6153846153846154
+      },
+      "cup": {
+        "tp": 47,
+        "fp": 22,
+        "fn": 13,
+        "precision": 0.6811594202898551,
+        "recall": 0.7833333333333333
+      },
+      "cell phone": {
+        "tp": 14,
+        "fp": 7,
+        "fn": 8,
+        "precision": 0.6666666666666666,
+        "recall": 0.6363636363636364
+      }
+    },
+    "size_bins": {
+      "small_lt32": {
+        "gt": 54,
+        "tp": 24,
+        "recall": 0.4444444444444444
+      },
+      "medium_32_96": {
+        "gt": 61,
+        "tp": 53,
+        "recall": 0.8688524590163934
+      },
+      "large_ge96": {
+        "gt": 19,
+        "tp": 16,
+        "recall": 0.8421052631578947
+      }
+    },
+    "negative_images": 15,
+    "negative_images_with_fp": 3,
+    "parameters": 25902640,
+    "median_cpu_total_ms": 311.89610000001267
+  },
+  "confirmation55_yolov8n_640": {
+    "classes": {
+      "bottle": {
+        "tp": 24,
+        "fp": 7,
+        "fn": 37,
+        "precision": 0.7741935483870968,
+        "recall": 0.39344262295081966
+      },
+      "cup": {
+        "tp": 31,
+        "fp": 9,
+        "fn": 18,
+        "precision": 0.775,
+        "recall": 0.6326530612244898
+      },
+      "cell phone": {
+        "tp": 8,
+        "fp": 5,
+        "fn": 13,
+        "precision": 0.6153846153846154,
+        "recall": 0.38095238095238093
+      }
+    },
+    "size_bins": {
+      "small_lt32": {
+        "gt": 57,
+        "tp": 11,
+        "recall": 0.19298245614035087
+      },
+      "medium_32_96": {
+        "gt": 50,
+        "tp": 34,
+        "recall": 0.68
+      },
+      "large_ge96": {
+        "gt": 24,
+        "tp": 18,
+        "recall": 0.75
+      }
+    },
+    "negative_images": 10,
+    "negative_images_with_fp": 0,
+    "parameters": 3157200,
+    "median_cpu_total_ms": 25.01414999642293
+  },
+  "confirmation55_yolov8m_960": {
+    "classes": {
+      "bottle": {
+        "tp": 39,
+        "fp": 22,
+        "fn": 22,
+        "precision": 0.639344262295082,
+        "recall": 0.639344262295082
+      },
+      "cup": {
+        "tp": 37,
+        "fp": 16,
+        "fn": 12,
+        "precision": 0.6981132075471698,
+        "recall": 0.7551020408163265
+      },
+      "cell phone": {
+        "tp": 13,
+        "fp": 7,
+        "fn": 8,
+        "precision": 0.65,
+        "recall": 0.6190476190476191
+      }
+    },
+    "size_bins": {
+      "small_lt32": {
+        "gt": 57,
+        "tp": 30,
+        "recall": 0.5263157894736842
+      },
+      "medium_32_96": {
+        "gt": 50,
+        "tp": 41,
+        "recall": 0.82
+      },
+      "large_ge96": {
+        "gt": 24,
+        "tp": 18,
+        "recall": 0.75
+      }
+    },
+    "negative_images": 10,
+    "negative_images_with_fp": 0,
+    "parameters": 25902640,
+    "median_cpu_total_ms": 313.48214999889024
+  }
+}

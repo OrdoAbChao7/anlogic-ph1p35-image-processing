@@ -1,0 +1,46 @@
+{
+  "confidence": 0.25,
+  "nms_iou": 0.7,
+  "match_iou": 0.5,
+  "device": "cpu",
+  "threads": 4,
+  "runs": [
+    [
+      "diagnostic60",
+      "yolov8n",
+      640
+    ],
+    [
+      "diagnostic60",
+      "yolov8n",
+      960
+    ],
+    [
+      "diagnostic60",
+      "yolov8m",
+      640
+    ],
+    [
+      "diagnostic60",
+      "yolov8m",
+      960
+    ],
+    [
+      "confirmation55",
+      "yolov8n",
+      640
+    ],
+    [
+      "confirmation55",
+      "yolov8m",
+      960
+    ]
+  ],
+  "scope": "Reused public diagnostics, NOT unseen workstation acceptance or COCO mAP",
+  "manifest_sha256": "f180fbcf711b53a4443939b5d2922c5390905b2b460d4b4df05ec9fdf781db5e",
+  "confirmation_manifest_sha256": "aa78d84ab1e649dc95ae591de997b44b1827a604ae96ab607c4d01caec6d888c",
+  "weights": {
+    "yolov8n": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+    "yolov8m": "5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5"
+  }
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "image_id": 120777,
+    "coco_file_name": "000000120777.jpg",
+    "width": 500,
+    "height": 375,
+    "source_sha256": "2ac67dbbfe0acf69d409d57489d55b5cdb505c17c2af3998a7a17d8ae4be9733",
+    "target_annotations": [
+      {
+        "category_id": 47,
+        "bbox": [
+          285.34,
+          14.45,
+          89.98,
+          131.09
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": 563882,
+    "coco_file_name": "000000563882.jpg",
+    "width": 640,
+    "height": 425,
+    "source_sha256": "ba07ae128053a6a7adfdc8fe6ccf10e311c0e934c664a0f0f57b9addc816453c",
+    "target_annotations": [
+      {
+        "category_id": 77,
+        "bbox": [
+          364.47,
+          234.24,
+          86.0,
+          39.69
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": 119233,
+    "coco_file_name": "000000119233.jpg",
+    "width": 500,
+    "height": 334,
+    "source_sha256": "24bfe0c95b1dbd6163fb6d36c61a40958d03f8ff6e1a45a2fc4ae8cbb9c4daf2",
+    "target_annotations": [
+      {
+        "category_id": 47,
+        "bbox": [
+          20.82,
+          39.04,
+          40.77,
+          52.05
+        ]
+      },
+      {
+        "category_id": 77,
+        "bbox": [
+          0.0,
+          207.51,
+          45.75,
+          30.37
+        ]
+      }
+    ]
+  }
+]

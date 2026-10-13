@@ -1,0 +1,48 @@
+{
+  "confirmation55_yolov8m_640": {
+    "classes": {
+      "bottle": {
+        "tp": 35,
+        "fp": 19,
+        "fn": 26,
+        "precision": 0.6481481481481481,
+        "recall": 0.5737704918032787
+      },
+      "cup": {
+        "tp": 37,
+        "fp": 9,
+        "fn": 12,
+        "precision": 0.8043478260869565,
+        "recall": 0.7551020408163265
+      },
+      "cell phone": {
+        "tp": 17,
+        "fp": 7,
+        "fn": 4,
+        "precision": 0.7083333333333334,
+        "recall": 0.8095238095238095
+      }
+    },
+    "size_bins": {
+      "small_lt32": {
+        "gt": 57,
+        "tp": 27,
+        "recall": 0.47368421052631576
+      },
+      "medium_32_96": {
+        "gt": 50,
+        "tp": 42,
+        "recall": 0.84
+      },
+      "large_ge96": {
+        "gt": 24,
+        "tp": 20,
+        "recall": 0.8333333333333334
+      }
+    },
+    "negative_images": 10,
+    "negative_images_with_fp": 0,
+    "parameters": 25902640,
+    "median_cpu_total_ms": 293.67570000249543
+  }
+}

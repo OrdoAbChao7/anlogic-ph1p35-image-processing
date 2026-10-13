@@ -277,17 +277,19 @@
   notes: SystemVerilog + Python 双轨仿真框架；Malvar-He-Cutler 拜耳解码算法可参考；AMD 原语/XDC 不可移植安路。禁止直接导入 SV 文件。
 
 - id: github_maojinxiang_anlu_prize
-  title: maojinxiang/FPGA-ANLU-National-First-Prize — 安路竞赛一等奖
+  title: maojinxiang/FPGA-ANLU-National-First-Prize — 2025 安路国一视觉与以太网系统
   url_or_path: https://github.com/maojinxiang/FPGA-ANLU-National-First-Prize
+  rel_path: .tools/references/anlogic-vision/02_image_algorithm_library
   type: github
-  platform: anlogic
+  platform: Anlogic EG4S20BG256
   related_goals: [1, 3, 4, 6]
-  priority: medium
-  license: NONE
-  adapt_level: C
-  status: evaluated_20261011
-  accessed_at: 2026-10-11
-  notes: "同安路赛题最贴近参考；摄像头为OV5640 DVP（非MIPI）；帧缓存为SDRAM（非DDR2）；无 License 文件。禁止复制任何代码——仅阅读架构和模式切换思路。"
+  priority: high
+  license: NONE (无开源许可证，严禁代码直接复制)
+  commit: 0672ee8ddff84385683afbbd799b09839f2405be
+  adapt_level: B
+  status: cloned_audited
+  accessed_at: 2026-10-13
+  notes: "包含完整 morphology_process.v (3x3 min/max 腐蚀膨胀流水线)、sobel_process.v、line_buffer.v；摄像头为 OV5640 DVP，帧缓存为片内 SDRAM。算法两级比较树结构可供纯软件建模参考，无许可证禁止复制代码。"
 
 - id: github_xilinx_finn
   title: Xilinx/finn — FPGA Neural Network Inference
@@ -352,15 +354,134 @@
   accessed_at: 2026-10-12
   notes: 双尺度带 anchor 检测头；有 COCO 权重但无许可证文件，仅供结构研究。
 
-- id: y1_tinyissimoyolo_20261012
-  title: TinyissimoYOLO 原始仓库 Y1 固定版本
-  url_or_path: https://github.com/eth-pbl/tinyissimoyolo
+- id: y_adamgallas_fpga_accelerator_yolov3tiny
+  title: adamgallas/fpga_accelerator_yolov3tiny — 基于FPGA的YOLOv3-tiny硬件加速器
+  url_or_path: reference/fpga_accelerator_yolov3tiny/
   type: github
-  platform: generic
-  related_goals: [5]
-  priority: medium
-  license: NONE_FOUND_ULTRALYTICS_DERIVATIVE
-  commit: 19bea4bd1ea1e2c29a6ee6b14bd7494ce8c6ba25
-  status: evaluated_reference_only
+  platform: xzcu3eg (Zynq UltraScale+)
+  related_goals: [5, 7]
+  priority: high
+  license: Apache-2.0
+  commit: 6ba312bd220e67a987d3417bacd030db30b15770
+  adapt_level: B
+  status: cloned_evaluated_reference
   accessed_at: 2026-10-12
-  notes: 无顶层许可证和随仓库可直接运行的预训练权重；部分配置标 AGPL-3.0，使用前须厘清授权。
+  notes: 2021集创赛DIGILENT杯一等奖作品；纯Verilog实现通用卷积加速器(1x1/3x3 Conv, 2x2 Maxpooling, 查表激活, INT8定点计算单元cal_acc, addtree, scale/shift量化截断)，对Goal 5 YOLO-tiny硬件架构极具参考价值；原工程依赖PS端CPU调度与AXI DMA，移植安路PH1P35需设计纯RTL状态机或微控制器控制通路。
+
+- id: y_yolov2_xilinx_fpga
+  title: dhm2013724/yolov2_xilinx_fpga — 基于Xilinx Zynq的YOLOv2硬件加速器
+  url_or_path: reference/yolov2_xilinx_fpga/
+  type: github
+  platform: Zynq-7000 / ZU3EG / ZCU102
+  related_goals: [5, 7]
+  priority: high
+  license: MIT
+  commit: d9d283fa022971954c93040487ea92881375f89a
+  adapt_level: B
+  status: cloned_evaluated_reference
+  accessed_at: 2026-10-12
+  notes: 江南大学硕士论文开源成果；使用Vivado HLS实现卷积/池化/重排循环分块(Tiling Tm/Tn/Tr/Tc)与Ping-Pong缓冲加速；支持INT16/FT32量化，对DDR循环分块与脉动阵列数据复用极具参考价值；依赖4路AXI-HP主接口与Petalinux/PS CPU调度，无法直接在纯Verilog PH1P35上运行。
+
+- id: y_xilinx_finn
+  title: Xilinx/finn — 数据流量化神经网络FPGA编译器
+  url_or_path: reference/finn/
+  type: github
+  platform: Xilinx FPGA / PYNQ
+  related_goals: [5, 7]
+  priority: medium
+  license: BSD-3-Clause
+  commit: 38c42bf95abbdad493db0b0f5053060074698908
+  adapt_level: C
+  status: cloned_evaluated_reference
+  accessed_at: 2026-10-12
+  notes: 流式Dataflow架构（每层分配独立硬件FIFO与MVAU矩阵乘法单元，不走DDR中间写回）；QAT量化（Brevitas）与BN Folding将批量归一化折叠到卷积权重中；对极低延迟流水设计思想极具启发，但生成代码绑定Xilinx HLS原语，不可直接生成安路IP。
+
+- id: ultralytics_yolov8_reference_20261012
+  title: Ultralytics YOLOv8 pretrained software visual reference
+  url_or_path: https://docs.ultralytics.com/models/yolov8/
+  type: official
+  platform: pc_software_only
+  related_goals: [5]
+  priority: high
+  license: AGPL-3.0
+  status: visual_review_pending
+  accessed_at: 2026-10-12
+  package_version: 8.4.175
+  weights_url: https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8m.pt
+  weights_sha256: 5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5
+  notes: Fixed public 60-image model/scale ablation and 55-image confirmation; improved detections but remaining false positives and misses. No FPGA deployment or visual approval.
+
+- id: anlogic_vision_01_lifeng_platform
+  title: lifeng0718/Multifunctional-video-processing-platform — 2024 安路国一多功能视频处理平台
+  url_or_path: https://github.com/lifeng0718/Multifunctional-video-processing-platform
+  rel_path: .tools/references/anlogic-vision/01_video_processing_national_prize
+  type: github
+  platform: Anlogic PH1A90SBG484
+  related_goals: [1, 3, 4, 6]
+  priority: medium
+  license: NONE (未见顶层独立 LICENSE)
+  commit: c8c0c1864d24c7ea3d6e9da5bc51d5b04a00a6ea
+  adapt_level: B
+  status: cloned_audited
+  accessed_at: 2026-10-13
+  notes: "2024安路国一三板级联系统；多模式视频切换、HDMI输出、图像流水线架构、分屏拼接与旋转；面向PH1A90高规格器件，仅学习系统分层与切换机制，禁止直接复制底层原语。"
+
+- id: anlogic_vision_03_initialxe_hu_moments
+  title: InitialXE/Multi-Function-Image-Processing-PLAT — 2024 安路国二 Hu 矩手势识别与几何特征
+  url_or_path: https://github.com/InitialXE/Multi-Function-Image-Processing-PLAT
+  rel_path: .tools/references/anlogic-vision/03_geometry_recognition
+  type: github
+  platform: Anlogic EG4S20BG256 (SparkRoad)
+  related_goals: [3, 4, 5, 6]
+  priority: high
+  license: NONE (未见顶层独立 LICENSE)
+  commit: 25ab494f8845dbf15565e8f05d64f94b9d63cd2a
+  adapt_level: B
+  status: cloned_audited
+  accessed_at: 2026-10-13
+  notes: "重点模块 Perimeter_aera.v 在指定 ROI 内流式累加边缘周长与膨胀面积，并例化安路 IP Divider 计算 Area*10/Perimeter；Hu_Invariant_moment.v 尝试计算中心矩；需注意定点除法器与乘法器对资源的消耗，以及未带许可证的版权限制。"
+
+- id: anlogic_vision_04_yuxiangjia_ph1p35_cnn
+  title: YuxiangJia111/FPGA_ANLU_National_First_Prize — 同型号 PH1P35 目标定位与 CNN 工程
+  url_or_path: https://github.com/YuxiangJia111/FPGA_ANLU_National_First_Prize
+  rel_path: .tools/references/anlogic-vision/04_ph1p35_bbox_cnn
+  type: github
+  platform: Anlogic PH1P35MDG324
+  related_goals: [1, 2, 3, 5, 6]
+  priority: critical
+  license: NONE (未见顶层独立 LICENSE)
+  commit: 60c11a2d9b59d0e8e9f9824e60b9b1841baf68ef
+  adapt_level: A
+  status: cloned_audited
+  accessed_at: 2026-10-13
+  notes: "目标器件与板卡完全同款(PH1P35MDG324/HX1P35A)；核心实现 digit_multi_bbox.v (3x3降采样Bitmap+双Bank连通域扫描+多目标BBox输出)、bbox_gray_downsampler.v、bbox_cnn_adapter.v。重要事实：doc/route_failure_notes.md 记录其布线跑3小时未完成且Demosaic/AWB右边界截断，核心原因是database.v将224KB ROM展平为组合逻辑且时序未约束。为本项目BBox设计与布线避坑提供了决定性参考。"
+
+- id: anlogic_vision_05_zdxddmx_vision_udp
+  title: zdxddmx/anlogic_fpga_vision_udp — 安路智能视觉及模板匹配系统
+  url_or_path: https://github.com/zdxddmx/anlogic_fpga_vision_udp
+  rel_path: .tools/references/anlogic-vision/05_vision_bbox_template
+  type: github
+  platform: Anlogic EG4S20BG256
+  related_goals: [3, 4, 5, 6]
+  priority: high
+  license: MIT (部分第三方子模块保留原作者版权)
+  commit: 5595d8368e279af8cee6e5b2abb559060138780d
+  adapt_level: A
+  status: cloned_audited
+  accessed_at: 2026-10-13
+  notes: "包含完整单目标 bounding_box.v (流式坐标极值统计+次帧边界像素替换为蓝框+中心坐标输出)、motion_border_overlay.v、template_match_realtime.v。顶层为MIT协议，结构极其简洁实用，是F1/F4单目标框画图与中心输出的最佳参考。"
+
+- id: anlogic_vision_06_aurora520_ph1p35_vision
+  title: Aurora-520/anlogic-ph1p35-vision — 同型号 PH1P35 规范化图像处理基线
+  url_or_path: https://github.com/Aurora-520/anlogic-ph1p35-vision
+  rel_path: .tools/references/anlogic-vision/06_ph1p35_vision_baseline
+  type: github
+  platform: Anlogic PH1P35MDG324
+  related_goals: [1, 2, 3, 4, 6]
+  priority: critical
+  license: NONE (未见独立 LICENSE 文件)
+  commit: 3ccd79f97107041dc7d6470521c80ab5be4148cf
+  adapt_level: A
+  status: cloned_audited
+  accessed_at: 2026-10-13
+  notes: "架构极其规范典范工程；同款PH1P35MDG324；将平台层(vendor_lab1_core)与应用处理层(vision_pipeline)严格解耦；pixel_algorithm.v实现无乘法器移位BT.601 Y灰度、自适应阈值二值化(用146/2^27倒数乘法代替除法器)、双BRAM行缓存Sobel、3位色阶量化+边缘融合卡通化；logo_overlay.v从ROM叠加安路Logo。该工程是目前见过的安路PH1P35架构质量最高、与本项目规范契合度最强的基准。"

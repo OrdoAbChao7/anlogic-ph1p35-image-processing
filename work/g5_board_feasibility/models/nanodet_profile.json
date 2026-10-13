@@ -1,0 +1,7011 @@
+{
+  "source_sha256": "4f12723cce3d48e47ca92cb925ba74d97a965c069208edca660bbb9f7ce2c610",
+  "graph_check": "PASS",
+  "initializer_elements": 1186417,
+  "conv_weight_elements": 1174320,
+  "conv_mac": 450712800,
+  "largest_single_int8_feature_bytes": 614400,
+  "unknown_shapes": [],
+  "operators": {
+    "Conv": 110,
+    "LeakyRelu": 71,
+    "MaxPool": 1,
+    "Concat": 33,
+    "Reshape": 36,
+    "Transpose": 17,
+    "Slice": 26,
+    "Resize": 2,
+    "Add": 5,
+    "Split": 4,
+    "Sigmoid": 4
+  },
+  "layers": [
+    {
+      "name": "Conv_0",
+      "op": "Conv",
+      "inputs": [
+        "data",
+        "1532",
+        "1533"
+      ],
+      "outputs": [
+        "1531"
+      ],
+      "output_shapes": [
+        [
+          1,
+          24,
+          160,
+          160
+        ]
+      ],
+      "weight_shape": [
+        24,
+        3,
+        3,
+        3
+      ],
+      "parameters": 648,
+      "mac": 16588800,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_1",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1531"
+      ],
+      "outputs": [
+        "890"
+      ],
+      "output_shapes": [
+        [
+          1,
+          24,
+          160,
+          160
+        ]
+      ]
+    },
+    {
+      "name": "MaxPool_2",
+      "op": "MaxPool",
+      "inputs": [
+        "890"
+      ],
+      "outputs": [
+        "891"
+      ],
+      "output_shapes": [
+        [
+          1,
+          24,
+          80,
+          80
+        ]
+      ]
+    },
+    {
+      "name": "Conv_3",
+      "op": "Conv",
+      "inputs": [
+        "891",
+        "1535",
+        "1536"
+      ],
+      "outputs": [
+        "1534"
+      ],
+      "output_shapes": [
+        [
+          1,
+          24,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        24,
+        1,
+        3,
+        3
+      ],
+      "parameters": 216,
+      "mac": 345600,
+      "groups": 24
+    },
+    {
+      "name": "Conv_4",
+      "op": "Conv",
+      "inputs": [
+        "1534",
+        "1538",
+        "1539"
+      ],
+      "outputs": [
+        "1537"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        24,
+        1,
+        1
+      ],
+      "parameters": 1392,
+      "mac": 2227200,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_5",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1537"
+      ],
+      "outputs": [
+        "896"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_6",
+      "op": "Conv",
+      "inputs": [
+        "891",
+        "1541",
+        "1542"
+      ],
+      "outputs": [
+        "1540"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          80,
+          80
+        ]
+      ],
+      "weight_shape": [
+        58,
+        24,
+        1,
+        1
+      ],
+      "parameters": 1392,
+      "mac": 8908800,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_7",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1540"
+      ],
+      "outputs": [
+        "899"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          80,
+          80
+        ]
+      ]
+    },
+    {
+      "name": "Conv_8",
+      "op": "Conv",
+      "inputs": [
+        "899",
+        "1544",
+        "1545"
+      ],
+      "outputs": [
+        "1543"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        1,
+        3,
+        3
+      ],
+      "parameters": 522,
+      "mac": 835200,
+      "groups": 58
+    },
+    {
+      "name": "Conv_9",
+      "op": "Conv",
+      "inputs": [
+        "1543",
+        "1547",
+        "1548"
+      ],
+      "outputs": [
+        "1546"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        58,
+        1,
+        1
+      ],
+      "parameters": 3364,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_10",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1546"
+      ],
+      "outputs": [
+        "904"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Concat_11",
+      "op": "Concat",
+      "inputs": [
+        "896",
+        "904"
+      ],
+      "outputs": [
+        "905"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_13",
+      "op": "Reshape",
+      "inputs": [
+        "905",
+        "906"
+      ],
+      "outputs": [
+        "907"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_14",
+      "op": "Transpose",
+      "inputs": [
+        "907"
+      ],
+      "outputs": [
+        "908"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          2,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_16",
+      "op": "Reshape",
+      "inputs": [
+        "908",
+        "909"
+      ],
+      "outputs": [
+        "910"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Slice_27",
+      "op": "Slice",
+      "inputs": [
+        "910",
+        "914",
+        "920",
+        "912"
+      ],
+      "outputs": [
+        "921"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Slice_30",
+      "op": "Slice",
+      "inputs": [
+        "910",
+        "920",
+        "923",
+        "912"
+      ],
+      "outputs": [
+        "924"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_31",
+      "op": "Conv",
+      "inputs": [
+        "924",
+        "1550",
+        "1551"
+      ],
+      "outputs": [
+        "1549"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        58,
+        1,
+        1
+      ],
+      "parameters": 3364,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_32",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1549"
+      ],
+      "outputs": [
+        "927"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_33",
+      "op": "Conv",
+      "inputs": [
+        "927",
+        "1553",
+        "1554"
+      ],
+      "outputs": [
+        "1552"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        1,
+        3,
+        3
+      ],
+      "parameters": 522,
+      "mac": 835200,
+      "groups": 58
+    },
+    {
+      "name": "Conv_34",
+      "op": "Conv",
+      "inputs": [
+        "1552",
+        "1556",
+        "1557"
+      ],
+      "outputs": [
+        "1555"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        58,
+        1,
+        1
+      ],
+      "parameters": 3364,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_35",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1555"
+      ],
+      "outputs": [
+        "932"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Concat_36",
+      "op": "Concat",
+      "inputs": [
+        "921",
+        "932"
+      ],
+      "outputs": [
+        "933"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_38",
+      "op": "Reshape",
+      "inputs": [
+        "933",
+        "906"
+      ],
+      "outputs": [
+        "935"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_39",
+      "op": "Transpose",
+      "inputs": [
+        "935"
+      ],
+      "outputs": [
+        "936"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          2,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_41",
+      "op": "Reshape",
+      "inputs": [
+        "936",
+        "909"
+      ],
+      "outputs": [
+        "938"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Slice_52",
+      "op": "Slice",
+      "inputs": [
+        "938",
+        "914",
+        "948",
+        "912"
+      ],
+      "outputs": [
+        "949"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Slice_55",
+      "op": "Slice",
+      "inputs": [
+        "938",
+        "948",
+        "951",
+        "912"
+      ],
+      "outputs": [
+        "952"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_56",
+      "op": "Conv",
+      "inputs": [
+        "952",
+        "1559",
+        "1560"
+      ],
+      "outputs": [
+        "1558"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        58,
+        1,
+        1
+      ],
+      "parameters": 3364,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_57",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1558"
+      ],
+      "outputs": [
+        "955"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_58",
+      "op": "Conv",
+      "inputs": [
+        "955",
+        "1562",
+        "1563"
+      ],
+      "outputs": [
+        "1561"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        1,
+        3,
+        3
+      ],
+      "parameters": 522,
+      "mac": 835200,
+      "groups": 58
+    },
+    {
+      "name": "Conv_59",
+      "op": "Conv",
+      "inputs": [
+        "1561",
+        "1565",
+        "1566"
+      ],
+      "outputs": [
+        "1564"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        58,
+        1,
+        1
+      ],
+      "parameters": 3364,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_60",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1564"
+      ],
+      "outputs": [
+        "960"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Concat_61",
+      "op": "Concat",
+      "inputs": [
+        "949",
+        "960"
+      ],
+      "outputs": [
+        "961"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_63",
+      "op": "Reshape",
+      "inputs": [
+        "961",
+        "906"
+      ],
+      "outputs": [
+        "963"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_64",
+      "op": "Transpose",
+      "inputs": [
+        "963"
+      ],
+      "outputs": [
+        "964"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          2,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_66",
+      "op": "Reshape",
+      "inputs": [
+        "964",
+        "909"
+      ],
+      "outputs": [
+        "966"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Slice_77",
+      "op": "Slice",
+      "inputs": [
+        "966",
+        "914",
+        "976",
+        "912"
+      ],
+      "outputs": [
+        "977"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Slice_80",
+      "op": "Slice",
+      "inputs": [
+        "966",
+        "976",
+        "979",
+        "912"
+      ],
+      "outputs": [
+        "980"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_81",
+      "op": "Conv",
+      "inputs": [
+        "980",
+        "1568",
+        "1569"
+      ],
+      "outputs": [
+        "1567"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        58,
+        1,
+        1
+      ],
+      "parameters": 3364,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_82",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1567"
+      ],
+      "outputs": [
+        "983"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_83",
+      "op": "Conv",
+      "inputs": [
+        "983",
+        "1571",
+        "1572"
+      ],
+      "outputs": [
+        "1570"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        1,
+        3,
+        3
+      ],
+      "parameters": 522,
+      "mac": 835200,
+      "groups": 58
+    },
+    {
+      "name": "Conv_84",
+      "op": "Conv",
+      "inputs": [
+        "1570",
+        "1574",
+        "1575"
+      ],
+      "outputs": [
+        "1573"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        58,
+        58,
+        1,
+        1
+      ],
+      "parameters": 3364,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_85",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1573"
+      ],
+      "outputs": [
+        "988"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Concat_86",
+      "op": "Concat",
+      "inputs": [
+        "977",
+        "988"
+      ],
+      "outputs": [
+        "989"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_88",
+      "op": "Reshape",
+      "inputs": [
+        "989",
+        "906"
+      ],
+      "outputs": [
+        "991"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          58,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_89",
+      "op": "Transpose",
+      "inputs": [
+        "991"
+      ],
+      "outputs": [
+        "992"
+      ],
+      "output_shapes": [
+        [
+          1,
+          58,
+          2,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_91",
+      "op": "Reshape",
+      "inputs": [
+        "992",
+        "909"
+      ],
+      "outputs": [
+        "994"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_92",
+      "op": "Conv",
+      "inputs": [
+        "994",
+        "1577",
+        "1578"
+      ],
+      "outputs": [
+        "1576"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_93",
+      "op": "Conv",
+      "inputs": [
+        "1576",
+        "1580",
+        "1581"
+      ],
+      "outputs": [
+        "1579"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_94",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1579"
+      ],
+      "outputs": [
+        "999"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_95",
+      "op": "Conv",
+      "inputs": [
+        "994",
+        "1583",
+        "1584"
+      ],
+      "outputs": [
+        "1582"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 21529600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_96",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1582"
+      ],
+      "outputs": [
+        "1002"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_97",
+      "op": "Conv",
+      "inputs": [
+        "1002",
+        "1586",
+        "1587"
+      ],
+      "outputs": [
+        "1585"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_98",
+      "op": "Conv",
+      "inputs": [
+        "1585",
+        "1589",
+        "1590"
+      ],
+      "outputs": [
+        "1588"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_99",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1588"
+      ],
+      "outputs": [
+        "1007"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_100",
+      "op": "Concat",
+      "inputs": [
+        "999",
+        "1007"
+      ],
+      "outputs": [
+        "1008"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_102",
+      "op": "Reshape",
+      "inputs": [
+        "1008",
+        "1009"
+      ],
+      "outputs": [
+        "1010"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_103",
+      "op": "Transpose",
+      "inputs": [
+        "1010"
+      ],
+      "outputs": [
+        "1011"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          2,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_105",
+      "op": "Reshape",
+      "inputs": [
+        "1011",
+        "1012"
+      ],
+      "outputs": [
+        "1013"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_116",
+      "op": "Slice",
+      "inputs": [
+        "1013",
+        "914",
+        "1023",
+        "912"
+      ],
+      "outputs": [
+        "1024"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_119",
+      "op": "Slice",
+      "inputs": [
+        "1013",
+        "1023",
+        "1026",
+        "912"
+      ],
+      "outputs": [
+        "1027"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_120",
+      "op": "Conv",
+      "inputs": [
+        "1027",
+        "1592",
+        "1593"
+      ],
+      "outputs": [
+        "1591"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_121",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1591"
+      ],
+      "outputs": [
+        "1030"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_122",
+      "op": "Conv",
+      "inputs": [
+        "1030",
+        "1595",
+        "1596"
+      ],
+      "outputs": [
+        "1594"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_123",
+      "op": "Conv",
+      "inputs": [
+        "1594",
+        "1598",
+        "1599"
+      ],
+      "outputs": [
+        "1597"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_124",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1597"
+      ],
+      "outputs": [
+        "1035"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_125",
+      "op": "Concat",
+      "inputs": [
+        "1024",
+        "1035"
+      ],
+      "outputs": [
+        "1036"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_127",
+      "op": "Reshape",
+      "inputs": [
+        "1036",
+        "1009"
+      ],
+      "outputs": [
+        "1038"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_128",
+      "op": "Transpose",
+      "inputs": [
+        "1038"
+      ],
+      "outputs": [
+        "1039"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          2,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_130",
+      "op": "Reshape",
+      "inputs": [
+        "1039",
+        "1012"
+      ],
+      "outputs": [
+        "1041"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_141",
+      "op": "Slice",
+      "inputs": [
+        "1041",
+        "914",
+        "1051",
+        "912"
+      ],
+      "outputs": [
+        "1052"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_144",
+      "op": "Slice",
+      "inputs": [
+        "1041",
+        "1051",
+        "1054",
+        "912"
+      ],
+      "outputs": [
+        "1055"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_145",
+      "op": "Conv",
+      "inputs": [
+        "1055",
+        "1601",
+        "1602"
+      ],
+      "outputs": [
+        "1600"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_146",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1600"
+      ],
+      "outputs": [
+        "1058"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_147",
+      "op": "Conv",
+      "inputs": [
+        "1058",
+        "1604",
+        "1605"
+      ],
+      "outputs": [
+        "1603"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_148",
+      "op": "Conv",
+      "inputs": [
+        "1603",
+        "1607",
+        "1608"
+      ],
+      "outputs": [
+        "1606"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_149",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1606"
+      ],
+      "outputs": [
+        "1063"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_150",
+      "op": "Concat",
+      "inputs": [
+        "1052",
+        "1063"
+      ],
+      "outputs": [
+        "1064"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_152",
+      "op": "Reshape",
+      "inputs": [
+        "1064",
+        "1009"
+      ],
+      "outputs": [
+        "1066"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_153",
+      "op": "Transpose",
+      "inputs": [
+        "1066"
+      ],
+      "outputs": [
+        "1067"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          2,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_155",
+      "op": "Reshape",
+      "inputs": [
+        "1067",
+        "1012"
+      ],
+      "outputs": [
+        "1069"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_166",
+      "op": "Slice",
+      "inputs": [
+        "1069",
+        "914",
+        "1079",
+        "912"
+      ],
+      "outputs": [
+        "1080"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_169",
+      "op": "Slice",
+      "inputs": [
+        "1069",
+        "1079",
+        "1082",
+        "912"
+      ],
+      "outputs": [
+        "1083"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_170",
+      "op": "Conv",
+      "inputs": [
+        "1083",
+        "1610",
+        "1611"
+      ],
+      "outputs": [
+        "1609"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_171",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1609"
+      ],
+      "outputs": [
+        "1086"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_172",
+      "op": "Conv",
+      "inputs": [
+        "1086",
+        "1613",
+        "1614"
+      ],
+      "outputs": [
+        "1612"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_173",
+      "op": "Conv",
+      "inputs": [
+        "1612",
+        "1616",
+        "1617"
+      ],
+      "outputs": [
+        "1615"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_174",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1615"
+      ],
+      "outputs": [
+        "1091"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_175",
+      "op": "Concat",
+      "inputs": [
+        "1080",
+        "1091"
+      ],
+      "outputs": [
+        "1092"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_177",
+      "op": "Reshape",
+      "inputs": [
+        "1092",
+        "1009"
+      ],
+      "outputs": [
+        "1094"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_178",
+      "op": "Transpose",
+      "inputs": [
+        "1094"
+      ],
+      "outputs": [
+        "1095"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          2,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_180",
+      "op": "Reshape",
+      "inputs": [
+        "1095",
+        "1012"
+      ],
+      "outputs": [
+        "1097"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_191",
+      "op": "Slice",
+      "inputs": [
+        "1097",
+        "914",
+        "1107",
+        "912"
+      ],
+      "outputs": [
+        "1108"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_194",
+      "op": "Slice",
+      "inputs": [
+        "1097",
+        "1107",
+        "1110",
+        "912"
+      ],
+      "outputs": [
+        "1111"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_195",
+      "op": "Conv",
+      "inputs": [
+        "1111",
+        "1619",
+        "1620"
+      ],
+      "outputs": [
+        "1618"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_196",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1618"
+      ],
+      "outputs": [
+        "1114"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_197",
+      "op": "Conv",
+      "inputs": [
+        "1114",
+        "1622",
+        "1623"
+      ],
+      "outputs": [
+        "1621"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_198",
+      "op": "Conv",
+      "inputs": [
+        "1621",
+        "1625",
+        "1626"
+      ],
+      "outputs": [
+        "1624"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_199",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1624"
+      ],
+      "outputs": [
+        "1119"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_200",
+      "op": "Concat",
+      "inputs": [
+        "1108",
+        "1119"
+      ],
+      "outputs": [
+        "1120"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_202",
+      "op": "Reshape",
+      "inputs": [
+        "1120",
+        "1009"
+      ],
+      "outputs": [
+        "1122"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_203",
+      "op": "Transpose",
+      "inputs": [
+        "1122"
+      ],
+      "outputs": [
+        "1123"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          2,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_205",
+      "op": "Reshape",
+      "inputs": [
+        "1123",
+        "1012"
+      ],
+      "outputs": [
+        "1125"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_216",
+      "op": "Slice",
+      "inputs": [
+        "1125",
+        "914",
+        "1135",
+        "912"
+      ],
+      "outputs": [
+        "1136"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_219",
+      "op": "Slice",
+      "inputs": [
+        "1125",
+        "1135",
+        "1138",
+        "912"
+      ],
+      "outputs": [
+        "1139"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_220",
+      "op": "Conv",
+      "inputs": [
+        "1139",
+        "1628",
+        "1629"
+      ],
+      "outputs": [
+        "1627"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_221",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1627"
+      ],
+      "outputs": [
+        "1142"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_222",
+      "op": "Conv",
+      "inputs": [
+        "1142",
+        "1631",
+        "1632"
+      ],
+      "outputs": [
+        "1630"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_223",
+      "op": "Conv",
+      "inputs": [
+        "1630",
+        "1634",
+        "1635"
+      ],
+      "outputs": [
+        "1633"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_224",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1633"
+      ],
+      "outputs": [
+        "1147"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_225",
+      "op": "Concat",
+      "inputs": [
+        "1136",
+        "1147"
+      ],
+      "outputs": [
+        "1148"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_227",
+      "op": "Reshape",
+      "inputs": [
+        "1148",
+        "1009"
+      ],
+      "outputs": [
+        "1150"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_228",
+      "op": "Transpose",
+      "inputs": [
+        "1150"
+      ],
+      "outputs": [
+        "1151"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          2,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_230",
+      "op": "Reshape",
+      "inputs": [
+        "1151",
+        "1012"
+      ],
+      "outputs": [
+        "1153"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_241",
+      "op": "Slice",
+      "inputs": [
+        "1153",
+        "914",
+        "1163",
+        "912"
+      ],
+      "outputs": [
+        "1164"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_244",
+      "op": "Slice",
+      "inputs": [
+        "1153",
+        "1163",
+        "1166",
+        "912"
+      ],
+      "outputs": [
+        "1167"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_245",
+      "op": "Conv",
+      "inputs": [
+        "1167",
+        "1637",
+        "1638"
+      ],
+      "outputs": [
+        "1636"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_246",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1636"
+      ],
+      "outputs": [
+        "1170"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_247",
+      "op": "Conv",
+      "inputs": [
+        "1170",
+        "1640",
+        "1641"
+      ],
+      "outputs": [
+        "1639"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_248",
+      "op": "Conv",
+      "inputs": [
+        "1639",
+        "1643",
+        "1644"
+      ],
+      "outputs": [
+        "1642"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_249",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1642"
+      ],
+      "outputs": [
+        "1175"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_250",
+      "op": "Concat",
+      "inputs": [
+        "1164",
+        "1175"
+      ],
+      "outputs": [
+        "1176"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_252",
+      "op": "Reshape",
+      "inputs": [
+        "1176",
+        "1009"
+      ],
+      "outputs": [
+        "1178"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_253",
+      "op": "Transpose",
+      "inputs": [
+        "1178"
+      ],
+      "outputs": [
+        "1179"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          2,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_255",
+      "op": "Reshape",
+      "inputs": [
+        "1179",
+        "1012"
+      ],
+      "outputs": [
+        "1181"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_266",
+      "op": "Slice",
+      "inputs": [
+        "1181",
+        "914",
+        "1191",
+        "912"
+      ],
+      "outputs": [
+        "1192"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Slice_269",
+      "op": "Slice",
+      "inputs": [
+        "1181",
+        "1191",
+        "1194",
+        "912"
+      ],
+      "outputs": [
+        "1195"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_270",
+      "op": "Conv",
+      "inputs": [
+        "1195",
+        "1646",
+        "1647"
+      ],
+      "outputs": [
+        "1645"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_271",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1645"
+      ],
+      "outputs": [
+        "1198"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_272",
+      "op": "Conv",
+      "inputs": [
+        "1198",
+        "1649",
+        "1650"
+      ],
+      "outputs": [
+        "1648"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        1,
+        3,
+        3
+      ],
+      "parameters": 1044,
+      "mac": 417600,
+      "groups": 116
+    },
+    {
+      "name": "Conv_273",
+      "op": "Conv",
+      "inputs": [
+        "1648",
+        "1652",
+        "1653"
+      ],
+      "outputs": [
+        "1651"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        116,
+        116,
+        1,
+        1
+      ],
+      "parameters": 13456,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_274",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1651"
+      ],
+      "outputs": [
+        "1203"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_275",
+      "op": "Concat",
+      "inputs": [
+        "1192",
+        "1203"
+      ],
+      "outputs": [
+        "1204"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_277",
+      "op": "Reshape",
+      "inputs": [
+        "1204",
+        "1009"
+      ],
+      "outputs": [
+        "1206"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          116,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_278",
+      "op": "Transpose",
+      "inputs": [
+        "1206"
+      ],
+      "outputs": [
+        "1207"
+      ],
+      "output_shapes": [
+        [
+          1,
+          116,
+          2,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_280",
+      "op": "Reshape",
+      "inputs": [
+        "1207",
+        "1012"
+      ],
+      "outputs": [
+        "1209"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_281",
+      "op": "Conv",
+      "inputs": [
+        "1209",
+        "1655",
+        "1656"
+      ],
+      "outputs": [
+        "1654"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        1,
+        3,
+        3
+      ],
+      "parameters": 2088,
+      "mac": 208800,
+      "groups": 232
+    },
+    {
+      "name": "Conv_282",
+      "op": "Conv",
+      "inputs": [
+        "1654",
+        "1658",
+        "1659"
+      ],
+      "outputs": [
+        "1657"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_283",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1657"
+      ],
+      "outputs": [
+        "1214"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_284",
+      "op": "Conv",
+      "inputs": [
+        "1209",
+        "1661",
+        "1662"
+      ],
+      "outputs": [
+        "1660"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 21529600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_285",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1660"
+      ],
+      "outputs": [
+        "1217"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_286",
+      "op": "Conv",
+      "inputs": [
+        "1217",
+        "1664",
+        "1665"
+      ],
+      "outputs": [
+        "1663"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        1,
+        3,
+        3
+      ],
+      "parameters": 2088,
+      "mac": 208800,
+      "groups": 232
+    },
+    {
+      "name": "Conv_287",
+      "op": "Conv",
+      "inputs": [
+        "1663",
+        "1667",
+        "1668"
+      ],
+      "outputs": [
+        "1666"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_288",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1666"
+      ],
+      "outputs": [
+        "1222"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Concat_289",
+      "op": "Concat",
+      "inputs": [
+        "1214",
+        "1222"
+      ],
+      "outputs": [
+        "1223"
+      ],
+      "output_shapes": [
+        [
+          1,
+          464,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_291",
+      "op": "Reshape",
+      "inputs": [
+        "1223",
+        "1224"
+      ],
+      "outputs": [
+        "1225"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_292",
+      "op": "Transpose",
+      "inputs": [
+        "1225"
+      ],
+      "outputs": [
+        "1226"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          2,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_294",
+      "op": "Reshape",
+      "inputs": [
+        "1226",
+        "1227"
+      ],
+      "outputs": [
+        "1228"
+      ],
+      "output_shapes": [
+        [
+          1,
+          464,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Slice_305",
+      "op": "Slice",
+      "inputs": [
+        "1228",
+        "914",
+        "1238",
+        "912"
+      ],
+      "outputs": [
+        "1239"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Slice_308",
+      "op": "Slice",
+      "inputs": [
+        "1228",
+        "1238",
+        "1241",
+        "912"
+      ],
+      "outputs": [
+        "1242"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_309",
+      "op": "Conv",
+      "inputs": [
+        "1242",
+        "1670",
+        "1671"
+      ],
+      "outputs": [
+        "1669"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_310",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1669"
+      ],
+      "outputs": [
+        "1245"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_311",
+      "op": "Conv",
+      "inputs": [
+        "1245",
+        "1673",
+        "1674"
+      ],
+      "outputs": [
+        "1672"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        1,
+        3,
+        3
+      ],
+      "parameters": 2088,
+      "mac": 208800,
+      "groups": 232
+    },
+    {
+      "name": "Conv_312",
+      "op": "Conv",
+      "inputs": [
+        "1672",
+        "1676",
+        "1677"
+      ],
+      "outputs": [
+        "1675"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_313",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1675"
+      ],
+      "outputs": [
+        "1250"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Concat_314",
+      "op": "Concat",
+      "inputs": [
+        "1239",
+        "1250"
+      ],
+      "outputs": [
+        "1251"
+      ],
+      "output_shapes": [
+        [
+          1,
+          464,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_316",
+      "op": "Reshape",
+      "inputs": [
+        "1251",
+        "1224"
+      ],
+      "outputs": [
+        "1253"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_317",
+      "op": "Transpose",
+      "inputs": [
+        "1253"
+      ],
+      "outputs": [
+        "1254"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          2,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_319",
+      "op": "Reshape",
+      "inputs": [
+        "1254",
+        "1227"
+      ],
+      "outputs": [
+        "1256"
+      ],
+      "output_shapes": [
+        [
+          1,
+          464,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Slice_330",
+      "op": "Slice",
+      "inputs": [
+        "1256",
+        "914",
+        "1266",
+        "912"
+      ],
+      "outputs": [
+        "1267"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Slice_333",
+      "op": "Slice",
+      "inputs": [
+        "1256",
+        "1266",
+        "1269",
+        "912"
+      ],
+      "outputs": [
+        "1270"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_334",
+      "op": "Conv",
+      "inputs": [
+        "1270",
+        "1679",
+        "1680"
+      ],
+      "outputs": [
+        "1678"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_335",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1678"
+      ],
+      "outputs": [
+        "1273"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_336",
+      "op": "Conv",
+      "inputs": [
+        "1273",
+        "1682",
+        "1683"
+      ],
+      "outputs": [
+        "1681"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        1,
+        3,
+        3
+      ],
+      "parameters": 2088,
+      "mac": 208800,
+      "groups": 232
+    },
+    {
+      "name": "Conv_337",
+      "op": "Conv",
+      "inputs": [
+        "1681",
+        "1685",
+        "1686"
+      ],
+      "outputs": [
+        "1684"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_338",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1684"
+      ],
+      "outputs": [
+        "1278"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Concat_339",
+      "op": "Concat",
+      "inputs": [
+        "1267",
+        "1278"
+      ],
+      "outputs": [
+        "1279"
+      ],
+      "output_shapes": [
+        [
+          1,
+          464,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_341",
+      "op": "Reshape",
+      "inputs": [
+        "1279",
+        "1224"
+      ],
+      "outputs": [
+        "1281"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_342",
+      "op": "Transpose",
+      "inputs": [
+        "1281"
+      ],
+      "outputs": [
+        "1282"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          2,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_344",
+      "op": "Reshape",
+      "inputs": [
+        "1282",
+        "1227"
+      ],
+      "outputs": [
+        "1284"
+      ],
+      "output_shapes": [
+        [
+          1,
+          464,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Slice_355",
+      "op": "Slice",
+      "inputs": [
+        "1284",
+        "914",
+        "1294",
+        "912"
+      ],
+      "outputs": [
+        "1295"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Slice_358",
+      "op": "Slice",
+      "inputs": [
+        "1284",
+        "1294",
+        "1297",
+        "912"
+      ],
+      "outputs": [
+        "1298"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_359",
+      "op": "Conv",
+      "inputs": [
+        "1298",
+        "1688",
+        "1689"
+      ],
+      "outputs": [
+        "1687"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_360",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1687"
+      ],
+      "outputs": [
+        "1301"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_361",
+      "op": "Conv",
+      "inputs": [
+        "1301",
+        "1691",
+        "1692"
+      ],
+      "outputs": [
+        "1690"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        1,
+        3,
+        3
+      ],
+      "parameters": 2088,
+      "mac": 208800,
+      "groups": 232
+    },
+    {
+      "name": "Conv_362",
+      "op": "Conv",
+      "inputs": [
+        "1690",
+        "1694",
+        "1695"
+      ],
+      "outputs": [
+        "1693"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        232,
+        232,
+        1,
+        1
+      ],
+      "parameters": 53824,
+      "mac": 5382400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_363",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1693"
+      ],
+      "outputs": [
+        "1306"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Concat_364",
+      "op": "Concat",
+      "inputs": [
+        "1295",
+        "1306"
+      ],
+      "outputs": [
+        "1307"
+      ],
+      "output_shapes": [
+        [
+          1,
+          464,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_366",
+      "op": "Reshape",
+      "inputs": [
+        "1307",
+        "1224"
+      ],
+      "outputs": [
+        "1309"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2,
+          232,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_367",
+      "op": "Transpose",
+      "inputs": [
+        "1309"
+      ],
+      "outputs": [
+        "1310"
+      ],
+      "output_shapes": [
+        [
+          1,
+          232,
+          2,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_369",
+      "op": "Reshape",
+      "inputs": [
+        "1310",
+        "1227"
+      ],
+      "outputs": [
+        "1312"
+      ],
+      "output_shapes": [
+        [
+          1,
+          464,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_370",
+      "op": "Conv",
+      "inputs": [
+        "994",
+        "1697",
+        "1698"
+      ],
+      "outputs": [
+        "1696"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        96,
+        116,
+        1,
+        1
+      ],
+      "parameters": 11136,
+      "mac": 17817600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_371",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1696"
+      ],
+      "outputs": [
+        "1315"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_372",
+      "op": "Conv",
+      "inputs": [
+        "1209",
+        "1700",
+        "1701"
+      ],
+      "outputs": [
+        "1699"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        232,
+        1,
+        1
+      ],
+      "parameters": 22272,
+      "mac": 8908800,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_373",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1699"
+      ],
+      "outputs": [
+        "1318"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_374",
+      "op": "Conv",
+      "inputs": [
+        "1312",
+        "1703",
+        "1704"
+      ],
+      "outputs": [
+        "1702"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        96,
+        464,
+        1,
+        1
+      ],
+      "parameters": 44544,
+      "mac": 4454400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_375",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1702"
+      ],
+      "outputs": [
+        "1321"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Resize_377",
+      "op": "Resize",
+      "inputs": [
+        "1321",
+        "1325",
+        "1849"
+      ],
+      "outputs": [
+        "1326"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_378",
+      "op": "Concat",
+      "inputs": [
+        "1326",
+        "1318"
+      ],
+      "outputs": [
+        "1327"
+      ],
+      "output_shapes": [
+        [
+          1,
+          192,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_379",
+      "op": "Conv",
+      "inputs": [
+        "1327",
+        "1706",
+        "1707"
+      ],
+      "outputs": [
+        "1705"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        48,
+        192,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 3686400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_380",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1705"
+      ],
+      "outputs": [
+        "1330"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_381",
+      "op": "Conv",
+      "inputs": [
+        "1330",
+        "1709",
+        "1710"
+      ],
+      "outputs": [
+        "1708"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "parameters": 432,
+      "mac": 172800,
+      "groups": 48
+    },
+    {
+      "name": "LeakyRelu_382",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1708"
+      ],
+      "outputs": [
+        "1333"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_383",
+      "op": "Concat",
+      "inputs": [
+        "1330",
+        "1333"
+      ],
+      "outputs": [
+        "1334"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_384",
+      "op": "Conv",
+      "inputs": [
+        "1334",
+        "1712",
+        "1713"
+      ],
+      "outputs": [
+        "1711"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        48,
+        96,
+        1,
+        1
+      ],
+      "parameters": 4608,
+      "mac": 1843200,
+      "groups": 1
+    },
+    {
+      "name": "Conv_385",
+      "op": "Conv",
+      "inputs": [
+        "1711",
+        "1715",
+        "1716"
+      ],
+      "outputs": [
+        "1714"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "parameters": 432,
+      "mac": 172800,
+      "groups": 48
+    },
+    {
+      "name": "Concat_386",
+      "op": "Concat",
+      "inputs": [
+        "1711",
+        "1714"
+      ],
+      "outputs": [
+        "1339"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_387",
+      "op": "Conv",
+      "inputs": [
+        "1327",
+        "1718",
+        "1719"
+      ],
+      "outputs": [
+        "1717"
+      ],
+      "output_shapes": [
+        [
+          1,
+          192,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        192,
+        1,
+        5,
+        5
+      ],
+      "parameters": 4800,
+      "mac": 1920000,
+      "groups": 192
+    },
+    {
+      "name": "Conv_388",
+      "op": "Conv",
+      "inputs": [
+        "1717",
+        "1721",
+        "1722"
+      ],
+      "outputs": [
+        "1720"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        192,
+        1,
+        1
+      ],
+      "parameters": 18432,
+      "mac": 7372800,
+      "groups": 1
+    },
+    {
+      "name": "Add_389",
+      "op": "Add",
+      "inputs": [
+        "1339",
+        "1720"
+      ],
+      "outputs": [
+        "1344"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Resize_391",
+      "op": "Resize",
+      "inputs": [
+        "1344",
+        "1325",
+        "1849"
+      ],
+      "outputs": [
+        "1349"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Concat_392",
+      "op": "Concat",
+      "inputs": [
+        "1349",
+        "1315"
+      ],
+      "outputs": [
+        "1350"
+      ],
+      "output_shapes": [
+        [
+          1,
+          192,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_393",
+      "op": "Conv",
+      "inputs": [
+        "1350",
+        "1724",
+        "1725"
+      ],
+      "outputs": [
+        "1723"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        48,
+        192,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 14745600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_394",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1723"
+      ],
+      "outputs": [
+        "1353"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_395",
+      "op": "Conv",
+      "inputs": [
+        "1353",
+        "1727",
+        "1728"
+      ],
+      "outputs": [
+        "1726"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "parameters": 432,
+      "mac": 691200,
+      "groups": 48
+    },
+    {
+      "name": "LeakyRelu_396",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1726"
+      ],
+      "outputs": [
+        "1356"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Concat_397",
+      "op": "Concat",
+      "inputs": [
+        "1353",
+        "1356"
+      ],
+      "outputs": [
+        "1357"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_398",
+      "op": "Conv",
+      "inputs": [
+        "1357",
+        "1730",
+        "1731"
+      ],
+      "outputs": [
+        "1729"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        48,
+        96,
+        1,
+        1
+      ],
+      "parameters": 4608,
+      "mac": 7372800,
+      "groups": 1
+    },
+    {
+      "name": "Conv_399",
+      "op": "Conv",
+      "inputs": [
+        "1729",
+        "1733",
+        "1734"
+      ],
+      "outputs": [
+        "1732"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "parameters": 432,
+      "mac": 691200,
+      "groups": 48
+    },
+    {
+      "name": "Concat_400",
+      "op": "Concat",
+      "inputs": [
+        "1729",
+        "1732"
+      ],
+      "outputs": [
+        "1362"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_401",
+      "op": "Conv",
+      "inputs": [
+        "1350",
+        "1736",
+        "1737"
+      ],
+      "outputs": [
+        "1735"
+      ],
+      "output_shapes": [
+        [
+          1,
+          192,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        192,
+        1,
+        5,
+        5
+      ],
+      "parameters": 4800,
+      "mac": 7680000,
+      "groups": 192
+    },
+    {
+      "name": "Conv_402",
+      "op": "Conv",
+      "inputs": [
+        "1735",
+        "1739",
+        "1740"
+      ],
+      "outputs": [
+        "1738"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        96,
+        192,
+        1,
+        1
+      ],
+      "parameters": 18432,
+      "mac": 29491200,
+      "groups": 1
+    },
+    {
+      "name": "Add_403",
+      "op": "Add",
+      "inputs": [
+        "1362",
+        "1738"
+      ],
+      "outputs": [
+        "1367"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_404",
+      "op": "Conv",
+      "inputs": [
+        "1367",
+        "1742",
+        "1743"
+      ],
+      "outputs": [
+        "1741"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 960000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_405",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1741"
+      ],
+      "outputs": [
+        "1370"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_406",
+      "op": "Conv",
+      "inputs": [
+        "1370",
+        "1745",
+        "1746"
+      ],
+      "outputs": [
+        "1744"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 3686400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_407",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1744"
+      ],
+      "outputs": [
+        "1373"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_408",
+      "op": "Concat",
+      "inputs": [
+        "1373",
+        "1344"
+      ],
+      "outputs": [
+        "1374"
+      ],
+      "output_shapes": [
+        [
+          1,
+          192,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_409",
+      "op": "Conv",
+      "inputs": [
+        "1374",
+        "1748",
+        "1749"
+      ],
+      "outputs": [
+        "1747"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        48,
+        192,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 3686400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_410",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1747"
+      ],
+      "outputs": [
+        "1377"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_411",
+      "op": "Conv",
+      "inputs": [
+        "1377",
+        "1751",
+        "1752"
+      ],
+      "outputs": [
+        "1750"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "parameters": 432,
+      "mac": 172800,
+      "groups": 48
+    },
+    {
+      "name": "LeakyRelu_412",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1750"
+      ],
+      "outputs": [
+        "1380"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_413",
+      "op": "Concat",
+      "inputs": [
+        "1377",
+        "1380"
+      ],
+      "outputs": [
+        "1381"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_414",
+      "op": "Conv",
+      "inputs": [
+        "1381",
+        "1754",
+        "1755"
+      ],
+      "outputs": [
+        "1753"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        48,
+        96,
+        1,
+        1
+      ],
+      "parameters": 4608,
+      "mac": 1843200,
+      "groups": 1
+    },
+    {
+      "name": "Conv_415",
+      "op": "Conv",
+      "inputs": [
+        "1753",
+        "1757",
+        "1758"
+      ],
+      "outputs": [
+        "1756"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "parameters": 432,
+      "mac": 172800,
+      "groups": 48
+    },
+    {
+      "name": "Concat_416",
+      "op": "Concat",
+      "inputs": [
+        "1753",
+        "1756"
+      ],
+      "outputs": [
+        "1386"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_417",
+      "op": "Conv",
+      "inputs": [
+        "1374",
+        "1760",
+        "1761"
+      ],
+      "outputs": [
+        "1759"
+      ],
+      "output_shapes": [
+        [
+          1,
+          192,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        192,
+        1,
+        5,
+        5
+      ],
+      "parameters": 4800,
+      "mac": 1920000,
+      "groups": 192
+    },
+    {
+      "name": "Conv_418",
+      "op": "Conv",
+      "inputs": [
+        "1759",
+        "1763",
+        "1764"
+      ],
+      "outputs": [
+        "1762"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        192,
+        1,
+        1
+      ],
+      "parameters": 18432,
+      "mac": 7372800,
+      "groups": 1
+    },
+    {
+      "name": "Add_419",
+      "op": "Add",
+      "inputs": [
+        "1386",
+        "1762"
+      ],
+      "outputs": [
+        "1391"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_420",
+      "op": "Conv",
+      "inputs": [
+        "1391",
+        "1766",
+        "1767"
+      ],
+      "outputs": [
+        "1765"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 240000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_421",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1765"
+      ],
+      "outputs": [
+        "1394"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_422",
+      "op": "Conv",
+      "inputs": [
+        "1394",
+        "1769",
+        "1770"
+      ],
+      "outputs": [
+        "1768"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 921600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_423",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1768"
+      ],
+      "outputs": [
+        "1397"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Concat_424",
+      "op": "Concat",
+      "inputs": [
+        "1397",
+        "1321"
+      ],
+      "outputs": [
+        "1398"
+      ],
+      "output_shapes": [
+        [
+          1,
+          192,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_425",
+      "op": "Conv",
+      "inputs": [
+        "1398",
+        "1772",
+        "1773"
+      ],
+      "outputs": [
+        "1771"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        48,
+        192,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 921600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_426",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1771"
+      ],
+      "outputs": [
+        "1401"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_427",
+      "op": "Conv",
+      "inputs": [
+        "1401",
+        "1775",
+        "1776"
+      ],
+      "outputs": [
+        "1774"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "parameters": 432,
+      "mac": 43200,
+      "groups": 48
+    },
+    {
+      "name": "LeakyRelu_428",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1774"
+      ],
+      "outputs": [
+        "1404"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Concat_429",
+      "op": "Concat",
+      "inputs": [
+        "1401",
+        "1404"
+      ],
+      "outputs": [
+        "1405"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_430",
+      "op": "Conv",
+      "inputs": [
+        "1405",
+        "1778",
+        "1779"
+      ],
+      "outputs": [
+        "1777"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        48,
+        96,
+        1,
+        1
+      ],
+      "parameters": 4608,
+      "mac": 460800,
+      "groups": 1
+    },
+    {
+      "name": "Conv_431",
+      "op": "Conv",
+      "inputs": [
+        "1777",
+        "1781",
+        "1782"
+      ],
+      "outputs": [
+        "1780"
+      ],
+      "output_shapes": [
+        [
+          1,
+          48,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        48,
+        1,
+        3,
+        3
+      ],
+      "parameters": 432,
+      "mac": 43200,
+      "groups": 48
+    },
+    {
+      "name": "Concat_432",
+      "op": "Concat",
+      "inputs": [
+        "1777",
+        "1780"
+      ],
+      "outputs": [
+        "1410"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_433",
+      "op": "Conv",
+      "inputs": [
+        "1398",
+        "1784",
+        "1785"
+      ],
+      "outputs": [
+        "1783"
+      ],
+      "output_shapes": [
+        [
+          1,
+          192,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        192,
+        1,
+        5,
+        5
+      ],
+      "parameters": 4800,
+      "mac": 480000,
+      "groups": 192
+    },
+    {
+      "name": "Conv_434",
+      "op": "Conv",
+      "inputs": [
+        "1783",
+        "1787",
+        "1788"
+      ],
+      "outputs": [
+        "1786"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        96,
+        192,
+        1,
+        1
+      ],
+      "parameters": 18432,
+      "mac": 1843200,
+      "groups": 1
+    },
+    {
+      "name": "Add_435",
+      "op": "Add",
+      "inputs": [
+        "1410",
+        "1786"
+      ],
+      "outputs": [
+        "1415"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_436",
+      "op": "Conv",
+      "inputs": [
+        "1321",
+        "1790",
+        "1791"
+      ],
+      "outputs": [
+        "1789"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 60000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_437",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1789"
+      ],
+      "outputs": [
+        "1418"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Conv_438",
+      "op": "Conv",
+      "inputs": [
+        "1418",
+        "1793",
+        "1794"
+      ],
+      "outputs": [
+        "1792"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 230400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_439",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1792"
+      ],
+      "outputs": [
+        "1421"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Conv_440",
+      "op": "Conv",
+      "inputs": [
+        "1415",
+        "1796",
+        "1797"
+      ],
+      "outputs": [
+        "1795"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 60000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_441",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1795"
+      ],
+      "outputs": [
+        "1424"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Conv_442",
+      "op": "Conv",
+      "inputs": [
+        "1424",
+        "1799",
+        "1800"
+      ],
+      "outputs": [
+        "1798"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 230400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_443",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1798"
+      ],
+      "outputs": [
+        "1427"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Add_444",
+      "op": "Add",
+      "inputs": [
+        "1421",
+        "1427"
+      ],
+      "outputs": [
+        "1428"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Conv_445",
+      "op": "Conv",
+      "inputs": [
+        "1367",
+        "1802",
+        "1803"
+      ],
+      "outputs": [
+        "1801"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 3840000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_446",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1801"
+      ],
+      "outputs": [
+        "1431"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_447",
+      "op": "Conv",
+      "inputs": [
+        "1431",
+        "1805",
+        "1806"
+      ],
+      "outputs": [
+        "1804"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 14745600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_448",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1804"
+      ],
+      "outputs": [
+        "1434"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_449",
+      "op": "Conv",
+      "inputs": [
+        "1434",
+        "1808",
+        "1809"
+      ],
+      "outputs": [
+        "1807"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 3840000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_450",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1807"
+      ],
+      "outputs": [
+        "1437"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_451",
+      "op": "Conv",
+      "inputs": [
+        "1437",
+        "1811",
+        "1812"
+      ],
+      "outputs": [
+        "1810"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 14745600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_452",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1810"
+      ],
+      "outputs": [
+        "1440"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Conv_453",
+      "op": "Conv",
+      "inputs": [
+        "1440",
+        "head.gfl_cls.0.weight",
+        "head.gfl_cls.0.bias"
+      ],
+      "outputs": [
+        "1441"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          40,
+          40
+        ]
+      ],
+      "weight_shape": [
+        112,
+        96,
+        1,
+        1
+      ],
+      "parameters": 10752,
+      "mac": 17203200,
+      "groups": 1
+    },
+    {
+      "name": "Split_454",
+      "op": "Split",
+      "inputs": [
+        "1441"
+      ],
+      "outputs": [
+        "1442",
+        "1443"
+      ],
+      "output_shapes": [
+        [
+          1,
+          80,
+          40,
+          40
+        ],
+        [
+          1,
+          32,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Sigmoid_455",
+      "op": "Sigmoid",
+      "inputs": [
+        "1442"
+      ],
+      "outputs": [
+        "1444"
+      ],
+      "output_shapes": [
+        [
+          1,
+          80,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Concat_456",
+      "op": "Concat",
+      "inputs": [
+        "1444",
+        "1443"
+      ],
+      "outputs": [
+        "1445"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          40,
+          40
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_464",
+      "op": "Reshape",
+      "inputs": [
+        "1445",
+        "1452"
+      ],
+      "outputs": [
+        "1453"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          1600
+        ]
+      ]
+    },
+    {
+      "name": "Conv_465",
+      "op": "Conv",
+      "inputs": [
+        "1391",
+        "1814",
+        "1815"
+      ],
+      "outputs": [
+        "1813"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 960000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_466",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1813"
+      ],
+      "outputs": [
+        "1456"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_467",
+      "op": "Conv",
+      "inputs": [
+        "1456",
+        "1817",
+        "1818"
+      ],
+      "outputs": [
+        "1816"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 3686400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_468",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1816"
+      ],
+      "outputs": [
+        "1459"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_469",
+      "op": "Conv",
+      "inputs": [
+        "1459",
+        "1820",
+        "1821"
+      ],
+      "outputs": [
+        "1819"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 960000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_470",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1819"
+      ],
+      "outputs": [
+        "1462"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_471",
+      "op": "Conv",
+      "inputs": [
+        "1462",
+        "1823",
+        "1824"
+      ],
+      "outputs": [
+        "1822"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 3686400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_472",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1822"
+      ],
+      "outputs": [
+        "1465"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Conv_473",
+      "op": "Conv",
+      "inputs": [
+        "1465",
+        "head.gfl_cls.1.weight",
+        "head.gfl_cls.1.bias"
+      ],
+      "outputs": [
+        "1466"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          20,
+          20
+        ]
+      ],
+      "weight_shape": [
+        112,
+        96,
+        1,
+        1
+      ],
+      "parameters": 10752,
+      "mac": 4300800,
+      "groups": 1
+    },
+    {
+      "name": "Split_474",
+      "op": "Split",
+      "inputs": [
+        "1466"
+      ],
+      "outputs": [
+        "1467",
+        "1468"
+      ],
+      "output_shapes": [
+        [
+          1,
+          80,
+          20,
+          20
+        ],
+        [
+          1,
+          32,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Sigmoid_475",
+      "op": "Sigmoid",
+      "inputs": [
+        "1467"
+      ],
+      "outputs": [
+        "1469"
+      ],
+      "output_shapes": [
+        [
+          1,
+          80,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Concat_476",
+      "op": "Concat",
+      "inputs": [
+        "1469",
+        "1468"
+      ],
+      "outputs": [
+        "1470"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_484",
+      "op": "Reshape",
+      "inputs": [
+        "1470",
+        "1477"
+      ],
+      "outputs": [
+        "1478"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          400
+        ]
+      ]
+    },
+    {
+      "name": "Conv_485",
+      "op": "Conv",
+      "inputs": [
+        "1415",
+        "1826",
+        "1827"
+      ],
+      "outputs": [
+        "1825"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 240000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_486",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1825"
+      ],
+      "outputs": [
+        "1481"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_487",
+      "op": "Conv",
+      "inputs": [
+        "1481",
+        "1829",
+        "1830"
+      ],
+      "outputs": [
+        "1828"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 921600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_488",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1828"
+      ],
+      "outputs": [
+        "1484"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_489",
+      "op": "Conv",
+      "inputs": [
+        "1484",
+        "1832",
+        "1833"
+      ],
+      "outputs": [
+        "1831"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 240000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_490",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1831"
+      ],
+      "outputs": [
+        "1487"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_491",
+      "op": "Conv",
+      "inputs": [
+        "1487",
+        "1835",
+        "1836"
+      ],
+      "outputs": [
+        "1834"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 921600,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_492",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1834"
+      ],
+      "outputs": [
+        "1490"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Conv_493",
+      "op": "Conv",
+      "inputs": [
+        "1490",
+        "head.gfl_cls.2.weight",
+        "head.gfl_cls.2.bias"
+      ],
+      "outputs": [
+        "1491"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          10,
+          10
+        ]
+      ],
+      "weight_shape": [
+        112,
+        96,
+        1,
+        1
+      ],
+      "parameters": 10752,
+      "mac": 1075200,
+      "groups": 1
+    },
+    {
+      "name": "Split_494",
+      "op": "Split",
+      "inputs": [
+        "1491"
+      ],
+      "outputs": [
+        "1492",
+        "1493"
+      ],
+      "output_shapes": [
+        [
+          1,
+          80,
+          10,
+          10
+        ],
+        [
+          1,
+          32,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Sigmoid_495",
+      "op": "Sigmoid",
+      "inputs": [
+        "1492"
+      ],
+      "outputs": [
+        "1494"
+      ],
+      "output_shapes": [
+        [
+          1,
+          80,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Concat_496",
+      "op": "Concat",
+      "inputs": [
+        "1494",
+        "1493"
+      ],
+      "outputs": [
+        "1495"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_504",
+      "op": "Reshape",
+      "inputs": [
+        "1495",
+        "1502"
+      ],
+      "outputs": [
+        "1503"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          100
+        ]
+      ]
+    },
+    {
+      "name": "Conv_505",
+      "op": "Conv",
+      "inputs": [
+        "1428",
+        "1838",
+        "1839"
+      ],
+      "outputs": [
+        "1837"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 60000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_506",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1837"
+      ],
+      "outputs": [
+        "1506"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Conv_507",
+      "op": "Conv",
+      "inputs": [
+        "1506",
+        "1841",
+        "1842"
+      ],
+      "outputs": [
+        "1840"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 230400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_508",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1840"
+      ],
+      "outputs": [
+        "1509"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Conv_509",
+      "op": "Conv",
+      "inputs": [
+        "1509",
+        "1844",
+        "1845"
+      ],
+      "outputs": [
+        "1843"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        96,
+        1,
+        5,
+        5
+      ],
+      "parameters": 2400,
+      "mac": 60000,
+      "groups": 96
+    },
+    {
+      "name": "LeakyRelu_510",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1843"
+      ],
+      "outputs": [
+        "1512"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Conv_511",
+      "op": "Conv",
+      "inputs": [
+        "1512",
+        "1847",
+        "1848"
+      ],
+      "outputs": [
+        "1846"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        96,
+        96,
+        1,
+        1
+      ],
+      "parameters": 9216,
+      "mac": 230400,
+      "groups": 1
+    },
+    {
+      "name": "LeakyRelu_512",
+      "op": "LeakyRelu",
+      "inputs": [
+        "1846"
+      ],
+      "outputs": [
+        "1515"
+      ],
+      "output_shapes": [
+        [
+          1,
+          96,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Conv_513",
+      "op": "Conv",
+      "inputs": [
+        "1515",
+        "head.gfl_cls.3.weight",
+        "head.gfl_cls.3.bias"
+      ],
+      "outputs": [
+        "1516"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          5,
+          5
+        ]
+      ],
+      "weight_shape": [
+        112,
+        96,
+        1,
+        1
+      ],
+      "parameters": 10752,
+      "mac": 268800,
+      "groups": 1
+    },
+    {
+      "name": "Split_514",
+      "op": "Split",
+      "inputs": [
+        "1516"
+      ],
+      "outputs": [
+        "1517",
+        "1518"
+      ],
+      "output_shapes": [
+        [
+          1,
+          80,
+          5,
+          5
+        ],
+        [
+          1,
+          32,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Sigmoid_515",
+      "op": "Sigmoid",
+      "inputs": [
+        "1517"
+      ],
+      "outputs": [
+        "1519"
+      ],
+      "output_shapes": [
+        [
+          1,
+          80,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Concat_516",
+      "op": "Concat",
+      "inputs": [
+        "1519",
+        "1518"
+      ],
+      "outputs": [
+        "1520"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Reshape_524",
+      "op": "Reshape",
+      "inputs": [
+        "1520",
+        "1527"
+      ],
+      "outputs": [
+        "1528"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          25
+        ]
+      ]
+    },
+    {
+      "name": "Concat_525",
+      "op": "Concat",
+      "inputs": [
+        "1453",
+        "1478",
+        "1503",
+        "1528"
+      ],
+      "outputs": [
+        "1529"
+      ],
+      "output_shapes": [
+        [
+          1,
+          112,
+          2125
+        ]
+      ]
+    },
+    {
+      "name": "Transpose_526",
+      "op": "Transpose",
+      "inputs": [
+        "1529"
+      ],
+      "outputs": [
+        "output"
+      ],
+      "output_shapes": [
+        [
+          1,
+          2125,
+          112
+        ]
+      ]
+    }
+  ],
+  "conservative_int8_graph_live_bytes": 1228800,
+  "peak_node": "LeakyRelu_1",
+  "note": "FP32 original graph. INT8 sizes are hypothetical, count alias outputs separately; shape tensors counted as one byte/element. Not optimized FPGA BRAM, quantization or schedule."
+}

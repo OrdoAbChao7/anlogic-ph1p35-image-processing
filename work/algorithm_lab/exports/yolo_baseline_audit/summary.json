@@ -1,0 +1,56 @@
+{
+  "manifest_sha256": "f180fbcf711b53a4443939b5d2922c5390905b2b460d4b4df05ec9fdf781db5e",
+  "weights_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+  "images": 60,
+  "confidence": 0.25,
+  "match_iou": 0.5,
+  "note": "Reused frozen public diagnostic subset; no training or threshold tuning. Not COCO mAP.",
+  "runs": {
+    "352": {
+      "bottle": {
+        "tp": 11,
+        "fp": 12,
+        "fn": 41,
+        "precision": 0.4782608695652174,
+        "recall": 0.21153846153846154
+      },
+      "cup": {
+        "tp": 23,
+        "fp": 10,
+        "fn": 37,
+        "precision": 0.696969696969697,
+        "recall": 0.38333333333333336
+      },
+      "cell phone": {
+        "tp": 10,
+        "fp": 1,
+        "fn": 12,
+        "precision": 0.9090909090909091,
+        "recall": 0.45454545454545453
+      }
+    },
+    "640": {
+      "bottle": {
+        "tp": 17,
+        "fp": 17,
+        "fn": 35,
+        "precision": 0.5,
+        "recall": 0.3269230769230769
+      },
+      "cup": {
+        "tp": 34,
+        "fp": 15,
+        "fn": 26,
+        "precision": 0.6938775510204082,
+        "recall": 0.5666666666666667
+      },
+      "cell phone": {
+        "tp": 12,
+        "fp": 1,
+        "fn": 10,
+        "precision": 0.9230769230769231,
+        "recall": 0.5454545454545454
+      }
+    }
+  }
+}

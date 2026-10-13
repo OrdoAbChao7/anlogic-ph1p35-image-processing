@@ -1,0 +1,1817 @@
+[
+  {
+    "image_id": 2685,
+    "file": "work/yolo_fpga_feasibility/data/images/000000002685.jpg",
+    "width": 640,
+    "height": 555,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          105.79,
+          277.75,
+          45.16,
+          75.12
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          121.75,
+          272.49,
+          58.68,
+          64.15
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          137.54,
+          263.43,
+          38.73,
+          48.34
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          160.27,
+          248.36,
+          19,
+          37.25
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          168.06,
+          237.87,
+          17.41,
+          27.86
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          140.95,
+          256,
+          36.68,
+          34.6
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          175.05,
+          235.76,
+          10.62,
+          16.45
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          154.53,
+          247.11,
+          23.78,
+          41.33
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          367.04,
+          200.07,
+          19.93,
+          18.74
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          140.87,
+          315.74,
+          33.8,
+          36.91
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 24610,
+    "file": "work/yolo_fpga_feasibility/data/images/000000024610.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          11.64,
+          261.4,
+          23.27,
+          65.52
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 26564,
+    "file": "work/yolo_fpga_feasibility/data/images/000000026564.jpg",
+    "width": 640,
+    "height": 426,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          554.26,
+          240.03,
+          55.88,
+          113.6
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 47121,
+    "file": "work/yolo_fpga_feasibility/data/images/000000047121.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          77.64,
+          106.41,
+          59.08,
+          145.51
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 50811,
+    "file": "work/yolo_fpga_feasibility/data/images/000000050811.jpg",
+    "width": 640,
+    "height": 605,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          448.87,
+          314.95,
+          72.86,
+          261.51
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          524.71,
+          316.61,
+          70.65,
+          276.21
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          448.06,
+          332.8,
+          19.8,
+          110.97
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cell phone",
+        "box": [
+          9.31,
+          473.02,
+          45.83,
+          26.67
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 61471,
+    "file": "work/yolo_fpga_feasibility/data/images/000000061471.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          181.23,
+          86.28,
+          27.44,
+          73.53
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 64868,
+    "file": "work/yolo_fpga_feasibility/data/images/000000064868.jpg",
+    "width": 500,
+    "height": 375,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          358.12,
+          0.39,
+          19.7,
+          50.3
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 68078,
+    "file": "work/yolo_fpga_feasibility/data/images/000000068078.jpg",
+    "width": 360,
+    "height": 640,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          273.57,
+          276.86,
+          30.75,
+          71.03
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 83531,
+    "file": "work/yolo_fpga_feasibility/data/images/000000083531.jpg",
+    "width": 500,
+    "height": 275,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          433.25,
+          0,
+          61.62,
+          64.21
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          481.52,
+          2.83,
+          18.48,
+          74.24
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          403.72,
+          16.08,
+          30.39,
+          31.02
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 92416,
+    "file": "work/yolo_fpga_feasibility/data/images/000000092416.jpg",
+    "width": 480,
+    "height": 640,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          287.41,
+          387.13,
+          55.15,
+          162.94
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 113720,
+    "file": "work/yolo_fpga_feasibility/data/images/000000113720.jpg",
+    "width": 640,
+    "height": 426,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          82.18,
+          116.48,
+          35.92,
+          99.2
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          194.08,
+          201.94,
+          63.63,
+          122.81
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          279.96,
+          214.3,
+          44.81,
+          71.21
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          147.12,
+          169.79,
+          28.38,
+          49.08
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 117719,
+    "file": "work/yolo_fpga_feasibility/data/images/000000117719.jpg",
+    "width": 640,
+    "height": 425,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          367.8,
+          281.17,
+          25.91,
+          56.66
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          258.04,
+          86.52,
+          15.01,
+          36.49
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          271.09,
+          86.93,
+          15.44,
+          38.24
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          283.86,
+          88.62,
+          14.84,
+          37.59
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          297.12,
+          89.71,
+          11.88,
+          36.97
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          308.32,
+          91.6,
+          11.68,
+          36.09
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          66.07,
+          177.68,
+          22.23,
+          69.06
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          347.75,
+          96.31,
+          10.63,
+          34.46
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          357.99,
+          96.84,
+          13.07,
+          35.44
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          370.71,
+          98.53,
+          11.56,
+          33.92
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          139.12,
+          101.57,
+          28.93,
+          59.99
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          184.65,
+          101.61,
+          16.9,
+          60.66
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          217.18,
+          96.67,
+          21.1,
+          69.82
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          0,
+          93.81,
+          19.64,
+          55.27
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          6,
+          75,
+          474,
+          263
+        ],
+        "iscrowd": 1
+      }
+    ]
+  },
+  {
+    "image_id": 127394,
+    "file": "work/yolo_fpga_feasibility/data/images/000000127394.jpg",
+    "width": 409,
+    "height": 640,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          333.18,
+          166.56,
+          13.13,
+          17.62
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          244.38,
+          166.95,
+          23.82,
+          31.86
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          354.01,
+          305.23,
+          43.54,
+          61.23
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          343.24,
+          164.19,
+          24.76,
+          51.27
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          163.07,
+          199.85,
+          24.13,
+          41.62
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          319.3,
+          159.25,
+          14.64,
+          58.3
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          303.22,
+          175.13,
+          20.2,
+          43.96
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 132587,
+    "file": "work/yolo_fpga_feasibility/data/images/000000132587.jpg",
+    "width": 640,
+    "height": 425,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          286.16,
+          199.35,
+          35.58,
+          86.84
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          167.08,
+          278.44,
+          13.25,
+          17.5
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 140076,
+    "file": "work/yolo_fpga_feasibility/data/images/000000140076.jpg",
+    "width": 500,
+    "height": 375,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          44.09,
+          158.21,
+          15.44,
+          50.49
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          251.5,
+          293.21,
+          26.32,
+          81.79
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          34.91,
+          159.17,
+          10.9,
+          35.48
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          23.07,
+          263.32,
+          24.91,
+          22.23
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          20.97,
+          162.89,
+          7.36,
+          10.69
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          9.35,
+          154.05,
+          8.58,
+          30.9
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          39.88,
+          263.6,
+          22.79,
+          23.72
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          4.87,
+          150.09,
+          5.35,
+          24.41
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          0,
+          292.96,
+          23.98,
+          23.73
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 9400,
+    "file": "work/yolo_fpga_feasibility/data/images/000000009400.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          32.75,
+          256.44,
+          44.03,
+          63.07
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          250.65,
+          417.12,
+          63.87,
+          62.88
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          251.59,
+          380.35,
+          76.66,
+          96.13
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          356.25,
+          281.88,
+          48.75,
+          81.25
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 17714,
+    "file": "work/yolo_fpga_feasibility/data/images/000000017714.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          199.45,
+          118.29,
+          109.45,
+          83.9
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          314.18,
+          177.04,
+          98.5,
+          76.05
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 18380,
+    "file": "work/yolo_fpga_feasibility/data/images/000000018380.jpg",
+    "width": 640,
+    "height": 426,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          236.54,
+          317.11,
+          38.36,
+          55.21
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          405.92,
+          304.44,
+          36.17,
+          54.05
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          235.12,
+          295.1,
+          34.42,
+          26.27
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          364.53,
+          229.64,
+          22.81,
+          19.81
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          292.15,
+          183.77,
+          17.32,
+          23.37
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          281.14,
+          215.1,
+          23.36,
+          27.22
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          350.02,
+          173.56,
+          14.72,
+          23.42
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          344.09,
+          163.21,
+          13.81,
+          21.4
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          357.59,
+          243.53,
+          25.35,
+          39.13
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          290.27,
+          166.5,
+          15.13,
+          18.72
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          305.53,
+          145.17,
+          12.74,
+          10.94
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          242.4,
+          374.04,
+          45.4,
+          51.96
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 25603,
+    "file": "work/yolo_fpga_feasibility/data/images/000000025603.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          308.88,
+          315.28,
+          89.33,
+          156.06
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          35.44,
+          402.79,
+          125.63,
+          77.21
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 38678,
+    "file": "work/yolo_fpga_feasibility/data/images/000000038678.jpg",
+    "width": 480,
+    "height": 640,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          147.83,
+          549.81,
+          120.49,
+          90.19
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 52996,
+    "file": "work/yolo_fpga_feasibility/data/images/000000052996.jpg",
+    "width": 640,
+    "height": 426,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          148.6,
+          252.46,
+          23.09,
+          27.21
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          118.01,
+          269.13,
+          33.58,
+          24.94
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          135.79,
+          294.07,
+          15.5,
+          17.21
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          168.41,
+          283.4,
+          16.82,
+          29.4
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          184.04,
+          269.21,
+          15.96,
+          27.75
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          172.69,
+          270.42,
+          11.99,
+          15.48
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          165.5,
+          290.71,
+          14.67,
+          20.9
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 54605,
+    "file": "work/yolo_fpga_feasibility/data/images/000000054605.jpg",
+    "width": 612,
+    "height": 612,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          0,
+          207.97,
+          78.9,
+          198.99
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          85.27,
+          72.89,
+          174.44,
+          378.55
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 63047,
+    "file": "work/yolo_fpga_feasibility/data/images/000000063047.jpg",
+    "width": 640,
+    "height": 561,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          94.53,
+          350.23,
+          50.93,
+          80.04
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 63740,
+    "file": "work/yolo_fpga_feasibility/data/images/000000063740.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          114.9,
+          291.72,
+          61.21,
+          71.95
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          269.02,
+          262.95,
+          59.16,
+          46.48
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 70048,
+    "file": "work/yolo_fpga_feasibility/data/images/000000070048.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          36.72,
+          202.9,
+          290.71,
+          229.12
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 92939,
+    "file": "work/yolo_fpga_feasibility/data/images/000000092939.jpg",
+    "width": 424,
+    "height": 640,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          186.69,
+          605.52,
+          53.71,
+          34.48
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 95786,
+    "file": "work/yolo_fpga_feasibility/data/images/000000095786.jpg",
+    "width": 500,
+    "height": 334,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          234.62,
+          163.51,
+          226.97,
+          170.49
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          184.86,
+          0,
+          262.56,
+          198.26
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 109313,
+    "file": "work/yolo_fpga_feasibility/data/images/000000109313.jpg",
+    "width": 480,
+    "height": 640,
+    "objects": [
+      {
+        "class": "cup",
+        "box": [
+          220.23,
+          287.05,
+          18.53,
+          18.81
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          194.38,
+          279.76,
+          22.17,
+          26.8
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 120853,
+    "file": "work/yolo_fpga_feasibility/data/images/000000120853.jpg",
+    "width": 640,
+    "height": 428,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          352.19,
+          69.08,
+          136.78,
+          60.05
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          209.2,
+          0,
+          117.08,
+          147.4
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 142620,
+    "file": "work/yolo_fpga_feasibility/data/images/000000142620.jpg",
+    "width": 640,
+    "height": 426,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          110.62,
+          203.7,
+          37.68,
+          111.85
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          235.19,
+          292.88,
+          44.15,
+          40.01
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          164.61,
+          377.82,
+          49.68,
+          48.18
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          229.72,
+          379.51,
+          47.37,
+          46.49
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "bottle",
+        "box": [
+          74.2,
+          280.99,
+          49.76,
+          79.26
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 1296,
+    "file": "work/yolo_fpga_feasibility/data/images/000000001296.jpg",
+    "width": 427,
+    "height": 640,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          299.46,
+          143.38,
+          71.72,
+          135.3
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 6763,
+    "file": "work/yolo_fpga_feasibility/data/images/000000006763.jpg",
+    "width": 375,
+    "height": 500,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          36.02,
+          439.98,
+          35.01,
+          24.31
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 22623,
+    "file": "work/yolo_fpga_feasibility/data/images/000000022623.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          4.33,
+          0,
+          634.95,
+          451.56
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 36660,
+    "file": "work/yolo_fpga_feasibility/data/images/000000036660.jpg",
+    "width": 500,
+    "height": 323,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          268.2,
+          98.13,
+          96.28,
+          105.81
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cell phone",
+        "box": [
+          184.63,
+          132.3,
+          88.1,
+          96.68
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cell phone",
+        "box": [
+          414.46,
+          72.58,
+          70.4,
+          100.9
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cell phone",
+        "box": [
+          131.72,
+          100.68,
+          51.17,
+          67.95
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 59598,
+    "file": "work/yolo_fpga_feasibility/data/images/000000059598.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          64.77,
+          271.28,
+          96.92,
+          38.64
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 76416,
+    "file": "work/yolo_fpga_feasibility/data/images/000000076416.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          345.61,
+          221,
+          53.66,
+          92.72
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 120420,
+    "file": "work/yolo_fpga_feasibility/data/images/000000120420.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          153.17,
+          188.84,
+          271.82,
+          74.42
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 146489,
+    "file": "work/yolo_fpga_feasibility/data/images/000000146489.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          180.3,
+          3.6,
+          110.82,
+          319.43
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cell phone",
+        "box": [
+          1.08,
+          279.64,
+          87.37,
+          136.99
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 151000,
+    "file": "work/yolo_fpga_feasibility/data/images/000000151000.jpg",
+    "width": 640,
+    "height": 426,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          246.12,
+          47.14,
+          51.28,
+          28.45
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cell phone",
+        "box": [
+          165.61,
+          281.01,
+          34.17,
+          20.8
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 180798,
+    "file": "work/yolo_fpga_feasibility/data/images/000000180798.jpg",
+    "width": 375,
+    "height": 500,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          175.68,
+          145.83,
+          127.25,
+          305.18
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 218439,
+    "file": "work/yolo_fpga_feasibility/data/images/000000218439.jpg",
+    "width": 480,
+    "height": 640,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          344.29,
+          412.46,
+          39.17,
+          21.03
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          372.12,
+          438,
+          70.18,
+          106.31
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 285047,
+    "file": "work/yolo_fpga_feasibility/data/images/000000285047.jpg",
+    "width": 427,
+    "height": 640,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          337.1,
+          473.81,
+          67.11,
+          43.99
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          195.15,
+          541.47,
+          63.83,
+          49.94
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 326541,
+    "file": "work/yolo_fpga_feasibility/data/images/000000326541.jpg",
+    "width": 640,
+    "height": 360,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          173.93,
+          92.22,
+          45.31,
+          118.93
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cell phone",
+        "box": [
+          254.02,
+          101.93,
+          40.45,
+          75.24
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 343706,
+    "file": "work/yolo_fpga_feasibility/data/images/000000343706.jpg",
+    "width": 640,
+    "height": 496,
+    "objects": [
+      {
+        "class": "cell phone",
+        "box": [
+          179.21,
+          313.78,
+          131.1,
+          85.61
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 345356,
+    "file": "work/yolo_fpga_feasibility/data/images/000000345356.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": [
+      {
+        "class": "bottle",
+        "box": [
+          119,
+          194.51,
+          13.26,
+          45.26
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cell phone",
+        "box": [
+          152.91,
+          260.62,
+          48.29,
+          86.7
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          329.26,
+          382.97,
+          70.72,
+          97.03
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          259.28,
+          269.63,
+          32.17,
+          29.62
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          241.58,
+          286.13,
+          22.51,
+          13.55
+        ],
+        "iscrowd": 0
+      },
+      {
+        "class": "cup",
+        "box": [
+          411.22,
+          263.93,
+          21.41,
+          26.04
+        ],
+        "iscrowd": 0
+      }
+    ]
+  },
+  {
+    "image_id": 139,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000139.jpg",
+    "width": 640,
+    "height": 426,
+    "objects": []
+  },
+  {
+    "image_id": 285,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000285.jpg",
+    "width": 586,
+    "height": 640,
+    "objects": []
+  },
+  {
+    "image_id": 632,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000632.jpg",
+    "width": 640,
+    "height": 483,
+    "objects": []
+  },
+  {
+    "image_id": 724,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000724.jpg",
+    "width": 375,
+    "height": 500,
+    "objects": []
+  },
+  {
+    "image_id": 776,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000776.jpg",
+    "width": 428,
+    "height": 640,
+    "objects": []
+  },
+  {
+    "image_id": 785,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000785.jpg",
+    "width": 640,
+    "height": 425,
+    "objects": []
+  },
+  {
+    "image_id": 802,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000802.jpg",
+    "width": 424,
+    "height": 640,
+    "objects": []
+  },
+  {
+    "image_id": 872,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000872.jpg",
+    "width": 621,
+    "height": 640,
+    "objects": []
+  },
+  {
+    "image_id": 885,
+    "file": "work/yolo_fpga_feasibility/data/images/000000000885.jpg",
+    "width": 640,
+    "height": 427,
+    "objects": []
+  },
+  {
+    "image_id": 1000,
+    "file": "work/yolo_fpga_feasibility/data/images/000000001000.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": []
+  },
+  {
+    "image_id": 1425,
+    "file": "work/yolo_fpga_feasibility/data/images/000000001425.jpg",
+    "width": 640,
+    "height": 512,
+    "objects": []
+  },
+  {
+    "image_id": 1490,
+    "file": "work/yolo_fpga_feasibility/data/images/000000001490.jpg",
+    "width": 640,
+    "height": 315,
+    "objects": []
+  },
+  {
+    "image_id": 1503,
+    "file": "work/yolo_fpga_feasibility/data/images/000000001503.jpg",
+    "width": 320,
+    "height": 240,
+    "objects": []
+  },
+  {
+    "image_id": 1532,
+    "file": "work/yolo_fpga_feasibility/data/images/000000001532.jpg",
+    "width": 640,
+    "height": 480,
+    "objects": []
+  },
+  {
+    "image_id": 1584,
+    "file": "work/yolo_fpga_feasibility/data/images/000000001584.jpg",
+    "width": 612,
+    "height": 612,
+    "objects": []
+  }
+]

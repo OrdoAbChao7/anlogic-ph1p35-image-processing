@@ -1,0 +1,4187 @@
+{
+  "parameters": 243095,
+  "conv_mac": 106382232,
+  "largest_single_int8_feature_bytes": 743424,
+  "weight_sha256": "bdd956aa079bf1cdd3e0090a295ac26d73c40aef7b61b6405981b1afcbea985c",
+  "input": [
+    1,
+    3,
+    352,
+    352
+  ],
+  "layers": [
+    {
+      "name": "backbone.first_conv.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        3,
+        352,
+        352
+      ],
+      "output": [
+        1,
+        24,
+        176,
+        176
+      ],
+      "output_elements": 743424,
+      "groups": 1,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "mac": 20072448
+    },
+    {
+      "name": "backbone.first_conv.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        176,
+        176
+      ],
+      "output": [
+        1,
+        24,
+        176,
+        176
+      ],
+      "output_elements": 743424
+    },
+    {
+      "name": "backbone.first_conv.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        176,
+        176
+      ],
+      "output": [
+        1,
+        24,
+        176,
+        176
+      ],
+      "output_elements": 743424
+    },
+    {
+      "name": "backbone.maxpool",
+      "op": "MaxPool2d",
+      "input": [
+        1,
+        24,
+        176,
+        176
+      ],
+      "output": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output_elements": 185856
+    },
+    {
+      "name": "backbone.stage2.0.branch_proj.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 24,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "mac": 418176
+    },
+    {
+      "name": "backbone.stage2.0.branch_proj.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.0.branch_proj.2",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage2.0.branch_proj.3",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.0.branch_proj.4",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.0.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output_elements": 185856,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 4460544
+    },
+    {
+      "name": "backbone.stage2.0.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output_elements": 185856
+    },
+    {
+      "name": "backbone.stage2.0.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output_elements": 185856
+    },
+    {
+      "name": "backbone.stage2.0.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        88,
+        88
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 24,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "mac": 418176
+    },
+    {
+      "name": "backbone.stage2.0.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.0.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage2.0.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.0.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.1.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage2.1.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.1.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.1.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 24,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 418176
+    },
+    {
+      "name": "backbone.stage2.1.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.1.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage2.1.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.1.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.2.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage2.2.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.2.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.2.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 24,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 418176
+    },
+    {
+      "name": "backbone.stage2.2.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.2.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage2.2.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.2.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.3.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage2.3.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.3.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.3.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 24,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 418176
+    },
+    {
+      "name": "backbone.stage2.3.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.3.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage2.3.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage2.3.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        24,
+        44,
+        44
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage3.0.branch_proj.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.0.branch_proj.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.0.branch_proj.2",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.0.branch_proj.3",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.0.branch_proj.4",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.0.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        48,
+        44,
+        44
+      ],
+      "output_elements": 92928,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 4460544
+    },
+    {
+      "name": "backbone.stage3.0.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        48,
+        44,
+        44
+      ],
+      "output_elements": 92928
+    },
+    {
+      "name": "backbone.stage3.0.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        48,
+        44,
+        44
+      ],
+      "output_elements": 92928
+    },
+    {
+      "name": "backbone.stage3.0.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        44,
+        44
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.0.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.0.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.0.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.0.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.1.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.1.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.1.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.1.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.1.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.1.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.1.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.1.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.2.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.2.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.2.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.2.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.2.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.2.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.2.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.2.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.3.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.3.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.3.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.3.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.3.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.3.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.3.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.3.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.4.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.4.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.4.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.4.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.4.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.4.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.4.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.4.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.5.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.5.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.5.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.5.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.5.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.5.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.5.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.5.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.6.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.6.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.6.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.6.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.6.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.6.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.6.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.6.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.7.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.7.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.7.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.7.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 48,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 209088
+    },
+    {
+      "name": "backbone.stage3.7.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.7.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage3.7.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage3.7.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        48,
+        22,
+        22
+      ],
+      "output_elements": 23232
+    },
+    {
+      "name": "backbone.stage4.0.branch_proj.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 96,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "mac": 104544
+    },
+    {
+      "name": "backbone.stage4.0.branch_proj.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.0.branch_proj.2",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage4.0.branch_proj.3",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.0.branch_proj.4",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.0.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        96,
+        22,
+        22
+      ],
+      "output_elements": 46464,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 4460544
+    },
+    {
+      "name": "backbone.stage4.0.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        96,
+        22,
+        22
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage4.0.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        96,
+        22,
+        22
+      ],
+      "output_elements": 46464
+    },
+    {
+      "name": "backbone.stage4.0.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 96,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "mac": 104544
+    },
+    {
+      "name": "backbone.stage4.0.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.0.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage4.0.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.0.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.1.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage4.1.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.1.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.1.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 96,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 104544
+    },
+    {
+      "name": "backbone.stage4.1.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.1.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage4.1.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.1.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.2.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage4.2.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.2.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.2.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 96,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 104544
+    },
+    {
+      "name": "backbone.stage4.2.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.2.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage4.2.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.2.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.3.branch_main.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage4.3.branch_main.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.3.branch_main.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.3.branch_main.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 96,
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 104544
+    },
+    {
+      "name": "backbone.stage4.3.branch_main.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.3.branch_main.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1115136
+    },
+    {
+      "name": "backbone.stage4.3.branch_main.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "backbone.stage4.3.branch_main.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        96,
+        11,
+        11
+      ],
+      "output_elements": 11616
+    },
+    {
+      "name": "fpn.conv1x1_3.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        192,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 1672704
+    },
+    {
+      "name": "fpn.conv1x1_3.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.conv1x1_3.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.cls_head_3.block.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 72,
+      "kernel": [
+        5,
+        5
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 217800
+    },
+    {
+      "name": "fpn.cls_head_3.block.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.cls_head_3.block.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.cls_head_3.block.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 627264
+    },
+    {
+      "name": "fpn.cls_head_3.block.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.cls_head_3.block.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 72,
+      "kernel": [
+        5,
+        5
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 217800
+    },
+    {
+      "name": "fpn.cls_head_3.block.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.cls_head_3.block.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.cls_head_3.block.8",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 627264
+    },
+    {
+      "name": "fpn.cls_head_3.block.9",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.reg_head_3.block.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 72,
+      "kernel": [
+        5,
+        5
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 217800
+    },
+    {
+      "name": "fpn.reg_head_3.block.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.reg_head_3.block.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.reg_head_3.block.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 627264
+    },
+    {
+      "name": "fpn.reg_head_3.block.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.reg_head_3.block.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 72,
+      "kernel": [
+        5,
+        5
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 217800
+    },
+    {
+      "name": "fpn.reg_head_3.block.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.reg_head_3.block.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.reg_head_3.block.8",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 627264
+    },
+    {
+      "name": "fpn.reg_head_3.block.9",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output_elements": 8712
+    },
+    {
+      "name": "fpn.conv1x1_2.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        288,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 10036224
+    },
+    {
+      "name": "fpn.conv1x1_2.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.conv1x1_2.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.cls_head_2.block.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 72,
+      "kernel": [
+        5,
+        5
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 871200
+    },
+    {
+      "name": "fpn.cls_head_2.block.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.cls_head_2.block.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.cls_head_2.block.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 2509056
+    },
+    {
+      "name": "fpn.cls_head_2.block.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.cls_head_2.block.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 72,
+      "kernel": [
+        5,
+        5
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 871200
+    },
+    {
+      "name": "fpn.cls_head_2.block.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.cls_head_2.block.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.cls_head_2.block.8",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 2509056
+    },
+    {
+      "name": "fpn.cls_head_2.block.9",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.reg_head_2.block.0",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 72,
+      "kernel": [
+        5,
+        5
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 871200
+    },
+    {
+      "name": "fpn.reg_head_2.block.1",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.reg_head_2.block.2",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.reg_head_2.block.3",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 2509056
+    },
+    {
+      "name": "fpn.reg_head_2.block.4",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.reg_head_2.block.5",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 72,
+      "kernel": [
+        5,
+        5
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 871200
+    },
+    {
+      "name": "fpn.reg_head_2.block.6",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.reg_head_2.block.7",
+      "op": "ReLU",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "fpn.reg_head_2.block.8",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 2509056
+    },
+    {
+      "name": "fpn.reg_head_2.block.9",
+      "op": "BatchNorm2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output_elements": 34848
+    },
+    {
+      "name": "output_reg_layers",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        12,
+        22,
+        22
+      ],
+      "output_elements": 5808,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 418176
+    },
+    {
+      "name": "output_obj_layers",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        3,
+        22,
+        22
+      ],
+      "output_elements": 1452,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 104544
+    },
+    {
+      "name": "output_cls_layers",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        22,
+        22
+      ],
+      "output": [
+        1,
+        80,
+        22,
+        22
+      ],
+      "output_elements": 38720,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 2787840
+    },
+    {
+      "name": "output_reg_layers",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        12,
+        11,
+        11
+      ],
+      "output_elements": 1452,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 104544
+    },
+    {
+      "name": "output_obj_layers",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        3,
+        11,
+        11
+      ],
+      "output_elements": 363,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 26136
+    },
+    {
+      "name": "output_cls_layers",
+      "op": "Conv2d",
+      "input": [
+        1,
+        72,
+        11,
+        11
+      ],
+      "output": [
+        1,
+        80,
+        11,
+        11
+      ],
+      "output_elements": 9680,
+      "groups": 1,
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "mac": 696960
+    }
+  ]
+}

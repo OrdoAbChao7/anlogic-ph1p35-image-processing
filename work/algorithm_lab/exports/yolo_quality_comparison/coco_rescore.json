@@ -1,0 +1,210 @@
+{
+  "pycocotools": "2.0.11",
+  "annotations_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+  "scope": "Fixed confidence .25, IoU .5, maxDets=100 per category/image; crowd honored. Not COCO AP.",
+  "runs": {
+    "diagnostic60_yolov8m_640": {
+      "bottle": {
+        "gt": 52,
+        "tp": 27,
+        "fp": 9,
+        "ignored_predictions": 10,
+        "fn": 25,
+        "precision": 0.75,
+        "recall": 0.5192307692307693
+      },
+      "cup": {
+        "gt": 60,
+        "tp": 45,
+        "fp": 17,
+        "ignored_predictions": 0,
+        "fn": 15,
+        "precision": 0.7258064516129032,
+        "recall": 0.75
+      },
+      "cell phone": {
+        "gt": 22,
+        "tp": 17,
+        "fp": 5,
+        "ignored_predictions": 0,
+        "fn": 5,
+        "precision": 0.7727272727272727,
+        "recall": 0.7727272727272727
+      }
+    },
+    "diagnostic60_yolov8m_960": {
+      "bottle": {
+        "gt": 52,
+        "tp": 32,
+        "fp": 18,
+        "ignored_predictions": 7,
+        "fn": 20,
+        "precision": 0.64,
+        "recall": 0.6153846153846154
+      },
+      "cup": {
+        "gt": 60,
+        "tp": 47,
+        "fp": 22,
+        "ignored_predictions": 0,
+        "fn": 13,
+        "precision": 0.6811594202898551,
+        "recall": 0.7833333333333333
+      },
+      "cell phone": {
+        "gt": 22,
+        "tp": 14,
+        "fp": 7,
+        "ignored_predictions": 0,
+        "fn": 8,
+        "precision": 0.6666666666666666,
+        "recall": 0.6363636363636364
+      }
+    },
+    "diagnostic60_yolov8n_640": {
+      "bottle": {
+        "gt": 52,
+        "tp": 17,
+        "fp": 10,
+        "ignored_predictions": 7,
+        "fn": 35,
+        "precision": 0.6296296296296297,
+        "recall": 0.3269230769230769
+      },
+      "cup": {
+        "gt": 60,
+        "tp": 34,
+        "fp": 15,
+        "ignored_predictions": 0,
+        "fn": 26,
+        "precision": 0.6938775510204082,
+        "recall": 0.5666666666666667
+      },
+      "cell phone": {
+        "gt": 22,
+        "tp": 12,
+        "fp": 1,
+        "ignored_predictions": 0,
+        "fn": 10,
+        "precision": 0.9230769230769231,
+        "recall": 0.5454545454545454
+      }
+    },
+    "diagnostic60_yolov8n_960": {
+      "bottle": {
+        "gt": 52,
+        "tp": 19,
+        "fp": 10,
+        "ignored_predictions": 13,
+        "fn": 33,
+        "precision": 0.6551724137931034,
+        "recall": 0.36538461538461536
+      },
+      "cup": {
+        "gt": 60,
+        "tp": 38,
+        "fp": 19,
+        "ignored_predictions": 0,
+        "fn": 22,
+        "precision": 0.6666666666666666,
+        "recall": 0.6333333333333333
+      },
+      "cell phone": {
+        "gt": 22,
+        "tp": 12,
+        "fp": 3,
+        "ignored_predictions": 0,
+        "fn": 10,
+        "precision": 0.8,
+        "recall": 0.5454545454545454
+      }
+    },
+    "confirmation55_yolov8m_960": {
+      "bottle": {
+        "gt": 61,
+        "tp": 39,
+        "fp": 22,
+        "ignored_predictions": 0,
+        "fn": 22,
+        "precision": 0.639344262295082,
+        "recall": 0.639344262295082
+      },
+      "cup": {
+        "gt": 49,
+        "tp": 37,
+        "fp": 16,
+        "ignored_predictions": 0,
+        "fn": 12,
+        "precision": 0.6981132075471698,
+        "recall": 0.7551020408163265
+      },
+      "cell phone": {
+        "gt": 21,
+        "tp": 13,
+        "fp": 7,
+        "ignored_predictions": 0,
+        "fn": 8,
+        "precision": 0.65,
+        "recall": 0.6190476190476191
+      }
+    },
+    "confirmation55_yolov8n_640": {
+      "bottle": {
+        "gt": 61,
+        "tp": 24,
+        "fp": 7,
+        "ignored_predictions": 0,
+        "fn": 37,
+        "precision": 0.7741935483870968,
+        "recall": 0.39344262295081966
+      },
+      "cup": {
+        "gt": 49,
+        "tp": 31,
+        "fp": 9,
+        "ignored_predictions": 0,
+        "fn": 18,
+        "precision": 0.775,
+        "recall": 0.6326530612244898
+      },
+      "cell phone": {
+        "gt": 21,
+        "tp": 8,
+        "fp": 5,
+        "ignored_predictions": 0,
+        "fn": 13,
+        "precision": 0.6153846153846154,
+        "recall": 0.38095238095238093
+      }
+    },
+    "confirmation55_yolov8m_640": {
+      "bottle": {
+        "gt": 61,
+        "tp": 35,
+        "fp": 19,
+        "ignored_predictions": 0,
+        "fn": 26,
+        "precision": 0.6481481481481481,
+        "recall": 0.5737704918032787
+      },
+      "cup": {
+        "gt": 49,
+        "tp": 37,
+        "fp": 9,
+        "ignored_predictions": 0,
+        "fn": 12,
+        "precision": 0.8043478260869565,
+        "recall": 0.7551020408163265
+      },
+      "cell phone": {
+        "gt": 21,
+        "tp": 17,
+        "fp": 7,
+        "ignored_predictions": 0,
+        "fn": 4,
+        "precision": 0.7083333333333334,
+        "recall": 0.8095238095238095
+      }
+    }
+  }
+}

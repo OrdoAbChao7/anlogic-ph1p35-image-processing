@@ -1,0 +1,8 @@
+{
+  "rule": "Two largest TP gains and one largest remaining FN; gallery only, all images retained in metrics",
+  "ids": [
+    18380,
+    2685,
+    117719
+  ]
+}

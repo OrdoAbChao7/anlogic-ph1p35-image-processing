@@ -1,0 +1,1131 @@
+[
+  {
+    "image_id": 2685,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000002685.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.3276996612548828,
+        "box": [
+          339.60901896158856,
+          33.0903697013855,
+          633.3174133300781,
+          428.6373972892761
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.268499997124309,
+      "post_ms": 0.9299000012106262,
+      "total_ms": 5.198399998334935,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 24610,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000024610.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.35471272468566895,
+        "box": [
+          512.8823852539062,
+          318.8890075683594,
+          631.8451944986979,
+          476.2239074707031
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.2155000010097865,
+      "post_ms": 0.6754999994882382,
+      "total_ms": 4.891000000498025,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 26564,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000026564.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.362299998319941,
+      "post_ms": 0.5727999996452127,
+      "total_ms": 4.935099997965153,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 47121,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000047121.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.33222225308418274,
+        "box": [
+          325.7674153645833,
+          64.43611145019531,
+          649.0491739908854,
+          417.3392868041992
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.31010475754737854,
+        "box": [
+          289.7596740722656,
+          117.13683128356934,
+          362.95313517252606,
+          260.25279998779297
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.152400000748457,
+      "post_ms": 0.6962000006751623,
+      "total_ms": 4.84860000142362,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 50811,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000050811.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.8221873641014099,
+        "box": [
+          69.72721099853516,
+          72.50027070442836,
+          442.6527404785156,
+          454.74821130434674
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.317500002798624,
+      "post_ms": 0.6547999983013142,
+      "total_ms": 4.9723000010999385,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 61471,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000061471.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.5052352547645569,
+        "box": [
+          247.17839558919272,
+          183.3721923828125,
+          433.60504150390625,
+          479.9488830566406
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.434399997990113,
+      "post_ms": 0.9035000002768356,
+      "total_ms": 5.337899998266948,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 64868,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000064868.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.5979017019271851,
+        "box": [
+          62.482635180155434,
+          12.256264686584473,
+          354.244589805603,
+          332.8365087509155
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.31827443838119507,
+        "box": [
+          -9.8306934038798,
+          16.25293493270874,
+          204.73676919937134,
+          367.1669363975525
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.2564999966998585,
+      "post_ms": 0.6797000023652799,
+      "total_ms": 4.936199999065138,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 68078,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000068078.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.49049999951967,
+      "post_ms": 0.4851000012422446,
+      "total_ms": 4.975600000761915,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 83531,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000083531.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.196800000499934,
+      "post_ms": 0.4681999998865649,
+      "total_ms": 4.665000000386499,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 92416,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000092416.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.7145565748214722,
+        "box": [
+          48.741455078125,
+          23.739013671875,
+          362.6813507080078,
+          624.1558837890625
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.31429999662214,
+      "post_ms": 0.6440000033762772,
+      "total_ms": 4.958299999998417,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 113720,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000113720.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.14959999761777,
+      "post_ms": 0.5534000010811724,
+      "total_ms": 4.702999998698942,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 117719,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000117719.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.312999997637235,
+      "post_ms": 0.5340000025171321,
+      "total_ms": 4.847000000154367,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 127394,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000127394.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.2317000006733,
+      "post_ms": 0.45060000047669746,
+      "total_ms": 4.682300001149997,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 132587,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000132587.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.44477108120918274,
+        "box": [
+          36.413065592447914,
+          80.5472840865453,
+          366.0449727376302,
+          427.1037022272746
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.293999998481013,
+      "post_ms": 0.6296000028669368,
+      "total_ms": 4.92360000134795,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 140076,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000140076.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.223199997795746,
+      "post_ms": 0.50060000285157,
+      "total_ms": 4.723800000647316,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 9400,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000009400.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.5438717603683472,
+        "box": [
+          352.0953369140625,
+          204.27705764770508,
+          640.0433349609375,
+          479.6412658691406
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.4628542959690094,
+        "box": [
+          254.03900146484375,
+          204.96788024902344,
+          461.1564636230469,
+          481.58836364746094
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.268200002115918,
+      "post_ms": 0.6405999993148725,
+      "total_ms": 4.908800001430791,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 17714,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000017714.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.354000000603264,
+      "post_ms": 0.49589999980526045,
+      "total_ms": 4.849900000408525,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 18380,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000018380.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.468200000701472,
+      "post_ms": 0.4768999970110599,
+      "total_ms": 4.945099997712532,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 25603,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000025603.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.191900003206683,
+      "post_ms": 0.5647999969369266,
+      "total_ms": 4.75670000014361,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 38678,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000038678.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.7938881516456604,
+        "box": [
+          19.824848175048828,
+          35.595296223958336,
+          474.03106689453125,
+          608.4831746419271
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.42393365502357483,
+        "box": [
+          40.198049545288086,
+          40.726025899251304,
+          215.1663589477539,
+          372.4690246582031
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.584700000123121,
+      "post_ms": 0.7145000017771963,
+      "total_ms": 5.299200001900317,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 52996,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000052996.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.646299999876646,
+      "post_ms": 0.5699000030290335,
+      "total_ms": 5.21620000290568,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 54605,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000054605.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.420199999003671,
+      "post_ms": 0.6033999998180661,
+      "total_ms": 5.023599998821737,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 63047,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000063047.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.7552672624588013,
+        "box": [
+          107.89432525634766,
+          238.12086391448975,
+          393.68860880533856,
+          552.9004640579224
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.792500003532041,
+      "post_ms": 0.723899996955879,
+      "total_ms": 5.51640000048792,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 63740,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000063740.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.555100000288803,
+      "post_ms": 0.5220999992161524,
+      "total_ms": 5.0771999995049555,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 70048,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000070048.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.4397000019671395,
+      "post_ms": 0.6415999996534083,
+      "total_ms": 5.081300001620548,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 92939,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000092939.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.4198806583881378,
+        "box": [
+          31.308337847391766,
+          69.95012919108073,
+          407.9131596883138,
+          635.2226765950521
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.444600002898369,
+      "post_ms": 0.7713999984844122,
+      "total_ms": 5.216000001382781,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 95786,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000095786.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 41,
+        "name": "cup",
+        "score": 0.42386090755462646,
+        "box": [
+          21.28911018371582,
+          27.657453219095867,
+          198.89398415883383,
+          287.5965296427409
+        ]
+      },
+      {
+        "class": 41,
+        "name": "cup",
+        "score": 0.3617915213108063,
+        "box": [
+          185.06085872650146,
+          -1.4204588731129963,
+          447.4925597508748,
+          306.45339425404865
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.605000001902226,
+      "post_ms": 0.8108999973046593,
+      "total_ms": 5.415899999206886,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 109313,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000109313.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 2,
+        "name": "2",
+        "score": 0.3971547484397888,
+        "box": [
+          22.14630126953125,
+          368.08306376139325,
+          213.87649536132812,
+          629.5208740234375
+        ]
+      },
+      {
+        "class": 2,
+        "name": "2",
+        "score": 0.30244195461273193,
+        "box": [
+          98.11105728149414,
+          352.4493408203125,
+          299.7318458557129,
+          629.2762247721354
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.557099997327896,
+      "post_ms": 0.8454000017081853,
+      "total_ms": 5.402499999036081,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 120853,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000120853.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 5.173600002308376,
+      "post_ms": 0.5229999987932388,
+      "total_ms": 5.696600001101615,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 142620,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000142620.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.42715707421302795,
+        "box": [
+          383.6009216308594,
+          14.377795219421387,
+          618.9215596516927,
+          394.940411567688
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.269000000931555,
+      "post_ms": 0.6742000005033333,
+      "total_ms": 4.943200001434889,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 1296,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000001296.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.8003005385398865,
+        "box": [
+          1.3392412662506104,
+          6.1900583902994795,
+          417.45556871096295,
+          637.535400390625
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.3384265899658203,
+        "box": [
+          1.3634920020898182,
+          28.163223266601562,
+          122.49048793315887,
+          459.86501057942706
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.432499998074491,
+      "post_ms": 0.6996000010985881,
+      "total_ms": 5.132099999173079,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 6763,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000006763.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.7871823906898499,
+        "box": [
+          175.31049251556396,
+          90.76635042826335,
+          370.3993558883667,
+          467.280109723409
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.7253061532974243,
+        "box": [
+          -1.3182982802391052,
+          81.68657620747884,
+          222.86975383758545,
+          482.07080364227295
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.321799999161158,
+      "post_ms": 0.7578000004286878,
+      "total_ms": 5.0795999995898455,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 22623,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000022623.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.356200002803234,
+      "post_ms": 0.5977999971946701,
+      "total_ms": 4.9539999999979045,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 36660,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000036660.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.5368999999482185,
+      "post_ms": 0.659799999993993,
+      "total_ms": 5.196699999942211,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 59598,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000059598.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.351299998234026,
+      "post_ms": 0.5865999992238358,
+      "total_ms": 4.937899997457862,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 76416,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000076416.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 5.050399999163346,
+      "post_ms": 0.6166999992274214,
+      "total_ms": 5.667099998390768,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 120420,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000120420.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.6606511473655701,
+        "box": [
+          180.7929229736328,
+          88.49016189575195,
+          515.1305135091146,
+          488.1694793701172
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.249699999490986,
+      "post_ms": 0.6367999994836282,
+      "total_ms": 4.886499998974614,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 146489,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000146489.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.248799999913899,
+      "post_ms": 0.5937999994785059,
+      "total_ms": 4.842599999392405,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 151000,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000151000.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.4813250005245209,
+        "box": [
+          133.59082539876303,
+          45.17043352127075,
+          378.977533976237,
+          410.4580855369568
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.610699998011114,
+      "post_ms": 0.7222000022011343,
+      "total_ms": 5.332900000212248,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 180798,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000180798.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.340899999078829,
+      "post_ms": 0.4797000001417473,
+      "total_ms": 4.820599999220576,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 218439,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000218439.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.465200003323844,
+      "post_ms": 0.5070999977760948,
+      "total_ms": 4.9723000010999385,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 285047,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000285047.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.7987722158432007,
+        "box": [
+          0.7708315054575602,
+          92.22569783528645,
+          422.6699053446452,
+          609.0023803710938
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.33089999933145,
+      "post_ms": 0.659499997709645,
+      "total_ms": 4.990399997041095,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 326541,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000326541.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.6500622630119324,
+        "box": [
+          375.37317911783856,
+          10.18458366394043,
+          636.9595845540365,
+          349.5523166656494
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.46776822209358215,
+        "box": [
+          -8.599745432535807,
+          5.1871490478515625,
+          194.22663370768228,
+          344.8471927642822
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.37955915927886963,
+        "box": [
+          227.94428507486978,
+          35.874481201171875,
+          520.2962748209635,
+          362.7466106414795
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.5629000014741905,
+      "post_ms": 0.7405999967886601,
+      "total_ms": 5.303499998262851,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 343706,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000343706.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.2267000026186,
+      "post_ms": 0.48939999760477804,
+      "total_ms": 4.716100000223378,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 345356,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000345356.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.8724222779273987,
+        "box": [
+          386.60695393880206,
+          136.9376564025879,
+          650.2780151367188,
+          469.15016174316406
+        ]
+      },
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.8722615838050842,
+        "box": [
+          -14.743016560872396,
+          120.41303634643555,
+          318.5879262288411,
+          466.275634765625
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.362700001365738,
+      "post_ms": 0.6629999988945201,
+      "total_ms": 5.025700000260258,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 139,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000139.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.288299998734146,
+      "post_ms": 0.4813999985344708,
+      "total_ms": 4.769699997268617,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 285,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000285.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 77,
+        "name": "77",
+        "score": 0.490780770778656,
+        "box": [
+          -8.488630056381226,
+          66.27334594726562,
+          570.8550796508789,
+          628.7122599283854
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.466899998078588,
+      "post_ms": 0.7525000000896398,
+      "total_ms": 5.219399998168228,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 632,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000632.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.941799998050556,
+      "post_ms": 0.5201999993005302,
+      "total_ms": 5.461999997351086,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 724,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000724.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.269999997632112,
+      "post_ms": 0.4991000023437664,
+      "total_ms": 4.769099999975879,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 776,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000776.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.363899999589194,
+      "post_ms": 0.5130000026838388,
+      "total_ms": 4.876900002273032,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 785,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000785.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.7216504812240601,
+        "box": [
+          292.4757130940755,
+          50.850374499956764,
+          491.5519205729167,
+          385.08781989415485
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.2644999994081445,
+      "post_ms": 0.6436000003304798,
+      "total_ms": 4.908099999738624,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 802,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000802.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 5.589500000496628,
+      "post_ms": 0.6620999993174337,
+      "total_ms": 6.2515999998140614,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 872,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000872.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.7835786938667297,
+        "box": [
+          178.19904202222824,
+          124.46901957194011,
+          404.97641158103943,
+          600.7891845703125
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.6689000009791926,
+      "post_ms": 0.7179999993240926,
+      "total_ms": 5.386900000303285,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 885,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000000885.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.5065943002700806,
+        "box": [
+          247.41734822591147,
+          140.01452692349753,
+          431.0023498535156,
+          367.7665108839671
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.314899997552857,
+      "post_ms": 0.704100002621999,
+      "total_ms": 5.019000000174856,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 1000,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000001000.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.515670895576477,
+        "box": [
+          386.88563028971356,
+          209.28314208984375,
+          584.4331359863281,
+          473.4840393066406
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.467300001124386,
+      "post_ms": 0.66059999880963,
+      "total_ms": 5.127899999934016,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 1425,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000001425.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.223100000672275,
+      "post_ms": 0.565999998798361,
+      "total_ms": 4.789099999470636,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 1490,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000001490.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 0,
+        "name": "0",
+        "score": 0.4442262351512909,
+        "box": [
+          438.2568359375,
+          119.63089227676392,
+          508.42946370442706,
+          237.05539226531982
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.796999997779494,
+      "post_ms": 0.7564000006823335,
+      "total_ms": 5.553399998461828,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 1503,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000001503.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.231999999319669,
+      "post_ms": 0.5252999981166795,
+      "total_ms": 4.757299997436348,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 1532,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000001532.jpg",
+    "all_80_class_detections": [],
+    "timing": {
+      "forward_ms": 4.144100003031781,
+      "post_ms": 0.4918999984511174,
+      "total_ms": 4.636000001482898,
+      "raw_candidates": 135
+    }
+  },
+  {
+    "image_id": 1584,
+    "source": "work\\yolo_fpga_feasibility\\data\\images\\000000001584.jpg",
+    "all_80_class_detections": [
+      {
+        "class": 7,
+        "name": "7",
+        "score": 0.4743933379650116,
+        "box": [
+          67.66951704025269,
+          70.06184434890747,
+          563.1752586364746,
+          523.4783935546875
+        ]
+      }
+    ],
+    "timing": {
+      "forward_ms": 4.496100002143066,
+      "post_ms": 0.7359999981417786,
+      "total_ms": 5.232100000284845,
+      "raw_candidates": 135
+    }
+  }
+]

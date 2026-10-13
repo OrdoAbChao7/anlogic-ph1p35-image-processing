@@ -471,20 +471,25 @@
       </div>
 
       <div id="tab-yolo-review" class="card" style="display:none;">
-        <div class="section-title">三类目标检测 · Y1 / Y2 软件对比</div>
+        <div class="section-title">三类目标检测 · 软件基准对比</div>
         <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">
-          Y1 是原始 COCO 80 类模型，仅筛选三类输出；Y2 是重新训练的三类微型模型。
-          两者均为 PC 软件预览，尚未获得视觉验收或硬件验证。
+          默认使用 YOLOv8m 640 软件基准，可与轻量模型对照；均只显示瓶子、杯子和手机。
+          960 用于分辨率对照，不保证更准确。所有候选均未通过用户视觉验收或 FPGA 验证。
         </p>
         <div class="btn-group" style="flex-wrap:wrap;align-items:center;margin-bottom:12px;">
           <select id="yolo-model" aria-label="检测模型" onchange="onYoloModelChange()">
-            <option value="fastestdet_y1">Y1 FastestDet 80 类</option>
-            <option value="microdet_y2">Y2 MicroDet 三类</option>
+            <option value="ultralytics_yolov8m">效果基准：YOLOv8m (PC 软件，640)</option>
+            <option value="ultralytics_yolov8n">成熟基准：Ultralytics YOLOv8n (官方COCO预训练)</option>
+            <option value="fastestdet_y1">超轻开源：FastestDet (官方COCO 352)</option>
+            <option value="yolo_fastestv2">超轻开源：YOLO-FastestV2 (官方COCO 352)</option>
+            <option value="microdet_y2">实验对比：Y2 MicroDet (未达标)</option>
           </select>
           <select id="yolo-sample" aria-label="Y1 测试图"></select>
           <input id="yolo-upload" type="file" accept="image/*,.mp4,.avi" onchange="uploadYolo(event)">
           <select id="yolo-size" aria-label="网络输入尺寸">
-            <option value="352">352×352 官方尺寸（仅 Y1）</option>
+            <option value="640" selected>640×640 默认 (YOLOv8)</option>
+            <option value="960">960×960 分辨率对照 (YOLOv8)</option>
+            <option value="352">352×352 推荐 (FastestDet/V2)</option>
             <option value="160">160×160</option>
             <option value="128">128×128</option>
             <option value="96">96×96</option>
@@ -567,7 +572,7 @@
       yoloSample = select.value;
       select.onchange = () => { yoloSample = select.value; processYolo(); };
       yoloLoaded = true;
-      if (yoloSample) processYolo();
+      if (yoloSample) onYoloModelChange();
     }
 
     async function uploadYolo(event) {
@@ -587,10 +592,18 @@
     }
 
     function onYoloModelChange() {
-      const y2 = document.getElementById('yolo-model').value === 'microdet_y2';
+      const model = document.getElementById('yolo-model').value;
       const size = document.getElementById('yolo-size');
-      size.querySelector('option[value="352"]').disabled = y2;
-      if (y2 && size.value === '352') size.value = '160';
+      if (model === 'ultralytics_yolov8n' || model === 'ultralytics_yolov8m') {
+        size.value = '640';
+      } else if (model === 'fastestdet_y1' || model === 'yolo_fastestv2') {
+        size.value = '352';
+      } else if (model === 'microdet_y2') {
+        size.value = '160';
+      }
+      const allowed = {ultralytics_yolov8m:['640','960'], ultralytics_yolov8n:['640','960','352','160','128','96'],
+        fastestdet_y1:['352','160','128','96'], yolo_fastestv2:['352'], microdet_y2:['160','128','96']};
+      Array.from(size.options).forEach(option => { option.disabled = !allowed[model].includes(option.value); });
       processYolo();
     }
 
@@ -616,7 +629,7 @@
       if (data.kind === 'image') img.src = data.annotated_url;
       else video.src = data.annotated_url;
       const detections = data.kind === 'image' ? data.detections : data.frames.flatMap(f => f.detections);
-      status.textContent = '显示目标：' + detections.length + ' · ' + data.model + ' · 网络前向 ' +
+      status.textContent = '显示目标：' + detections.length + ' · ' + data.model + ' · 推理耗时 ' +
         (data.forward_ms ?? '逐帧记录') + ' ms';
       document.getElementById('yolo-results').textContent = JSON.stringify(
         data.kind === 'image' ? data.detections : {frames:data.frames.length, first_frames:data.frames.slice(0,5)},

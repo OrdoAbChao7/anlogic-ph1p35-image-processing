@@ -1,0 +1,123 @@
+[
+  {
+    "status": 200,
+    "model": "ultralytics_yolov8n",
+    "params": {
+      "confidence": 0.25,
+      "resolution": 640,
+      "model": "ultralytics_yolov8n"
+    },
+    "label": "Ultralytics YOLOv8n original COCO 80-class; output filtered to 3 classes",
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.8364,
+        "box": [
+          364.11,
+          233.89,
+          449.49,
+          274.54
+        ]
+      },
+      {
+        "class": "cell phone",
+        "confidence": 0.3999,
+        "box": [
+          364.45,
+          233.57,
+          450.26,
+          291.53
+        ]
+      }
+    ]
+  },
+  {
+    "status": 200,
+    "model": "fastestdet_y1",
+    "params": {
+      "confidence": 0.25,
+      "resolution": 352,
+      "model": "fastestdet_y1"
+    },
+    "label": "FastestDet original COCO 80-class; output filtered to 3 classes",
+    "detections": [
+      {
+        "class_id": 67,
+        "class": "cell phone",
+        "confidence": 0.805638,
+        "box": [
+          366.2,
+          224.75,
+          451.1,
+          279.3
+        ]
+      },
+      {
+        "class_id": 67,
+        "class": "cell phone",
+        "confidence": 0.328742,
+        "box": [
+          326.84,
+          193.74,
+          393.87,
+          243.21
+        ]
+      },
+      {
+        "class_id": 67,
+        "class": "cell phone",
+        "confidence": 0.269552,
+        "box": [
+          292.07,
+          196.89,
+          405.32,
+          277.82
+        ]
+      },
+      {
+        "class_id": 67,
+        "class": "cell phone",
+        "confidence": 0.267468,
+        "box": [
+          244.96,
+          209.94,
+          443.77,
+          292.59
+        ]
+      }
+    ]
+  },
+  {
+    "status": 200,
+    "model": "yolo_fastestv2",
+    "params": {
+      "confidence": 0.25,
+      "resolution": 352,
+      "model": "yolo_fastestv2"
+    },
+    "label": "YOLO-FastestV2 original COCO 80-class; output filtered to 3 classes",
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.8027,
+        "box": [
+          365.95,
+          227.58,
+          449.06,
+          282.95
+        ]
+      }
+    ]
+  },
+  {
+    "status": 200,
+    "model": "microdet_y2",
+    "params": {
+      "confidence": 0.25,
+      "resolution": 160,
+      "model": "microdet_y2"
+    },
+    "label": "Y2 MicroDet three-class trained at 160; quality gate failed",
+    "detections": []
+  }
+]

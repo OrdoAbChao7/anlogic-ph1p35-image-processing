@@ -1,0 +1,87 @@
+ M docs/project/STATUS.md
+ M docs/research/OPEN_SOURCE.md
+ M docs/research/known-gaps.md
+ M docs/research/sources.yaml
+ M work/algorithm_lab/app.py
+ M work/algorithm_lab/registry.json
+ M work/algorithm_lab/run_lab.bat
+ M work/algorithm_lab/static/index.html
+ M work/y1_yolo/evaluate.py
+?? docs/experiments/2026-10-12-yolo-baseline-debug.md
+?? docs/experiments/2026-10-12-yolo-correction-roadmap.md
+?? docs/experiments/2026-10-12-yolo-quality-comparison.md
+?? docs/superpowers/plans/2026-10-12-yolov2-fpga-feasibility.md
+?? reference/finn/
+?? reference/fpga_accelerator_yolov3tiny/
+?? reference/yolov2_xilinx_fpga/
+?? work/algorithm_lab/compare_yolo_models.py
+?? work/algorithm_lab/exports/yolo_baseline_audit/before_after.jpg
+?? work/algorithm_lab/exports/yolo_baseline_audit/detections_352.json
+?? work/algorithm_lab/exports/yolo_baseline_audit/detections_640.json
+?? work/algorithm_lab/exports/yolo_baseline_audit/live_api.json
+?? work/algorithm_lab/exports/yolo_baseline_audit/model_smoke.json
+?? work/algorithm_lab/exports/yolo_baseline_audit/source_sha256.json
+?? work/algorithm_lab/exports/yolo_baseline_audit/summary.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/balanced_confirmation/confirmation55_yolov8m_640.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/balanced_confirmation/plan.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/balanced_confirmation/summary.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/coco_rescore.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/comparison.jpg
+?? work/algorithm_lab/exports/yolo_quality_comparison/confirmation55_yolov8m_960.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/confirmation55_yolov8n_640.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/diagnostic60_yolov8m_640.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/diagnostic60_yolov8m_960.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/diagnostic60_yolov8n_640.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/diagnostic60_yolov8n_960.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/gallery_selection.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/live_api.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/plan.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/source_sha256.json
+?? work/algorithm_lab/exports/yolo_quality_comparison/summary.json
+?? work/algorithm_lab/plugins/yolo_reference.py
+?? work/algorithm_lab/requirements.txt
+?? work/algorithm_lab/rescore_yolo_coco.py
+?? work/algorithm_lab/test_yolo.py
+?? work/algorithm_lab/verify_yolo_baseline.py
+?? work/algorithm_lab/yolov8m.pt
+?? work/algorithm_lab/yolov8n.pt
+?? work/y1_yolo/yolo_fastestv2_coco.pth
+?? work/yolo_fpga_feasibility/.gitignore
+?? work/yolo_fpga_feasibility/README.md
+?? work/yolo_fpga_feasibility/check_decode.py
+?? work/yolo_fpga_feasibility/check_rtl.py
+?? work/yolo_fpga_feasibility/data/frozen_eval_manifest.json
+?? work/yolo_fpga_feasibility/data/image_sha256.json
+?? work/yolo_fpga_feasibility/data/official_smoke_sha256.json
+?? work/yolo_fpga_feasibility/fetch_eval_images.py
+?? work/yolo_fpga_feasibility/make_budget.py
+?? work/yolo_fpga_feasibility/profile_liveness.py
+?? work/yolo_fpga_feasibility/report.md
+?? work/yolo_fpga_feasibility/reproduce.py
+?? work/yolo_fpga_feasibility/results/budget/layer_budget.csv
+?? work/yolo_fpga_feasibility/results/budget/summary.json
+?? work/yolo_fpga_feasibility/results/decode_check/comparison.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_128/detections.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_128/summary.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_160/detections.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_160/summary.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_352/detections.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_352/summary.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_352_conf0001/detections.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_352_conf0001/summary.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_352_conf001/detections.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_352_conf001/summary.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_96/detections.json
+?? work/yolo_fpga_feasibility/results/frozen_eval_96/summary.json
+?? work/yolo_fpga_feasibility/results/official/source_metadata.json
+?? work/yolo_fpga_feasibility/results/profile/graph_liveness.json
+?? work/yolo_fpga_feasibility/results/profile/network_layers.csv
+?? work/yolo_fpga_feasibility/results/profile/network_profile.json
+?? work/yolo_fpga_feasibility/results/rtl/chain_vectors_expected.json
+?? work/yolo_fpga_feasibility/results/rtl/summary.json
+?? work/yolo_fpga_feasibility/rtl_candidate/LICENSE-APACHE-2.0
+?? work/yolo_fpga_feasibility/rtl_candidate/cal_addtree_int16_x9_wide.v
+?? work/yolo_fpga_feasibility/run_official_smoke.py
+?? work/yolo_fpga_feasibility/run_study.py
+?? work/yolo_fpga_feasibility/run_windows.bat
+?? yolov8n.pt

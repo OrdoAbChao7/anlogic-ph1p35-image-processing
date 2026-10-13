@@ -122,3 +122,34 @@
 - `project`：三个模型 6,988 参数，PyTorch x86 静态 PTQ 后卷积 INT8 权重 6,436 B；量化后的新测试结论同样失败。逐层形状、MAC 和存储见 `work/y2_micro/results/`。160 输入的相邻完整特征峰值 153,600 B，紧贴本工程报告的 176,640 B 未占用 ERAM；这不是硬件综合或可用性证据。
 - `project`：Algorithm Lab 新版在本机 `http://127.0.0.1:8503/` 提供 Y1/Y2 图片、视频、阈值、检测框和 ZIP 导出；接口冒烟通过。Y2 登记为 `SOFTWARE_IMPLEMENTED`，未获 `VISUAL_APPROVED`。
 - `unknown`：用户稍后提供工位素材与验收数值。G1/G2 阶段门仍未通过；未改 FPGA 视频工程、核心 RTL 或长期目标，未运行 TD/生成位流。
+
+## 2026-10-12 YOLO-FastestV2 / 开源加速器隔离可行性验证
+
+- `project`：固定官方 YOLO-FastestV2 `ac2a5e3060bff76dd1e45f9b921dd77bfbeb194d` 与 COCO 80 类权重，三张指定图片官方 `test.py` 通过；独立 NumPy 解码对照通过。与现有 Y1/Y2 图像 ID 不重叠的 COCO val2017 60 图已冻结，352 输入 0.3 阈值下 bottle TP/GT 0/52、cup 3/60、cell phone 5/22。软件复现 PASS，三类效果 FAIL；见 [`../../work/yolo_fpga_feasibility/report.md`](../../work/yolo_fpga_feasibility/report.md)。
+- `project`：实际网络 243,095 唯一参数、106,382,232 卷积 MAC；16 MAC/100 MHz 理想下界 66.49 ms/帧，原版 352 输入 30 fps 路线 NO-GO。原版开源加速器 9 路 18 位求和在 305 个向量中 4 个发生整数溢出；隔离 19 位候选同组通过，未修改正式 RTL。
+- `unknown`：Yolo-FastestV2 仓库没有许可文件；INT8 网络精度、安路双乘 DSP 映射、完整活跃特征缓存、DDR2 实际带宽、综合时序和板级效果均未验证。`VISUAL_APPROVED`、G1/G2/G5 均未通过。本轮未运行 TD、未生成位流，也未改变长期目标或验收标准。
+
+## 2026-10-12 YOLO 软件测试入口修复
+
+- `project`：修复 Algorithm Lab 的 YOLOv8n 首次输入尺寸（352→640）、模型名称误标、V2 无效尺寸静默忽略、权重路径依赖和一键启动使用错误 Python 环境。7 项回归通过，实际四模型 HTTP 推理与导出通过。
+- `project`：固定公开 60 图、同权重/阈值，YOLOv8n 三类总 TP 44→63/134，FP 23→33；仍有漏检和误报，不声明效果达标。证据与复现见 [排错记录](../experiments/2026-10-12-yolo-baseline-debug.md)。
+- `unknown`：本次未获用户视觉验收，未做硬件验证；基本软件复现无需用户先提供工位素材。
+
+## 2026-10-12 YOLO 软件参考升级与计分复核
+
+- `project`：YOLOv8m 640 已接入 Algorithm Lab 默认检测页，状态 VISUAL_REVIEW_PENDING。60图正确检出63→89/134；不重叠55图63→89/131。官方crowd规则复核后60图FP26→31，55图FP21→35，不能称为效果达标。
+- `project`：修复简化计分器crowd错误，7组预测与官方COCOeval的TP/FP/FN一致；9项回归通过，新候选640/960真实HTTP推理及导出通过。见 [效果对照报告](../experiments/2026-10-12-yolo-quality-comparison.md)。
+- `unknown`：小目标、遮挡场景仍有漏检，未做用户视觉验收、INT8等价或硬件实现。25.9M参数模型仅为PC参考，G1/G2/G5阶段门不变。
+
+## 2026-10-13 安路工业视觉参考库建立与审计
+
+- `project`：建立本地参考库管理目录 `.tools/references/anlogic-vision/`，并通过可复现脚本 `scripts/sync-anlogic-vision-references.ps1` 幂等克隆完成 6 个已筛选安路参考工程（总计 538.38 MB）。详细清单见 `.tools/references/anlogic-vision/inventory.json`，来源元数据见 `docs/research/sources.yaml`，综合评测见 `docs/research/OPEN_SOURCE.md`。
+- `project`：完成六项目源码阅读与审计：
+  1. `01_video_processing_national_prize` (PH1A90, c8c0c18)：多模式视频切换与降采样架构；
+  2. `02_image_algorithm_library` (EG4S20, 0672ee8)：两级树比较 3×3 腐蚀膨胀流水线（无 License，严禁复制代码）；
+  3. `03_geometry_recognition` (EG4S20, 25ab494)：ROI 内 Sobel 边缘累加周长与二值前景累加面积；
+  4. `04_ph1p35_bbox_cnn` (**同款 PH1P35**, 60c11a2)：3×3 采样 Bitmap + 双 Bank 连通域多目标 BBox；`route_failure_notes.md` 披露其因 224KB ROM 展平组合逻辑导致 TD 布线 3 小时崩溃（重大避坑证据）；
+  5. `05_vision_bbox_template` (EG4S20, 5595d83, MIT)：流式单目标坐标极值统计与次帧蓝框叠加（推荐 F1/F4 最佳实践）；
+  6. `06_ph1p35_vision_baseline` (**同款 PH1P35**, 3ccd79f)：平台与应用严格解耦、无乘法器 BT.601 Y、倒数乘法自适应二值化、双 BRAM Sobel、3位色阶卡通化与 Logo OSD（推荐 Goal 3/4 架构基线）。
+- `unknown`：本轮工作属于开源技术审计与资料索引建立，**不代表任何工业视觉算法或硬件功能已经实现或上板**。F1~F5 状态保持不变。
+- **下一步最值得验证的模块**：基于 05/06 的高时序架构思路，在 PC 端 Algorithm Lab 优先验证**“二值化 → 单目标极值 Bounding Box → HDMI 框叠加”**的纯流式算法效果，获得用户视觉验收（`VISUAL_APPROVED`）后再推进硬件 RTL。

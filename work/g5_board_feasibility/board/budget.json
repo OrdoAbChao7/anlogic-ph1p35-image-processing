@@ -1,0 +1,236 @@
+{
+  "evidence_type": "project_and_inferred_no_new_hardware_measurement",
+  "versions": [
+    {
+      "name": "lab1",
+      "artifacts": {
+        "camera_to_dsi_display.bit": {
+          "path": ".tools/td/work/lab_ex1_mipi_hdmi_sc520/td_project/camera_to_dsi_display_Runs/phy_1/camera_to_dsi_display.bit",
+          "sha256": "a3117b3ca6bb68326da2b14914b713fd9de49dcc4a2b9fde8a8abb19f9ff6010"
+        },
+        "route.qor": {
+          "path": ".tools/td/work/lab_ex1_mipi_hdmi_sc520/td_project/camera_to_dsi_display_Runs/phy_1/route.qor",
+          "sha256": "f2945692550803894ac38743389e12c51cf66f6305c2b02581efcbb1607b4d5a"
+        },
+        "final_timing.rpt": {
+          "path": ".tools/td/work/lab_ex1_mipi_hdmi_sc520/td_project/camera_to_dsi_display_Runs/phy_1/final_timing.rpt",
+          "sha256": "6aa01dd94045b893d78c1cb92f8c2a4bbe0e2b9cb9565b52c0c71da0f536639e"
+        }
+      },
+      "resources": {
+        "lut6": {
+          "used": 10002,
+          "total": 21216,
+          "unallocated": 11214
+        },
+        "slice reg": {
+          "used": 13396,
+          "total": 42432,
+          "unallocated": 29036
+        },
+        "slice": {
+          "used": 12390,
+          "total": 21216,
+          "unallocated": 8826
+        },
+        "eram": {
+          "used": 39,
+          "total": 108,
+          "unallocated": 69
+        },
+        "dsp": {
+          "used": 8,
+          "total": 40,
+          "unallocated": 32
+        },
+        "pll": {
+          "used": 3,
+          "total": 6,
+          "unallocated": 3
+        },
+        "gclk": {
+          "used": 9,
+          "total": 32,
+          "unallocated": 23
+        }
+      },
+      "resource_evidence": ".tools/td/work/lab_ex1_mipi_hdmi_sc520/td_project/camera_to_dsi_display_Runs/phy_1/camera_to_dsi_display_phy.area:15",
+      "hardware_verified": false
+    },
+    {
+      "name": "td_cartoon",
+      "artifacts": {
+        "camera_to_dsi_display.bit": {
+          "path": "work/td_cartoon/td_project/camera_to_dsi_display_Runs/phy_1/camera_to_dsi_display.bit",
+          "sha256": "8284e7a90d3c36c20440d6e989800b4912683c5157e153cb64b3722f33bdd9f3"
+        },
+        "route.qor": {
+          "path": "work/td_cartoon/td_project/camera_to_dsi_display_Runs/phy_1/route.qor",
+          "sha256": "1e83ba6a6f455bdebd00c9d2ac8aaafa35372b1a15111c09a7677e608bd9b3d0"
+        },
+        "final_timing.rpt": {
+          "path": "work/td_cartoon/td_project/camera_to_dsi_display_Runs/phy_1/final_timing.rpt",
+          "sha256": "9458af7f46c7f5dec04cd966c5706793fb0a1468cf04d17e412116dd9414b70d"
+        }
+      },
+      "resources": {
+        "lut6": {
+          "used": 12469,
+          "total": 21216,
+          "unallocated": 8747
+        },
+        "slice reg": {
+          "used": 14249,
+          "total": 42432,
+          "unallocated": 28183
+        },
+        "slice": {
+          "used": 14848,
+          "total": 21216,
+          "unallocated": 6368
+        },
+        "eram": {
+          "used": 39,
+          "total": 108,
+          "unallocated": 69
+        },
+        "dsp": {
+          "used": 8,
+          "total": 40,
+          "unallocated": 32
+        },
+        "pll": {
+          "used": 3,
+          "total": 6,
+          "unallocated": 3
+        },
+        "gclk": {
+          "used": 9,
+          "total": 32,
+          "unallocated": 23
+        }
+      },
+      "resource_evidence": "work/td_cartoon/td_project/camera_to_dsi_display_Runs/phy_1/camera_to_dsi_display_phy.area:15",
+      "hardware_verified": false
+    },
+    {
+      "name": "cartoon_release",
+      "artifacts": {
+        "camera_to_dsi_display.bit": {
+          "path": "work/output/cartoon-release/camera_to_dsi_display.bit",
+          "sha256": "8284e7a90d3c36c20440d6e989800b4912683c5157e153cb64b3722f33bdd9f3"
+        },
+        "route.qor": {
+          "path": "work/output/cartoon-release/route.qor",
+          "sha256": "1e83ba6a6f455bdebd00c9d2ac8aaafa35372b1a15111c09a7677e608bd9b3d0"
+        },
+        "final_timing.rpt": {
+          "path": "work/output/cartoon-release/final_timing.rpt",
+          "sha256": "9458af7f46c7f5dec04cd966c5706793fb0a1468cf04d17e412116dd9414b70d"
+        }
+      },
+      "resources": {
+        "lut6": {
+          "used": 12469,
+          "total": 21216,
+          "unallocated": 8747
+        },
+        "slice reg": {
+          "used": 14249,
+          "total": 42432,
+          "unallocated": 28183
+        },
+        "slice": {
+          "used": 14848,
+          "total": 21216,
+          "unallocated": 6368
+        },
+        "eram": {
+          "used": 39,
+          "total": 108,
+          "unallocated": 69
+        },
+        "dsp": {
+          "used": 8,
+          "total": 40,
+          "unallocated": 32
+        },
+        "pll": {
+          "used": 3,
+          "total": 6,
+          "unallocated": 3
+        },
+        "gclk": {
+          "used": 9,
+          "total": 32,
+          "unallocated": 23
+        }
+      },
+      "resource_evidence": "work/td_cartoon/td_project/camera_to_dsi_display_Runs/phy_1/camera_to_dsi_display_phy.area:15",
+      "hardware_verified": false
+    }
+  ],
+  "eram": {
+    "block_bits": 20480,
+    "total_blocks": 108,
+    "video_used_blocks": 39,
+    "unallocated_blocks": 69,
+    "unallocated_raw_bytes": 176640,
+    "guaranteed_ai_usable_bytes": null,
+    "note": "Raw capacity only; width/depth packing, ports, buffering and integration reserve reduce usable storage."
+  },
+  "ddr2": {
+    "configured_density_mbit": 512,
+    "configured_capacity_bytes": 67108864,
+    "dq_bits": 16,
+    "row_bits": 13,
+    "column_bits": 10,
+    "bank_bits": 2,
+    "hardware_capacity_tested": false,
+    "gui_reference_mhz": 100,
+    "top_reference_mhz": 50,
+    "gui_ddr_clock_mhz": 533.3,
+    "routed_ddr_clock_mhz": 266.667,
+    "routed_ui_clock_mhz": 66.667,
+    "ui_data_bits": 128,
+    "effective_bandwidth_measured_bytes_s": null,
+    "theoretical_peak_bytes_s": 1066666666.6666666,
+    "theoretical_peak_basis": "50MHz * 32 / 3 / 2 DDR CK; double data rate x16; matches routed STA. UI128 x 66.6667MHz. Clock not physically measured.",
+    "frame_bytes": 2764800,
+    "frame_base_mc_word_addresses": [
+      0,
+      7000000,
+      14000000,
+      21000000
+    ],
+    "mc_word_address_bytes": 2,
+    "address_unit_evidence": "MC_ADDR_WIDTH=25 equals row13+col10+bank2; +8 address per128b transaction; inferred x16 word units",
+    "frame_base_inferred_byte_addresses": [
+      0,
+      14000000,
+      28000000,
+      42000000
+    ],
+    "frame_payload_total_bytes": 11059200,
+    "frame_reserved_span_conservative_bytes": 44764800,
+    "contiguous_tail_above_last_frame_bytes": 22344064,
+    "tail_allocated_to_ai": false
+  },
+  "video_bandwidth": {
+    "stored_format": "packed RGB888; 16 pixels occupy 3x128bit words",
+    "output_timing_total": [
+      1650,
+      750
+    ],
+    "pixel_clock_nominal_hz": 75000000,
+    "hdmi_refresh_nominal_hz": 60.60606060606061,
+    "camera_rate_measured_hz": null,
+    "camera_selected_table": "uics520reg_720p60; 24MHz nominal 60fps table, actual MCLK23.809524MHz; exact sensor cadence unmeasured",
+    "camera_60fps_scenario_write_bytes_s": 165888000,
+    "hdmi_read_minimum_bytes_s": 167563636.36363637,
+    "camera60_hdmi_actual_minimum_bytes_s": 333451636.3636364,
+    "camera30_hdmi_actual_sensitivity_bytes_s": 250507636.36363637,
+    "warning": "Minimum useful pixel traffic; prefetch discarded at vsync, refresh, row misses, read/write turnarounds, FIFO arbitration and AI traffic excluded. Input60 is budget scenario, not measured fact."
+  },
+  "integration_status": "BLOCKED: G1/G2/VISUAL_APPROVED and deterministic DDR arbitration/response routing/CDC/frame contracts incomplete"
+}

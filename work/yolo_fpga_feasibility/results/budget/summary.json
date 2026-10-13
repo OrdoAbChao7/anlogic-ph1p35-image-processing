@@ -1,0 +1,33 @@
+{
+  "assumptions": {
+    "clock_mhz": 100,
+    "effective_mac_per_cycle": 16,
+    "goal_fps": 30,
+    "tile": {
+      "tn": 4,
+      "tm": 4,
+      "tr": 26,
+      "tc": 26
+    },
+    "eram20k_bytes": 2560,
+    "no_overhead_ideal_bound": true
+  },
+  "conv_calls": 79,
+  "conv_mac": 106382232,
+  "unique_parameters": 243095,
+  "ideal_16mac_ms": 66.488895,
+  "ideal_32mac_ms": 33.2444475,
+  "ideal_16mac_fps": 15.040105569509013,
+  "required_mac_per_cycle_30fps": 31.9146696,
+  "weights_int8_bytes_no_quant_metadata": 243095,
+  "weights_eram20k_blocks": 95,
+  "max_single_leaf_feature_int8_bytes": 743424,
+  "max_single_leaf_feature_eram20k_blocks": 291,
+  "tile_3x3_pingpong_input_bytes": 6272,
+  "tile_pingpong_int32_partial_bytes": 21632,
+  "tile_pingpong_total_eram20k_blocks": 11,
+  "conv_input_output_bytes_if_every_conv_spills_to_ddr": 6016483,
+  "conv_spill_ddr_mb_per_sec_at_30fps": 180.49449,
+  "standard_conv_padded_tile_cycles_only": 12204504,
+  "depthwise_excluded_from_padded_tile_cycles": 27
+}

@@ -1,0 +1,166 @@
+[
+  {
+    "image_id": 120777,
+    "input_file": "work/y1_yolo/datasets/val_subset/000000120777.jpg",
+    "weights_sha256": "bdd956aa079bf1cdd3e0090a295ac26d73c40aef7b61b6405981b1afcbea985c",
+    "input_size": [
+      352,
+      352
+    ],
+    "confidence_threshold": 0.3,
+    "nms_iou": 0.4,
+    "predictions_all_classes": [
+      {
+        "class_index": 41,
+        "class_name": "cup",
+        "confidence": 0.8925365209579468,
+        "box_xyxy_original": [
+          285.1265869140625,
+          13.191278457641602,
+          373.9787902832031,
+          136.2431640625
+        ]
+      },
+      {
+        "class_index": 60,
+        "class_name": "60",
+        "confidence": 0.7962671518325806,
+        "box_xyxy_original": [
+          -9.022712707519531,
+          9.405206680297852,
+          502.0107727050781,
+          364.0374755859375
+        ]
+      },
+      {
+        "class_index": 45,
+        "class_name": "45",
+        "confidence": 0.6896191835403442,
+        "box_xyxy_original": [
+          258.1241149902344,
+          146.2764129638672,
+          446.6496276855469,
+          310.7413024902344
+        ]
+      },
+      {
+        "class_index": 45,
+        "class_name": "45",
+        "confidence": 0.368901789188385,
+        "box_xyxy_original": [
+          56.24007797241211,
+          104.88485717773438,
+          235.24815368652344,
+          266.0989074707031
+        ]
+      }
+    ],
+    "raw_candidate_count": 1815,
+    "decoded_max_abs_diff": 0.0001220703125,
+    "official_box_count": 4,
+    "separate_box_count": 4,
+    "post_nms_max_abs_diff": 3.0517578125e-05
+  },
+  {
+    "image_id": 563882,
+    "input_file": "work/y1_yolo/datasets/val_subset/000000563882.jpg",
+    "weights_sha256": "bdd956aa079bf1cdd3e0090a295ac26d73c40aef7b61b6405981b1afcbea985c",
+    "input_size": [
+      352,
+      352
+    ],
+    "confidence_threshold": 0.3,
+    "nms_iou": 0.4,
+    "predictions_all_classes": [
+      {
+        "class_index": 67,
+        "class_name": "cell phone",
+        "confidence": 0.8026998043060303,
+        "box_xyxy_original": [
+          365.9472961425781,
+          227.57977294921875,
+          449.0622253417969,
+          282.9486083984375
+        ]
+      },
+      {
+        "class_index": 0,
+        "class_name": "0",
+        "confidence": 0.7244179844856262,
+        "box_xyxy_original": [
+          -9.559548377990723,
+          57.35623550415039,
+          399.4906921386719,
+          403.0951232910156
+        ]
+      },
+      {
+        "class_index": 0,
+        "class_name": "0",
+        "confidence": 0.5759463906288147,
+        "box_xyxy_original": [
+          327.2240905761719,
+          14.186273574829102,
+          637.5191040039062,
+          417.5564270019531
+        ]
+      },
+      {
+        "class_index": 0,
+        "class_name": "0",
+        "confidence": 0.5465307235717773,
+        "box_xyxy_original": [
+          2.3052561283111572,
+          -0.6901903748512268,
+          186.63743591308594,
+          266.70196533203125
+        ]
+      }
+    ],
+    "raw_candidate_count": 1815,
+    "decoded_max_abs_diff": 9.1552734375e-05,
+    "official_box_count": 4,
+    "separate_box_count": 4,
+    "post_nms_max_abs_diff": 7.62939453125e-06
+  },
+  {
+    "image_id": 119233,
+    "input_file": "work/y1_yolo/datasets/val_subset/000000119233.jpg",
+    "weights_sha256": "bdd956aa079bf1cdd3e0090a295ac26d73c40aef7b61b6405981b1afcbea985c",
+    "input_size": [
+      352,
+      352
+    ],
+    "confidence_threshold": 0.3,
+    "nms_iou": 0.4,
+    "predictions_all_classes": [
+      {
+        "class_index": 15,
+        "class_name": "15",
+        "confidence": 0.6274502873420715,
+        "box_xyxy_original": [
+          275.58673095703125,
+          126.25005340576172,
+          494.1970520019531,
+          331.7711181640625
+        ]
+      },
+      {
+        "class_index": 15,
+        "class_name": "15",
+        "confidence": 0.3843504786491394,
+        "box_xyxy_original": [
+          20.38949203491211,
+          55.274776458740234,
+          489.2482604980469,
+          270.2734069824219
+        ]
+      }
+    ],
+    "raw_candidate_count": 1815,
+    "decoded_max_abs_diff": 9.1552734375e-05,
+    "official_box_count": 2,
+    "separate_box_count": 2,
+    "post_nms_max_abs_diff": 1.52587890625e-05
+  }
+]

@@ -1,0 +1,111 @@
+{
+  "tool": "Tang Dynasty V6.2.168116",
+  "device": "PH1P35MDG324",
+  "speed": 3,
+  "clock_period_ns": 10,
+  "hardware_tested": false,
+  "bitstream_generated": false,
+  "configs": {
+    "core9": {
+      "Setup WNS": 355,
+      "Setup TNS": 0,
+      "Hold WNS": 26,
+      "Hold TNS": 0,
+      "#slices": 217,
+      "#RAMs": 0,
+      "#DSPs": 9,
+      "sta_coverage": "95.83%",
+      "warnings": {
+        "syn": [
+          "SYN-6021 CRITICAL-WARNING: 22 out of 22 logical ports has no user assigned specific location constraint."
+        ],
+        "phy": []
+      },
+      "syn_completed": true,
+      "phy_completed": true
+    },
+    "packed2": {
+      "Setup WNS": -3000,
+      "Setup TNS": -22532,
+      "Hold WNS": 44,
+      "Hold TNS": 0,
+      "#slices": 31,
+      "#RAMs": 0,
+      "#DSPs": 1,
+      "sta_coverage": "96.57%",
+      "warnings": {
+        "syn": [
+          "PRJ-5611 WARNING: ../../../cal_mul_int8_x2_dsp.v and ../../../cal_mul_int8_x2.v have the same CompileOrder value.",
+          "SYN-6021 CRITICAL-WARNING: 57 out of 57 logical ports has no user assigned specific location constraint."
+        ],
+        "phy": [
+          "PRJ-5611 WARNING: ../../../cal_mul_int8_x2_dsp.v and ../../../cal_mul_int8_x2.v have the same CompileOrder value."
+        ]
+      },
+      "syn_completed": true,
+      "phy_completed": true
+    },
+    "ram1024x32": {
+      "Setup WNS": -2549,
+      "Setup TNS": -27178,
+      "Hold WNS": 3741,
+      "Hold TNS": 0,
+      "#slices": 0,
+      "#RAMs": 2,
+      "#DSPs": 0,
+      "sta_coverage": "35.77%",
+      "warnings": {
+        "syn": [
+          "SYN-6021 CRITICAL-WARNING: 86 out of 86 logical ports has no user assigned specific location constraint."
+        ],
+        "phy": []
+      },
+      "syn_completed": true,
+      "phy_completed": true
+    },
+    "packed2_registered": {
+      "Setup WNS": -1046,
+      "Setup TNS": -4439,
+      "Hold WNS": 54,
+      "Hold TNS": 0,
+      "#slices": 61,
+      "#RAMs": 0,
+      "#DSPs": 1,
+      "sta_coverage": "97.19%",
+      "warnings": {
+        "syn": [
+          "PRJ-5611 WARNING: ../../../cal_mul_int8_x2.v and ../../../probe_wrappers.v have the same CompileOrder value.",
+          "PRJ-5611 WARNING: ../../../cal_mul_int8_x2_dsp.v and ../../../cal_mul_int8_x2.v have the same CompileOrder value.",
+          "SYN-6021 CRITICAL-WARNING: 57 out of 57 logical ports has no user assigned specific location constraint."
+        ],
+        "phy": [
+          "PRJ-5611 WARNING: ../../../cal_mul_int8_x2.v and ../../../probe_wrappers.v have the same CompileOrder value.",
+          "PRJ-5611 WARNING: ../../../cal_mul_int8_x2_dsp.v and ../../../cal_mul_int8_x2.v have the same CompileOrder value."
+        ]
+      },
+      "syn_completed": true,
+      "phy_completed": true
+    },
+    "ram1024x32_registered": {
+      "Setup WNS": 778,
+      "Setup TNS": 0,
+      "Hold WNS": 312,
+      "Hold TNS": 0,
+      "#slices": 16,
+      "#RAMs": 2,
+      "#DSPs": 0,
+      "sta_coverage": "48.14%",
+      "warnings": {
+        "syn": [
+          "PRJ-5611 WARNING: ../../../int8_core.v and ../../../probe_wrappers.v have the same CompileOrder value.",
+          "SYN-6021 CRITICAL-WARNING: 86 out of 86 logical ports has no user assigned specific location constraint."
+        ],
+        "phy": [
+          "PRJ-5611 WARNING: ../../../int8_core.v and ../../../probe_wrappers.v have the same CompileOrder value."
+        ]
+      },
+      "syn_completed": true,
+      "phy_completed": true
+    }
+  }
+}

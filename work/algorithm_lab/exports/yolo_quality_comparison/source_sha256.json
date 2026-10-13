@@ -1,0 +1,11 @@
+{
+  "work/algorithm_lab/app.py": "48eaf34f9857180fbcc2d6902fd1a7c4049fb5e3b1a20ed654b3522b32ac4e08",
+  "work/algorithm_lab/plugins/yolo_reference.py": "b86e7a3e2a7ce9ce89873c6004348c23d4b5be1eedc80c15dc37c6ca5f1446b5",
+  "work/algorithm_lab/static/index.html": "d7e69c97209244479a862a6462e6e41b9bd2918f575bee161af6c9454da05994",
+  "work/algorithm_lab/registry.json": "67f9798ab9ea93bd5e7ba6ddc16caee82e90dc6d6b404da305b995eb0807439a",
+  "work/algorithm_lab/test_yolo.py": "bc613e61a2fec77ba1749dd0a82ff1740e48ecb5056322a9ace0328beda41388",
+  "work/algorithm_lab/compare_yolo_models.py": "93dd7ec97f0441184ef6a98a3f5c03f7a98402ae0349cff80b10b7035e711771",
+  "work/algorithm_lab/rescore_yolo_coco.py": "d03d1d5b79da6763e133f2663985b27887874eaa99673b7c1384da18d93565da",
+  "work/y1_yolo/evaluate.py": "d59f27d0a59a19efbac2d926bc0e9cc55fdb240abe029fff94231dd55c858496",
+  "work/algorithm_lab/requirements.txt": "634cf7fcc98494315e0b79c372966c2dc68f76f45d172a52d551c0766bb682e6"
+}

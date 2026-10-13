@@ -23,6 +23,7 @@ from plugins.threshold import ThresholdAlgorithm
 from plugins.sobel import SobelAlgorithm
 from plugins.cartoon import CartoonAlgorithm
 from plugins.fastestdet import FastestDetAlgorithm
+from plugins.yolo_reference import YoloReferenceAlgorithm
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
@@ -51,6 +52,7 @@ PLUGIN_INSTANCES: Dict[str, BaseAlgorithm] = {
     "grayscale": GrayscaleAlgorithm(),
 }
 DETECTION_PLUGIN = FastestDetAlgorithm()
+QUALITY_DETECTION_PLUGIN = YoloReferenceAlgorithm()
 Y2_MODELS = {}
 
 
@@ -107,8 +109,8 @@ async def yolo_upload(file: UploadFile = File(...)):
 class YoloProcessRequest(BaseModel):
     sample_id: str
     confidence: float = 0.25
-    resolution: int = 352
-    model: str = "fastestdet_y1"
+    resolution: int | None = None
+    model: str = "ultralytics_yolov8n"
 
 
 def yolo_input_path(sample_id: str) -> Path:
@@ -124,23 +126,134 @@ def yolo_input_path(sample_id: str) -> Path:
     raise HTTPException(status_code=404, detail="Unknown Y1 sample")
 
 
+YOLO8_MODEL = None
+FASTESTV2_MODEL = None
+FASTESTV2_CFG = None
+FASTESTV2_NAMES = None
+
+
+def get_yolov8():
+    global YOLO8_MODEL
+    if YOLO8_MODEL is None:
+        from ultralytics import YOLO
+        weights = BASE_DIR / "yolov8n.pt"
+        if not weights.is_file():
+            raise HTTPException(status_code=503, detail="Missing local YOLOv8n weights: work/algorithm_lab/yolov8n.pt")
+        YOLO8_MODEL = YOLO(str(weights))
+    return YOLO8_MODEL
+
+
+def get_yolo_fastestv2():
+    global FASTESTV2_MODEL, FASTESTV2_CFG, FASTESTV2_NAMES
+    if FASTESTV2_MODEL is None:
+        import sys
+        import torch
+        v2_dir = Y1_DIR / "Yolo-FastestV2"
+        if str(v2_dir) not in sys.path:
+            sys.path.insert(0, str(v2_dir))
+        import model.detector
+        import utils.utils
+        FASTESTV2_CFG = utils.utils.load_datafile(str(v2_dir / "data" / "coco.data"))
+        FASTESTV2_CFG["names"] = str(v2_dir / "data" / "coco.names")
+        with open(FASTESTV2_CFG["names"], "r", encoding="utf-8") as f:
+            FASTESTV2_NAMES = [line.strip() for line in f]
+        det = model.detector.Detector(FASTESTV2_CFG["classes"], FASTESTV2_CFG["anchor_num"], False)
+        weights_path = Y1_DIR / "yolo_fastestv2_coco.pth"
+        det.load_state_dict(torch.load(weights_path, map_location="cpu", weights_only=True))
+        det.eval()
+        FASTESTV2_MODEL = det
+    return FASTESTV2_MODEL, FASTESTV2_CFG, FASTESTV2_NAMES
+
+
+def yolov8_detect(image_bgr, conf_thresh, imgsz=640):
+    start = time.perf_counter()
+    model = get_yolov8()
+    results = model.predict(image_bgr, imgsz=imgsz, conf=conf_thresh, verbose=False)[0]
+    elapsed = (time.perf_counter() - start) * 1000.0
+    detections = []
+    target_map = {39: "bottle", 41: "cup", 67: "cell phone"}
+    for box in results.boxes:
+        cls_id = int(box.cls[0])
+        score = float(box.conf[0])
+        if cls_id in target_map:
+            xyxy = [round(float(x), 2) for x in box.xyxy[0].tolist()]
+            detections.append({
+                "class": target_map[cls_id],
+                "confidence": round(score, 4),
+                "box": xyxy
+            })
+    return detections, elapsed
+
+
+def yolo_fastestv2_detect(image_bgr, conf_thresh):
+    start = time.perf_counter()
+    import sys
+    import torch
+    v2_dir = Y1_DIR / "Yolo-FastestV2"
+    if str(v2_dir) not in sys.path:
+        sys.path.insert(0, str(v2_dir))
+    import utils.utils
+    model, cfg, names = get_yolo_fastestv2()
+    h, w = image_bgr.shape[:2]
+    res_img = cv2.resize(image_bgr, (cfg["width"], cfg["height"]), interpolation=cv2.INTER_LINEAR)
+    inp = res_img.reshape(1, cfg["height"], cfg["width"], 3).transpose(0, 3, 1, 2)
+    inp = torch.from_numpy(inp).float() / 255.0
+    with torch.inference_mode():
+        preds = model(inp)
+    out = utils.utils.handel_preds(preds, cfg, torch.device("cpu"))
+    boxes = utils.utils.non_max_suppression(out, conf_thres=conf_thresh, iou_thres=0.4)[0]
+    elapsed = (time.perf_counter() - start) * 1000.0
+    scale_h, scale_w = h / cfg["height"], w / cfg["width"]
+    target_3 = {"bottle", "cup", "cell phone"}
+    detections = []
+    for b in boxes:
+        cls_name = names[int(b[5])]
+        if cls_name in target_3:
+            box = [round(float(b[0] * scale_w), 2), round(float(b[1] * scale_h), 2),
+                   round(float(b[2] * scale_w), 2), round(float(b[3] * scale_h), 2)]
+            detections.append({
+                "class": cls_name,
+                "confidence": round(float(b[4]), 4),
+                "box": box
+            })
+    return detections, elapsed
+
+
 @app.post("/api/yolo/process")
 def yolo_process(req: YoloProcessRequest):
-    if not 0.01 <= req.confidence <= 0.99 or req.model not in ("fastestdet_y1", "microdet_y2"):
+    allowed_models = ("fastestdet_y1", "microdet_y2", "ultralytics_yolov8n", "ultralytics_yolov8m", "yolo_fastestv2")
+    if not 0.01 <= req.confidence <= 0.99 or req.model not in allowed_models:
         raise HTTPException(status_code=400, detail="Invalid confidence or resolution")
-    if (req.model == "fastestdet_y1" and req.resolution not in (352, 160, 128, 96)) or \
-       (req.model == "microdet_y2" and req.resolution not in (160, 128, 96)):
-        raise HTTPException(status_code=400, detail="Invalid model resolution")
-    if req.model == "fastestdet_y1":
+    defaults = {"ultralytics_yolov8m": 640, "ultralytics_yolov8n": 640, "fastestdet_y1": 352,
+                "yolo_fastestv2": 352, "microdet_y2": 160}
+    sizes = {"ultralytics_yolov8m": (640, 960), "ultralytics_yolov8n": (960, 640, 352, 160, 128, 96),
+             "fastestdet_y1": (352, 160, 128, 96),
+             "yolo_fastestv2": (352,), "microdet_y2": (160, 128, 96)}
+    if req.resolution is None:
+        req = req.model_copy(update={"resolution": defaults[req.model]})
+    if req.resolution not in sizes[req.model]:
+        raise HTTPException(status_code=400, detail=f"Unsupported resolution for {req.model}: {req.resolution}")
+    import sys
+    if str(Y1_DIR) not in sys.path:
+        sys.path.insert(0, str(Y1_DIR))
+    from fastestdet_runtime import draw
+    if req.model == "ultralytics_yolov8m":
+        detector = lambda frame: QUALITY_DETECTION_PLUGIN.detect_bgr(frame, params)
+        out_root, asset_route = Y1_LAB_DIR, "/y1-assets"
+    elif req.model == "ultralytics_yolov8n":
+        detector = lambda frame: yolov8_detect(frame, req.confidence, req.resolution)
+        out_root, asset_route = Y1_LAB_DIR, "/y1-assets"
+    elif req.model == "yolo_fastestv2":
+        detector = lambda frame: yolo_fastestv2_detect(frame, req.confidence)
+        out_root, asset_route = Y1_LAB_DIR, "/y1-assets"
+    elif req.model == "fastestdet_y1":
         DETECTION_PLUGIN.detector
-        from fastestdet_runtime import draw
         detector = lambda frame: DETECTION_PLUGIN.detect_bgr(frame, params)
         out_root, asset_route = Y1_LAB_DIR, "/y1-assets"
     else:
         import sys
         if str(Y2_DIR) not in sys.path:
             sys.path.insert(0, str(Y2_DIR))
-        from microdet import draw
         detector = lambda frame: y2_detect(frame, req.resolution, req.confidence)
         out_root, asset_route = Y2_LAB_DIR, "/y2-assets"
     source = yolo_input_path(req.sample_id)
@@ -181,10 +294,15 @@ def yolo_process(req: YoloProcessRequest):
         result = {"kind": "image", "detections": detections,
                   "forward_ms": round(forward_ms, 3),
                   "annotated_url": f"{asset_route}/{run_id}/annotated.jpg"}
+    model_labels = {
+        "ultralytics_yolov8m": "Ultralytics YOLOv8m COCO 80-class; PC visual reference only",
+        "ultralytics_yolov8n": "Ultralytics YOLOv8n original COCO 80-class; output filtered to 3 classes",
+        "fastestdet_y1": "FastestDet original COCO 80-class; output filtered to 3 classes",
+        "yolo_fastestv2": "YOLO-FastestV2 original COCO 80-class; output filtered to 3 classes",
+        "microdet_y2": f"Y2 MicroDet three-class trained at {req.resolution}; quality gate failed",
+    }
     result.update({"run_id": run_id, "sample_id": req.sample_id, "params": params,
-                   "model": ("FastestDet original 80-class COCO; output filtered to 3 classes"
-                             if req.model == "fastestdet_y1" else
-                             f"Y2 MicroDet three-class trained at {req.resolution}"),
+                   "model": model_labels[req.model],
                    "stage": "VISUAL_REVIEW_PENDING",
                    "export_url": f"/api/yolo/export/{run_id}"})
     (out_dir / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2),
@@ -205,7 +323,7 @@ def yolo_export(run_id: str):
         for path in out_dir.iterdir():
             if path != archive and path.is_file():
                 z.write(path, path.name)
-    label = "microdet_y2" if out_dir.parent == Y2_LAB_DIR else "fastestdet_y1"
+    label = json.loads((out_dir / "result.json").read_text(encoding="utf-8"))["params"]["model"]
     return FileResponse(archive, filename=f"{label}_{run_id}.zip")
 
 

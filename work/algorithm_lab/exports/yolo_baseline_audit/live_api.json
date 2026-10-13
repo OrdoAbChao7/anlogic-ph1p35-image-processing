@@ -1,0 +1,37 @@
+{
+  "kind": "image",
+  "detections": [
+    {
+      "class": "cell phone",
+      "confidence": 0.8364,
+      "box": [
+        364.11,
+        233.89,
+        449.49,
+        274.54
+      ]
+    },
+    {
+      "class": "cell phone",
+      "confidence": 0.3999,
+      "box": [
+        364.45,
+        233.57,
+        450.26,
+        291.53
+      ]
+    }
+  ],
+  "forward_ms": 4742.744,
+  "annotated_url": "/y1-assets/9aaf1339db8d44d79aecba6bdcc4bfb4/annotated.jpg",
+  "run_id": "9aaf1339db8d44d79aecba6bdcc4bfb4",
+  "sample_id": "563882",
+  "params": {
+    "confidence": 0.25,
+    "resolution": 640,
+    "model": "ultralytics_yolov8n"
+  },
+  "model": "Ultralytics YOLOv8n original COCO 80-class; output filtered to 3 classes",
+  "stage": "VISUAL_REVIEW_PENDING",
+  "export_url": "/api/yolo/export/9aaf1339db8d44d79aecba6bdcc4bfb4"
+}

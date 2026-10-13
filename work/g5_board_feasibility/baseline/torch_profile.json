@@ -1,0 +1,2196 @@
+{
+  "unfused_parameter_elements": 25902640,
+  "fused_parameter_elements": 25886080,
+  "conv_mac": 39468364800,
+  "layers": [
+    {
+      "name": "model.0.conv",
+      "input": [
+        1,
+        3,
+        640,
+        640
+      ],
+      "output": [
+        1,
+        48,
+        320,
+        320
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 1,
+      "weight_elements": 1296,
+      "mac": 132710400
+    },
+    {
+      "name": "model.1.conv",
+      "input": [
+        1,
+        48,
+        320,
+        320
+      ],
+      "output": [
+        1,
+        96,
+        160,
+        160
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 1,
+      "weight_elements": 41472,
+      "mac": 1061683200
+    },
+    {
+      "name": "model.2.cv1.conv",
+      "input": [
+        1,
+        96,
+        160,
+        160
+      ],
+      "output": [
+        1,
+        96,
+        160,
+        160
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 9216,
+      "mac": 235929600
+    },
+    {
+      "name": "model.2.m.0.cv1.conv",
+      "input": [
+        1,
+        48,
+        160,
+        160
+      ],
+      "output": [
+        1,
+        48,
+        160,
+        160
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 20736,
+      "mac": 530841600
+    },
+    {
+      "name": "model.2.m.0.cv2.conv",
+      "input": [
+        1,
+        48,
+        160,
+        160
+      ],
+      "output": [
+        1,
+        48,
+        160,
+        160
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 20736,
+      "mac": 530841600
+    },
+    {
+      "name": "model.2.m.1.cv1.conv",
+      "input": [
+        1,
+        48,
+        160,
+        160
+      ],
+      "output": [
+        1,
+        48,
+        160,
+        160
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 20736,
+      "mac": 530841600
+    },
+    {
+      "name": "model.2.m.1.cv2.conv",
+      "input": [
+        1,
+        48,
+        160,
+        160
+      ],
+      "output": [
+        1,
+        48,
+        160,
+        160
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 20736,
+      "mac": 530841600
+    },
+    {
+      "name": "model.2.cv2.conv",
+      "input": [
+        1,
+        192,
+        160,
+        160
+      ],
+      "output": [
+        1,
+        96,
+        160,
+        160
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 18432,
+      "mac": 471859200
+    },
+    {
+      "name": "model.3.conv",
+      "input": [
+        1,
+        96,
+        160,
+        160
+      ],
+      "output": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 1,
+      "weight_elements": 165888,
+      "mac": 1061683200
+    },
+    {
+      "name": "model.4.cv1.conv",
+      "input": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 36864,
+      "mac": 235929600
+    },
+    {
+      "name": "model.4.m.0.cv1.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.4.m.0.cv2.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.4.m.1.cv1.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.4.m.1.cv2.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.4.m.2.cv1.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.4.m.2.cv2.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.4.m.3.cv1.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.4.m.3.cv2.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.4.cv2.conv",
+      "input": [
+        1,
+        576,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 110592,
+      "mac": 707788800
+    },
+    {
+      "name": "model.5.conv",
+      "input": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 1,
+      "weight_elements": 663552,
+      "mac": 1061683200
+    },
+    {
+      "name": "model.6.cv1.conv",
+      "input": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 147456,
+      "mac": 235929600
+    },
+    {
+      "name": "model.6.m.0.cv1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.6.m.0.cv2.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.6.m.1.cv1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.6.m.1.cv2.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.6.m.2.cv1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.6.m.2.cv2.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.6.m.3.cv1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.6.m.3.cv2.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.6.cv2.conv",
+      "input": [
+        1,
+        1152,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 442368,
+      "mac": 707788800
+    },
+    {
+      "name": "model.7.conv",
+      "input": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 1,
+      "weight_elements": 1990656,
+      "mac": 796262400
+    },
+    {
+      "name": "model.8.cv1.conv",
+      "input": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 132710400
+    },
+    {
+      "name": "model.8.m.0.cv1.conv",
+      "input": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 746496,
+      "mac": 298598400
+    },
+    {
+      "name": "model.8.m.0.cv2.conv",
+      "input": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 746496,
+      "mac": 298598400
+    },
+    {
+      "name": "model.8.m.1.cv1.conv",
+      "input": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 746496,
+      "mac": 298598400
+    },
+    {
+      "name": "model.8.m.1.cv2.conv",
+      "input": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 746496,
+      "mac": 298598400
+    },
+    {
+      "name": "model.8.cv2.conv",
+      "input": [
+        1,
+        1152,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 663552,
+      "mac": 265420800
+    },
+    {
+      "name": "model.9.cv1.conv",
+      "input": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 165888,
+      "mac": 66355200
+    },
+    {
+      "name": "model.9.cv2.conv",
+      "input": [
+        1,
+        1152,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 663552,
+      "mac": 265420800
+    },
+    {
+      "name": "model.12.cv1.conv",
+      "input": [
+        1,
+        960,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 368640,
+      "mac": 589824000
+    },
+    {
+      "name": "model.12.m.0.cv1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.12.m.0.cv2.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.12.m.1.cv1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.12.m.1.cv2.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.12.cv2.conv",
+      "input": [
+        1,
+        768,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 294912,
+      "mac": 471859200
+    },
+    {
+      "name": "model.15.cv1.conv",
+      "input": [
+        1,
+        576,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 110592,
+      "mac": 707788800
+    },
+    {
+      "name": "model.15.m.0.cv1.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.15.m.0.cv2.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.15.m.1.cv1.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.15.m.1.cv2.conv",
+      "input": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        96,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 82944,
+      "mac": 530841600
+    },
+    {
+      "name": "model.15.cv2.conv",
+      "input": [
+        1,
+        384,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 73728,
+      "mac": 471859200
+    },
+    {
+      "name": "model.16.conv",
+      "input": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.18.cv1.conv",
+      "input": [
+        1,
+        576,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 221184,
+      "mac": 353894400
+    },
+    {
+      "name": "model.18.m.0.cv1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.18.m.0.cv2.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.18.m.1.cv1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.18.m.1.cv2.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.18.cv2.conv",
+      "input": [
+        1,
+        768,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 294912,
+      "mac": 471859200
+    },
+    {
+      "name": "model.19.conv",
+      "input": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        384,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        2,
+        2
+      ],
+      "groups": 1,
+      "weight_elements": 1327104,
+      "mac": 530841600
+    },
+    {
+      "name": "model.21.cv1.conv",
+      "input": [
+        1,
+        960,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 552960,
+      "mac": 221184000
+    },
+    {
+      "name": "model.21.m.0.cv1.conv",
+      "input": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 746496,
+      "mac": 298598400
+    },
+    {
+      "name": "model.21.m.0.cv2.conv",
+      "input": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 746496,
+      "mac": 298598400
+    },
+    {
+      "name": "model.21.m.1.cv1.conv",
+      "input": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 746496,
+      "mac": 298598400
+    },
+    {
+      "name": "model.21.m.1.cv2.conv",
+      "input": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        288,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 746496,
+      "mac": 298598400
+    },
+    {
+      "name": "model.21.cv2.conv",
+      "input": [
+        1,
+        1152,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 663552,
+      "mac": 265420800
+    },
+    {
+      "name": "model.22.cv2.0.0.conv",
+      "input": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        64,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 110592,
+      "mac": 707788800
+    },
+    {
+      "name": "model.22.cv2.0.1.conv",
+      "input": [
+        1,
+        64,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        64,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 36864,
+      "mac": 235929600
+    },
+    {
+      "name": "model.22.cv2.0.2",
+      "input": [
+        1,
+        64,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        64,
+        80,
+        80
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 4096,
+      "mac": 26214400
+    },
+    {
+      "name": "model.22.cv2.1.0.conv",
+      "input": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        64,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 221184,
+      "mac": 353894400
+    },
+    {
+      "name": "model.22.cv2.1.1.conv",
+      "input": [
+        1,
+        64,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        64,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 36864,
+      "mac": 58982400
+    },
+    {
+      "name": "model.22.cv2.1.2",
+      "input": [
+        1,
+        64,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        64,
+        40,
+        40
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 4096,
+      "mac": 6553600
+    },
+    {
+      "name": "model.22.cv2.2.0.conv",
+      "input": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        64,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 132710400
+    },
+    {
+      "name": "model.22.cv2.2.1.conv",
+      "input": [
+        1,
+        64,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        64,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 36864,
+      "mac": 14745600
+    },
+    {
+      "name": "model.22.cv2.2.2",
+      "input": [
+        1,
+        64,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        64,
+        20,
+        20
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 4096,
+      "mac": 1638400
+    },
+    {
+      "name": "model.22.cv3.0.0.conv",
+      "input": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 2123366400
+    },
+    {
+      "name": "model.22.cv3.0.1.conv",
+      "input": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 2123366400
+    },
+    {
+      "name": "model.22.cv3.0.2",
+      "input": [
+        1,
+        192,
+        80,
+        80
+      ],
+      "output": [
+        1,
+        80,
+        80,
+        80
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 15360,
+      "mac": 98304000
+    },
+    {
+      "name": "model.22.cv3.1.0.conv",
+      "input": [
+        1,
+        384,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 663552,
+      "mac": 1061683200
+    },
+    {
+      "name": "model.22.cv3.1.1.conv",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 530841600
+    },
+    {
+      "name": "model.22.cv3.1.2",
+      "input": [
+        1,
+        192,
+        40,
+        40
+      ],
+      "output": [
+        1,
+        80,
+        40,
+        40
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 15360,
+      "mac": 24576000
+    },
+    {
+      "name": "model.22.cv3.2.0.conv",
+      "input": [
+        1,
+        576,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        192,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 995328,
+      "mac": 398131200
+    },
+    {
+      "name": "model.22.cv3.2.1.conv",
+      "input": [
+        1,
+        192,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        192,
+        20,
+        20
+      ],
+      "kernel": [
+        3,
+        3
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 331776,
+      "mac": 132710400
+    },
+    {
+      "name": "model.22.cv3.2.2",
+      "input": [
+        1,
+        192,
+        20,
+        20
+      ],
+      "output": [
+        1,
+        80,
+        20,
+        20
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 15360,
+      "mac": 6144000
+    },
+    {
+      "name": "model.22.dfl.conv",
+      "input": [
+        1,
+        16,
+        4,
+        8400
+      ],
+      "output": [
+        1,
+        1,
+        4,
+        8400
+      ],
+      "kernel": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "weight_elements": 16,
+      "mac": 537600
+    }
+  ],
+  "output": [
+    1,
+    84,
+    8400
+  ]
+}

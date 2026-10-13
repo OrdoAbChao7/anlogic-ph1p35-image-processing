@@ -1,0 +1,7 @@
+/upstream/
+/data/images/
+/results/**/*.jpg
+/results/**/*.png
+/results/**/*.vvp
+/results/**/*.npz
+/results/rtl/*.v

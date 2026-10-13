@@ -1,0 +1,56 @@
+[
+  {
+    "kind": "image",
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.7777,
+        "box": [
+          365.1,
+          233.12,
+          449.3,
+          273.78
+        ]
+      }
+    ],
+    "forward_ms": 3177.171,
+    "annotated_url": "/y1-assets/10494301965b4b0baa53e0e90329544c/annotated.jpg",
+    "run_id": "10494301965b4b0baa53e0e90329544c",
+    "sample_id": "563882",
+    "params": {
+      "confidence": 0.25,
+      "resolution": 640,
+      "model": "ultralytics_yolov8m"
+    },
+    "model": "Ultralytics YOLOv8m COCO 80-class; PC visual reference only",
+    "stage": "VISUAL_REVIEW_PENDING",
+    "export_url": "/api/yolo/export/10494301965b4b0baa53e0e90329544c"
+  },
+  {
+    "kind": "image",
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.679,
+        "box": [
+          365.64,
+          233.03,
+          449.56,
+          273.62
+        ]
+      }
+    ],
+    "forward_ms": 378.145,
+    "annotated_url": "/y1-assets/fa526dbe4ad44f8ead97663d61698543/annotated.jpg",
+    "run_id": "fa526dbe4ad44f8ead97663d61698543",
+    "sample_id": "563882",
+    "params": {
+      "confidence": 0.25,
+      "resolution": 960,
+      "model": "ultralytics_yolov8m"
+    },
+    "model": "Ultralytics YOLOv8m COCO 80-class; PC visual reference only",
+    "stage": "VISUAL_REVIEW_PENDING",
+    "export_url": "/api/yolo/export/fa526dbe4ad44f8ead97663d61698543"
+  }
+]

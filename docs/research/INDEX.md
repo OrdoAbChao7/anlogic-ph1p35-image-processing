@@ -44,7 +44,9 @@
 - [HDMI 时序](mipi-video/hdmi-timing.md)
 - [DDR 帧缓存](mipi-video/ddr-framebuffer.md)
 - [图像算法](algorithms/)
-- [GitHub 参考工程](github/repositories.md)
+- [GitHub 参考工程总表及速查指引](github/repositories.md)
+- [安路 FPGA 工业视觉开源参考库 (6 仓库)](OPEN_SOURCE.md#2026-10-13-安路-fpga-工业视觉参考工程专项已完整克隆与源码审计)
+- [开源算法与 RTL 参考索引 (OPEN_SOURCE.md)](OPEN_SOURCE.md)
 - [资料缺口](known-gaps.md)
 - [质量检查规则](quality-check.md)
 

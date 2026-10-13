@@ -13,6 +13,15 @@
 # Keep source notes and reproducible documentation in the repository instead.
 /HX1P35A2026/
 
+# Local reference repositories and third-party mirrors
+reference/
+
+# Large model weights and binary packages
+*.pt
+*.onnx
+*.whl
+work/y1_yolo/*.pth
+
 # Generated outputs and local scratch data
 preboard/output/
 work/output/

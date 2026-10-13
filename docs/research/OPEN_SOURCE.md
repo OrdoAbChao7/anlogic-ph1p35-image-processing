@@ -172,3 +172,129 @@
 ## 2026-10-12 Y1 三个目标检测原始仓库复核
 
 固定 Commit、许可证、预训练权重、检测头、算子和硬件成本见 [Y1 实验报告](../experiments/2026-10-12-y1-fastestdet.md)。FastestDet@50473cd155cb088aa4a99e64ff6a4b3c24fa07e1 为 BSD-3-Clause，仓库有 COCO 80 类权重与 ONNX；Yolo-FastestV2@ac2a5e3060bff76dd1e45f9b921dd77bfbeb194d 仓库无许可证文件但有 COCO 权重；TinyissimoYOLO@19bea4bd1ea1e2c29a6ee6b14bd7494ce8c6ba25 仓库无顶层许可证和可直接使用的预训练权重，含基于 Ultralytics 的代码与 AGPL 声明。后两者只作结构参考。FastestDet 软件复现结果表明原模型直接移植 PH1P35 为 NO-GO；Y2 应先研究三类微型网络训练。
+
+---
+
+## 2026-10-12 深度评估：adamgallas/fpga_accelerator_yolov3tiny
+
+本地路径：`reference/fpga_accelerator_yolov3tiny/`  
+Commit: `6ba312bd220e67a987d3417bacd030db30b15770`  
+License: **Apache-2.0** ✅  
+适配等级：**B（核心计算模块与量化截断可直接参考，控制通路需解耦）**
+
+### 1. 仓库背景与价值
+- **来源**：2021年全国大学生集成电路创新创业大赛（DIGILENT杯）一等奖作品。
+- **架构**：纯 Verilog 实现通用卷积硬件加速器，部署 YOLOv3-tiny（包含口罩识别、安全帽识别 Demo），基于 Angel-Eye / Going Deeper 等经典 FPGA CNN 加速器架构。
+- **性能与指标**：INT8 量化，24K LUT，23K FF，40 BRAM36K，296 DSP48（基于 Xilinx ZU3EG），推理延迟 <50ms。
+
+### 2. 对本项目 Goal 5 的核心参考价值
+1. **纯 Verilog 核心算子实现**（位于 `vivado_prj/source/`）：
+   - `cal_acc.v` / `module_acc_1x8.v`：累加与多通道处理。
+   - `cal_addtree_int16_x9.v` / `cal_addtree_int18_x9.v`：3×3 卷积树状加法器网络（流水线化）。
+   - `cal_mul_int8_x2.v` / `cal_mul_int8_x2_dsp.v`：INT8 乘法器结构，可方便替换为安路 DSP 原语或 LUT 乘法器。
+   - `cal_scale.v` / `cal_scale_shift.v` / `cal_sat_int16_int8.v`：量化 Scale 与 Shift 截断饱和硬件模块，与定点量化数学模型完全对应。
+   - `linebuffer_3x3_collect.v`：面向特征图卷积的 Line Buffer 结构。
+   - `module_pool_kernel.v`：2×2 Maxpooling 单元。
+2. **完整量化与权重导出工程**（`python_prj/`）：
+   - 包含 PyTorch 训练、INT8 对称/非对称量化导出二进制权重文件的方法。
+
+### 3. 安路 PH1P35 适配差异与风险
+- **控制与调度**：原工程依赖 Zynq PS（ARM CPU）通过 AXI-Lite 配置寄存器并通过 AXI DMA 搬运特征图/权重。本项目为**纯 Verilog 无软核**系统，无法直接使用其 C 语言调度器；控制通路需改造成有限状态机（FSM）或紧凑型 Micro-Sequencer。
+- **DSP 资源**：原工程使用了 296 个 DSP48，PH1P35 芯片硬件 DSP 资源较有限，需根据安路 DSP 数量裁减并行通道数（例如从 8 通道并行裁剪为更低并行度），或将部分乘法器映射至 LUT。
+
+### 4. 2026-10-12 独立仿真后的适用范围修正
+
+上文“可直接参考”“完全对应”仅表示值得研究，**不表示可直接移植或与本项目量化数学等价**。隔离 Icarus 验证见 [`../../work/yolo_fpga_feasibility/report.md`](../../work/yolo_fpga_feasibility/report.md)：原 `cal_addtree_int16_x9.v` 的 18 位和在 9 个全幅 INT8 正乘积时发生回绕；19 位隔离候选通过同一组 305 向量。乘法打包 372 向量、scale/saturation 352 向量的稳定算术结果与独立模型一致，但逐拍时序、安路 DSP 推断和网络量化尚未验证。Yolo-FastestV2 官方权重 352 输入的三类抽样效果较差，且 16 MAC/100 MHz 的理想卷积下界为 66.49 ms/帧；原版 30 fps 部署判 NO-GO。
+
+## 2026-10-12 YOLOv8 软件效果基准复核
+
+- 来源：[Ultralytics YOLOv8 官方文档](https://docs.ultralytics.com/models/yolov8/)，本机 ultralytics 8.4.175；许可 AGPL-3.0（官方同时提供商业授权）。本次仅使用官方预训练权重与现有 Python 包，不复制厂商 RTL。
+- 权重：Ultralytics assets v8.4.0/yolov8m.pt，SHA-256 5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5；代码运行实测 25,902,640 参数。
+- 定位：PC Visual Reference，640 默认、960 对照；COCO 80 类推理，仅显示 bottle/cup/cell phone。固定公开60图及不重叠55图均改善检出，但仍有漏检/误报。不得称三类效果门通过。
+- 硬件成本：仅按 INT8 每参数1字节已约25.9 MB，远大于既有视频工程名义空闲 ERAM；没有 PH1P35 整网综合/量化证据，不能作为直接上板模型。
+- 证据：work/algorithm_lab/exports/yolo_quality_comparison/，实验报告 docs/experiments/2026-10-12-yolo-quality-comparison.md。
+
+---
+
+## 2026-10-13 安路 FPGA 工业视觉参考工程专项（已完整克隆与源码审计）
+
+本地参考目录：`.tools/references/anlogic-vision/`（已受 `.gitignore` 保护，同步脚本见 `scripts/sync-anlogic-vision-references.ps1`，清单见 `.tools/references/anlogic-vision/inventory.json`）。
+
+### 1. 六个安路参考项目综合对照表
+
+| 项目编号与仓库 | 目标器件与板卡 | 核心工业视觉功能 | 源码完整度 | 验证证据等级 | 许可证状态 | 移植价值与主要使用边界 |
+|---|---|---|---|---|---|---|
+| **01 视频平台**<br>[lifeng0718/...](https://github.com/lifeng0718/Multifunctional-video-processing-platform) | PH1A90SBG484 | 四分屏、HDMI视频移动、旋转、多模式切换 | 完整 (带 TD 工程及位流) | `reference` (国一宣称，含 B 站演示) | **无 License** ⚠️ | 仅架构借鉴；器件为高端 PH1A90，不可直接移植其底层 DDR/PHY 原语 |
+| **02 算法库**<br>[maojinxiang/...](https://github.com/maojinxiang/FPGA-ANLU-National-First-Prize) | EG4S20BG256 | 3×3 腐蚀/膨胀 (`morphology_process.v`)、Sobel、浮雕、Line Buffer | 完整 (带 TD 工程及位流) | `reference` (国一宣称，含 PPT 及上位机) | **无 License** ❌ | **严禁复制代码**；3×3 两级比较树形态学流水线适合作为纯 Python/Verilog 黄金模型参考 |
+| **03 几何识别**<br>[InitialXE/...](https://github.com/InitialXE/Multi-Function-Image-Processing-PLAT) | EG4S20BG256 (SparkRoad) | 流式周长/面积统计 (`Perimeter_aera.v`)、Hu不变矩、手势判定 | 完整 (带 TD 工程) | `reference` (国二宣称，含实物照片) | **无 License** ⚠️ | 仅学习流式几何累加与面积/周长比计算；Hu矩定点除法器与高阶乘法极度消耗 DSP/LUT，需优化 |
+| **04 多目标BBox**<br>[YuxiangJia111/...](https://github.com/YuxiangJia111/FPGA_ANLU_National_First_Prize) | **PH1P35MDG324** (同款) | 连通域多目标 BBox (`digit_multi_bbox.v`)、CNN 裁剪适配器 | 完整 (带 TD 工程) | **`FAIL` 明确记录** (`route_failure_notes.md`) | **无 License** ⚠️ | **重点避坑**：布线 3 小时失败（224KB ROM 展平逻辑门）；但 3×3 采样 Bitmap + 双 Bank 连通域状态机极具启发 |
+| **05 BBox/模板匹配**<br>[zdxddmx/...](https://github.com/zdxddmx/anlogic_fpga_vision_udp) | EG4S20BG256 | 流式单目标 BBox 与蓝框叠加 (`bounding_box.v`)、运动检测、模板匹配 | 完整 (带 TD 工程) | `reference` (带上位机客户端) | **MIT** ✅ (部分子模块第三方版权) | **推荐核心参考**：单帧流式坐标极值更新 + 次帧边界绘框极简优雅，时序干净，适合直接作为 F1/F4 基准 |
+| **06 规范化基线**<br>[Aurora-520/...](https://github.com/Aurora-520/anlogic-ph1p35-vision) | **PH1P35MDG324** (同款) | 解耦架构、无乘法器 BT.601 Y、自适应二值化、双BRAM Sobel、3位色阶卡通化、Logo OSD | 完整规范 (带 TD 工程、构建与验证文档) | `project` / `reference` (规范工程) | **无独立 License** ⚠️ | **最高规范基线**：平台层与应用层彻底解耦，倒数乘法代替除法器，无乘法器 Y 提取，直接契合本项目 Goal 3/4 |
+
+---
+
+### 2. 深入源码技术分析与架构卡片
+
+#### 01_video_processing_national_prize (lifeng0718)
+- **Commit**: `c8c0c1864d24c7ea3d6e9da5bc51d5b04a00a6ea`
+- **目标器件**: Anlogic PH1A90SBG484 (PH1A 系列 90K 逻辑单元，BGA484)
+- **核心模块**: `four_channel_video_splicer.v`, `down_samping_2x2.v`, `design_top_wrapper.v`
+- **数据流与架构**: 针对多路视频源（双目、HDMI、SFP、以太网）进行 2×2 降采样后通过 DDR 仲裁写入对应显存区块，读取时根据模式控制信号产生全屏或四分屏显示时序。
+- **移植风险与边界**: 器件逻辑量和引脚数远超 PH1P35MDG324，且 DDR 控制器配置为 PH1A 专用 IP，不可直接移植；其视频多模式切换的控制状态机（FSM）与降采样流式处理结构具备高参考价值。
+
+#### 02_image_algorithm_library (maojinxiang)
+- **Commit**: `0672ee8ddff84385683afbbd799b09839f2405be`
+- **目标器件**: Anlogic EG4S20BG256 (内置 2MByte SDRAM)
+- **核心模块**: `morphology_process.v` (膨胀/腐蚀), `sobel_process.v`, `line_buffer.v`, `emboss_process.v`
+- **数据流与架构**:
+  - `morphology_process.v`: 级联 `line_buffer.v` 获取 3×3 邻域窗口。第一级流水线通过 `max2`/`min2` 组合函数计算每行最大值与最小值；第二级流水线再求 3 行极值，输出 1 拍延迟的 `dilate_out` 与 `erode_out`。
+  - 内置行计数器与边界控制，完全流式处理，无跨时钟域停顿。
+- **移植风险与边界**: **该仓库无开源许可证**，严格禁止直接复制源码。其 3×3 极值树算法非常典型，应在 PC 端 Python Algorithm Lab 验证等价数学后，由本项目从零编写等价流式 Verilog。
+
+#### 03_geometry_recognition (InitialXE)
+- **Commit**: `25ab494f8845dbf15565e8f05d64f94b9d63cd2a`
+- **目标器件**: Anlogic EG4S20BG256 (SparkRoad)
+- **核心模块**: `Perimeter_aera.v`, `Hu_Invariant_moment.v`, `Dilation_Detector.v`, `Caculate_Sobel.v`
+- **数据流与架构**:
+  - `Perimeter_aera.v`: 在设定窗口 `(150<=x<=450, 50<=y<=350)` 内，统计 Sobel 边缘像素计数作为周长 `Perimeter`（24位计数器），统计膨胀二值前景像素作为面积 `Aera`。
+  - 帧尾触发安路 IP `Divider` 计算 `Aera*10 / Perimeter` 作为形状特征比值，用于区分手势/形状。
+- **移植风险与边界**:
+  - `Hu_Invariant_moment.v` 包含 7 个不变矩的大量高位宽定点乘加与归一化除法，在 EG4/PH1P 容易造成严重的 DSP 和时序阻塞；
+  - 工业分拣推荐采用其 `Perimeter_aera.v` 的轻量统计思路（长宽比 + 面积 + 周长比），摒弃复杂的全图 Hu 矩。
+
+#### 04_ph1p35_bbox_cnn (YuxiangJia111) — 重点避坑与多目标启发
+- **Commit**: `60c11a2d9b59d0e8e9f9824e60b9b1841baf68ef`
+- **目标器件**: **Anlogic PH1P35MDG324** (与本项目完全一致)
+- **核心模块**: `digit_multi_bbox.v`, `bbox_gray_downsampler.v`, `bbox_cnn_adapter.v`, `doc/route_failure_notes.md`
+- **数据流与架构**:
+  - `digit_multi_bbox.v`: 针对 1280×720 图像，按 3×3 步长降采样得到紧凑二值 Bitmap（减少 BRAM 占用）；
+  - 采用双 Bank 内存交替工作（Ping-Pong）：一帧采集写入 Bank A，下一帧由状态机 `PR_SCAN` → `PR_MATCH` → `PR_PUBLISH` 扫描连通块并动态合并相邻行 Run，输出多达 8 个目标的 `(x_min, x_max, y_min, y_max)`。
+- **重大教训与避坑记录**:
+  - `doc/route_failure_notes.md` 披露：TD 布局布线运行 3 小时未结束而放弃；
+  - 根本原因分析：`cnn/database.v`（224 KB）用巨大的 Verilog `case` 组合逻辑存储网络权重，综合器将其展开为数十万门组合网表，彻底压垮路由引擎；另外 Demosaic 128-bit 总线与 AWB 接口未对齐导致画面三分裂。
+  - **核心启示**：特征图与权重必须严格通过 BRAM IP/MIF 实例化，严禁在 Verilog 源码中硬编码大型常量查找表！
+
+#### 05_vision_bbox_template (zdxddmx) — 单目标 BBox 推荐实践
+- **Commit**: `5595d8368e279af8cee6e5b2abb559060138780d`
+- **目标器件**: Anlogic EG4S20BG256
+- **核心模块**: `import/dual_cam/bounding_box.v`, `import/other/motion_border_overlay.v`
+- **许可证**: **MIT** (顶层明确授权)
+- **数据流与架构**:
+  - `bounding_box.v`: 像素流入时，若当前像素为二值化前景（`idata_r == 1`），单周期动态更新 `x_minr = min(x_minr, x)`, `x_maxr = max(x_maxr, x)`, `y_minr`, `y_maxr`；
+  - 帧场同步 `vsync` 边界将极值锁存至 `x_min/x_max/y_min/y_max` 供下一帧使用；
+  - 在下一帧视频流出时，当坐标落在线框边界（如 `hcout == x_min || hcout == x_max`）时，强制替换为蓝色像素 `24'h0000ff`；
+  - 同时输出中心点坐标 `coor_data = (x_max + x_min) >> 1`。
+- **移植价值**: 逻辑仅消耗数十个寄存器，无 BRAM 压力，WNS 极高，是 F1/F4 工业单目标检测框的最佳实现范例。
+
+#### 06_ph1p35_vision_baseline (Aurora-520) — 架构典范与零乘法器实现
+- **Commit**: `3ccd79f97107041dc7d6470521c80ab5be4148cf`
+- **目标器件**: **Anlogic PH1P35MDG324** (与本项目完全一致)
+- **核心模块**: `rtl/app/vision_pipeline.v`, `rtl/isp/pixel_algorithm.v`, `rtl/overlay/logo_overlay.v`
+- **数据流与架构**:
+  - 遵循与本项目极其一致的高内聚低耦合规范：将平台底层封装为 `vendor_lab1_core.v`，业务逻辑封装为 `vision_pipeline.v`；
+  - `pixel_algorithm.v`:
+    1. 灰度提取：无乘法器移位展开实现 BT.601 `Y = (77R + 150G + 29B) >> 8`；
+    2. 自适应二值化：全帧累加亮度，利用倒数乘法 `146 / 2^27`（移位加法）计算均值，彻底消除了硬件除法器；
+    3. Sobel 与卡通化：双 BRAM 行缓存，3 位色彩量化截断 + 边缘黑色融合（`24'h101010`），流水线只有 2 级延迟，时序极其干净；
+  - `logo_overlay.v`: 从片上 ROM 读取安路官方 Logo 并在 HDMI 画面右上角稳定叠加。
+- **移植价值**: 解决了本项目 Goal 3/4 的核心算子优化（无除法、无乘法器灰度、自适应阈值），应作为首选参考。

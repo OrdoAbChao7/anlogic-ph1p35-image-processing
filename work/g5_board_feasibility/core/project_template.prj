@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Version="3" Minor="2" RunTime="2026-10-04T19:25:04">
+    <Project_Created_Time></Project_Created_Time>
+    <TD_Encoding>UTF-8</TD_Encoding>
+    <TD_Version>6.2.168116</TD_Version>
+    <Name>probe</Name>
+    <HardWare>
+        <Family>PH1</Family>
+        <Device>PH1P35MDG324</Device>
+        <Speed>-3</Speed>
+    </HardWare>
+    <Source_Files>
+</Source_Files>
+    <FileSets>
+        <FileSet Name="design_1" Type="DesignFiles">
+        </FileSet>
+        <FileSet Name="constraint_1" Type="ConstrainFiles">
+        </FileSet>
+    </FileSets>
+    <TOP_MODULE>
+        <LABEL>TOP_PLACEHOLDER</LABEL>
+        <MODULE>TOP_PLACEHOLDER</MODULE>
+        <CREATEINDEX>user</CREATEINDEX>
+    </TOP_MODULE>
+    <Property>
+    </Property>
+    <Device_Settings>
+    </Device_Settings>
+    <Configurations>
+        <Control0>
+            <mclk_freq>33MHz</mclk_freq>
+        </Control0>
+        <FeatureRow>
+            <boot_mode>mspix4</boot_mode>
+        </FeatureRow>
+    </Configurations>
+</Project>

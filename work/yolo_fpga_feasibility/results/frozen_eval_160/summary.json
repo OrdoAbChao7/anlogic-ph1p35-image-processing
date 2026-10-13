@@ -1,0 +1,51 @@
+{
+  "weights_sha256": "bdd956aa079bf1cdd3e0090a295ac26d73c40aef7b61b6405981b1afcbea985c",
+  "input_size": 160,
+  "conf": 0.3,
+  "iou": 0.4,
+  "image_count": 60,
+  "classes": {
+    "bottle": {
+      "gt": 52,
+      "tp": 0,
+      "fp": 0,
+      "fn": 52,
+      "precision": 0,
+      "recall": 0.0,
+      "ap50": 0.0
+    },
+    "cup": {
+      "gt": 60,
+      "tp": 3,
+      "fp": 3,
+      "fn": 57,
+      "precision": 0.5,
+      "recall": 0.05,
+      "ap50": 0.03333333333333333
+    },
+    "cell phone": {
+      "gt": 22,
+      "tp": 0,
+      "fp": 0,
+      "fn": 22,
+      "precision": 0,
+      "recall": 0.0,
+      "ap50": 0.0
+    }
+  },
+  "macro_ap50": 0.011111111111111112,
+  "timing_ms": {
+    "forward_ms": {
+      "median": 4.915600000458653,
+      "p95": 5.452115001207858
+    },
+    "post_ms": {
+      "median": 0.7823000014468562,
+      "p95": 0.9962849995645229
+    },
+    "total_ms": {
+      "median": 5.714099999750033,
+      "p95": 6.208540000807261
+    }
+  }
+}

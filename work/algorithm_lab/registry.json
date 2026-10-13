@@ -178,5 +178,21 @@
         "action": "Trained 96/128/160 models; new 55-image holdout found only two bottle matches at 128 with 822 false positives; visual and hardware gates remain closed"
       }
     ]
+  },
+  {
+    "algorithm_id": "ultralytics_yolov8m",
+    "display_name": "YOLOv8m 软件效果基准",
+    "category": "Detection",
+    "source_reference": "Ultralytics assets v8.4.0 / yolov8m.pt",
+    "license": "AGPL-3.0",
+    "status": "VISUAL_REVIEW_PENDING",
+    "software_model_path": "work/algorithm_lab/plugins/yolo_reference.py",
+    "default_params": {
+      "resolution": 640,
+      "confidence": 0.25
+    },
+    "hardware_model_path": null,
+    "rtl_source_path": null,
+    "notes": "Official COCO 80-class model, output filtered to 3 classes. Public diagnostics improved, not application acceptance or FPGA feasibility."
   }
 ]

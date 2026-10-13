@@ -1,0 +1,543 @@
+diff --git a/docs/project/STATUS.md b/docs/project/STATUS.md
+index 27184e6..a213616 100644
+--- a/docs/project/STATUS.md
++++ b/docs/project/STATUS.md
+@@ -122,3 +122,21 @@
+ - `project`：三个模型 6,988 参数，PyTorch x86 静态 PTQ 后卷积 INT8 权重 6,436 B；量化后的新测试结论同样失败。逐层形状、MAC 和存储见 `work/y2_micro/results/`。160 输入的相邻完整特征峰值 153,600 B，紧贴本工程报告的 176,640 B 未占用 ERAM；这不是硬件综合或可用性证据。
+ - `project`：Algorithm Lab 新版在本机 `http://127.0.0.1:8503/` 提供 Y1/Y2 图片、视频、阈值、检测框和 ZIP 导出；接口冒烟通过。Y2 登记为 `SOFTWARE_IMPLEMENTED`，未获 `VISUAL_APPROVED`。
+ - `unknown`：用户稍后提供工位素材与验收数值。G1/G2 阶段门仍未通过；未改 FPGA 视频工程、核心 RTL 或长期目标，未运行 TD/生成位流。
++
++## 2026-10-12 YOLO-FastestV2 / 开源加速器隔离可行性验证
++
++- `project`：固定官方 YOLO-FastestV2 `ac2a5e3060bff76dd1e45f9b921dd77bfbeb194d` 与 COCO 80 类权重，三张指定图片官方 `test.py` 通过；独立 NumPy 解码对照通过。与现有 Y1/Y2 图像 ID 不重叠的 COCO val2017 60 图已冻结，352 输入 0.3 阈值下 bottle TP/GT 0/52、cup 3/60、cell phone 5/22。软件复现 PASS，三类效果 FAIL；见 [`../../work/yolo_fpga_feasibility/report.md`](../../work/yolo_fpga_feasibility/report.md)。
++- `project`：实际网络 243,095 唯一参数、106,382,232 卷积 MAC；16 MAC/100 MHz 理想下界 66.49 ms/帧，原版 352 输入 30 fps 路线 NO-GO。原版开源加速器 9 路 18 位求和在 305 个向量中 4 个发生整数溢出；隔离 19 位候选同组通过，未修改正式 RTL。
++- `unknown`：Yolo-FastestV2 仓库没有许可文件；INT8 网络精度、安路双乘 DSP 映射、完整活跃特征缓存、DDR2 实际带宽、综合时序和板级效果均未验证。`VISUAL_APPROVED`、G1/G2/G5 均未通过。本轮未运行 TD、未生成位流，也未改变长期目标或验收标准。
++
++## 2026-10-12 YOLO 软件测试入口修复
++
++- `project`：修复 Algorithm Lab 的 YOLOv8n 首次输入尺寸（352→640）、模型名称误标、V2 无效尺寸静默忽略、权重路径依赖和一键启动使用错误 Python 环境。7 项回归通过，实际四模型 HTTP 推理与导出通过。
++- `project`：固定公开 60 图、同权重/阈值，YOLOv8n 三类总 TP 44→63/134，FP 23→33；仍有漏检和误报，不声明效果达标。证据与复现见 [排错记录](../experiments/2026-10-12-yolo-baseline-debug.md)。
++- `unknown`：本次未获用户视觉验收，未做硬件验证；基本软件复现无需用户先提供工位素材。
++
++## 2026-10-12 YOLO 软件参考升级与计分复核
++
++- `project`：YOLOv8m 640 已接入 Algorithm Lab 默认检测页，状态 VISUAL_REVIEW_PENDING。60图正确检出63→89/134；不重叠55图63→89/131。官方crowd规则复核后60图FP26→31，55图FP21→35，不能称为效果达标。
++- `project`：修复简化计分器crowd错误，7组预测与官方COCOeval的TP/FP/FN一致；9项回归通过，新候选640/960真实HTTP推理及导出通过。见 [效果对照报告](../experiments/2026-10-12-yolo-quality-comparison.md)。
++- `unknown`：小目标、遮挡场景仍有漏检，未做用户视觉验收、INT8等价或硬件实现。25.9M参数模型仅为PC参考，G1/G2/G5阶段门不变。
+diff --git a/docs/research/OPEN_SOURCE.md b/docs/research/OPEN_SOURCE.md
+index 93fb20d..7c83757 100644
+--- a/docs/research/OPEN_SOURCE.md
++++ b/docs/research/OPEN_SOURCE.md
+@@ -172,3 +172,44 @@
+ ## 2026-10-12 Y1 三个目标检测原始仓库复核
+ 
+ 固定 Commit、许可证、预训练权重、检测头、算子和硬件成本见 [Y1 实验报告](../experiments/2026-10-12-y1-fastestdet.md)。FastestDet@50473cd155cb088aa4a99e64ff6a4b3c24fa07e1 为 BSD-3-Clause，仓库有 COCO 80 类权重与 ONNX；Yolo-FastestV2@ac2a5e3060bff76dd1e45f9b921dd77bfbeb194d 仓库无许可证文件但有 COCO 权重；TinyissimoYOLO@19bea4bd1ea1e2c29a6ee6b14bd7494ce8c6ba25 仓库无顶层许可证和可直接使用的预训练权重，含基于 Ultralytics 的代码与 AGPL 声明。后两者只作结构参考。FastestDet 软件复现结果表明原模型直接移植 PH1P35 为 NO-GO；Y2 应先研究三类微型网络训练。
++
++---
++
++## 2026-10-12 深度评估：adamgallas/fpga_accelerator_yolov3tiny
++
++本地路径：`reference/fpga_accelerator_yolov3tiny/`  
++Commit: `6ba312bd220e67a987d3417bacd030db30b15770`  
++License: **Apache-2.0** ✅  
++适配等级：**B（核心计算模块与量化截断可直接参考，控制通路需解耦）**
++
++### 1. 仓库背景与价值
++- **来源**：2021年全国大学生集成电路创新创业大赛（DIGILENT杯）一等奖作品。
++- **架构**：纯 Verilog 实现通用卷积硬件加速器，部署 YOLOv3-tiny（包含口罩识别、安全帽识别 Demo），基于 Angel-Eye / Going Deeper 等经典 FPGA CNN 加速器架构。
++- **性能与指标**：INT8 量化，24K LUT，23K FF，40 BRAM36K，296 DSP48（基于 Xilinx ZU3EG），推理延迟 <50ms。
++
++### 2. 对本项目 Goal 5 的核心参考价值
++1. **纯 Verilog 核心算子实现**（位于 `vivado_prj/source/`）：
++   - `cal_acc.v` / `module_acc_1x8.v`：累加与多通道处理。
++   - `cal_addtree_int16_x9.v` / `cal_addtree_int18_x9.v`：3×3 卷积树状加法器网络（流水线化）。
++   - `cal_mul_int8_x2.v` / `cal_mul_int8_x2_dsp.v`：INT8 乘法器结构，可方便替换为安路 DSP 原语或 LUT 乘法器。
++   - `cal_scale.v` / `cal_scale_shift.v` / `cal_sat_int16_int8.v`：量化 Scale 与 Shift 截断饱和硬件模块，与定点量化数学模型完全对应。
++   - `linebuffer_3x3_collect.v`：面向特征图卷积的 Line Buffer 结构。
++   - `module_pool_kernel.v`：2×2 Maxpooling 单元。
++2. **完整量化与权重导出工程**（`python_prj/`）：
++   - 包含 PyTorch 训练、INT8 对称/非对称量化导出二进制权重文件的方法。
++
++### 3. 安路 PH1P35 适配差异与风险
++- **控制与调度**：原工程依赖 Zynq PS（ARM CPU）通过 AXI-Lite 配置寄存器并通过 AXI DMA 搬运特征图/权重。本项目为**纯 Verilog 无软核**系统，无法直接使用其 C 语言调度器；控制通路需改造成有限状态机（FSM）或紧凑型 Micro-Sequencer。
++- **DSP 资源**：原工程使用了 296 个 DSP48，PH1P35 芯片硬件 DSP 资源较有限，需根据安路 DSP 数量裁减并行通道数（例如从 8 通道并行裁剪为更低并行度），或将部分乘法器映射至 LUT。
++
++### 4. 2026-10-12 独立仿真后的适用范围修正
++
++上文“可直接参考”“完全对应”仅表示值得研究，**不表示可直接移植或与本项目量化数学等价**。隔离 Icarus 验证见 [`../../work/yolo_fpga_feasibility/report.md`](../../work/yolo_fpga_feasibility/report.md)：原 `cal_addtree_int16_x9.v` 的 18 位和在 9 个全幅 INT8 正乘积时发生回绕；19 位隔离候选通过同一组 305 向量。乘法打包 372 向量、scale/saturation 352 向量的稳定算术结果与独立模型一致，但逐拍时序、安路 DSP 推断和网络量化尚未验证。Yolo-FastestV2 官方权重 352 输入的三类抽样效果较差，且 16 MAC/100 MHz 的理想卷积下界为 66.49 ms/帧；原版 30 fps 部署判 NO-GO。
++
++## 2026-10-12 YOLOv8 软件效果基准复核
++
++- 来源：[Ultralytics YOLOv8 官方文档](https://docs.ultralytics.com/models/yolov8/)，本机 ultralytics 8.4.175；许可 AGPL-3.0（官方同时提供商业授权）。本次仅使用官方预训练权重与现有 Python 包，不复制厂商 RTL。
++- 权重：Ultralytics assets v8.4.0/yolov8m.pt，SHA-256 5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5；代码运行实测 25,902,640 参数。
++- 定位：PC Visual Reference，640 默认、960 对照；COCO 80 类推理，仅显示 bottle/cup/cell phone。固定公开60图及不重叠55图均改善检出，但仍有漏检/误报。不得称三类效果门通过。
++- 硬件成本：仅按 INT8 每参数1字节已约25.9 MB，远大于既有视频工程名义空闲 ERAM；没有 PH1P35 整网综合/量化证据，不能作为直接上板模型。
++- 证据：work/algorithm_lab/exports/yolo_quality_comparison/，实验报告 docs/experiments/2026-10-12-yolo-quality-comparison.md。
+diff --git a/docs/research/known-gaps.md b/docs/research/known-gaps.md
+index c2b1f1f..a0c75d2 100644
+--- a/docs/research/known-gaps.md
++++ b/docs/research/known-gaps.md
+@@ -76,3 +76,16 @@
+ - 公开 COCO 样本已完成图像 ID 隔离训练/调参/测试，但没有当前工位的场景或拍摄批次元数据，不能充当最终工位独立测试。用户表示工位图片/视频及三类指标稍后提供；需要记录采集批次、光照、物距和相机视角后冻结划分。
+ - 96/160 的 6,988 参数候选在新冻结测试集为 0 TP；128 仅匹配 2 个瓶子且有 822 个误报，不能据此断言所有微型网络不可行。新测试标注中在 160 输入下 65/131 个目标短边不足 8 像素，ROI 与目标尺度是下一轮必须验证的设计变量。见 [Y2 报告](../experiments/2026-10-12-y2-microdet.md)。
+ - x86 静态 INT8 仅证明 PC 量化算子可运行，尚无 PH1P35 定点逐层等价、实际 RAM 分配、DDR2 吞吐或综合时序证据。Y2 效果门失败，硬件化继续暂停。
++
++## 2026-10-12 YOLO-FastestV2 / 开源加速器预研新增缺口
++
++- Yolo-FastestV2 固定仓库版本未见 LICENSE/COPYING；已仅作本地官方权重复现，重用或分发其源码前需取得明确许可。权重使用条款也待确认。
++- 原版加速器 18 位 9 路求和存在全幅 INT8 输入溢出，19 位隔离候选只通过稳定算术仿真；下游累加、复位、逐拍对齐、安路 DSP 双乘映射和时序仍待最小实验。原仓库 Zynq PS/AXI DMA 调度不适用于当前无软核主链路。
++- 352 输入最大单张 INT8 特征 743,424 B，按 INT8 参数粗下界 243,095 B，均超过所参考视频工程的 69 块未占用 ERAM 总字节数；完整特征存活期、DDR2 仲裁/有效带宽和帧级周期预算仍未闭合。
++- 原版权重在冻结 COCO 60 图三类检测效果不足，较小输入保持原 anchor 也未解决；要继续部署研究须取得工位数据及数值验收线，开展重训、INT8 对照和用户视觉验收。公开 COCO 图像 ID 隔离不等于场景或拍摄批次隔离。
++
++## 2026-10-12 YOLO 软件效果后续缺口
++
++- 已关闭（project）：默认尺寸与启动环境错误、crowd预测误计FP；证据见 docs/experiments/2026-10-12-yolo-quality-comparison.md。旧统计保留，以COCOeval复核口径区分。
++- 仍未关闭：固定工位目标最小成像尺寸、每类召回/误报验收线、分批独立素材与用户视觉确认。公开60图m640的小目标召回38.9%，中/大目标83.6%/89.5%；不能推断工位效果。
++- 软件基准与硬件模型间的能力差距仍在：m640约25.9M参数，既有MicroDet失败状态不变；不得把PC参考直接当作PH1P35实现。
+diff --git a/docs/research/sources.yaml b/docs/research/sources.yaml
+index f103b5f..718373b 100644
+--- a/docs/research/sources.yaml
++++ b/docs/research/sources.yaml
+@@ -352,15 +352,59 @@
+   accessed_at: 2026-10-12
+   notes: 双尺度带 anchor 检测头；有 COCO 权重但无许可证文件，仅供结构研究。
+ 
+-- id: y1_tinyissimoyolo_20261012
+-  title: TinyissimoYOLO 原始仓库 Y1 固定版本
+-  url_or_path: https://github.com/eth-pbl/tinyissimoyolo
++- id: y_adamgallas_fpga_accelerator_yolov3tiny
++  title: adamgallas/fpga_accelerator_yolov3tiny — 基于FPGA的YOLOv3-tiny硬件加速器
++  url_or_path: reference/fpga_accelerator_yolov3tiny/
+   type: github
+-  platform: generic
+-  related_goals: [5]
++  platform: xzcu3eg (Zynq UltraScale+)
++  related_goals: [5, 7]
++  priority: high
++  license: Apache-2.0
++  commit: 6ba312bd220e67a987d3417bacd030db30b15770
++  adapt_level: B
++  status: cloned_evaluated_reference
++  accessed_at: 2026-10-12
++  notes: 2021集创赛DIGILENT杯一等奖作品；纯Verilog实现通用卷积加速器(1x1/3x3 Conv, 2x2 Maxpooling, 查表激活, INT8定点计算单元cal_acc, addtree, scale/shift量化截断)，对Goal 5 YOLO-tiny硬件架构极具参考价值；原工程依赖PS端CPU调度与AXI DMA，移植安路PH1P35需设计纯RTL状态机或微控制器控制通路。
++
++- id: y_yolov2_xilinx_fpga
++  title: dhm2013724/yolov2_xilinx_fpga — 基于Xilinx Zynq的YOLOv2硬件加速器
++  url_or_path: reference/yolov2_xilinx_fpga/
++  type: github
++  platform: Zynq-7000 / ZU3EG / ZCU102
++  related_goals: [5, 7]
++  priority: high
++  license: MIT
++  commit: d9d283fa022971954c93040487ea92881375f89a
++  adapt_level: B
++  status: cloned_evaluated_reference
++  accessed_at: 2026-10-12
++  notes: 江南大学硕士论文开源成果；使用Vivado HLS实现卷积/池化/重排循环分块(Tiling Tm/Tn/Tr/Tc)与Ping-Pong缓冲加速；支持INT16/FT32量化，对DDR循环分块与脉动阵列数据复用极具参考价值；依赖4路AXI-HP主接口与Petalinux/PS CPU调度，无法直接在纯Verilog PH1P35上运行。
++
++- id: y_xilinx_finn
++  title: Xilinx/finn — 数据流量化神经网络FPGA编译器
++  url_or_path: reference/finn/
++  type: github
++  platform: Xilinx FPGA / PYNQ
++  related_goals: [5, 7]
+   priority: medium
+-  license: NONE_FOUND_ULTRALYTICS_DERIVATIVE
+-  commit: 19bea4bd1ea1e2c29a6ee6b14bd7494ce8c6ba25
+-  status: evaluated_reference_only
++  license: BSD-3-Clause
++  commit: 38c42bf95abbdad493db0b0f5053060074698908
++  adapt_level: C
++  status: cloned_evaluated_reference
++  accessed_at: 2026-10-12
++  notes: 流式Dataflow架构（每层分配独立硬件FIFO与MVAU矩阵乘法单元，不走DDR中间写回）；QAT量化（Brevitas）与BN Folding将批量归一化折叠到卷积权重中；对极低延迟流水设计思想极具启发，但生成代码绑定Xilinx HLS原语，不可直接生成安路IP。
++
++- id: ultralytics_yolov8_reference_20261012
++  title: Ultralytics YOLOv8 pretrained software visual reference
++  url_or_path: https://docs.ultralytics.com/models/yolov8/
++  type: official
++  platform: pc_software_only
++  related_goals: [5]
++  priority: high
++  license: AGPL-3.0
++  status: visual_review_pending
+   accessed_at: 2026-10-12
+-  notes: 无顶层许可证和随仓库可直接运行的预训练权重；部分配置标 AGPL-3.0，使用前须厘清授权。
++  package_version: 8.4.175
++  weights_url: https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8m.pt
++  weights_sha256: 5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5
++  notes: Fixed public 60-image model/scale ablation and 55-image confirmation; improved detections but remaining false positives and misses. No FPGA deployment or visual approval.
+diff --git a/work/algorithm_lab/app.py b/work/algorithm_lab/app.py
+index 3ed9351..ce721f1 100644
+--- a/work/algorithm_lab/app.py
++++ b/work/algorithm_lab/app.py
+@@ -23,6 +23,7 @@ from plugins.threshold import ThresholdAlgorithm
+ from plugins.sobel import SobelAlgorithm
+ from plugins.cartoon import CartoonAlgorithm
+ from plugins.fastestdet import FastestDetAlgorithm
++from plugins.yolo_reference import YoloReferenceAlgorithm
+ 
+ BASE_DIR = Path(__file__).resolve().parent
+ STATIC_DIR = BASE_DIR / "static"
+@@ -51,6 +52,7 @@ PLUGIN_INSTANCES: Dict[str, BaseAlgorithm] = {
+     "grayscale": GrayscaleAlgorithm(),
+ }
+ DETECTION_PLUGIN = FastestDetAlgorithm()
++QUALITY_DETECTION_PLUGIN = YoloReferenceAlgorithm()
+ Y2_MODELS = {}
+ 
+ 
+@@ -107,8 +109,8 @@ async def yolo_upload(file: UploadFile = File(...)):
+ class YoloProcessRequest(BaseModel):
+     sample_id: str
+     confidence: float = 0.25
+-    resolution: int = 352
+-    model: str = "fastestdet_y1"
++    resolution: int | None = None
++    model: str = "ultralytics_yolov8n"
+ 
+ 
+ def yolo_input_path(sample_id: str) -> Path:
+@@ -124,23 +126,134 @@ def yolo_input_path(sample_id: str) -> Path:
+     raise HTTPException(status_code=404, detail="Unknown Y1 sample")
+ 
+ 
++YOLO8_MODEL = None
++FASTESTV2_MODEL = None
++FASTESTV2_CFG = None
++FASTESTV2_NAMES = None
++
++
++def get_yolov8():
++    global YOLO8_MODEL
++    if YOLO8_MODEL is None:
++        from ultralytics import YOLO
++        weights = BASE_DIR / "yolov8n.pt"
++        if not weights.is_file():
++            raise HTTPException(status_code=503, detail="Missing local YOLOv8n weights: work/algorithm_lab/yolov8n.pt")
++        YOLO8_MODEL = YOLO(str(weights))
++    return YOLO8_MODEL
++
++
++def get_yolo_fastestv2():
++    global FASTESTV2_MODEL, FASTESTV2_CFG, FASTESTV2_NAMES
++    if FASTESTV2_MODEL is None:
++        import sys
++        import torch
++        v2_dir = Y1_DIR / "Yolo-FastestV2"
++        if str(v2_dir) not in sys.path:
++            sys.path.insert(0, str(v2_dir))
++        import model.detector
++        import utils.utils
++        FASTESTV2_CFG = utils.utils.load_datafile(str(v2_dir / "data" / "coco.data"))
++        FASTESTV2_CFG["names"] = str(v2_dir / "data" / "coco.names")
++        with open(FASTESTV2_CFG["names"], "r", encoding="utf-8") as f:
++            FASTESTV2_NAMES = [line.strip() for line in f]
++        det = model.detector.Detector(FASTESTV2_CFG["classes"], FASTESTV2_CFG["anchor_num"], False)
++        weights_path = Y1_DIR / "yolo_fastestv2_coco.pth"
++        det.load_state_dict(torch.load(weights_path, map_location="cpu", weights_only=True))
++        det.eval()
++        FASTESTV2_MODEL = det
++    return FASTESTV2_MODEL, FASTESTV2_CFG, FASTESTV2_NAMES
++
++
++def yolov8_detect(image_bgr, conf_thresh, imgsz=640):
++    start = time.perf_counter()
++    model = get_yolov8()
++    results = model.predict(image_bgr, imgsz=imgsz, conf=conf_thresh, verbose=False)[0]
++    elapsed = (time.perf_counter() - start) * 1000.0
++    detections = []
++    target_map = {39: "bottle", 41: "cup", 67: "cell phone"}
++    for box in results.boxes:
++        cls_id = int(box.cls[0])
++        score = float(box.conf[0])
++        if cls_id in target_map:
++            xyxy = [round(float(x), 2) for x in box.xyxy[0].tolist()]
++            detections.append({
++                "class": target_map[cls_id],
++                "confidence": round(score, 4),
++                "box": xyxy
++            })
++    return detections, elapsed
++
++
++def yolo_fastestv2_detect(image_bgr, conf_thresh):
++    start = time.perf_counter()
++    import sys
++    import torch
++    v2_dir = Y1_DIR / "Yolo-FastestV2"
++    if str(v2_dir) not in sys.path:
++        sys.path.insert(0, str(v2_dir))
++    import utils.utils
++    model, cfg, names = get_yolo_fastestv2()
++    h, w = image_bgr.shape[:2]
++    res_img = cv2.resize(image_bgr, (cfg["width"], cfg["height"]), interpolation=cv2.INTER_LINEAR)
++    inp = res_img.reshape(1, cfg["height"], cfg["width"], 3).transpose(0, 3, 1, 2)
++    inp = torch.from_numpy(inp).float() / 255.0
++    with torch.inference_mode():
++        preds = model(inp)
++    out = utils.utils.handel_preds(preds, cfg, torch.device("cpu"))
++    boxes = utils.utils.non_max_suppression(out, conf_thres=conf_thresh, iou_thres=0.4)[0]
++    elapsed = (time.perf_counter() - start) * 1000.0
++    scale_h, scale_w = h / cfg["height"], w / cfg["width"]
++    target_3 = {"bottle", "cup", "cell phone"}
++    detections = []
++    for b in boxes:
++        cls_name = names[int(b[5])]
++        if cls_name in target_3:
++            box = [round(float(b[0] * scale_w), 2), round(float(b[1] * scale_h), 2),
++                   round(float(b[2] * scale_w), 2), round(float(b[3] * scale_h), 2)]
++            detections.append({
++                "class": cls_name,
++                "confidence": round(float(b[4]), 4),
++                "box": box
++            })
++    return detections, elapsed
++
++
+ @app.post("/api/yolo/process")
+ def yolo_process(req: YoloProcessRequest):
+-    if not 0.01 <= req.confidence <= 0.99 or req.model not in ("fastestdet_y1", "microdet_y2"):
++    allowed_models = ("fastestdet_y1", "microdet_y2", "ultralytics_yolov8n", "ultralytics_yolov8m", "yolo_fastestv2")
++    if not 0.01 <= req.confidence <= 0.99 or req.model not in allowed_models:
+         raise HTTPException(status_code=400, detail="Invalid confidence or resolution")
+-    if (req.model == "fastestdet_y1" and req.resolution not in (352, 160, 128, 96)) or \
+-       (req.model == "microdet_y2" and req.resolution not in (160, 128, 96)):
+-        raise HTTPException(status_code=400, detail="Invalid model resolution")
+-    if req.model == "fastestdet_y1":
++    defaults = {"ultralytics_yolov8m": 640, "ultralytics_yolov8n": 640, "fastestdet_y1": 352,
++                "yolo_fastestv2": 352, "microdet_y2": 160}
++    sizes = {"ultralytics_yolov8m": (640, 960), "ultralytics_yolov8n": (960, 640, 352, 160, 128, 96),
++             "fastestdet_y1": (352, 160, 128, 96),
++             "yolo_fastestv2": (352,), "microdet_y2": (160, 128, 96)}
++    if req.resolution is None:
++        req = req.model_copy(update={"resolution": defaults[req.model]})
++    if req.resolution not in sizes[req.model]:
++        raise HTTPException(status_code=400, detail=f"Unsupported resolution for {req.model}: {req.resolution}")
++    import sys
++    if str(Y1_DIR) not in sys.path:
++        sys.path.insert(0, str(Y1_DIR))
++    from fastestdet_runtime import draw
++    if req.model == "ultralytics_yolov8m":
++        detector = lambda frame: QUALITY_DETECTION_PLUGIN.detect_bgr(frame, params)
++        out_root, asset_route = Y1_LAB_DIR, "/y1-assets"
++    elif req.model == "ultralytics_yolov8n":
++        detector = lambda frame: yolov8_detect(frame, req.confidence, req.resolution)
++        out_root, asset_route = Y1_LAB_DIR, "/y1-assets"
++    elif req.model == "yolo_fastestv2":
++        detector = lambda frame: yolo_fastestv2_detect(frame, req.confidence)
++        out_root, asset_route = Y1_LAB_DIR, "/y1-assets"
++    elif req.model == "fastestdet_y1":
+         DETECTION_PLUGIN.detector
+-        from fastestdet_runtime import draw
+         detector = lambda frame: DETECTION_PLUGIN.detect_bgr(frame, params)
+         out_root, asset_route = Y1_LAB_DIR, "/y1-assets"
+     else:
+         import sys
+         if str(Y2_DIR) not in sys.path:
+             sys.path.insert(0, str(Y2_DIR))
+-        from microdet import draw
+         detector = lambda frame: y2_detect(frame, req.resolution, req.confidence)
+         out_root, asset_route = Y2_LAB_DIR, "/y2-assets"
+     source = yolo_input_path(req.sample_id)
+@@ -181,10 +294,15 @@ def yolo_process(req: YoloProcessRequest):
+         result = {"kind": "image", "detections": detections,
+                   "forward_ms": round(forward_ms, 3),
+                   "annotated_url": f"{asset_route}/{run_id}/annotated.jpg"}
++    model_labels = {
++        "ultralytics_yolov8m": "Ultralytics YOLOv8m COCO 80-class; PC visual reference only",
++        "ultralytics_yolov8n": "Ultralytics YOLOv8n original COCO 80-class; output filtered to 3 classes",
++        "fastestdet_y1": "FastestDet original COCO 80-class; output filtered to 3 classes",
++        "yolo_fastestv2": "YOLO-FastestV2 original COCO 80-class; output filtered to 3 classes",
++        "microdet_y2": f"Y2 MicroDet three-class trained at {req.resolution}; quality gate failed",
++    }
+     result.update({"run_id": run_id, "sample_id": req.sample_id, "params": params,
+-                   "model": ("FastestDet original 80-class COCO; output filtered to 3 classes"
+-                             if req.model == "fastestdet_y1" else
+-                             f"Y2 MicroDet three-class trained at {req.resolution}"),
++                   "model": model_labels[req.model],
+                    "stage": "VISUAL_REVIEW_PENDING",
+                    "export_url": f"/api/yolo/export/{run_id}"})
+     (out_dir / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2),
+@@ -205,7 +323,7 @@ def yolo_export(run_id: str):
+         for path in out_dir.iterdir():
+             if path != archive and path.is_file():
+                 z.write(path, path.name)
+-    label = "microdet_y2" if out_dir.parent == Y2_LAB_DIR else "fastestdet_y1"
++    label = json.loads((out_dir / "result.json").read_text(encoding="utf-8"))["params"]["model"]
+     return FileResponse(archive, filename=f"{label}_{run_id}.zip")
+ 
+ 
+diff --git a/work/algorithm_lab/registry.json b/work/algorithm_lab/registry.json
+index 9cf4a98..c77cc05 100644
+--- a/work/algorithm_lab/registry.json
++++ b/work/algorithm_lab/registry.json
+@@ -178,5 +178,21 @@
+         "action": "Trained 96/128/160 models; new 55-image holdout found only two bottle matches at 128 with 822 false positives; visual and hardware gates remain closed"
+       }
+     ]
++  },
++  {
++    "algorithm_id": "ultralytics_yolov8m",
++    "display_name": "YOLOv8m 软件效果基准",
++    "category": "Detection",
++    "source_reference": "Ultralytics assets v8.4.0 / yolov8m.pt",
++    "license": "AGPL-3.0",
++    "status": "VISUAL_REVIEW_PENDING",
++    "software_model_path": "work/algorithm_lab/plugins/yolo_reference.py",
++    "default_params": {
++      "resolution": 640,
++      "confidence": 0.25
++    },
++    "hardware_model_path": null,
++    "rtl_source_path": null,
++    "notes": "Official COCO 80-class model, output filtered to 3 classes. Public diagnostics improved, not application acceptance or FPGA feasibility."
+   }
+ ]
+diff --git a/work/algorithm_lab/run_lab.bat b/work/algorithm_lab/run_lab.bat
+index ab56cc8..69d496a 100644
+--- a/work/algorithm_lab/run_lab.bat
++++ b/work/algorithm_lab/run_lab.bat
+@@ -1,11 +1,20 @@
+ @echo off
+ chcp 65001 >nul
+-echo ===================================================
+-echo   FPGA Algorithm Lab (Software-First 预览平台)
+-echo ===================================================
+-echo.
+-echo [1/2] 正在启动本地 FastAPI 算法服务...
++setlocal
+ cd /d "%~dp0"
++set "LAB_PYTHON=%~dp0..\y1_yolo\.venv\Scripts\python.exe"
++if not exist "%LAB_PYTHON%" (
++  echo Missing Python environment: work/y1_yolo/.venv
++  pause
++  exit /b 1
++)
++"%LAB_PYTHON%" -c "import fastapi, uvicorn, cv2, torch, ultralytics"
++if errorlevel 1 (
++  echo Algorithm Lab dependencies are missing from the project environment.
++  pause
++  exit /b 1
++)
++echo Algorithm Lab: http://127.0.0.1:8501
+ start "" http://127.0.0.1:8501
+-python -m uvicorn app:app --host 127.0.0.1 --port 8501
++"%LAB_PYTHON%" -m uvicorn app:app --host 127.0.0.1 --port 8501
+ pause
+diff --git a/work/algorithm_lab/static/index.html b/work/algorithm_lab/static/index.html
+index 303b078..20c1218 100644
+--- a/work/algorithm_lab/static/index.html
++++ b/work/algorithm_lab/static/index.html
+@@ -471,20 +471,25 @@
+       </div>
+ 
+       <div id="tab-yolo-review" class="card" style="display:none;">
+-        <div class="section-title">三类目标检测 · Y1 / Y2 软件对比</div>
++        <div class="section-title">三类目标检测 · 软件基准对比</div>
+         <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">
+-          Y1 是原始 COCO 80 类模型，仅筛选三类输出；Y2 是重新训练的三类微型模型。
+-          两者均为 PC 软件预览，尚未获得视觉验收或硬件验证。
++          默认使用 YOLOv8m 640 软件基准，可与轻量模型对照；均只显示瓶子、杯子和手机。
++          960 用于分辨率对照，不保证更准确。所有候选均未通过用户视觉验收或 FPGA 验证。
+         </p>
+         <div class="btn-group" style="flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+           <select id="yolo-model" aria-label="检测模型" onchange="onYoloModelChange()">
+-            <option value="fastestdet_y1">Y1 FastestDet 80 类</option>
+-            <option value="microdet_y2">Y2 MicroDet 三类</option>
++            <option value="ultralytics_yolov8m">效果基准：YOLOv8m (PC 软件，640)</option>
++            <option value="ultralytics_yolov8n">成熟基准：Ultralytics YOLOv8n (官方COCO预训练)</option>
++            <option value="fastestdet_y1">超轻开源：FastestDet (官方COCO 352)</option>
++            <option value="yolo_fastestv2">超轻开源：YOLO-FastestV2 (官方COCO 352)</option>
++            <option value="microdet_y2">实验对比：Y2 MicroDet (未达标)</option>
+           </select>
+           <select id="yolo-sample" aria-label="Y1 测试图"></select>
+           <input id="yolo-upload" type="file" accept="image/*,.mp4,.avi" onchange="uploadYolo(event)">
+           <select id="yolo-size" aria-label="网络输入尺寸">
+-            <option value="352">352×352 官方尺寸（仅 Y1）</option>
++            <option value="640" selected>640×640 默认 (YOLOv8)</option>
++            <option value="960">960×960 分辨率对照 (YOLOv8)</option>
++            <option value="352">352×352 推荐 (FastestDet/V2)</option>
+             <option value="160">160×160</option>
+             <option value="128">128×128</option>
+             <option value="96">96×96</option>
+@@ -567,7 +572,7 @@
+       yoloSample = select.value;
+       select.onchange = () => { yoloSample = select.value; processYolo(); };
+       yoloLoaded = true;
+-      if (yoloSample) processYolo();
++      if (yoloSample) onYoloModelChange();
+     }
+ 
+     async function uploadYolo(event) {
+@@ -587,10 +592,18 @@
+     }
+ 
+     function onYoloModelChange() {
+-      const y2 = document.getElementById('yolo-model').value === 'microdet_y2';
++      const model = document.getElementById('yolo-model').value;
+       const size = document.getElementById('yolo-size');
+-      size.querySelector('option[value="352"]').disabled = y2;
+-      if (y2 && size.value === '352') size.value = '160';
++      if (model === 'ultralytics_yolov8n' || model === 'ultralytics_yolov8m') {
++        size.value = '640';
++      } else if (model === 'fastestdet_y1' || model === 'yolo_fastestv2') {
++        size.value = '352';
++      } else if (model === 'microdet_y2') {
++        size.value = '160';
++      }
++      const allowed = {ultralytics_yolov8m:['640','960'], ultralytics_yolov8n:['640','960','352','160','128','96'],
++        fastestdet_y1:['352','160','128','96'], yolo_fastestv2:['352'], microdet_y2:['160','128','96']};
++      Array.from(size.options).forEach(option => { option.disabled = !allowed[model].includes(option.value); });
+       processYolo();
+     }
+ 
+@@ -616,7 +629,7 @@
+       if (data.kind === 'image') img.src = data.annotated_url;
+       else video.src = data.annotated_url;
+       const detections = data.kind === 'image' ? data.detections : data.frames.flatMap(f => f.detections);
+-      status.textContent = '显示目标：' + detections.length + ' · ' + data.model + ' · 网络前向 ' +
++      status.textContent = '显示目标：' + detections.length + ' · ' + data.model + ' · 推理耗时 ' +
+         (data.forward_ms ?? '逐帧记录') + ' ms';
+       document.getElementById('yolo-results').textContent = JSON.stringify(
+         data.kind === 'image' ? data.detections : {frames:data.frames.length, first_frames:data.frames.slice(0,5)},
+diff --git a/work/y1_yolo/evaluate.py b/work/y1_yolo/evaluate.py
+index c12b90f..51583c9 100644
+--- a/work/y1_yolo/evaluate.py
++++ b/work/y1_yolo/evaluate.py
+@@ -26,21 +26,31 @@ def iou_xyxy(a: list[float], b: list[float]) -> float:
+ def score_image(preds: list[dict], objects: list[dict]) -> dict[str, dict[str, int]]:
+     counts = {name: {"tp": 0, "fp": 0, "fn": 0} for name in TARGET_NAMES}
+     for name in TARGET_NAMES:
+-        gt = []
++        gt, crowds = [], []
+         for item in objects:
+             if item["class"] != name:
+                 continue
+             x, y, w, h = item["box"]
+-            gt.append([x, y, x + w, y + h])
++            (crowds if item.get("iscrowd", 0) else gt).append([x, y, x + w, y + h])
+         used = set()
+-        for pred in (p for p in preds if p["class"] == name):
++        for pred in sorted((p for p in preds if p["class"] == name),
++                           key=lambda p: -p.get("confidence", 0)):
+             matches = [(iou_xyxy(pred["box"], g), j) for j, g in enumerate(gt) if j not in used]
+             overlap, index = max(matches, default=(0, -1))
+             if overlap >= 0.5:
+                 used.add(index)
+                 counts[name]["tp"] += 1
+             else:
+-                counts[name]["fp"] += 1
++                # COCO crowd matching uses intersection / detection area.
++                # A crowd region can ignore multiple unmatched detections.
++                a = pred["box"]
++                area = max(0, a[2]-a[0]) * max(0, a[3]-a[1])
++                covered = any(
++                    max(0, min(a[2], c[2])-max(a[0], c[0])) *
++                    max(0, min(a[3], c[3])-max(a[1], c[1])) / max(area, 1e-9) >= .5
++                    for c in crowds)
++                if not covered:
++                    counts[name]["fp"] += 1
+         counts[name]["fn"] += len(gt) - len(used)
+     return counts
+ 

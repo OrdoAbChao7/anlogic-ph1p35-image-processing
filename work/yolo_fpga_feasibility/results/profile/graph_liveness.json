@@ -1,0 +1,4376 @@
+{
+  "graph_nodes": 728,
+  "peak_graph_tensor_int8_bytes": 1486848,
+  "peak_at_node": "batch_norm",
+  "warning": "Conservative tensor liveness: views/aliases counted as materialized, params excluded; actual hardware can fuse, tile, or spill to DDR. Not a BRAM allocation.",
+  "records": [
+    {
+      "node": "p_backbone_first_conv_0_weight",
+      "operator": "p_backbone_first_conv_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_first_conv_1_weight",
+      "operator": "p_backbone_first_conv_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_first_conv_1_bias",
+      "operator": "p_backbone_first_conv_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_0_weight",
+      "operator": "p_backbone_stage2_0_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_1_weight",
+      "operator": "p_backbone_stage2_0_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_1_bias",
+      "operator": "p_backbone_stage2_0_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_3_weight",
+      "operator": "p_backbone_stage2_0_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_4_weight",
+      "operator": "p_backbone_stage2_0_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_4_bias",
+      "operator": "p_backbone_stage2_0_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_5_weight",
+      "operator": "p_backbone_stage2_0_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_6_weight",
+      "operator": "p_backbone_stage2_0_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_main_6_bias",
+      "operator": "p_backbone_stage2_0_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_proj_0_weight",
+      "operator": "p_backbone_stage2_0_branch_proj_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_proj_1_weight",
+      "operator": "p_backbone_stage2_0_branch_proj_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_proj_1_bias",
+      "operator": "p_backbone_stage2_0_branch_proj_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_proj_2_weight",
+      "operator": "p_backbone_stage2_0_branch_proj_2_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_proj_3_weight",
+      "operator": "p_backbone_stage2_0_branch_proj_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_0_branch_proj_3_bias",
+      "operator": "p_backbone_stage2_0_branch_proj_3_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_0_weight",
+      "operator": "p_backbone_stage2_1_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_1_weight",
+      "operator": "p_backbone_stage2_1_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_1_bias",
+      "operator": "p_backbone_stage2_1_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_3_weight",
+      "operator": "p_backbone_stage2_1_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_4_weight",
+      "operator": "p_backbone_stage2_1_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_4_bias",
+      "operator": "p_backbone_stage2_1_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_5_weight",
+      "operator": "p_backbone_stage2_1_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_6_weight",
+      "operator": "p_backbone_stage2_1_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_1_branch_main_6_bias",
+      "operator": "p_backbone_stage2_1_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_0_weight",
+      "operator": "p_backbone_stage2_2_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_1_weight",
+      "operator": "p_backbone_stage2_2_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_1_bias",
+      "operator": "p_backbone_stage2_2_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_3_weight",
+      "operator": "p_backbone_stage2_2_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_4_weight",
+      "operator": "p_backbone_stage2_2_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_4_bias",
+      "operator": "p_backbone_stage2_2_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_5_weight",
+      "operator": "p_backbone_stage2_2_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_6_weight",
+      "operator": "p_backbone_stage2_2_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_2_branch_main_6_bias",
+      "operator": "p_backbone_stage2_2_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_0_weight",
+      "operator": "p_backbone_stage2_3_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_1_weight",
+      "operator": "p_backbone_stage2_3_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_1_bias",
+      "operator": "p_backbone_stage2_3_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_3_weight",
+      "operator": "p_backbone_stage2_3_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_4_weight",
+      "operator": "p_backbone_stage2_3_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_4_bias",
+      "operator": "p_backbone_stage2_3_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_5_weight",
+      "operator": "p_backbone_stage2_3_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_6_weight",
+      "operator": "p_backbone_stage2_3_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage2_3_branch_main_6_bias",
+      "operator": "p_backbone_stage2_3_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_0_weight",
+      "operator": "p_backbone_stage3_0_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_1_weight",
+      "operator": "p_backbone_stage3_0_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_1_bias",
+      "operator": "p_backbone_stage3_0_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_3_weight",
+      "operator": "p_backbone_stage3_0_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_4_weight",
+      "operator": "p_backbone_stage3_0_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_4_bias",
+      "operator": "p_backbone_stage3_0_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_5_weight",
+      "operator": "p_backbone_stage3_0_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_6_weight",
+      "operator": "p_backbone_stage3_0_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_main_6_bias",
+      "operator": "p_backbone_stage3_0_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_proj_0_weight",
+      "operator": "p_backbone_stage3_0_branch_proj_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_proj_1_weight",
+      "operator": "p_backbone_stage3_0_branch_proj_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_proj_1_bias",
+      "operator": "p_backbone_stage3_0_branch_proj_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_proj_2_weight",
+      "operator": "p_backbone_stage3_0_branch_proj_2_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_proj_3_weight",
+      "operator": "p_backbone_stage3_0_branch_proj_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_0_branch_proj_3_bias",
+      "operator": "p_backbone_stage3_0_branch_proj_3_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_0_weight",
+      "operator": "p_backbone_stage3_1_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_1_weight",
+      "operator": "p_backbone_stage3_1_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_1_bias",
+      "operator": "p_backbone_stage3_1_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_3_weight",
+      "operator": "p_backbone_stage3_1_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_4_weight",
+      "operator": "p_backbone_stage3_1_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_4_bias",
+      "operator": "p_backbone_stage3_1_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_5_weight",
+      "operator": "p_backbone_stage3_1_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_6_weight",
+      "operator": "p_backbone_stage3_1_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_1_branch_main_6_bias",
+      "operator": "p_backbone_stage3_1_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_0_weight",
+      "operator": "p_backbone_stage3_2_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_1_weight",
+      "operator": "p_backbone_stage3_2_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_1_bias",
+      "operator": "p_backbone_stage3_2_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_3_weight",
+      "operator": "p_backbone_stage3_2_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_4_weight",
+      "operator": "p_backbone_stage3_2_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_4_bias",
+      "operator": "p_backbone_stage3_2_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_5_weight",
+      "operator": "p_backbone_stage3_2_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_6_weight",
+      "operator": "p_backbone_stage3_2_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_2_branch_main_6_bias",
+      "operator": "p_backbone_stage3_2_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_0_weight",
+      "operator": "p_backbone_stage3_3_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_1_weight",
+      "operator": "p_backbone_stage3_3_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_1_bias",
+      "operator": "p_backbone_stage3_3_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_3_weight",
+      "operator": "p_backbone_stage3_3_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_4_weight",
+      "operator": "p_backbone_stage3_3_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_4_bias",
+      "operator": "p_backbone_stage3_3_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_5_weight",
+      "operator": "p_backbone_stage3_3_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_6_weight",
+      "operator": "p_backbone_stage3_3_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_3_branch_main_6_bias",
+      "operator": "p_backbone_stage3_3_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_0_weight",
+      "operator": "p_backbone_stage3_4_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_1_weight",
+      "operator": "p_backbone_stage3_4_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_1_bias",
+      "operator": "p_backbone_stage3_4_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_3_weight",
+      "operator": "p_backbone_stage3_4_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_4_weight",
+      "operator": "p_backbone_stage3_4_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_4_bias",
+      "operator": "p_backbone_stage3_4_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_5_weight",
+      "operator": "p_backbone_stage3_4_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_6_weight",
+      "operator": "p_backbone_stage3_4_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_4_branch_main_6_bias",
+      "operator": "p_backbone_stage3_4_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_0_weight",
+      "operator": "p_backbone_stage3_5_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_1_weight",
+      "operator": "p_backbone_stage3_5_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_1_bias",
+      "operator": "p_backbone_stage3_5_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_3_weight",
+      "operator": "p_backbone_stage3_5_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_4_weight",
+      "operator": "p_backbone_stage3_5_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_4_bias",
+      "operator": "p_backbone_stage3_5_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_5_weight",
+      "operator": "p_backbone_stage3_5_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_6_weight",
+      "operator": "p_backbone_stage3_5_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_5_branch_main_6_bias",
+      "operator": "p_backbone_stage3_5_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_0_weight",
+      "operator": "p_backbone_stage3_6_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_1_weight",
+      "operator": "p_backbone_stage3_6_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_1_bias",
+      "operator": "p_backbone_stage3_6_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_3_weight",
+      "operator": "p_backbone_stage3_6_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_4_weight",
+      "operator": "p_backbone_stage3_6_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_4_bias",
+      "operator": "p_backbone_stage3_6_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_5_weight",
+      "operator": "p_backbone_stage3_6_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_6_weight",
+      "operator": "p_backbone_stage3_6_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_6_branch_main_6_bias",
+      "operator": "p_backbone_stage3_6_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_0_weight",
+      "operator": "p_backbone_stage3_7_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_1_weight",
+      "operator": "p_backbone_stage3_7_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_1_bias",
+      "operator": "p_backbone_stage3_7_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_3_weight",
+      "operator": "p_backbone_stage3_7_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_4_weight",
+      "operator": "p_backbone_stage3_7_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_4_bias",
+      "operator": "p_backbone_stage3_7_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_5_weight",
+      "operator": "p_backbone_stage3_7_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_6_weight",
+      "operator": "p_backbone_stage3_7_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage3_7_branch_main_6_bias",
+      "operator": "p_backbone_stage3_7_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_0_weight",
+      "operator": "p_backbone_stage4_0_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_1_weight",
+      "operator": "p_backbone_stage4_0_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_1_bias",
+      "operator": "p_backbone_stage4_0_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_3_weight",
+      "operator": "p_backbone_stage4_0_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_4_weight",
+      "operator": "p_backbone_stage4_0_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_4_bias",
+      "operator": "p_backbone_stage4_0_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_5_weight",
+      "operator": "p_backbone_stage4_0_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_6_weight",
+      "operator": "p_backbone_stage4_0_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_main_6_bias",
+      "operator": "p_backbone_stage4_0_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_proj_0_weight",
+      "operator": "p_backbone_stage4_0_branch_proj_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_proj_1_weight",
+      "operator": "p_backbone_stage4_0_branch_proj_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_proj_1_bias",
+      "operator": "p_backbone_stage4_0_branch_proj_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_proj_2_weight",
+      "operator": "p_backbone_stage4_0_branch_proj_2_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_proj_3_weight",
+      "operator": "p_backbone_stage4_0_branch_proj_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_0_branch_proj_3_bias",
+      "operator": "p_backbone_stage4_0_branch_proj_3_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_0_weight",
+      "operator": "p_backbone_stage4_1_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_1_weight",
+      "operator": "p_backbone_stage4_1_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_1_bias",
+      "operator": "p_backbone_stage4_1_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_3_weight",
+      "operator": "p_backbone_stage4_1_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_4_weight",
+      "operator": "p_backbone_stage4_1_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_4_bias",
+      "operator": "p_backbone_stage4_1_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_5_weight",
+      "operator": "p_backbone_stage4_1_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_6_weight",
+      "operator": "p_backbone_stage4_1_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_1_branch_main_6_bias",
+      "operator": "p_backbone_stage4_1_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_0_weight",
+      "operator": "p_backbone_stage4_2_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_1_weight",
+      "operator": "p_backbone_stage4_2_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_1_bias",
+      "operator": "p_backbone_stage4_2_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_3_weight",
+      "operator": "p_backbone_stage4_2_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_4_weight",
+      "operator": "p_backbone_stage4_2_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_4_bias",
+      "operator": "p_backbone_stage4_2_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_5_weight",
+      "operator": "p_backbone_stage4_2_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_6_weight",
+      "operator": "p_backbone_stage4_2_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_2_branch_main_6_bias",
+      "operator": "p_backbone_stage4_2_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_0_weight",
+      "operator": "p_backbone_stage4_3_branch_main_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_1_weight",
+      "operator": "p_backbone_stage4_3_branch_main_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_1_bias",
+      "operator": "p_backbone_stage4_3_branch_main_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_3_weight",
+      "operator": "p_backbone_stage4_3_branch_main_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_4_weight",
+      "operator": "p_backbone_stage4_3_branch_main_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_4_bias",
+      "operator": "p_backbone_stage4_3_branch_main_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_5_weight",
+      "operator": "p_backbone_stage4_3_branch_main_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_6_weight",
+      "operator": "p_backbone_stage4_3_branch_main_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_backbone_stage4_3_branch_main_6_bias",
+      "operator": "p_backbone_stage4_3_branch_main_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_conv1x1_2_0_weight",
+      "operator": "p_fpn_conv1x1_2_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_conv1x1_2_1_weight",
+      "operator": "p_fpn_conv1x1_2_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_conv1x1_2_1_bias",
+      "operator": "p_fpn_conv1x1_2_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_conv1x1_3_0_weight",
+      "operator": "p_fpn_conv1x1_3_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_conv1x1_3_1_weight",
+      "operator": "p_fpn_conv1x1_3_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_conv1x1_3_1_bias",
+      "operator": "p_fpn_conv1x1_3_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_0_weight",
+      "operator": "p_fpn_cls_head_2_block_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_1_weight",
+      "operator": "p_fpn_cls_head_2_block_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_1_bias",
+      "operator": "p_fpn_cls_head_2_block_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_3_weight",
+      "operator": "p_fpn_cls_head_2_block_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_4_weight",
+      "operator": "p_fpn_cls_head_2_block_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_4_bias",
+      "operator": "p_fpn_cls_head_2_block_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_5_weight",
+      "operator": "p_fpn_cls_head_2_block_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_6_weight",
+      "operator": "p_fpn_cls_head_2_block_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_6_bias",
+      "operator": "p_fpn_cls_head_2_block_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_8_weight",
+      "operator": "p_fpn_cls_head_2_block_8_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_9_weight",
+      "operator": "p_fpn_cls_head_2_block_9_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_2_block_9_bias",
+      "operator": "p_fpn_cls_head_2_block_9_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_0_weight",
+      "operator": "p_fpn_reg_head_2_block_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_1_weight",
+      "operator": "p_fpn_reg_head_2_block_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_1_bias",
+      "operator": "p_fpn_reg_head_2_block_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_3_weight",
+      "operator": "p_fpn_reg_head_2_block_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_4_weight",
+      "operator": "p_fpn_reg_head_2_block_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_4_bias",
+      "operator": "p_fpn_reg_head_2_block_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_5_weight",
+      "operator": "p_fpn_reg_head_2_block_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_6_weight",
+      "operator": "p_fpn_reg_head_2_block_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_6_bias",
+      "operator": "p_fpn_reg_head_2_block_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_8_weight",
+      "operator": "p_fpn_reg_head_2_block_8_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_9_weight",
+      "operator": "p_fpn_reg_head_2_block_9_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_2_block_9_bias",
+      "operator": "p_fpn_reg_head_2_block_9_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_0_weight",
+      "operator": "p_fpn_reg_head_3_block_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_1_weight",
+      "operator": "p_fpn_reg_head_3_block_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_1_bias",
+      "operator": "p_fpn_reg_head_3_block_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_3_weight",
+      "operator": "p_fpn_reg_head_3_block_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_4_weight",
+      "operator": "p_fpn_reg_head_3_block_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_4_bias",
+      "operator": "p_fpn_reg_head_3_block_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_5_weight",
+      "operator": "p_fpn_reg_head_3_block_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_6_weight",
+      "operator": "p_fpn_reg_head_3_block_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_6_bias",
+      "operator": "p_fpn_reg_head_3_block_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_8_weight",
+      "operator": "p_fpn_reg_head_3_block_8_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_9_weight",
+      "operator": "p_fpn_reg_head_3_block_9_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_reg_head_3_block_9_bias",
+      "operator": "p_fpn_reg_head_3_block_9_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_0_weight",
+      "operator": "p_fpn_cls_head_3_block_0_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_1_weight",
+      "operator": "p_fpn_cls_head_3_block_1_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_1_bias",
+      "operator": "p_fpn_cls_head_3_block_1_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_3_weight",
+      "operator": "p_fpn_cls_head_3_block_3_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_4_weight",
+      "operator": "p_fpn_cls_head_3_block_4_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_4_bias",
+      "operator": "p_fpn_cls_head_3_block_4_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_5_weight",
+      "operator": "p_fpn_cls_head_3_block_5_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_6_weight",
+      "operator": "p_fpn_cls_head_3_block_6_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_6_bias",
+      "operator": "p_fpn_cls_head_3_block_6_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_8_weight",
+      "operator": "p_fpn_cls_head_3_block_8_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_9_weight",
+      "operator": "p_fpn_cls_head_3_block_9_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_fpn_cls_head_3_block_9_bias",
+      "operator": "p_fpn_cls_head_3_block_9_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_output_reg_layers_weight",
+      "operator": "p_output_reg_layers_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_output_reg_layers_bias",
+      "operator": "p_output_reg_layers_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_output_obj_layers_weight",
+      "operator": "p_output_obj_layers_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_output_obj_layers_bias",
+      "operator": "p_output_obj_layers_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_output_cls_layers_weight",
+      "operator": "p_output_cls_layers_weight",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "p_output_cls_layers_bias",
+      "operator": "p_output_cls_layers_bias",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_first_conv_1_running_mean",
+      "operator": "b_backbone_first_conv_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_first_conv_1_running_var",
+      "operator": "b_backbone_first_conv_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_first_conv_1_num_batches_tracked",
+      "operator": "b_backbone_first_conv_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_1_running_mean",
+      "operator": "b_backbone_stage2_0_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_1_running_var",
+      "operator": "b_backbone_stage2_0_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage2_0_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_4_running_mean",
+      "operator": "b_backbone_stage2_0_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_4_running_var",
+      "operator": "b_backbone_stage2_0_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage2_0_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_6_running_mean",
+      "operator": "b_backbone_stage2_0_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_6_running_var",
+      "operator": "b_backbone_stage2_0_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage2_0_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_proj_1_running_mean",
+      "operator": "b_backbone_stage2_0_branch_proj_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_proj_1_running_var",
+      "operator": "b_backbone_stage2_0_branch_proj_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_proj_1_num_batches_tracked",
+      "operator": "b_backbone_stage2_0_branch_proj_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_proj_3_running_mean",
+      "operator": "b_backbone_stage2_0_branch_proj_3_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_proj_3_running_var",
+      "operator": "b_backbone_stage2_0_branch_proj_3_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_0_branch_proj_3_num_batches_tracked",
+      "operator": "b_backbone_stage2_0_branch_proj_3_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_1_running_mean",
+      "operator": "b_backbone_stage2_1_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_1_running_var",
+      "operator": "b_backbone_stage2_1_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage2_1_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_4_running_mean",
+      "operator": "b_backbone_stage2_1_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_4_running_var",
+      "operator": "b_backbone_stage2_1_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage2_1_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_6_running_mean",
+      "operator": "b_backbone_stage2_1_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_6_running_var",
+      "operator": "b_backbone_stage2_1_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_1_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage2_1_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_1_running_mean",
+      "operator": "b_backbone_stage2_2_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_1_running_var",
+      "operator": "b_backbone_stage2_2_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage2_2_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_4_running_mean",
+      "operator": "b_backbone_stage2_2_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_4_running_var",
+      "operator": "b_backbone_stage2_2_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage2_2_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_6_running_mean",
+      "operator": "b_backbone_stage2_2_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_6_running_var",
+      "operator": "b_backbone_stage2_2_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_2_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage2_2_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_1_running_mean",
+      "operator": "b_backbone_stage2_3_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_1_running_var",
+      "operator": "b_backbone_stage2_3_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage2_3_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_4_running_mean",
+      "operator": "b_backbone_stage2_3_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_4_running_var",
+      "operator": "b_backbone_stage2_3_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage2_3_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_6_running_mean",
+      "operator": "b_backbone_stage2_3_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_6_running_var",
+      "operator": "b_backbone_stage2_3_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage2_3_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage2_3_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_1_running_mean",
+      "operator": "b_backbone_stage3_0_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_1_running_var",
+      "operator": "b_backbone_stage3_0_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_0_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_4_running_mean",
+      "operator": "b_backbone_stage3_0_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_4_running_var",
+      "operator": "b_backbone_stage3_0_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage3_0_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_6_running_mean",
+      "operator": "b_backbone_stage3_0_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_6_running_var",
+      "operator": "b_backbone_stage3_0_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage3_0_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_proj_1_running_mean",
+      "operator": "b_backbone_stage3_0_branch_proj_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_proj_1_running_var",
+      "operator": "b_backbone_stage3_0_branch_proj_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_proj_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_0_branch_proj_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_proj_3_running_mean",
+      "operator": "b_backbone_stage3_0_branch_proj_3_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_proj_3_running_var",
+      "operator": "b_backbone_stage3_0_branch_proj_3_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_0_branch_proj_3_num_batches_tracked",
+      "operator": "b_backbone_stage3_0_branch_proj_3_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_1_running_mean",
+      "operator": "b_backbone_stage3_1_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_1_running_var",
+      "operator": "b_backbone_stage3_1_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_1_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_4_running_mean",
+      "operator": "b_backbone_stage3_1_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_4_running_var",
+      "operator": "b_backbone_stage3_1_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage3_1_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_6_running_mean",
+      "operator": "b_backbone_stage3_1_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_6_running_var",
+      "operator": "b_backbone_stage3_1_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_1_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage3_1_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_1_running_mean",
+      "operator": "b_backbone_stage3_2_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_1_running_var",
+      "operator": "b_backbone_stage3_2_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_2_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_4_running_mean",
+      "operator": "b_backbone_stage3_2_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_4_running_var",
+      "operator": "b_backbone_stage3_2_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage3_2_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_6_running_mean",
+      "operator": "b_backbone_stage3_2_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_6_running_var",
+      "operator": "b_backbone_stage3_2_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_2_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage3_2_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_1_running_mean",
+      "operator": "b_backbone_stage3_3_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_1_running_var",
+      "operator": "b_backbone_stage3_3_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_3_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_4_running_mean",
+      "operator": "b_backbone_stage3_3_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_4_running_var",
+      "operator": "b_backbone_stage3_3_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage3_3_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_6_running_mean",
+      "operator": "b_backbone_stage3_3_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_6_running_var",
+      "operator": "b_backbone_stage3_3_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_3_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage3_3_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_1_running_mean",
+      "operator": "b_backbone_stage3_4_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_1_running_var",
+      "operator": "b_backbone_stage3_4_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_4_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_4_running_mean",
+      "operator": "b_backbone_stage3_4_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_4_running_var",
+      "operator": "b_backbone_stage3_4_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage3_4_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_6_running_mean",
+      "operator": "b_backbone_stage3_4_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_6_running_var",
+      "operator": "b_backbone_stage3_4_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_4_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage3_4_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_1_running_mean",
+      "operator": "b_backbone_stage3_5_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_1_running_var",
+      "operator": "b_backbone_stage3_5_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_5_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_4_running_mean",
+      "operator": "b_backbone_stage3_5_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_4_running_var",
+      "operator": "b_backbone_stage3_5_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage3_5_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_6_running_mean",
+      "operator": "b_backbone_stage3_5_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_6_running_var",
+      "operator": "b_backbone_stage3_5_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_5_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage3_5_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_1_running_mean",
+      "operator": "b_backbone_stage3_6_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_1_running_var",
+      "operator": "b_backbone_stage3_6_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_6_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_4_running_mean",
+      "operator": "b_backbone_stage3_6_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_4_running_var",
+      "operator": "b_backbone_stage3_6_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage3_6_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_6_running_mean",
+      "operator": "b_backbone_stage3_6_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_6_running_var",
+      "operator": "b_backbone_stage3_6_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_6_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage3_6_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_1_running_mean",
+      "operator": "b_backbone_stage3_7_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_1_running_var",
+      "operator": "b_backbone_stage3_7_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage3_7_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_4_running_mean",
+      "operator": "b_backbone_stage3_7_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_4_running_var",
+      "operator": "b_backbone_stage3_7_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage3_7_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_6_running_mean",
+      "operator": "b_backbone_stage3_7_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_6_running_var",
+      "operator": "b_backbone_stage3_7_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage3_7_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage3_7_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_1_running_mean",
+      "operator": "b_backbone_stage4_0_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_1_running_var",
+      "operator": "b_backbone_stage4_0_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage4_0_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_4_running_mean",
+      "operator": "b_backbone_stage4_0_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_4_running_var",
+      "operator": "b_backbone_stage4_0_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage4_0_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_6_running_mean",
+      "operator": "b_backbone_stage4_0_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_6_running_var",
+      "operator": "b_backbone_stage4_0_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage4_0_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_proj_1_running_mean",
+      "operator": "b_backbone_stage4_0_branch_proj_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_proj_1_running_var",
+      "operator": "b_backbone_stage4_0_branch_proj_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_proj_1_num_batches_tracked",
+      "operator": "b_backbone_stage4_0_branch_proj_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_proj_3_running_mean",
+      "operator": "b_backbone_stage4_0_branch_proj_3_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_proj_3_running_var",
+      "operator": "b_backbone_stage4_0_branch_proj_3_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_0_branch_proj_3_num_batches_tracked",
+      "operator": "b_backbone_stage4_0_branch_proj_3_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_1_running_mean",
+      "operator": "b_backbone_stage4_1_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_1_running_var",
+      "operator": "b_backbone_stage4_1_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage4_1_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_4_running_mean",
+      "operator": "b_backbone_stage4_1_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_4_running_var",
+      "operator": "b_backbone_stage4_1_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage4_1_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_6_running_mean",
+      "operator": "b_backbone_stage4_1_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_6_running_var",
+      "operator": "b_backbone_stage4_1_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_1_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage4_1_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_1_running_mean",
+      "operator": "b_backbone_stage4_2_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_1_running_var",
+      "operator": "b_backbone_stage4_2_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage4_2_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_4_running_mean",
+      "operator": "b_backbone_stage4_2_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_4_running_var",
+      "operator": "b_backbone_stage4_2_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage4_2_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_6_running_mean",
+      "operator": "b_backbone_stage4_2_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_6_running_var",
+      "operator": "b_backbone_stage4_2_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_2_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage4_2_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_1_running_mean",
+      "operator": "b_backbone_stage4_3_branch_main_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_1_running_var",
+      "operator": "b_backbone_stage4_3_branch_main_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_1_num_batches_tracked",
+      "operator": "b_backbone_stage4_3_branch_main_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_4_running_mean",
+      "operator": "b_backbone_stage4_3_branch_main_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_4_running_var",
+      "operator": "b_backbone_stage4_3_branch_main_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_4_num_batches_tracked",
+      "operator": "b_backbone_stage4_3_branch_main_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_6_running_mean",
+      "operator": "b_backbone_stage4_3_branch_main_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_6_running_var",
+      "operator": "b_backbone_stage4_3_branch_main_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_backbone_stage4_3_branch_main_6_num_batches_tracked",
+      "operator": "b_backbone_stage4_3_branch_main_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_conv1x1_2_1_running_mean",
+      "operator": "b_fpn_conv1x1_2_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_conv1x1_2_1_running_var",
+      "operator": "b_fpn_conv1x1_2_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_conv1x1_2_1_num_batches_tracked",
+      "operator": "b_fpn_conv1x1_2_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_conv1x1_3_1_running_mean",
+      "operator": "b_fpn_conv1x1_3_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_conv1x1_3_1_running_var",
+      "operator": "b_fpn_conv1x1_3_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_conv1x1_3_1_num_batches_tracked",
+      "operator": "b_fpn_conv1x1_3_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_1_running_mean",
+      "operator": "b_fpn_cls_head_2_block_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_1_running_var",
+      "operator": "b_fpn_cls_head_2_block_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_1_num_batches_tracked",
+      "operator": "b_fpn_cls_head_2_block_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_4_running_mean",
+      "operator": "b_fpn_cls_head_2_block_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_4_running_var",
+      "operator": "b_fpn_cls_head_2_block_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_4_num_batches_tracked",
+      "operator": "b_fpn_cls_head_2_block_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_6_running_mean",
+      "operator": "b_fpn_cls_head_2_block_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_6_running_var",
+      "operator": "b_fpn_cls_head_2_block_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_6_num_batches_tracked",
+      "operator": "b_fpn_cls_head_2_block_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_9_running_mean",
+      "operator": "b_fpn_cls_head_2_block_9_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_9_running_var",
+      "operator": "b_fpn_cls_head_2_block_9_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_2_block_9_num_batches_tracked",
+      "operator": "b_fpn_cls_head_2_block_9_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_1_running_mean",
+      "operator": "b_fpn_reg_head_2_block_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_1_running_var",
+      "operator": "b_fpn_reg_head_2_block_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_1_num_batches_tracked",
+      "operator": "b_fpn_reg_head_2_block_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_4_running_mean",
+      "operator": "b_fpn_reg_head_2_block_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_4_running_var",
+      "operator": "b_fpn_reg_head_2_block_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_4_num_batches_tracked",
+      "operator": "b_fpn_reg_head_2_block_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_6_running_mean",
+      "operator": "b_fpn_reg_head_2_block_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_6_running_var",
+      "operator": "b_fpn_reg_head_2_block_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_6_num_batches_tracked",
+      "operator": "b_fpn_reg_head_2_block_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_9_running_mean",
+      "operator": "b_fpn_reg_head_2_block_9_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_9_running_var",
+      "operator": "b_fpn_reg_head_2_block_9_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_2_block_9_num_batches_tracked",
+      "operator": "b_fpn_reg_head_2_block_9_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_1_running_mean",
+      "operator": "b_fpn_reg_head_3_block_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_1_running_var",
+      "operator": "b_fpn_reg_head_3_block_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_1_num_batches_tracked",
+      "operator": "b_fpn_reg_head_3_block_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_4_running_mean",
+      "operator": "b_fpn_reg_head_3_block_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_4_running_var",
+      "operator": "b_fpn_reg_head_3_block_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_4_num_batches_tracked",
+      "operator": "b_fpn_reg_head_3_block_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_6_running_mean",
+      "operator": "b_fpn_reg_head_3_block_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_6_running_var",
+      "operator": "b_fpn_reg_head_3_block_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_6_num_batches_tracked",
+      "operator": "b_fpn_reg_head_3_block_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_9_running_mean",
+      "operator": "b_fpn_reg_head_3_block_9_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_9_running_var",
+      "operator": "b_fpn_reg_head_3_block_9_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_reg_head_3_block_9_num_batches_tracked",
+      "operator": "b_fpn_reg_head_3_block_9_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_1_running_mean",
+      "operator": "b_fpn_cls_head_3_block_1_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_1_running_var",
+      "operator": "b_fpn_cls_head_3_block_1_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_1_num_batches_tracked",
+      "operator": "b_fpn_cls_head_3_block_1_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_4_running_mean",
+      "operator": "b_fpn_cls_head_3_block_4_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_4_running_var",
+      "operator": "b_fpn_cls_head_3_block_4_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_4_num_batches_tracked",
+      "operator": "b_fpn_cls_head_3_block_4_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_6_running_mean",
+      "operator": "b_fpn_cls_head_3_block_6_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_6_running_var",
+      "operator": "b_fpn_cls_head_3_block_6_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_6_num_batches_tracked",
+      "operator": "b_fpn_cls_head_3_block_6_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_9_running_mean",
+      "operator": "b_fpn_cls_head_3_block_9_running_mean",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_9_running_var",
+      "operator": "b_fpn_cls_head_3_block_9_running_var",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "b_fpn_cls_head_3_block_9_num_batches_tracked",
+      "operator": "b_fpn_cls_head_3_block_9_num_batches_tracked",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "x",
+      "operator": "x",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    },
+    {
+      "node": "conv2d",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 743424,
+      "live_after_free_bytes": 743424
+    },
+    {
+      "node": "batch_norm",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 743424,
+      "live_after_free_bytes": 743424
+    },
+    {
+      "node": "relu_",
+      "operator": "aten.relu_.default",
+      "new_bytes": 743424,
+      "live_after_free_bytes": 743424
+    },
+    {
+      "node": "max_pool2d",
+      "operator": "aten.max_pool2d.default",
+      "new_bytes": 185856,
+      "live_after_free_bytes": 185856
+    },
+    {
+      "node": "conv2d_1",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 232320
+    },
+    {
+      "node": "batch_norm_1",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 232320
+    },
+    {
+      "node": "conv2d_2",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 232320
+    },
+    {
+      "node": "batch_norm_2",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 232320
+    },
+    {
+      "node": "relu__1",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 232320
+    },
+    {
+      "node": "conv2d_3",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 185856,
+      "live_after_free_bytes": 232320
+    },
+    {
+      "node": "batch_norm_3",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 185856,
+      "live_after_free_bytes": 232320
+    },
+    {
+      "node": "relu__2",
+      "operator": "aten.relu_.default",
+      "new_bytes": 185856,
+      "live_after_free_bytes": 232320
+    },
+    {
+      "node": "conv2d_4",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_4",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_5",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_5",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "relu__3",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "cat",
+      "operator": "aten.cat.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "reshape",
+      "operator": "aten.reshape.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "permute",
+      "operator": "aten.permute.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "reshape_1",
+      "operator": "aten.reshape.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "select",
+      "operator": "aten.select.int",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 139392
+    },
+    {
+      "node": "select_1",
+      "operator": "aten.select.int",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_6",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_6",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "relu__4",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_7",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_7",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_8",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_8",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "relu__5",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "cat_1",
+      "operator": "aten.cat.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "reshape_2",
+      "operator": "aten.reshape.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "permute_1",
+      "operator": "aten.permute.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "reshape_3",
+      "operator": "aten.reshape.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "select_2",
+      "operator": "aten.select.int",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 139392
+    },
+    {
+      "node": "select_3",
+      "operator": "aten.select.int",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_9",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_9",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "relu__6",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_10",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_10",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_11",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_11",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "relu__7",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "cat_2",
+      "operator": "aten.cat.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "reshape_4",
+      "operator": "aten.reshape.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "permute_2",
+      "operator": "aten.permute.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "reshape_5",
+      "operator": "aten.reshape.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "select_4",
+      "operator": "aten.select.int",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 139392
+    },
+    {
+      "node": "select_5",
+      "operator": "aten.select.int",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_12",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_12",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "relu__8",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_13",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_13",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_14",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "batch_norm_14",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "relu__9",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "cat_3",
+      "operator": "aten.cat.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 92928
+    },
+    {
+      "node": "conv2d_15",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 116160
+    },
+    {
+      "node": "batch_norm_15",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 116160
+    },
+    {
+      "node": "conv2d_16",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 116160
+    },
+    {
+      "node": "batch_norm_16",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 116160
+    },
+    {
+      "node": "relu__10",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 116160
+    },
+    {
+      "node": "conv2d_17",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 116160
+    },
+    {
+      "node": "batch_norm_17",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 116160
+    },
+    {
+      "node": "relu__11",
+      "operator": "aten.relu_.default",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 116160
+    },
+    {
+      "node": "conv2d_18",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_18",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_19",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_19",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__12",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "cat_4",
+      "operator": "aten.cat.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_6",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "permute_3",
+      "operator": "aten.permute.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_7",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "select_6",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_7",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_20",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_20",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__13",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_21",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_21",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_22",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_22",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__14",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "cat_5",
+      "operator": "aten.cat.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_8",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "permute_4",
+      "operator": "aten.permute.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_9",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "select_8",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_9",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_23",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_23",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__15",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_24",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_24",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_25",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_25",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__16",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "cat_6",
+      "operator": "aten.cat.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_10",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "permute_5",
+      "operator": "aten.permute.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_11",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "select_10",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_11",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_26",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_26",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__17",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_27",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_27",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_28",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_28",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__18",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "cat_7",
+      "operator": "aten.cat.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_12",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "permute_6",
+      "operator": "aten.permute.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_13",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "select_12",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_13",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_29",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_29",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__19",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_30",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_30",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_31",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_31",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__20",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "cat_8",
+      "operator": "aten.cat.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_14",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "permute_7",
+      "operator": "aten.permute.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_15",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "select_14",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_15",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_32",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_32",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__21",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_33",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_33",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_34",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_34",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__22",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "cat_9",
+      "operator": "aten.cat.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_16",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "permute_8",
+      "operator": "aten.permute.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_17",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "select_16",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_17",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_35",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_35",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__23",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_36",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_36",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_37",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_37",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__24",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "cat_10",
+      "operator": "aten.cat.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_18",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "permute_9",
+      "operator": "aten.permute.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "reshape_19",
+      "operator": "aten.reshape.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "select_18",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_19",
+      "operator": "aten.select.int",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_38",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_38",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__25",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_39",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_39",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_40",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "batch_norm_40",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "relu__26",
+      "operator": "aten.relu_.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "cat_11",
+      "operator": "aten.cat.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 46464
+    },
+    {
+      "node": "conv2d_41",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 58080
+    },
+    {
+      "node": "batch_norm_41",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 58080
+    },
+    {
+      "node": "conv2d_42",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 58080
+    },
+    {
+      "node": "batch_norm_42",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 58080
+    },
+    {
+      "node": "relu__27",
+      "operator": "aten.relu_.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 58080
+    },
+    {
+      "node": "conv2d_43",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 104544
+    },
+    {
+      "node": "batch_norm_43",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 104544
+    },
+    {
+      "node": "relu__28",
+      "operator": "aten.relu_.default",
+      "new_bytes": 46464,
+      "live_after_free_bytes": 104544
+    },
+    {
+      "node": "conv2d_44",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_44",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_45",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_45",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "relu__29",
+      "operator": "aten.relu_.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "cat_12",
+      "operator": "aten.cat.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "reshape_20",
+      "operator": "aten.reshape.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "permute_10",
+      "operator": "aten.permute.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "reshape_21",
+      "operator": "aten.reshape.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_20",
+      "operator": "aten.select.int",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 81312
+    },
+    {
+      "node": "select_21",
+      "operator": "aten.select.int",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_46",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_46",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "relu__30",
+      "operator": "aten.relu_.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_47",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_47",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_48",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_48",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "relu__31",
+      "operator": "aten.relu_.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "cat_13",
+      "operator": "aten.cat.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "reshape_22",
+      "operator": "aten.reshape.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "permute_11",
+      "operator": "aten.permute.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "reshape_23",
+      "operator": "aten.reshape.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_22",
+      "operator": "aten.select.int",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 81312
+    },
+    {
+      "node": "select_23",
+      "operator": "aten.select.int",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_49",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_49",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "relu__32",
+      "operator": "aten.relu_.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_50",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_50",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_51",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_51",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "relu__33",
+      "operator": "aten.relu_.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "cat_14",
+      "operator": "aten.cat.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "reshape_24",
+      "operator": "aten.reshape.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "permute_12",
+      "operator": "aten.permute.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "reshape_25",
+      "operator": "aten.reshape.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "select_24",
+      "operator": "aten.select.int",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 81312
+    },
+    {
+      "node": "select_25",
+      "operator": "aten.select.int",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_52",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_52",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "relu__34",
+      "operator": "aten.relu_.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_53",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_53",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_54",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "batch_norm_54",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "relu__35",
+      "operator": "aten.relu_.default",
+      "new_bytes": 11616,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "cat_15",
+      "operator": "aten.cat.default",
+      "new_bytes": 23232,
+      "live_after_free_bytes": 69696
+    },
+    {
+      "node": "conv2d_55",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 78408
+    },
+    {
+      "node": "batch_norm_55",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 78408
+    },
+    {
+      "node": "relu__36",
+      "operator": "aten.relu_.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 78408
+    },
+    {
+      "node": "conv2d_56",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_56",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "relu__37",
+      "operator": "aten.relu_.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_57",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_57",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_58",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_58",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "relu__38",
+      "operator": "aten.relu_.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_59",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_59",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_60",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_60",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "relu__39",
+      "operator": "aten.relu_.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_61",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_61",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_62",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_62",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "relu__40",
+      "operator": "aten.relu_.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_63",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_63",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 8712,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "upsample_nearest2d",
+      "operator": "aten.upsample_nearest2d.vec",
+      "new_bytes": 92928,
+      "live_after_free_bytes": 156816
+    },
+    {
+      "node": "cat_16",
+      "operator": "aten.cat.default",
+      "new_bytes": 139392,
+      "live_after_free_bytes": 156816
+    },
+    {
+      "node": "conv2d_64",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 52272
+    },
+    {
+      "node": "batch_norm_64",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 52272
+    },
+    {
+      "node": "relu__41",
+      "operator": "aten.relu_.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 52272
+    },
+    {
+      "node": "conv2d_65",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_65",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "relu__42",
+      "operator": "aten.relu_.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_66",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_66",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_67",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_67",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "relu__43",
+      "operator": "aten.relu_.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_68",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_68",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_69",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_69",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "relu__44",
+      "operator": "aten.relu_.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_70",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_70",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_71",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_71",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "relu__45",
+      "operator": "aten.relu_.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_72",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "batch_norm_72",
+      "operator": "aten.batch_norm.default",
+      "new_bytes": 34848,
+      "live_after_free_bytes": 87120
+    },
+    {
+      "node": "conv2d_73",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 5808,
+      "live_after_free_bytes": 58080
+    },
+    {
+      "node": "conv2d_74",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 1452,
+      "live_after_free_bytes": 59532
+    },
+    {
+      "node": "conv2d_75",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 38720,
+      "live_after_free_bytes": 63404
+    },
+    {
+      "node": "conv2d_76",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 1452,
+      "live_after_free_bytes": 56144
+    },
+    {
+      "node": "conv2d_77",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 363,
+      "live_after_free_bytes": 56507
+    },
+    {
+      "node": "conv2d_78",
+      "operator": "aten.conv2d.default",
+      "new_bytes": 9680,
+      "live_after_free_bytes": 57475
+    },
+    {
+      "node": "output",
+      "operator": "output",
+      "new_bytes": 0,
+      "live_after_free_bytes": 0
+    }
+  ]
+}

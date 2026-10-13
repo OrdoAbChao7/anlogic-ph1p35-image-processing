@@ -1,0 +1,1965 @@
+[
+  {
+    "image_id": 2685,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 24610,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 26564,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.4286,
+        "box": [
+          553.6,
+          240.67,
+          606.99,
+          351.95
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 47121,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.6555,
+        "box": [
+          80.89,
+          106.89,
+          135.82,
+          254.33
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 50811,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.9045,
+        "box": [
+          449.72,
+          312.76,
+          518.21,
+          579.88
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.8479,
+        "box": [
+          525.71,
+          314.25,
+          599.27,
+          594.39
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 1
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 61471,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.3725,
+        "box": [
+          179.77,
+          66.02,
+          212.1,
+          166.53
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 64868,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.2504,
+        "box": [
+          358.04,
+          0.84,
+          375.5,
+          51.49
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 68078,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.4915,
+        "box": [
+          276.32,
+          281.93,
+          301.27,
+          344.84
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 83531,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 92416,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.3818,
+        "box": [
+          287.34,
+          385.03,
+          332.18,
+          477.78
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 113720,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.7556,
+        "box": [
+          80.79,
+          121.46,
+          117.31,
+          212.42
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.7018,
+        "box": [
+          196.32,
+          210.48,
+          247.57,
+          321.22
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.3773,
+        "box": [
+          239.4,
+          220.83,
+          291.28,
+          309.56
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 2
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 117719,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.3161,
+        "box": [
+          113.25,
+          94.28,
+          139.81,
+          159.73
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.2582,
+        "box": [
+          163.41,
+          97.78,
+          188.85,
+          161.83
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 13
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 127394,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.8019,
+        "box": [
+          355.44,
+          304.68,
+          396.34,
+          367.51
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.5217,
+        "box": [
+          33.38,
+          338.08,
+          66.85,
+          397.02
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.4589,
+        "box": [
+          302.86,
+          139.88,
+          325.26,
+          219.54
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.4384,
+        "box": [
+          243.19,
+          165.72,
+          267.28,
+          204.43
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.3818,
+        "box": [
+          245.72,
+          262.6,
+          294.35,
+          374.5
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.2918,
+        "box": [
+          372.85,
+          157.15,
+          396.4,
+          212.61
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 3
+      },
+      "cup": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 2
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 132587,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 140076,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.3298,
+        "box": [
+          43.03,
+          158.33,
+          58.66,
+          206.99
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 8
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 9400,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.8298,
+        "box": [
+          250.87,
+          378.39,
+          323.68,
+          478.88
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.2852,
+        "box": [
+          173.26,
+          197.69,
+          215.86,
+          254.61
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.2618,
+        "box": [
+          217.38,
+          274.34,
+          246.7,
+          314.92
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 3
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 17714,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.7177,
+        "box": [
+          201.94,
+          116.28,
+          308.05,
+          208.27
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.3805,
+        "box": [
+          320.69,
+          179.32,
+          416.07,
+          260.49
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 18380,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.6962,
+        "box": [
+          243.79,
+          373.15,
+          289.77,
+          424.71
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.6699,
+        "box": [
+          406.31,
+          304.0,
+          441.64,
+          357.82
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.4998,
+        "box": [
+          237.88,
+          302.4,
+          275.24,
+          372.95
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.37,
+        "box": [
+          279.39,
+          206.04,
+          305.56,
+          239.35
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 8
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 25603,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.8816,
+        "box": [
+          315.55,
+          314.39,
+          400.21,
+          477.11
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.7691,
+        "box": [
+          28.34,
+          402.1,
+          154.09,
+          479.08
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.2694,
+        "box": [
+          252.02,
+          143.57,
+          274.02,
+          187.93
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 38678,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.4944,
+        "box": [
+          146.54,
+          550.96,
+          267.59,
+          639.41
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 52996,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 54605,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.5643,
+        "box": [
+          0.1,
+          205.69,
+          78.52,
+          413.24
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 1
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 63047,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 63740,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.5909,
+        "box": [
+          116.5,
+          289.91,
+          177.29,
+          364.45
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.4845,
+        "box": [
+          100.52,
+          217.03,
+          142.66,
+          296.57
+        ]
+      },
+      {
+        "class": "cell phone",
+        "confidence": 0.321,
+        "box": [
+          14.16,
+          354.94,
+          155.46,
+          431.09
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 1
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 70048,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.4773,
+        "box": [
+          285.32,
+          0.76,
+          399.22,
+          193.7
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 92939,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 95786,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.9175,
+        "box": [
+          232.52,
+          161.96,
+          460.15,
+          329.82
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.8997,
+        "box": [
+          181.09,
+          0.72,
+          448.6,
+          199.95
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.8198,
+        "box": [
+          1.15,
+          34.05,
+          231.73,
+          287.86
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 109313,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 120853,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.9025,
+        "box": [
+          204.86,
+          0.56,
+          326.7,
+          142.07
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.5454,
+        "box": [
+          36.46,
+          4.28,
+          136.95,
+          175.62
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 142620,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.6538,
+        "box": [
+          163.8,
+          379.89,
+          214.79,
+          425.93
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.4573,
+        "box": [
+          109.2,
+          203.37,
+          143.96,
+          276.83
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.4264,
+        "box": [
+          105.33,
+          202.86,
+          146.26,
+          308.25
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.3217,
+        "box": [
+          170.72,
+          228.37,
+          205.35,
+          313.71
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.3102,
+        "box": [
+          233.2,
+          291.35,
+          271.8,
+          333.35
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 1
+      },
+      "cup": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 1
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 1296,
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.8192,
+        "box": [
+          297.63,
+          143.47,
+          372.94,
+          280.45
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 6763,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 22623,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 36660,
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.8261,
+        "box": [
+          271.69,
+          98.68,
+          363.17,
+          208.46
+        ]
+      },
+      {
+        "class": "cell phone",
+        "confidence": 0.7733,
+        "box": [
+          413.76,
+          70.05,
+          485.83,
+          172.97
+        ]
+      },
+      {
+        "class": "cell phone",
+        "confidence": 0.6387,
+        "box": [
+          183.92,
+          133.84,
+          272.61,
+          228.73
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 59598,
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.5492,
+        "box": [
+          67.75,
+          275.79,
+          160.31,
+          303.46
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.2547,
+        "box": [
+          429.5,
+          256.0,
+          515.61,
+          401.16
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 76416,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 120420,
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.256,
+        "box": [
+          158.48,
+          188.23,
+          417.93,
+          268.25
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 146489,
+    "detections": [
+      {
+        "class": "bottle",
+        "confidence": 0.9054,
+        "box": [
+          179.15,
+          0.0,
+          295.13,
+          318.44
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.3674,
+        "box": [
+          71.3,
+          5.09,
+          190.78,
+          131.82
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 151000,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2
+      }
+    }
+  },
+  {
+    "image_id": 180798,
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.9281,
+        "box": [
+          167.15,
+          149.78,
+          298.18,
+          440.22
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 218439,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.3022,
+        "box": [
+          371.44,
+          436.69,
+          444.24,
+          543.72
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 285047,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.3623,
+        "box": [
+          201.65,
+          542.3,
+          259.66,
+          591.12
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 326541,
+    "detections": [
+      {
+        "class": "cell phone",
+        "confidence": 0.6543,
+        "box": [
+          248.72,
+          97.1,
+          295.61,
+          213.43
+        ]
+      },
+      {
+        "class": "cell phone",
+        "confidence": 0.3816,
+        "box": [
+          173.29,
+          85.52,
+          224.32,
+          213.0
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 343706,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      }
+    }
+  },
+  {
+    "image_id": 345356,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.8663,
+        "box": [
+          327.67,
+          382.02,
+          400.69,
+          478.82
+        ]
+      },
+      {
+        "class": "cell phone",
+        "confidence": 0.7324,
+        "box": [
+          157.43,
+          260.29,
+          203.33,
+          334.66
+        ]
+      },
+      {
+        "class": "bottle",
+        "confidence": 0.4075,
+        "box": [
+          269.91,
+          422.0,
+          313.3,
+          480.0
+        ]
+      },
+      {
+        "class": "cup",
+        "confidence": 0.3762,
+        "box": [
+          269.76,
+          423.42,
+          312.82,
+          480.0
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "cup": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 3
+      },
+      "cell phone": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 139,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 285,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 632,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 724,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 776,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 785,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 802,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 872,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 885,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 1000,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 1425,
+    "detections": [
+      {
+        "class": "cup",
+        "confidence": 0.3952,
+        "box": [
+          495.1,
+          199.8,
+          639.82,
+          377.94
+        ]
+      }
+    ],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 1490,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 1503,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 1532,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  {
+    "image_id": 1584,
+    "detections": [],
+    "counts": {
+      "bottle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cup": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "cell phone": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  }
+]

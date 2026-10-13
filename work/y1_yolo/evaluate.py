@@ -26,21 +26,31 @@ def iou_xyxy(a: list[float], b: list[float]) -> float:
 def score_image(preds: list[dict], objects: list[dict]) -> dict[str, dict[str, int]]:
     counts = {name: {"tp": 0, "fp": 0, "fn": 0} for name in TARGET_NAMES}
     for name in TARGET_NAMES:
-        gt = []
+        gt, crowds = [], []
         for item in objects:
             if item["class"] != name:
                 continue
             x, y, w, h = item["box"]
-            gt.append([x, y, x + w, y + h])
+            (crowds if item.get("iscrowd", 0) else gt).append([x, y, x + w, y + h])
         used = set()
-        for pred in (p for p in preds if p["class"] == name):
+        for pred in sorted((p for p in preds if p["class"] == name),
+                           key=lambda p: -p.get("confidence", 0)):
             matches = [(iou_xyxy(pred["box"], g), j) for j, g in enumerate(gt) if j not in used]
             overlap, index = max(matches, default=(0, -1))
             if overlap >= 0.5:
                 used.add(index)
                 counts[name]["tp"] += 1
             else:
-                counts[name]["fp"] += 1
+                # COCO crowd matching uses intersection / detection area.
+                # A crowd region can ignore multiple unmatched detections.
+                a = pred["box"]
+                area = max(0, a[2]-a[0]) * max(0, a[3]-a[1])
+                covered = any(
+                    max(0, min(a[2], c[2])-max(a[0], c[0])) *
+                    max(0, min(a[3], c[3])-max(a[1], c[1])) / max(area, 1e-9) >= .5
+                    for c in crowds)
+                if not covered:
+                    counts[name]["fp"] += 1
         counts[name]["fn"] += len(gt) - len(used)
     return counts
 

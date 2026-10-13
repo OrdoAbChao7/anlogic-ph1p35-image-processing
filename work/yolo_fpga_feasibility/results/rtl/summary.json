@@ -1,0 +1,108 @@
+{
+  "source": "adamgallas/fpga_accelerator_yolov3tiny@6ba312bd220e67a987d3417bacd030db30b15770",
+  "multiplier": {
+    "vectors": 372,
+    "observed": 372,
+    "mismatches": []
+  },
+  "adder": {
+    "vectors": 305,
+    "observed": 305,
+    "mismatches": [
+      {
+        "index": 0,
+        "inputs": [
+          16384,
+          16384,
+          16384,
+          16384,
+          16384,
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "exact": 147456,
+        "actual": -114688,
+        "wrapped_18bit": -114688
+      },
+      {
+        "index": 1,
+        "inputs": [
+          -16384,
+          -16384,
+          -16384,
+          -16384,
+          -16384,
+          -16384,
+          -16384,
+          -16384,
+          -16384
+        ],
+        "exact": -147456,
+        "actual": 114688,
+        "wrapped_18bit": 114688
+      },
+      {
+        "index": 2,
+        "inputs": [
+          16129,
+          16129,
+          16129,
+          16129,
+          16129,
+          16129,
+          16129,
+          16129,
+          16129
+        ],
+        "exact": 145161,
+        "actual": -116983,
+        "wrapped_18bit": -116983
+      },
+      {
+        "index": 3,
+        "inputs": [
+          16384,
+          16384,
+          16384,
+          16384,
+          16384,
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "exact": 147456,
+        "actual": -114688,
+        "wrapped_18bit": -114688
+      }
+    ]
+  },
+  "adder_candidate": {
+    "vectors": 305,
+    "observed": 305,
+    "mismatches": []
+  },
+  "scale_sat": {
+    "vectors": 352,
+    "observed": 352,
+    "mismatches": []
+  },
+  "chain_candidate": {
+    "vectors": 186,
+    "observed": 186,
+    "mismatches": []
+  },
+  "continuous_latency": {
+    "vectors": 120,
+    "observed": 125,
+    "checked_values": 480,
+    "latency_edges": {
+      "multiplier": 4,
+      "adder": 2,
+      "scale_sat": 2
+    },
+    "mismatches": []
+  }
+}

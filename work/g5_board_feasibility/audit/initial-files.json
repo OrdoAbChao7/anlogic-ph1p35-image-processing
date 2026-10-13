@@ -1,0 +1,563 @@
+{
+  "head": "0afb5a620898ef63a8160446fdf83081b9a13595",
+  "files": [
+    {
+      "path": "docs/project/STATUS.md",
+      "bytes": 11706,
+      "sha256": "206c2f543dabf01c235f58ea529144f14d85084ff9cfec2cf92c6243fcae9780",
+      "kind": "modified"
+    },
+    {
+      "path": "docs/research/OPEN_SOURCE.md",
+      "bytes": 15618,
+      "sha256": "217cfd21726a4aa1b9565cc7174de17f33af32f82614ccfad11441a9b4babdcb",
+      "kind": "modified"
+    },
+    {
+      "path": "docs/research/known-gaps.md",
+      "bytes": 11336,
+      "sha256": "30f1e44c91356f45db8b294e6f75234701f23046d0970ff0e558e42b63659c8e",
+      "kind": "modified"
+    },
+    {
+      "path": "docs/research/sources.yaml",
+      "bytes": 15067,
+      "sha256": "83c1079092a92f7610df21e49e08c6fa469201096cac01b272d68d621bb6d2b6",
+      "kind": "modified"
+    },
+    {
+      "path": "work/algorithm_lab/app.py",
+      "bytes": 26845,
+      "sha256": "48eaf34f9857180fbcc2d6902fd1a7c4049fb5e3b1a20ed654b3522b32ac4e08",
+      "kind": "modified"
+    },
+    {
+      "path": "work/algorithm_lab/registry.json",
+      "bytes": 6370,
+      "sha256": "67f9798ab9ea93bd5e7ba6ddc16caee82e90dc6d6b404da305b995eb0807439a",
+      "kind": "modified"
+    },
+    {
+      "path": "work/algorithm_lab/run_lab.bat",
+      "bytes": 540,
+      "sha256": "3dae7d1db525ded46afc9ca70d395d0ac057a73d8b3aa0c6f32976c3e51cc008",
+      "kind": "modified"
+    },
+    {
+      "path": "work/algorithm_lab/static/index.html",
+      "bytes": 34673,
+      "sha256": "d7e69c97209244479a862a6462e6e41b9bd2918f575bee161af6c9454da05994",
+      "kind": "modified"
+    },
+    {
+      "path": "work/y1_yolo/evaluate.py",
+      "bytes": 5141,
+      "sha256": "d59f27d0a59a19efbac2d926bc0e9cc55fdb240abe029fff94231dd55c858496",
+      "kind": "modified"
+    },
+    {
+      "path": "docs/experiments/2026-10-12-yolo-baseline-debug.md",
+      "bytes": 4082,
+      "sha256": "b630d716322f88a895522a3464f29b46d9ba0d56159793b953dc944f31af58ba",
+      "kind": "untracked"
+    },
+    {
+      "path": "docs/experiments/2026-10-12-yolo-correction-roadmap.md",
+      "bytes": 11313,
+      "sha256": "014dc60b3206a842000a4eecabe2413d0b46fbb58386aa8b658f0bf4fdb5333e",
+      "kind": "untracked"
+    },
+    {
+      "path": "docs/experiments/2026-10-12-yolo-quality-comparison.md",
+      "bytes": 6749,
+      "sha256": "9d7937e68d16f7ab6c0ea61e77bf73f530bf72d9e4e1b68cf49e2d20c71471bb",
+      "kind": "untracked"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-12-yolov2-fpga-feasibility.md",
+      "bytes": 2863,
+      "sha256": "a2850c444861f456e746abf89d484768712da7b1debea7b0296da2b2eec5b4a5",
+      "kind": "untracked"
+    },
+    {
+      "path": "reference/finn/",
+      "kind": "nested_directory",
+      "head": {
+        "code": 0,
+        "stdout": "38c42bf95abbdad493db0b0f5053060074698908\n",
+        "stderr": ""
+      },
+      "status": {
+        "code": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "reference/fpga_accelerator_yolov3tiny/",
+      "kind": "nested_directory",
+      "head": {
+        "code": 0,
+        "stdout": "6ba312bd220e67a987d3417bacd030db30b15770\n",
+        "stderr": ""
+      },
+      "status": {
+        "code": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "reference/yolov2_xilinx_fpga/",
+      "kind": "nested_directory",
+      "head": {
+        "code": 0,
+        "stdout": "d9d283fa022971954c93040487ea92881375f89a\n",
+        "stderr": ""
+      },
+      "status": {
+        "code": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "work/algorithm_lab/compare_yolo_models.py",
+      "bytes": 7306,
+      "sha256": "93dd7ec97f0441184ef6a98a3f5c03f7a98402ae0349cff80b10b7035e711771",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_baseline_audit/before_after.jpg",
+      "bytes": 629058,
+      "sha256": "e034ca62a280703772fda8ead14f9b53d54af37ecec42f475f11670c77f2472e",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_baseline_audit/detections_352.json",
+      "bytes": 31901,
+      "sha256": "7510cfe1de81b548ba5a72cd326b7b14e9efee11dd69a6b3aa96fdc26edf2323",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_baseline_audit/detections_640.json",
+      "bytes": 37121,
+      "sha256": "54a9dc4a3b235ae16d7c2c5b2d8ae7748f68e79160c3596d81faa43836d7bc04",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_baseline_audit/live_api.json",
+      "bytes": 827,
+      "sha256": "c119e7b7eb6a3cb62f941dcc6c218fcf2388edc7c5d1c91a5c220d7cd6b1382f",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_baseline_audit/model_smoke.json",
+      "bytes": 2422,
+      "sha256": "47113b414111152b043fc73e867e6b60c490ddbfc9f86f1cc4ce5190c19bf152",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_baseline_audit/source_sha256.json",
+      "bytes": 441,
+      "sha256": "edc0c3566a06f4635df820050f596172023b1fd17914fee7ecac75e9c006d78d",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_baseline_audit/summary.json",
+      "bytes": 1387,
+      "sha256": "f9a0b8c94b16aa7c6cfcfd17085f20dc7cfe83fb12f8b7c7d47edbca36211000",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/balanced_confirmation/confirmation55_yolov8m_640.json",
+      "bytes": 79429,
+      "sha256": "19eeaf18a4235a8d8cc713e175bfbebf09b65d6fb7cac9866ffc0f04a82031f7",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/balanced_confirmation/plan.json",
+      "bytes": 743,
+      "sha256": "f98ff534d7415ca190c8686c0bf34bfb85ab8496ebb37aed18ac168f208a7d53",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/balanced_confirmation/summary.json",
+      "bytes": 1047,
+      "sha256": "f2bfcdc95fb28e87ede79a43cb5e35dd34e0d581270de4c6b8e825b55975b4f7",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/coco_rescore.json",
+      "bytes": 5077,
+      "sha256": "a0d9be7a30877e7adb6191178fe9f0a9efbf369bd25a347c10f6d43522be5e94",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/comparison.jpg",
+      "bytes": 837058,
+      "sha256": "c745ddafa14ecd21d6481c2f96df8c23731f1e843e38dd4e356498e310e8ab3b",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/confirmation55_yolov8m_960.json",
+      "bytes": 81641,
+      "sha256": "9cd1d6821cdf6857949a0d54b4794d09888f787acd067041a7379b4c7a88fc12",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/confirmation55_yolov8n_640.json",
+      "bytes": 69482,
+      "sha256": "4c3c24e284a8841b65585ee4d82c6a7ef7183ef760e1c79635dcd7affefe661c",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/diagnostic60_yolov8m_640.json",
+      "bytes": 87713,
+      "sha256": "3b9dbfbe4e6cdb30db448bbb84f7111222195a9f9b5f61a33043ac8554e60a12",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/diagnostic60_yolov8m_960.json",
+      "bytes": 91654,
+      "sha256": "766297d0150abb0281271c595eac8c4addc8dc1982f9d843ecf36e043f5ee48f",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/diagnostic60_yolov8n_640.json",
+      "bytes": 79226,
+      "sha256": "a4a2c3d7555c9e34e94268af66b20b4075ca554ff8b8d13d160cba672fee9b55",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/diagnostic60_yolov8n_960.json",
+      "bytes": 83458,
+      "sha256": "2916ef8ddcbdf43722b0ac2e219a853f819895f41bd33e76bf749f06c27b09d7",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/gallery_selection.json",
+      "bytes": 166,
+      "sha256": "1ccc66a5882ba0b1c1b70901cadf28287ebdce7583d3eefb9e1141f7b872f568",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/live_api.json",
+      "bytes": 1426,
+      "sha256": "be4d32c29a8168d272abdc7640c1680fb23145db25557c38d4a1a3bf54d4e95b",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/plan.json",
+      "bytes": 997,
+      "sha256": "18be582b067aa1fa05f4e435b57ea52c10ba5ae5ec7b5adace387b855a4ed5b8",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/source_sha256.json",
+      "bytes": 975,
+      "sha256": "011cdd3ff4b9e0e93ac21f1773f3e69f4754f8fc101e3aaf10676241c3e5db0f",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/exports/yolo_quality_comparison/summary.json",
+      "bytes": 6213,
+      "sha256": "496fa83e7adf640535addaf050c1dba30caf1633e2bbd6ee8d53479620611050",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/plugins/yolo_reference.py",
+      "bytes": 2828,
+      "sha256": "b86e7a3e2a7ce9ce89873c6004348c23d4b5be1eedc80c15dc37c6ca5f1446b5",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/requirements.txt",
+      "bytes": 184,
+      "sha256": "634cf7fcc98494315e0b79c372966c2dc68f76f45d172a52d551c0766bb682e6",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/rescore_yolo_coco.py",
+      "bytes": 3746,
+      "sha256": "d03d1d5b79da6763e133f2663985b27887874eaa99673b7c1384da18d93565da",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/test_yolo.py",
+      "bytes": 4072,
+      "sha256": "bc613e61a2fec77ba1749dd0a82ff1740e48ecb5056322a9ace0328beda41388",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/verify_yolo_baseline.py",
+      "bytes": 2911,
+      "sha256": "d477105e3d9c203a9bedb3d09d4b35cc8f60e79989424aff24e00c87353e2c9e",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/yolov8m.pt",
+      "bytes": 52136884,
+      "sha256": "5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/algorithm_lab/yolov8n.pt",
+      "bytes": 6549796,
+      "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/g5_board_feasibility/audit/initial-status.txt",
+      "bytes": 5024,
+      "sha256": "c91357e00aa0dbcc03077c255fe76a3b3a51160850606fce3ccd575f3abcf8a5",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/g5_board_feasibility/audit/initial-tracked.patch",
+      "bytes": 32991,
+      "sha256": "440ba7b8827491345f1bcc6b0e23b2d170ea862686cdb49b5798d4fe2f73784b",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/y1_yolo/yolo_fastestv2_coco.pth",
+      "bytes": 1158025,
+      "sha256": "bdd956aa079bf1cdd3e0090a295ac26d73c40aef7b61b6405981b1afcbea985c",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/.gitignore",
+      "bytes": 114,
+      "sha256": "cf42165188f2f7d10c194baac015b5f589993153e90bb22dd4f9eae604f15be5",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/README.md",
+      "bytes": 1665,
+      "sha256": "bb560e5a9bc1796363e40c3059fd4cde017752c5d3949f4624537aae97aaa6f6",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/check_decode.py",
+      "bytes": 4633,
+      "sha256": "3de11fd405fba23e1847d2102a1e537b82c6cff6061a256449c924d9ace360ba",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/check_rtl.py",
+      "bytes": 11249,
+      "sha256": "1df0874b751e3bc5c3583a8c4c01fdfaa83060e17b35fc65f97c8220876a275a",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/data/frozen_eval_manifest.json",
+      "bytes": 31294,
+      "sha256": "f180fbcf711b53a4443939b5d2922c5390905b2b460d4b4df05ec9fdf781db5e",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/data/image_sha256.json",
+      "bytes": 4731,
+      "sha256": "503a697ffc5616f163b8e8fbce1570f272e99a21da557255dd12938567a43718",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/data/official_smoke_sha256.json",
+      "bytes": 242,
+      "sha256": "27d85cdc9980e1cfd89408dc48a77f44b91f0d2285c8ec29c5b0411d372e8453",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/fetch_eval_images.py",
+      "bytes": 941,
+      "sha256": "593f6fe5a077c63bc6d0ede62d0ed5ae5070d586b2d17aca692f704c245319b5",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/make_budget.py",
+      "bytes": 3258,
+      "sha256": "8f16e6c03127ad5ae3e57e6ade33fe7689f6537aa299b92e6186759753abbb54",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/profile_liveness.py",
+      "bytes": 1568,
+      "sha256": "b48e327b6727a8904536cf540eaedf6164586bad55eab33d89b3004bf6949de7",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/report.md",
+      "bytes": 14627,
+      "sha256": "94856c14a4e53308218927f08e02969a264393444dd227bcfc5d751d373e3baf",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/reproduce.py",
+      "bytes": 2087,
+      "sha256": "b38dd072f5a8dc61f9d1c79d95c712fe39bf51e3e9188153a7ad5d0dfa42b903",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/budget/layer_budget.csv",
+      "bytes": 13647,
+      "sha256": "679a9ea2692e9977978ddb2db60225c72a48bdfa9f6eba2da9d03d7e5f33b00d",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/budget/summary.json",
+      "bytes": 1038,
+      "sha256": "18890db8690b1db1e2a51fb18bff650b312e79226ef0d26443fed21c9180f43b",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/decode_check/comparison.json",
+      "bytes": 4433,
+      "sha256": "128a3c603f2c849a85be08a6b77a465a44cb2cb5a4ff95d1c46f1e254192db61",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_128/detections.json",
+      "bytes": 33731,
+      "sha256": "fb855a532c71a535ad19f4edbeef5648ebeb48736d251b3f60b544fafcfb6ad9",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_128/summary.json",
+      "bytes": 1040,
+      "sha256": "77528c05bdd14fd964f2b0628b8e3297606f1de8060fd35a7d19b419452c697e",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_160/detections.json",
+      "bytes": 40545,
+      "sha256": "b90c5772da7d8a64f5389f7da7ee991253139148942ef951387b007cc0b4993e",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_160/summary.json",
+      "bytes": 1023,
+      "sha256": "f49270492348c09c0a9f6fe068781e14d5bd727547b766380bec243f11c05386",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_352/detections.json",
+      "bytes": 75394,
+      "sha256": "806bbc688fce2bde792fb5c54dedbe8246cf475ee6360a4767987c6c13059ac6",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_352/summary.json",
+      "bytes": 1088,
+      "sha256": "d6ccb7ff34648f57f09aeb005a34d35859a7b301f30032e1f69a514da204c4e6",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_352_conf0001/detections.json",
+      "bytes": 2553667,
+      "sha256": "13687b1ec7d431d45c101f870de781f3f9657e62253911672fbebea6b60d4286",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_352_conf0001/summary.json",
+      "bytes": 1147,
+      "sha256": "f7977d5ad04acc020cbd776c521146af6ba4b7cda02f0bbca72d8ac457d5093b",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_352_conf001/detections.json",
+      "bytes": 1021596,
+      "sha256": "da8fa9704335245493104917bfb9ea2831d6d4b0c1df87e464cf6a331ccb1c83",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_352_conf001/summary.json",
+      "bytes": 1145,
+      "sha256": "6ee1e6240af8ade89e7d03f0e187942f6631a17fe15edcfe2e5b11defe6623b3",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_96/detections.json",
+      "bytes": 29203,
+      "sha256": "8d070fd29ce69b1e310c07da368439c173d95f1d0fa15bef8b64281e0111b40a",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/frozen_eval_96/summary.json",
+      "bytes": 1040,
+      "sha256": "73eedb1b62861e642e7b955fdababea1463d73e4e6008af4f4389b5888e58d7c",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/official/source_metadata.json",
+      "bytes": 1326,
+      "sha256": "933f96bddfbe9d74912eb58890b9ae3830b8ed49a3e56ceb90fb7d6e602e43bb",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/profile/graph_liveness.json",
+      "bytes": 130086,
+      "sha256": "3e0f0b362a11adfc6500c423ba0e54b77e8f4b5717e6f5bc0ed7f86f6a680a63",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/profile/network_layers.csv",
+      "bytes": 20758,
+      "sha256": "16f9aa3f5adedcdd6f2d7d8c383ff571d747cead30f51472f3432ffd6c4aaafb",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/profile/network_profile.json",
+      "bytes": 80987,
+      "sha256": "a950f6630f0a82f71e5665863474bbfeeb517554666986d780a38d35827d9701",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/rtl/chain_vectors_expected.json",
+      "bytes": 71199,
+      "sha256": "79bc19644f49216e6aa0d803efa0104d4720ed9c0794ee796d050bdd0fd63b78",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/results/rtl/summary.json",
+      "bytes": 2077,
+      "sha256": "21119f0f0335dec2f2111e19146db218ce0f13b4e71134e25c964c53fb403bd2",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/rtl_candidate/LICENSE-APACHE-2.0",
+      "bytes": 11558,
+      "sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/rtl_candidate/cal_addtree_int16_x9_wide.v",
+      "bytes": 677,
+      "sha256": "4ed6ebda65fc9ee6b71b9cef2be78a89872d68b48fceefcfd5722305b276d08d",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/run_official_smoke.py",
+      "bytes": 2305,
+      "sha256": "8e08943111407b53a45db2285d56db2510a49d3ee5d5faa944a446876394a41e",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/run_study.py",
+      "bytes": 9382,
+      "sha256": "3667ccb0448e04a5837db6db1b73c797538ae18597699c760e19699b5cccaabe",
+      "kind": "untracked"
+    },
+    {
+      "path": "work/yolo_fpga_feasibility/run_windows.bat",
+      "bytes": 258,
+      "sha256": "d5d5c44720474a2d803da25397317a699de04864a09d9416dee3c3ecb5c33df6",
+      "kind": "untracked"
+    },
+    {
+      "path": "yolov8n.pt",
+      "bytes": 6549796,
+      "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "kind": "untracked"
+    }
+  ]
+}

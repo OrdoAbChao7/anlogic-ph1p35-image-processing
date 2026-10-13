@@ -1,0 +1,46 @@
+{
+  "weight": "work\\algorithm_lab\\yolov8m.pt",
+  "weight_sha256": "5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5",
+  "packages": {
+    "torch": "2.14.0",
+    "ultralytics": "8.4.175",
+    "onnx": "1.19.1",
+    "onnxruntime": "1.29.0",
+    "numpy": "2.4.3",
+    "opencv-python": "4.13.0.92"
+  },
+  "baseline": {
+    "imgsz": 640,
+    "rect": true,
+    "confidence": 0.25,
+    "nms_iou": 0.7,
+    "device": "cpu",
+    "classes": [
+      39,
+      41,
+      67
+    ],
+    "status": "VISUAL_REVIEW_PENDING"
+  },
+  "export": {
+    "shape": [
+      1,
+      3,
+      640,
+      640
+    ],
+    "rect": false,
+    "opset": 17,
+    "fp32": true,
+    "nms": false
+  },
+  "sources": {
+    "work/algorithm_lab/plugins/yolo_reference.py": "b86e7a3e2a7ce9ce89873c6004348c23d4b5be1eedc80c15dc37c6ca5f1446b5",
+    "work/algorithm_lab/compare_yolo_models.py": "93dd7ec97f0441184ef6a98a3f5c03f7a98402ae0349cff80b10b7035e711771",
+    "work/algorithm_lab/rescore_yolo_coco.py": "d03d1d5b79da6763e133f2663985b27887874eaa99673b7c1384da18d93565da",
+    "work/algorithm_lab/exports/yolo_quality_comparison/coco_rescore.json": "a0d9be7a30877e7adb6191178fe9f0a9efbf369bd25a347c10f6d43522be5e94",
+    "work/yolo_fpga_feasibility/data/frozen_eval_manifest.json": "f180fbcf711b53a4443939b5d2922c5390905b2b460d4b4df05ec9fdf781db5e",
+    "work/y2_micro/data/manifest.json": "aa78d84ab1e649dc95ae591de997b44b1827a604ae96ab607c4d01caec6d888c"
+  },
+  "note": "Original baseline uses stride-aligned rectangular letterbox. Static square export is a separate deployment graph; no equivalence of image padding is assumed."
+}

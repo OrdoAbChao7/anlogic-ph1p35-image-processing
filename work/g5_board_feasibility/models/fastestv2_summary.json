@@ -1,0 +1,74 @@
+{
+  "diagnostic60": {
+    "classes": {
+      "bottle": {
+        "gt": 52,
+        "tp": 0,
+        "fp": 6,
+        "ignored_predictions": 0,
+        "fn": 52,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "cup": {
+        "gt": 60,
+        "tp": 6,
+        "fp": 8,
+        "ignored_predictions": 0,
+        "fn": 54,
+        "precision": 0.42857142857142855,
+        "recall": 0.1
+      },
+      "cell phone": {
+        "gt": 22,
+        "tp": 5,
+        "fp": 1,
+        "ignored_predictions": 0,
+        "fn": 17,
+        "precision": 0.8333333333333334,
+        "recall": 0.22727272727272727
+      }
+    },
+    "conf": 0.25,
+    "nms_iou": 0.4,
+    "match_iou": 0.5,
+    "manifest_sha256": "f180fbcf711b53a4443939b5d2922c5390905b2b460d4b4df05ec9fdf781db5e",
+    "images": 60
+  },
+  "confirmation55": {
+    "classes": {
+      "bottle": {
+        "gt": 61,
+        "tp": 2,
+        "fp": 8,
+        "ignored_predictions": 0,
+        "fn": 59,
+        "precision": 0.2,
+        "recall": 0.03278688524590164
+      },
+      "cup": {
+        "gt": 49,
+        "tp": 7,
+        "fp": 11,
+        "ignored_predictions": 0,
+        "fn": 42,
+        "precision": 0.3888888888888889,
+        "recall": 0.14285714285714285
+      },
+      "cell phone": {
+        "gt": 21,
+        "tp": 3,
+        "fp": 0,
+        "ignored_predictions": 0,
+        "fn": 18,
+        "precision": 1.0,
+        "recall": 0.14285714285714285
+      }
+    },
+    "conf": 0.25,
+    "nms_iou": 0.4,
+    "match_iou": 0.5,
+    "manifest_sha256": "19eeaf18a4235a8d8cc713e175bfbebf09b65d6fb7cac9866ffc0f04a82031f7",
+    "images": 55
+  }
+}
