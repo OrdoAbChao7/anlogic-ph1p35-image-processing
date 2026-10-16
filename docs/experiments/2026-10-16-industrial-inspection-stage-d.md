@@ -58,3 +58,12 @@ Stage D 通过后允许进入 Stage E 的 RTL 等价仿真准备，但当前不�
 3. 修复后需重新执行 RTL 仿真、Golden Model 比对，再决定是否进入 TD 构建。
 
 本阶段没有运行新的 TD 构建、没有修改正式 RTL、没有进行整机视频集成或板级烧录。
+
+## 后续阶段关闭记录
+
+上述“未关闭项”是 2026-10-16 Stage D 形成时的入口条件，不代表当前 RTL 状态。随后在 Stage E/F 已完成：
+
+- `color_detect_96_v2.v` 面积计数统一为 20 bit，1280×720 全前景回归得到 `area=921600`。
+- RTL 阈值统一为 Q10 偏置 `131072` 的严格开区间 `85<Cb<125`、`135<Cr<200`，边界向量和 Python Golden 比对通过。
+- `morph_open_96.v` 已接入四像素流式 3×3 Opening；连续帧、帧尾排空、非法 ROI 和工业样本回归通过。
+- 后续正式证据见 [`2026-10-17-industrial-inspection-stage-e.md`](2026-10-17-industrial-inspection-stage-e.md)、[`industrial-v1-requirement-audit.md`](../evidence/industrial-v1-requirement-audit.md) 和发布 manifest；Stage G 仍未完成。

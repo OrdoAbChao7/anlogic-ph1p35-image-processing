@@ -115,6 +115,12 @@ def test_legacy_industrial_verification_covers_approved_modes_and_osd_led():
     assert "industrial_osd_overlay.v" in script
 
 
+def test_cartoon_streaming_regression_exposes_full_frame_mode():
+    runner = (ROOT / "work" / "tests" / "run_cartoon_luma_sim.py").read_text(encoding="utf-8")
+    assert "--full-frame" in runner
+    assert "1280, 720" in runner
+
+
 def test_release_docs_bind_the_current_bitstream_manifest():
     manifest = json.loads((ROOT / "release" / "industrial-v1" / "industrial-v1-manifest.json").read_text(encoding="utf-8"))
     bit_path = ROOT / "release" / "industrial-v1" / "camera_to_dsi_display_compress.bit"
@@ -154,6 +160,7 @@ if __name__ == "__main__":
     test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles_morphology()
     test_legacy_industrial_verification_includes_full_frame_and_threshold_gates()
     test_legacy_industrial_verification_covers_approved_modes_and_osd_led()
+    test_cartoon_streaming_regression_exposes_full_frame_mode()
     test_release_docs_bind_the_current_bitstream_manifest()
     test_current_requirement_and_warning_audits_bind_the_eram_build()
     print("PASS industrial build contracts")

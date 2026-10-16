@@ -1,6 +1,7 @@
 """Run the approved s3_luma model against the streaming RTL for all modes."""
 
 from collections import deque
+import argparse
 from pathlib import Path
 import subprocess
 import sys
@@ -15,9 +16,13 @@ def pack(pixel):
     return (int(pixel[0]) << 16) | (int(pixel[1]) << 8) | int(pixel[2])
 
 
-def run():
-    width, height = 16, 8
-    vectors = ROOT / "work" / "output" / "cartoon-tests" / "luma-small.txt"
+def run(full_frame=False):
+    # The small case is the fast per-cycle regression.  The full-frame case
+    # reuses the same TB and golden path to exercise the production line-buffer
+    # depth, 1280x720 row/column rollover, and frame-boundary mode commits.
+    width, height = (1280, 720) if full_frame else (16, 8)
+    vector_name = "luma-full-frame.txt" if full_frame else "luma-small.txt"
+    vectors = ROOT / "work" / "output" / "cartoon-tests" / vector_name
     vectors.parent.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(520)
     pipeline = deque([0] * 6, maxlen=6)
@@ -49,7 +54,7 @@ def run():
         for _ in range(4):
             emit(reset=0)
 
-        modes = [0, 1, 2, 0, 2, 1]
+        modes = [0, 1, 2] if full_frame else [0, 1, 2, 0, 2, 1]
         for frame, mode in enumerate(modes):
             request = {0: 0, 1: 1, 2: 3}[mode]
             for _ in range(3):
@@ -88,7 +93,8 @@ def run():
                         wanted = overlay
                     emit(raw, de=1, request=req_now, keep=keep,
                          overlay=overlay, wanted=wanted, mode=mode)
-                    if (x + 3 * y) % 17 == 3:
+                    stall_period = 4093 if full_frame else 17
+                    if (x + 3 * y) % stall_period == 3:
                         emit(request=req_now, mode=mode)
                 for blank in range(5):
                     emit(hs=int(1 <= blank < 3), request=req_now, mode=mode)
@@ -120,4 +126,10 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    parser = argparse.ArgumentParser(description="Run the approved s3_luma streaming regression.")
+    parser.add_argument(
+        "--full-frame",
+        action="store_true",
+        help="exercise three complete 1280x720 frames with the same streaming testbench",
+    )
+    run(full_frame=parser.parse_args().full_frame)

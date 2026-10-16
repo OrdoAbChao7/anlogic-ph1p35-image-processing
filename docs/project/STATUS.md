@@ -4,7 +4,7 @@
 > 修改 PROJECT_GOAL.md 中定义的目标或验收标准须提变更提案。  
 > 用户口头反馈记录为 `USER_REPORTED_ON_BOARD`，不等于硬件验证通过。
 
-最后更新：2026-10-17（固定红色 v1 显式 ERAM 候选通过资源/时序门禁）
+最后更新：2026-10-17（固定红色 v1 ISP ready 契约重建通过资源/时序门禁）
 
 ---
 
@@ -33,7 +33,7 @@
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
 | **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
 | **G6** | OSD + LED 联动（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `tb_osd_led_joint.v` 与整机 OSD 集成；WM8978 不在 v1 范围 |
-| **G7** | 优化与创新 | `RISK` | 显式 ERAM 行缓存将 Slice 从 95.02% 降至 79.46%，但仍缺硬件演示、告警关闭和第二个可证明创新点 |
+| **G7** | 优化与创新 | `RISK` | 显式 ERAM 行缓存将 Slice 从 95.02% 降至 84.64%，仍高于项目 80% 目标；缺硬件演示、告警关闭和第二个可证明创新点 |
 | **G8** | 冻结 / 发布 / 答辩 | `IN_PROGRESS` | 单 `.bit` 已归档；板级、长稳和答辩材料未完成 |
 
 ---
@@ -228,3 +228,6 @@
 
 > 2026-10-17 ISP ready contract rebuild:
 > 提交 `1af7ae2` 后，为 `S_ISP_O_tready` 增加显式 `assign = 1'b1`，并通过顶层契约测试；随后使用同一套显式 TD/基线路径完成综合、布局、布线、Hold Fix、bitgen 和 QoR 门禁。最终 Setup WNS +114 ps、Hold WNS +20 ps、TNS 0，Slice 17,958/84.64%、RAM 43、DSP 24、DRAMHARDCON 229、STA coverage 96.46%。当前压缩位流大小 `1,367,025 bytes`，SHA-256 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`；未上板，Stage G 和资源 80% 目标仍未关闭。
+
+> 2026-10-17 full-frame three-mode regression:
+> `run_cartoon_luma_sim.py --full-frame` 使用同一 Icarus Testbench 和 Golden Model，完成 `1280×720` Original/Sobel/Cartoon 三帧、帧边界模式提交、空拍和 sideband 对齐，共 `2,775,640` cycles 全部通过。该证据加强 RTL/流接口覆盖，不替代三模式真实 HDMI 视觉验收。

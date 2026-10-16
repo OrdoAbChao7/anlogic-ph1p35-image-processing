@@ -144,3 +144,9 @@
 - `project`：最新 `route.qor` 为 Setup WNS `+114 ps`、Setup TNS `0`、Hold WNS `+20 ps`、Hold TNS `0`、违规端点 `0`；资源为 `17,958 slices / 84.64%`、`43 RAM`、`24 DSP`、`229 DRAMHARDCON`，STA coverage `96.46%`。
 - `project`：当前压缩位流大小 `1,367,025 bytes`，SHA-256 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`；未压缩位流 SHA-256 `8a6c3a246a3a2ee7e2477818e71df2945be26bc1563a7810dd7ef002dcf38ac0`。manifest 已记录本轮产物与报告哈希。
 - `unknown`：新的位流仍未在 PH1P35/SC520CS/HDMI 上下载；84.64% 资源仍高于项目 80% 目标，厂商 IP/时钟告警、干净环境重建和 Stage G 仍 OPEN。
+
+## 2026-10-17 1280×720 三模式流式回归
+
+- `project`：扩展既有 `run_cartoon_luma_sim.py`，新增 `--full-frame`，不改变 Testbench、Golden Model 或算法参数；先由 build contract 复现入口缺失，再完成实现。
+- `project`：`python work/tests/run_cartoon_luma_sim.py --full-frame` 实际 exit code `0`，完成 Original/Sobel/Cartoon 各一帧 `1280×720`，覆盖帧首、行末、空拍、帧边界模式提交和 sideband，Icarus 逐周期比较共 `2,775,640` cycles 全部通过。
+- `unknown`：该回归证明仿真流接口和行缓存尺寸在软件/RTL层一致，不证明真实 SC520CS 速率、DDR2 行为、HDMI 显示效果或板级长稳。
