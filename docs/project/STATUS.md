@@ -225,3 +225,6 @@
 
 > 2026-10-17 release documentation binding:
 > `test_release_docs_bind_the_current_bitstream_manifest` 已通过；README、Stage G 模板和 fallback 状态入口均已与 `release/industrial-v1/industrial-v1-manifest.json` 及当前压缩位流 SHA-256 `cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b` 对齐。该校验只保证文件与文档一致，不新增板级验证。
+
+> 2026-10-17 ISP ready contract rebuild:
+> 提交 `1af7ae2` 后，为 `S_ISP_O_tready` 增加显式 `assign = 1'b1`，并通过顶层契约测试；随后使用同一套显式 TD/基线路径完成综合、布局、布线、Hold Fix、bitgen 和 QoR 门禁。最终 Setup WNS +114 ps、Hold WNS +20 ps、TNS 0，Slice 17,958/84.64%、RAM 43、DSP 24、DRAMHARDCON 229、STA coverage 96.46%。当前压缩位流大小 `1,367,025 bytes`，SHA-256 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`；未上板，Stage G 和资源 80% 目标仍未关闭。

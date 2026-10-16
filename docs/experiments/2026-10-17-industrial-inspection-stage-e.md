@@ -25,16 +25,16 @@
 - 构建入口：python scripts/build_industrial_td.py
 - 工具：Tang Dynasty v6.2.168116；器件 PH1P35MDG324，Speed 3。
 - 本轮显式 ERAM 候选流程：综合、布局、布线、Hold Fix、Route QoR、最终时序、bitgen 均完成；TD `v6.2.168116` / `PH1P35MDG324 Speed 3` 的构建脚本 exit code 为 `0`。
-- 最终 Setup WNS：+108 ps；Setup TNS：0；违规端点：0；STA coverage：96.58%。
+- 最终 Setup WNS：+114 ps；Setup TNS：0；违规端点：0；STA coverage：96.46%。
 - 最终 Hold WNS：+20 ps；Hold TNS：0；违规端点：0。
-- 资源：16,859 slices / 79.46%；43 RAM；24 DSP；229 DRAMHARDCON。相对当前稳定基线 `20,159 / 95.02%` 减少 3,300 slices；时序仍为正，但 PHY-7022/厂商告警和板级证据仍未关闭。
+- 资源：17,958 slices / 84.64%；43 RAM；24 DSP；229 DRAMHARDCON。相对当前稳定基线 `20,159 / 95.02%` 减少 2,201 slices；时序仍为正，但项目 80% 资源目标、厂商告警和板级证据仍未关闭。
 - 综合日志存在厂商 DDR 初始化宏的 undriven-pin warnings；本轮未修改厂商 DDR IP，需在后续告警归类中处理。
 
 ## 发布位流
 
 - 文件：release/industrial-v1/camera_to_dsi_display_compress.bit
 - 大小：1,371,697 bytes
-- SHA-256：cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b
+- SHA-256：92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5
 - 该位流尚未在 PH1P35 板卡上下载、冷启动、热复位、接摄像头和显示器实测。
 
 ## 下一步
@@ -136,3 +136,11 @@
 - `project`：新增强证据：`tb_color_detect_96_v2.v` 实际报告 `area=921600`、BBox `0,0,1279,719`；`tb_color_detect_96_v2_boundaries.v` 五组阈值向量全部通过；`run_cartoon_luma_sim.py` 1102 周期逐周期通过；`tb_osd_led_joint.v` 验证 `NO_OBJECT` 文本尾部和 PASS/检测 LED 联动。
 - `project`：为防止下载入口与实际位流脱节，新增发布文档一致性契约，按 manifest 和文件实际 SHA-256 校验 README、Stage G 模板及 fallback 状态入口；修正它们引用的旧版 `77fd...` 哈希和资源数据，当前入口统一指向显式 ERAM 位流 `cbc361...`。
 - `project`：Icarus 仍报告既有 timescale 继承警告；它们不影响本轮 `$fatal` 断言和结果比较，但尚未作为厂商告警关闭依据。该回归没有增加板级证据，Stage G、摄像头/HDMI/LED 实物效果、帧率/延迟、冷启动/热复位和长稳仍未验证。
+
+## 2026-10-17 ISP 输出 ready 契约修复后的发布重建
+
+- `project`：综合日志中曾报告顶层 `u_isp_top/O_tready` 未驱动。由于当前 `video_in` 没有反压输出，本轮先增加顶层契约测试，再在 `design_top_wrapper.v` 中将 `S_ISP_O_tready` 显式 tie-high；顶层契约测试通过，最新综合日志已不再报告该网络。
+- `project`：源码提交 `1af7ae2d0c70428d3f3031e1cb0445a0d11af54` 后使用相同 TD/Flow/baseline 输入完成完整构建，综合、布局、布线、Hold Fix、Route QoR、最终时序和 bitgen 均 exit code `0`。
+- `project`：最新 `route.qor` 为 Setup WNS `+114 ps`、Setup TNS `0`、Hold WNS `+20 ps`、Hold TNS `0`、违规端点 `0`；资源为 `17,958 slices / 84.64%`、`43 RAM`、`24 DSP`、`229 DRAMHARDCON`，STA coverage `96.46%`。
+- `project`：当前压缩位流大小 `1,367,025 bytes`，SHA-256 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`；未压缩位流 SHA-256 `8a6c3a246a3a2ee7e2477818e71df2945be26bc1563a7810dd7ef002dcf38ac0`。manifest 已记录本轮产物与报告哈希。
+- `unknown`：新的位流仍未在 PH1P35/SC520CS/HDMI 上下载；84.64% 资源仍高于项目 80% 目标，厂商 IP/时钟告警、干净环境重建和 Stage G 仍 OPEN。

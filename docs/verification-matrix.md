@@ -52,5 +52,5 @@
 | 红色 Q10 分割、3×3 opening、BBox、面积 | `tb_morph_open_96.v`、`tb_color_detect_96_v2.v`、`tb_color_detect_96_v2_boundaries.v` | `SIM_PASS`；未上板 |
 | PASS/NG/NO_OBJECT/INVALID 与 LED | `tb_defect_classifier.v`、`tb_osd_led_joint.v`、`tb_industrial_subsystem.v` | `SIM_PASS`；管脚未实测 |
 | Logo、模式、帧计数、类别、尺寸和状态 OSD | `fallback/rtl/industrial_osd_overlay.v`，整机 TD 集成；OSD/LED 联调 | `BUILD_PASS`；显示效果未实测 |
-| 单文件下载 | `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`；manifest 同目录 | `BUILD_PASS`；未下载 |
-| Timing/resource | `route.qor`：Setup WNS +116 ps、Hold WNS +20 ps、TNS 0；Slice 95.02%、RAM 39、DSP 24 | 时序通过；资源仍高风险 |
+| 单文件下载 | `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`；manifest 同目录 | `BUILD_PASS`；未下载 |
+| Timing/resource | `route.qor`：Setup WNS +114 ps、Hold WNS +20 ps、TNS 0；Slice 84.64%、RAM 43、DSP 24 | 时序通过；资源仍高于 80% 项目目标 |

@@ -40,7 +40,7 @@ SC520CS MIPI pads
 | `sys_clk_50m` | 50.000 MHz | 板级系统时钟域 |
 | `HDMI_SERIAL_CLK` | 375.094 MHz | HDMI 串行发送时钟 |
 
-该报告的最终 Setup WNS 为 `+116 ps`、Hold WNS 为 `+20 ps`、TNS 均为 `0`，STA coverage 为 `95.71%`。这些是 TD 构建事实，不是板级测量。
+该报告的最终 Setup WNS 为 `+114 ps`、Hold WNS 为 `+20 ps`、TNS 均为 `0`，STA coverage 为 `96.46%`。这些是 TD 构建事实，不是板级测量。
 
 ## 尚未关闭的接口问题（unknown / measured）
 

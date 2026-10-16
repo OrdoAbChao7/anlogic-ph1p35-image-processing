@@ -122,13 +122,13 @@
 
 ## 8. 当前固定红色 v1 状态校正（2026-10-17）
 
-当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的最新记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，并恢复官方 720p `uivtc`/`hdmi_mixer` 时序链路；三模式、固定红色检测、OSD/LED 联调和 TD 位流生成均有当前工作区证据。当前显式 ERAM 优化版压缩位流 SHA-256 为 `cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b`，资源为 `16,859/79.46%` slices、`43 RAM`、`24 DSP`、Setup WNS `+108 ps`、Hold WNS `+20 ps`。旧表中的资源、时序和哈希不能用于描述当前版本。
+当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的最新记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，并恢复官方 720p `uivtc`/`hdmi_mixer` 时序链路；三模式、固定红色检测、OSD/LED 联调和 TD 位流生成均有当前工作区证据。当前显式 ERAM 优化版压缩位流 SHA-256 为 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`，资源为 `17,958/84.64%` slices、`43 RAM`、`24 DSP`、Setup WNS `+114 ps`、Hold WNS `+20 ps`。旧表中的资源、时序和哈希不能用于描述当前版本。
 
-当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、PHY-7022 资源占用 95.02% 高于 80% 目标，以及从无本机绝对路径的干净环境重建。
+当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、84.64% Slice 资源仍高于 80% 目标，以及从无本机绝对路径的干净环境重建。
 
 ## 9. 2026-10-17 本轮重建证据
 
-- `project`：构建时源码 commit 为 `13253b037e2822337b76aa655e99b445f16d1d54`，并使用显式 TD/基线路径完成显式 ERAM 行缓存版本的 TD 综合、布局、布线、Hold Fix、QoR、时序和 bitgen，TD exit code `0`。
-- `project`：当前报告位于 `release/industrial-v1/route.qor` 与 `release/industrial-v1/final_timing.rpt`；Setup WNS `+108 ps`、Hold WNS `+20 ps`、TNS 均为 `0`，Slice `16,859/79.46%`、RAM `43`、DSP `24`、DRAMHARDCON `229`，STA coverage `96.58%`。
-- `project`：当前推荐下载文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b`；同目录 manifest 绑定了本轮源码和全部发布文件哈希。
+- `project`：源码提交 `1af7ae2d0c70428d3f3031e1cb0445a0d11af54` 已加入 ISP 输出 ready 显式 tie-high 契约，并使用显式 TD/基线路径完成完整综合、布局、布线、Hold Fix、QoR、时序和 bitgen，TD exit code `0`。
+- `project`：当前报告位于 `release/industrial-v1/route.qor` 与 `release/industrial-v1/final_timing.rpt`；Setup WNS `+114 ps`、Hold WNS `+20 ps`、TNS 均为 `0`，Slice `17,958/84.64%`、RAM `43`、DSP `24`、DRAMHARDCON `229`，STA coverage `96.46%`。
+- `project`：当前推荐下载文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`；同目录 manifest 绑定了本轮源码和全部发布文件哈希。
 - `project`：`tb_industrial_subsystem.v` 已补齐 INVALID 信号连接，重新编译联合仿真通过；没有硬件实测，因此不改变 Stage G 待上板状态。

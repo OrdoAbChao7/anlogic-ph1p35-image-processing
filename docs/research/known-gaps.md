@@ -128,7 +128,7 @@
 - **已关闭（project）**：批准的卡通化版本为 `s3_luma`，TD 构建入口已切换到 `work/rtl/video_cartoon_luma.v`，冻结 Sobel 阈值为 `240`；三模式逐周期 1102 周期比对通过。
 - **已关闭（project）**：OSD/LED 联调已覆盖 `NO_OBJECT` 文本尾部、PASS 状态和检测 LED；`NO_OBJECT` 文本映射缺陷已修复。
 - **仍开放（unknown / measured）**：没有 PH1P35、SC520CS、HDMI 的下载和显示实测，因此 Stage G、冷启动、热复位、模式视觉效果、LED 管脚和长稳仍未验证。
-- **仍开放（project risk）**：当前优化版 Slice 占用 `95.02%`，仍高于项目目标 `80%` 并触发 `PHY-7022`；OSD 逐行字库优化已减少 702 slices，但 TD 仍有厂商 DDR 初始化宏的 undriven-pin warnings 未逐条关闭；构建脚本依赖本机 TD 工具和官方基线工程，干净环境重建未关闭。
+- **仍开放（project risk）**：当前显式 ERAM 版本 Slice 占用 `84.64%`，仍高于项目目标 `80%`，但当前日志未出现旧版 `PHY-7022` 资源告警；TD 仍有厂商 DDR 初始化宏和时钟/接口 warnings 未逐条关闭，构建脚本依赖本机 TD 工具和官方基线工程，干净环境重建未关闭。
 
 ## 2026-10-17 TD 告警与构建复现校正
 
