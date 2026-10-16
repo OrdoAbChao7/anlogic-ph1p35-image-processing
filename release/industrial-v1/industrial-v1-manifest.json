@@ -1,8 +1,8 @@
 {
   "project": "PH1P35 fixed-red industrial inspection v1",
   "target_device": "PH1P35MDG324",
-  "git_commit": "e31f47c85cd78210b08446a3bb27c7c3bb9738d0",
-  "git_status": "M fallback/rtl/morph_open_96.v\n M fallback/tb_color.vvp\n M release/industrial-v1/camera_to_dsi_display.bit\n M release/industrial-v1/camera_to_dsi_display_compress.bit\n M release/industrial-v1/final_timing.rpt\n M release/industrial-v1/route.qor\n M work/tests/run_industrial_rtl_golden.py\n M work/tests/test_industrial_build_contract.py",
+  "git_commit": "13253b037e2822337b76aa655e99b445f16d1d54",
+  "git_status": " M fallback/tb_color.vvp",
   "build_inputs": {
     "td_exe": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
     "flow_tcl": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
