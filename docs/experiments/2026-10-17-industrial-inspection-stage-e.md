@@ -106,3 +106,10 @@
 - `project`：按 TDD 先运行 `test_industrial_build_contract.py`，新增测试因门禁接口不存在而失败；实现后该测试通过，实际 fixed-red 发布 `route.qor` 解析为 Setup WNS `+116 ps`、Hold WNS `+20 ps`、TNS `0`、违例端点 `0`。
 - `project`：本轮完整回归中 build/top/OSD 契约、工业 RTL/Golden、卡通化逐周期、工业 5 样本、Stage D 和工业合同测试均通过；FPGA Agent doctor 在主工作区报告 `Overall Environment Status: PASS`。
 - `unknown`：QoR 门禁只约束构建报告与发布收集，不替代 CDC/厂商告警分类、干净环境重建或 Stage G 板级验收；`PHY-7022` 和时钟/IP 告警仍 OPEN。
+
+## 2026-10-17 形态学 RAM 属性候选的拒绝记录
+
+- `project`：按 TDD 先增加行缓存 RAM 推断契约测试；在 `morph_open_96.v` 的两组行缓存上加入 `ram_style="block"` 与 `syn_ramstyle="block_ram"` 属性后，Icarus、工业 RTL/Golden、卡通化和 Stage D 回归均通过。
+- `project`：完整 TD 构建 exit code 为 `0`，QoR 门禁通过；最终资源为 `20,435 slices / 96.32%`、`39 RAM`、`24 DSP`、`229 DRAMHARDCON`，Setup WNS `+6 ps`、Hold WNS `+21 ps`、TNS `0`，STA coverage `95.70%`。
+- `project`：相对当前稳定发布基线 `20,159 slices / 95.02%`、Setup WNS `+116 ps`、Hold WNS `+20 ps`，候选多 `276 slices` 且 setup 裕量少 `110 ps`；面积报告显示 `u_morph_open` 仍为 `ERAM=0`，没有证据表明属性真正推断为 RAM。因此候选和专用契约测试均已回退，稳定 `.bit`、报告和 manifest 恢复。
+- `unknown`：要继续降低形态学资源，需要显式接入已存在的 Anlogic RAM primitive/IP 并补齐仿真替代模型、工程源文件和读写时序验证；仅靠通用属性不足以关闭 `PHY-7022`。
