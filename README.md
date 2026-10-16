@@ -65,3 +65,5 @@ python .\work\models\reference_model.py --self-test
 **2026-10-17 固定红色零件 v1：** 已完成软件模型、硬件等价模型和独立 RTL 仿真回归；当前 TD 构建和 Stage G 上板仍按 [实验记录](docs/experiments/2026-10-17-industrial-inspection-stage-e.md) 记录，未有板级证据前不宣称稳定可用。
 
 当前可下载位流：[industrial-v1/camera_to_dsi_display_compress.bit](release/industrial-v1/camera_to_dsi_display_compress.bit)，SHA-256：`886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`。该文件尚未在板卡上实测。
+
+上板记录模板：[industrial-v1-stage-g-template.md](docs/evidence/industrial-v1-stage-g-template.md)。
