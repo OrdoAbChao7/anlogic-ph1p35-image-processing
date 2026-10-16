@@ -78,10 +78,20 @@ def test_qor_gate_parses_and_rejects_non_converged_reports():
     assert failed, "negative WNS or violated endpoints must block release"
 
 
+def test_morphology_declares_explicit_eram_wrapper_and_simulation_path():
+    rtl = (ROOT / "fallback" / "rtl" / "morph_open_96.v").read_text(encoding="utf-8")
+    runner = (ROOT / "work" / "tests" / "run_industrial_rtl_golden.py").read_text(encoding="utf-8")
+    assert "module morph_line_ram_4bit" in rtl
+    assert "PH1P_LOGIC_ERAM" in rtl
+    assert "`ifdef MORPH_SIMULATION" in rtl
+    assert '"-DMORPH_SIMULATION"' in runner
+
+
 if __name__ == "__main__":
     test_industrial_build_uses_approved_luma_cartoon_rtl()
     test_industrial_build_writes_the_downloadable_release_directory()
     test_industrial_build_exposes_reproducible_external_inputs()
     test_industrial_build_argument_overrides_are_parsed()
     test_qor_gate_parses_and_rejects_non_converged_reports()
+    test_morphology_declares_explicit_eram_wrapper_and_simulation_path()
     print("PASS industrial build contracts")

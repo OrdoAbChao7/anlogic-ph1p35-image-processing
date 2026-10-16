@@ -18,6 +18,92 @@
 // OPERATION=1: dilation (3x3 OR)
 // ============================================================================
 
+// The TD build uses the same dual-port ERAM primitive emitted by the official
+// Anlogic memory generator.  Icarus uses the behavioral branch so the RTL
+// Golden tests remain independent of vendor simulation libraries.
+module morph_line_ram_4bit #(
+  parameter integer ADDR_WIDTH = 9,
+  parameter integer DEPTH      = 320
+)(
+  input  wire                   I_clk,
+  input  wire                   I_rst_n,
+  input  wire                   I_write_en,
+  input  wire [ADDR_WIDTH-1:0]  I_write_addr,
+  input  wire [3:0]             I_write_data,
+  input  wire [ADDR_WIDTH-1:0]  I_read_addr,
+  output wire [3:0]             O_read_data
+);
+
+`ifdef MORPH_SIMULATION
+  reg [3:0] mem [0:DEPTH-1];
+  integer mem_i;
+  assign O_read_data = (I_read_addr < DEPTH) ? mem[I_read_addr] : 4'd0;
+
+  always @(posedge I_clk or negedge I_rst_n) begin
+    if (!I_rst_n) begin
+      for (mem_i = 0; mem_i < DEPTH; mem_i = mem_i + 1)
+        mem[mem_i] <= 4'd0;
+    end else if (I_write_en && (I_write_addr < DEPTH)) begin
+      mem[I_write_addr] <= I_write_data;
+    end
+  end
+`else
+  wire [3:0] ram_read_data;
+
+  PH1P_LOGIC_ERAM #(
+    .DATA_WIDTH_A(4),
+    .DATA_WIDTH_B(4),
+    .ADDR_WIDTH_A(ADDR_WIDTH),
+    .ADDR_WIDTH_B(ADDR_WIDTH),
+    .DATA_DEPTH_A(DEPTH),
+    .DATA_DEPTH_B(DEPTH),
+    .MODE("DP"),
+    .REGMODE_A("NOREG"),
+    .REGMODE_B("NOREG"),
+    .WRITEMODE_A("NORMAL"),
+    .WRITEMODE_B("NORMAL"),
+    .IMPLEMENT("20K(FAST)"),
+    .ECC_ENCODE("DISABLE"),
+    .ECC_DECODE("DISABLE"),
+    .CLKMODE("ASYNC"),
+    .SSROVERCE("DISABLE"),
+    .OREGSET_A("RESET"),
+    .OREGSET_B("RESET"),
+    .RESETMODE_A("ASYNC"),
+    .RESETMODE_B("ASYNC"),
+    .ASYNC_RESET_RELEASE_A("ASYNC"),
+    .ASYNC_RESET_RELEASE_B("ASYNC"),
+    .INIT_FILE("NONE"),
+    .FILL_ALL("NONE")
+  ) ram_inst (
+    .dia(4'd0),
+    .dib(I_write_data),
+    .addra(I_read_addr),
+    .addrb(I_write_addr),
+    .cea(1'b1),
+    .ceb(1'b1),
+    .ocea(1'b0),
+    .oceb(1'b0),
+    .clka(I_clk),
+    .clkb(I_clk),
+    .wea(1'b0),
+    .web(I_write_en),
+    .bea(1'b0),
+    .beb(1'b0),
+    .rsta(1'b0),
+    .rstb(1'b0),
+    .doa(ram_read_data),
+    .ecc_sbiterr(),
+    .ecc_dbiterr(),
+    .ecc_sbiterrinj('d0),
+    .ecc_dbiterrinj('d0),
+    .dob()
+  );
+
+  assign O_read_data = ram_read_data;
+`endif
+endmodule
+
 module morph_filter_96 #(
   parameter integer IMG_WIDTH  = 1280,
   parameter integer IMG_HEIGHT = 720,
@@ -42,8 +128,8 @@ module morph_filter_96 #(
   localparam integer GROUP_BITS = (GROUPS <= 1) ? 1 : $clog2(GROUPS + 1);
 
   // Ping-pong row memories.  A word contains four binary pixels.
-  reg [3:0] row_mem0 [0:GROUPS-1];
-  reg [3:0] row_mem1 [0:GROUPS-1];
+  wire [3:0] mem0_group;
+  wire [3:0] mem1_group;
 
   reg                    active;
   reg                    virtual_row;
@@ -56,8 +142,35 @@ module morph_filter_96 #(
   reg [3:0] left_top,  left_mid,  left_bot;
   reg [3:0] prev_top,  prev_mid,  prev_bot;
 
-  wire [3:0] mem0_group = row_mem0[group_index];
-  wire [3:0] mem1_group = row_mem1[group_index];
+  // During the one-cycle row transition, the next row's group zero is needed
+  // while group_index still points at the previous row's right edge.
+  wire transition_read = flush_pending && !virtual_row && I_tvalid && !I_tuser;
+  wire [GROUP_BITS-1:0] ram_read_addr = transition_read ? {GROUP_BITS{1'b0}} : group_index;
+
+  wire accept_first_group = !active && I_tuser && I_tvalid;
+  wire accept_row_group = active && !flush_pending && !virtual_row && I_tvalid;
+  wire accept_transition_group = active && flush_pending && !virtual_row &&
+                                 (row_index < IMG_HEIGHT-1) && I_tvalid && !I_tuser;
+  wire row0_write_en = accept_first_group ||
+                       (accept_row_group && ((row_index & 1'b1) == 1'b0)) ||
+                       (accept_transition_group && (((row_index + 12'd1) & 1'b1) == 1'b0));
+  wire row1_write_en = (accept_row_group && ((row_index & 1'b1) == 1'b1)) ||
+                       (accept_transition_group && (((row_index + 12'd1) & 1'b1) == 1'b1));
+  wire [GROUP_BITS-1:0] row0_write_addr = (accept_first_group || accept_transition_group) ?
+                                           {GROUP_BITS{1'b0}} : group_index;
+  wire [GROUP_BITS-1:0] row1_write_addr = accept_transition_group ?
+                                           {GROUP_BITS{1'b0}} : group_index;
+
+  morph_line_ram_4bit #(.ADDR_WIDTH(GROUP_BITS), .DEPTH(GROUPS)) u_row_mem0 (
+    .I_clk(I_clk), .I_rst_n(I_rst_n), .I_write_en(row0_write_en),
+    .I_write_addr(row0_write_addr), .I_write_data(I_mask),
+    .I_read_addr(ram_read_addr), .O_read_data(mem0_group)
+  );
+  morph_line_ram_4bit #(.ADDR_WIDTH(GROUP_BITS), .DEPTH(GROUPS)) u_row_mem1 (
+    .I_clk(I_clk), .I_rst_n(I_rst_n), .I_write_en(row1_write_en),
+    .I_write_addr(row1_write_addr), .I_write_data(I_mask),
+    .I_read_addr(ram_read_addr), .O_read_data(mem1_group)
+  );
 
   // The current triplet is the vertical window for the row being accepted.
   // For row zero no previous row exists, so the current row is replicated.
@@ -72,17 +185,17 @@ module morph_filter_96 #(
 
     if (virtual_row) begin
       if (IMG_HEIGHT <= 1) begin
-        cur_top = row_mem0[group_index];
-        cur_mid = row_mem0[group_index];
-        cur_bot = row_mem0[group_index];
+        cur_top = mem0_group;
+        cur_mid = mem0_group;
+        cur_bot = mem0_group;
       end else if (((IMG_HEIGHT - 2) & 1) == 1) begin
-        cur_top = row_mem1[group_index];
-        cur_mid = row_mem0[group_index];
-        cur_bot = row_mem0[group_index];
+        cur_top = mem1_group;
+        cur_mid = mem0_group;
+        cur_bot = mem0_group;
       end else begin
-        cur_top = row_mem0[group_index];
-        cur_mid = row_mem1[group_index];
-        cur_bot = row_mem1[group_index];
+        cur_top = mem0_group;
+        cur_mid = mem1_group;
+        cur_bot = mem1_group;
       end
     end else if (row_index == 0) begin
       cur_top = I_mask;
@@ -178,13 +291,12 @@ module morph_filter_96 #(
 
   // When the source has no blank cycle between rows, the last group of the
   // previous row is emitted while group zero of the next row is captured.
-  wire [3:0] next_row_top = ((row_index + 1) == 1) ? row_mem0[0] :
-                             (((row_index + 1) & 1'b1) ? row_mem1[0] : row_mem0[0]);
-  wire [3:0] next_row_mid = ((row_index + 1) == 1) ? row_mem0[0] :
-                             (((row_index + 1) & 1'b1) ? row_mem0[0] : row_mem1[0]);
+  wire [3:0] next_row_top = ((row_index + 1) == 1) ? mem0_group :
+                             (((row_index + 1) & 1'b1) ? mem1_group : mem0_group);
+  wire [3:0] next_row_mid = ((row_index + 1) == 1) ? mem0_group :
+                             (((row_index + 1) & 1'b1) ? mem0_group : mem1_group);
   wire [3:0] next_row_bot = I_mask;
 
-  integer k;
   always @(posedge I_clk or negedge I_rst_n) begin
     if (!I_rst_n) begin
       active          <= 1'b0;
@@ -206,10 +318,6 @@ module morph_filter_96 #(
       O_mask          <= 4'd0;
       O_frame_end     <= 1'b0;
       O_invalid       <= 1'b0;
-      for (k = 0; k < GROUPS; k = k + 1) begin
-        row_mem0[k] <= 4'd0;
-        row_mem1[k] <= 4'd0;
-      end
     end else begin
       O_tvalid    <= 1'b0;
       O_tlast     <= 1'b0;
@@ -235,7 +343,6 @@ module morph_filter_96 #(
           // Support SOF accompanying the first group.  Row zero produces no
           // output until row one arrives, but it is captured immediately.
           if (I_tvalid) begin
-            row_mem0[0] <= I_mask;
             left_top    <= I_mask;
             left_mid    <= I_mask;
             left_bot    <= I_mask;
@@ -266,10 +373,6 @@ module morph_filter_96 #(
         // except for the internally generated bottom-row drain.
         if (!virtual_row && (row_index < IMG_HEIGHT-1) &&
             I_tvalid && !I_tuser) begin
-          if (((row_index + 1) & 1'b1) == 1'b0)
-            row_mem0[0] <= I_mask;
-          else
-            row_mem1[0] <= I_mask;
           if (I_tlast && (GROUPS != 1))
             O_invalid <= 1'b1;
           left_top <= next_row_top;
@@ -309,12 +412,6 @@ module morph_filter_96 #(
         end
       end else if (process_group) begin
         if (!virtual_row) begin
-          if (row_index < IMG_HEIGHT) begin
-            if ((row_index & 1'b1) == 1'b0)
-              row_mem0[group_index] <= I_mask;
-            else
-              row_mem1[group_index] <= I_mask;
-          end
           if (I_tlast && (group_index != GROUPS-1))
             O_invalid <= 1'b1;
           if (!I_tlast && (group_index == GROUPS-1))

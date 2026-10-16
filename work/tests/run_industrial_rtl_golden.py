@@ -95,7 +95,7 @@ def run_case(name, roi):
     vvp = tool_root / "iverilog" / "bin" / "vvp.exe"
     sim = output / f"{name}.vvp"
     subprocess.run([
-        str(iverilog), "-g2012", "-Wall", "-s", "tb_color_detect_golden",
+        str(iverilog), "-g2012", "-DMORPH_SIMULATION", "-Wall", "-s", "tb_color_detect_golden",
         f"-Ptb_color_detect_golden.ROI_X={roi[0]}",
         f"-Ptb_color_detect_golden.ROI_Y={roi[1]}",
         f"-Ptb_color_detect_golden.ROI_W={roi[2]}",

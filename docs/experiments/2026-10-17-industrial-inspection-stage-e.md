@@ -24,23 +24,23 @@
 
 - 构建入口：python scripts/build_industrial_td.py
 - 工具：Tang Dynasty v6.2.168116；器件 PH1P35MDG324，Speed 3。
-- 本轮流程：综合、布局、布线、Hold Fix、Route QoR、最终时序、bitgen 均完成；TD flow 统计总时长约 4m33s。
-- 最终 Setup WNS：+142 ps；Setup TNS：0；违规端点：0。
-- 最终 Hold WNS：+21 ps；Hold TNS：0；违规端点：0。
-- 资源：18,463 slices / 87.02%；35 RAM；24 DSP；该 Slice 占用高于项目目标的 80% 上限，属于发布风险，不应写成资源余量充足。
+- 本轮显式 ERAM 候选流程：综合、布局、布线、Hold Fix、Route QoR、最终时序、bitgen 均完成；TD `v6.2.168116` / `PH1P35MDG324 Speed 3` 的构建脚本 exit code 为 `0`。
+- 最终 Setup WNS：+108 ps；Setup TNS：0；违规端点：0；STA coverage：96.58%。
+- 最终 Hold WNS：+20 ps；Hold TNS：0；违规端点：0。
+- 资源：16,859 slices / 79.46%；43 RAM；24 DSP；229 DRAMHARDCON。相对当前稳定基线 `20,159 / 95.02%` 减少 3,300 slices；时序仍为正，但 PHY-7022/厂商告警和板级证据仍未关闭。
 - 综合日志存在厂商 DDR 初始化宏的 undriven-pin warnings；本轮未修改厂商 DDR IP，需在后续告警归类中处理。
 
 ## 发布位流
 
 - 文件：release/industrial-v1/camera_to_dsi_display_compress.bit
-- 大小：1,339,505 bytes
-- SHA-256：6817f946be06340ede434146a17f343ecc68dbf4e3f2e492252b3c79354d7b49
+- 大小：1,371,697 bytes
+- SHA-256：cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b
 - 该位流尚未在 PH1P35 板卡上下载、冷启动、热复位、接摄像头和显示器实测。
 
 ## 下一步
 
 1. 在有板卡、SC520CS 和 HDMI 显示器后下载发布位流，记录冷启动、热复位、三种模式和 PASS/NG/NO_OBJECT/INVALID。
-2. 处理 Slice 87.02% 资源风险和厂商告警，再决定是否冻结发布版本。
+2. 处理 PHY-7022、厂商 IP/时钟告警，并在干净环境复建后再决定是否冻结发布版本。
 3. 在板级证据齐全前，不能把本版本写成可上板稳定。
 
 ## 2026-10-17 修正版回归与位流归档
@@ -113,3 +113,12 @@
 - `project`：完整 TD 构建 exit code 为 `0`，QoR 门禁通过；最终资源为 `20,435 slices / 96.32%`、`39 RAM`、`24 DSP`、`229 DRAMHARDCON`，Setup WNS `+6 ps`、Hold WNS `+21 ps`、TNS `0`，STA coverage `95.70%`。
 - `project`：相对当前稳定发布基线 `20,159 slices / 95.02%`、Setup WNS `+116 ps`、Hold WNS `+20 ps`，候选多 `276 slices` 且 setup 裕量少 `110 ps`；面积报告显示 `u_morph_open` 仍为 `ERAM=0`，没有证据表明属性真正推断为 RAM。因此候选和专用契约测试均已回退，稳定 `.bit`、报告和 manifest 恢复。
 - `unknown`：要继续降低形态学资源，需要显式接入已存在的 Anlogic RAM primitive/IP 并补齐仿真替代模型、工程源文件和读写时序验证；仅靠通用属性不足以关闭 `PHY-7022`。
+
+## 2026-10-17 显式 Anlogic ERAM 行缓存候选：接受进入当前发布物
+
+- `project`：按 TDD 先增加 `test_morphology_declares_explicit_eram_wrapper_and_simulation_path`，先确认旧 RTL 缺少 wrapper；随后将形态学两级行缓存替换为 `morph_line_ram_4bit`，TD 路径实例化 `PH1P_LOGIC_ERAM`，Icarus 路径由 `MORPH_SIMULATION` 提供行为模型。该结构对应官方生成 RAM wrapper 的双口读写参数；未修改厂商生成 IP 文件。
+- `project`：`test_industrial_build_contract.py`、`run_industrial_rtl_golden.py`（7 帧 + 非法 ROI）、`run_cartoon_luma_sim.py`、工业 5 样本、Stage D、工业合同、视频顶层和 OSD 字库契约全部通过；Icarus 仅保留既有 timescale/数组敏感列表告警。
+- `project`：完整 TD 构建 exit code 为 `0`，QoR 门禁 PASS。最终 `route.qor` 为 Setup WNS `+108 ps`、Setup TNS `0`、Hold WNS `+20 ps`、Hold TNS `0`、违例端点 `0`；资源为 `16,859 slices / 79.46%`、`43 RAM`、`24 DSP`、`229 DRAMHARDCON`。面积报告明确显示 `u_morph_open` 的 4 个 `morph_line_ram_4bit` 实例各推断 1 个 ERAM。
+- `project`：相对稳定基线 `20,159 slices / 95.02%`、`39 RAM`、Setup WNS `+116 ps`、Hold WNS `+20 ps`，减少 `3,300 slices`、增加 `4 RAM`，Setup 裕量减少 `8 ps` 但仍为正；候选位流和报告已更新到 `release/industrial-v1/`。
+- `project`：候选未修改用户已有的 `fallback/tb_color.vvp`；该文件保持未暂存状态，不属于本次提交。
+- `unknown`：尚无 PH1P35/SC520CS/HDMI 实物下载、摄像头画面、LED 管脚和长稳证据；Stage G 仍未通过。`final_timing.rpt` 中的厂商告警仍需逐条分类，不能仅凭 QoR 门禁关闭。

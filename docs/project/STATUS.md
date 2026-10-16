@@ -4,7 +4,7 @@
 > 修改 PROJECT_GOAL.md 中定义的目标或验收标准须提变更提案。  
 > 用户口头反馈记录为 `USER_REPORTED_ON_BOARD`，不等于硬件验证通过。
 
-最后更新：2026-10-17（固定红色 v1 发布 QoR 门禁补全）
+最后更新：2026-10-17（固定红色 v1 显式 ERAM 候选通过资源/时序门禁）
 
 ---
 
@@ -33,7 +33,7 @@
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
 | **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
 | **G6** | OSD + LED 联动（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `tb_osd_led_joint.v` 与整机 OSD 集成；WM8978 不在 v1 范围 |
-| **G7** | 优化与创新 | `RISK` | Slice 95.02%，高于项目 80% 目标并触发 PHY-7022；OSD 逐行字库优化减少 702 slices，但资源余量仍不足 |
+| **G7** | 优化与创新 | `RISK` | 显式 ERAM 行缓存将 Slice 从 95.02% 降至 79.46%，但仍缺硬件演示、告警关闭和第二个可证明创新点 |
 | **G8** | 冻结 / 发布 / 答辩 | `IN_PROGRESS` | 单 `.bit` 已归档；板级、长稳和答辩材料未完成 |
 
 ---
@@ -213,3 +213,6 @@
 
 > 2026-10-17 OSD QoR optimization:
 > 在上述稳定 HDMI 时序基线之上，将 OSD 字库从 35-bit 整字动态选位改为逐行 5-bit 查表，保持 OSD/LED/模式契约不变。TD `v6.2.168116` / `PH1P35MDG324 Speed 3` 完整构建成功，最终 Setup WNS +116 ps、Hold WNS +20 ps、TNS 0，Slice 20,159/95.02%、RAM 39、DSP 24、DRAMHARDCON 229。压缩位流大小 `1,356,145 bytes`，SHA-256 `77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`。相对上一版减少 702 slices；PHY-7022 和板级 Stage G 仍未关闭。
+
+> 2026-10-17 explicit ERAM morphology optimization:
+> 将形态学两级行缓存改为 `PH1P_LOGIC_ERAM` 双口 wrapper，并为 Icarus 保留 `MORPH_SIMULATION` 行为模型。完整 TD `v6.2.168116` / `PH1P35MDG324 Speed 3` 构建和 QoR 门禁通过：Setup WNS +108 ps、Hold WNS +20 ps、TNS 0、Slice 16,859/79.46%、RAM 43、DSP 24、DRAMHARDCON 229、STA coverage 96.58%。相对上述稳定基线减少 3,300 slices、增加 4 RAM；压缩位流大小 `1,371,697 bytes`，SHA-256 `cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b`，未压缩位流 SHA-256 `0a089d254a3124ec3462bfc2e6eaa2682f075beca4c44fe551c78ac2696b9be1`。无板级下载、摄像头/HDMI/LED/冷启动/热复位/长稳证据，Stage G 仍未通过。

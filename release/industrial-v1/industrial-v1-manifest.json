@@ -1,8 +1,8 @@
 {
   "project": "PH1P35 fixed-red industrial inspection v1",
   "target_device": "PH1P35MDG324",
-  "git_commit": "e27c1c1fd185b620882bfaaf62b7b9e788a3aa7e",
-  "git_status": "M fallback/rtl/industrial_osd_overlay.v\n M fallback/tb_color.vvp\n M release/industrial-v1/camera_to_dsi_display.bit\n M release/industrial-v1/camera_to_dsi_display_compress.bit\n M release/industrial-v1/final_timing.rpt\n M release/industrial-v1/route.qor\n?? work/tests/test_osd_font_contract.py",
+  "git_commit": "e31f47c85cd78210b08446a3bb27c7c3bb9738d0",
+  "git_status": "M fallback/rtl/morph_open_96.v\n M fallback/tb_color.vvp\n M release/industrial-v1/camera_to_dsi_display.bit\n M release/industrial-v1/camera_to_dsi_display_compress.bit\n M release/industrial-v1/final_timing.rpt\n M release/industrial-v1/route.qor\n M work/tests/run_industrial_rtl_golden.py\n M work/tests/test_industrial_build_contract.py",
   "build_inputs": {
     "td_exe": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
     "flow_tcl": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
@@ -23,11 +23,11 @@
     },
     {
       "path": "fallback/rtl/morph_open_96.v",
-      "sha256": "0fff1c580068c8d76191bbbb4540e5621ff1e13ba5ba6cacf997c4af79b55d98"
+      "sha256": "7dfe7d1dcc0270872c7d2465e5fb857fe779aa49b12f72b47bae282c4667a560"
     },
     {
       "path": "fallback/rtl/color_detect_96_v2.v",
-      "sha256": "bcf0c2bb5bed8755a020628e873a18d05f4d8cf84ccf5fedbfa592b2c07b0b2a"
+      "sha256": "2600cb606d615f26bfb7f3b9ae253e531eb14b6fad05a99d183bd6a19b460e0d"
     },
     {
       "path": "fallback/rtl/defect_classifier.v",
@@ -54,22 +54,22 @@
     {
       "path": "release/industrial-v1/camera_to_dsi_display.bit",
       "size_bytes": 1789539,
-      "sha256": "278aac832d22e570ec6c00455084cf6c7aed421d52e68f37e77b30c7145e03d0"
+      "sha256": "0a089d254a3124ec3462bfc2e6eaa2682f075beca4c44fe551c78ac2696b9be1"
     },
     {
       "path": "release/industrial-v1/camera_to_dsi_display_compress.bit",
-      "size_bytes": 1356145,
-      "sha256": "77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4"
+      "size_bytes": 1371697,
+      "sha256": "cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b"
     },
     {
       "path": "release/industrial-v1/route.qor",
       "size_bytes": 1313,
-      "sha256": "64b3c412967a849f5febf88776b04ad044865e8f024434c20341ba9a5bb16732"
+      "sha256": "7a0155176a3ff2d7bf05e525506ccaeaa44b28994bc107d14ea77c4419db9797"
     },
     {
       "path": "release/industrial-v1/final_timing.rpt",
-      "size_bytes": 4831035,
-      "sha256": "6c03157e94b0498eff4a73c5a8a545c6c7fb2082b59f493098ae9c485c28f3c3"
+      "size_bytes": 4749766,
+      "sha256": "c16b8c40f0c7ccd55adfdca0aad0a1e099077631fb1f8aba323ad9ae8499c842"
     }
   ]
 }
