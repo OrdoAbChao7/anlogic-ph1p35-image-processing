@@ -51,6 +51,34 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def describe_input(path: Path) -> dict:
+    """Record enough metadata to detect drift in an external build input."""
+    record = {
+        "path": str(path.resolve()),
+        "exists": path.exists(),
+    }
+    if path.is_file():
+        record["size_bytes"] = path.stat().st_size
+        record["sha256"] = sha256(path)
+    return record
+
+
+def build_input_provenance() -> dict:
+    baseline_files = {
+        "syn_1/settings.cfg": ORIG_RUNS / "syn_1" / "settings.cfg",
+        "syn_1/camera_to_dsi_display.prj": ORIG_RUNS / "syn_1" / "camera_to_dsi_display.prj",
+        "phy_1/settings.cfg": ORIG_RUNS / "phy_1" / "settings.cfg",
+        "phy_1/camera_to_dsi_display.prj": ORIG_RUNS / "phy_1" / "camera_to_dsi_display.prj",
+    }
+    return {
+        "td_exe": describe_input(TD_EXE),
+        "flow_tcl": describe_input(FLOW_TCL),
+        "baseline_files": {
+            relative: describe_input(path) for relative, path in baseline_files.items()
+        },
+    }
+
+
 def parse_qor_metrics(content: str) -> dict:
     """Parse the route QoR fields required before a release can be copied."""
     fields = {
@@ -212,6 +240,7 @@ def write_release_manifest(bit_files):
             "flow_tcl": str(FLOW_TCL.resolve()),
             "baseline_runs": str(ORIG_RUNS.resolve()),
         },
+        "build_input_hashes": build_input_provenance(),
         "sources": source_manifest(),
         "artifacts": artifacts,
     }

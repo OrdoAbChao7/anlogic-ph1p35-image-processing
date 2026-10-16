@@ -136,6 +136,17 @@ def test_release_docs_bind_the_current_bitstream_manifest():
         assert bit_sha in (ROOT / rel).read_text(encoding="utf-8"), f"{rel} is stale for the current release bitstream"
 
 
+def test_manifest_records_external_td_input_provenance():
+    manifest = json.loads((ROOT / "release" / "industrial-v1" / "industrial-v1-manifest.json").read_text(encoding="utf-8"))
+    hashes = manifest["build_input_hashes"]
+    for key in ("td_exe", "flow_tcl"):
+        assert hashes[key]["exists"] is True
+        assert len(hashes[key]["sha256"]) == 64
+    for key in ("syn_1/settings.cfg", "syn_1/camera_to_dsi_display.prj", "phy_1/settings.cfg", "phy_1/camera_to_dsi_display.prj"):
+        assert hashes["baseline_files"][key]["exists"] is True
+        assert len(hashes["baseline_files"][key]["sha256"]) == 64
+
+
 def test_current_requirement_and_warning_audits_bind_the_eram_build():
     requirement_audit = (ROOT / "docs" / "evidence" / "industrial-v1-requirement-audit.md").read_text(encoding="utf-8")
     warning_audit = (ROOT / "docs" / "evidence" / "industrial-v1-td-warning-audit.md").read_text(encoding="utf-8")
@@ -162,5 +173,6 @@ if __name__ == "__main__":
     test_legacy_industrial_verification_covers_approved_modes_and_osd_led()
     test_cartoon_streaming_regression_exposes_full_frame_mode()
     test_release_docs_bind_the_current_bitstream_manifest()
+    test_manifest_records_external_td_input_provenance()
     test_current_requirement_and_warning_audits_bind_the_eram_build()
     print("PASS industrial build contracts")

@@ -1,12 +1,52 @@
 {
   "project": "PH1P35 fixed-red industrial inspection v1",
   "target_device": "PH1P35MDG324",
-  "git_commit": "0e37828ee1ed37d95593f2b8191f8fbc7a3d0abf",
-  "git_status": "M fallback/tb_color.vvp",
+  "git_commit": "1b2c51de58b33d53fd0acc54c067d81f7692aafd",
+  "git_status": "M fallback/tb_color.vvp\n M scripts/build_industrial_td.py\n M work/tests/test_industrial_build_contract.py",
   "build_inputs": {
     "td_exe": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
     "flow_tcl": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
     "baseline_runs": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs"
+  },
+  "build_input_hashes": {
+    "td_exe": {
+      "path": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
+      "exists": true,
+      "size_bytes": 76680976,
+      "sha256": "e2e04ada5e256dccd017240c0f4dcface7f96dca67cde0e56e606ac0e02f827a"
+    },
+    "flow_tcl": {
+      "path": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
+      "exists": true,
+      "size_bytes": 7809,
+      "sha256": "d1a5d4291706dac224cc33008d8945e79ed2eb1adf8ce86cca46be564975bade"
+    },
+    "baseline_files": {
+      "syn_1/settings.cfg": {
+        "path": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs\\syn_1\\settings.cfg",
+        "exists": true,
+        "size_bytes": 698,
+        "sha256": "0edb3a700629ede8b9f436782036851e07146991899bd2533622ee221e70c149"
+      },
+      "syn_1/camera_to_dsi_display.prj": {
+        "path": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs\\syn_1\\camera_to_dsi_display.prj",
+        "exists": true,
+        "size_bytes": 24288,
+        "sha256": "63507a5350c9bba7885febda6492b5fdd72ca5a1b51544204026d999bd654c00"
+      },
+      "phy_1/settings.cfg": {
+        "path": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs\\phy_1\\settings.cfg",
+        "exists": true,
+        "size_bytes": 755,
+        "sha256": "082f4f12f328456316e9d4452a85aa12034bd92651c839929ab9afe0214edce8"
+      },
+      "phy_1/camera_to_dsi_display.prj": {
+        "path": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs\\phy_1\\camera_to_dsi_display.prj",
+        "exists": true,
+        "size_bytes": 24408,
+        "sha256": "c7b53a6476a64b8e366a0874809f69e6375f3844fccbc38076b70ad56c39b98d"
+      }
+    }
   },
   "sources": [
     {
