@@ -89,6 +89,16 @@ def test_morphology_declares_explicit_eram_wrapper_and_simulation_path():
     assert '"-DMORPH_SIMULATION"' in runner
 
 
+def test_roi_parameters_reach_both_morphology_passes_and_boundary_regression():
+    morph = (ROOT / "fallback" / "rtl" / "morph_open_96.v").read_text(encoding="utf-8")
+    detector = (ROOT / "fallback" / "rtl" / "color_detect_96_v2.v").read_text(encoding="utf-8")
+    runner = (ROOT / "work" / "tests" / "run_industrial_rtl_golden.py").read_text(encoding="utf-8")
+    assert morph.count(".ROI_X(ROI_X)") >= 2
+    assert morph.count(".ROI_WIDTH(ROI_WIDTH)") >= 2
+    assert ".ROI_X(ROI_X)" in detector
+    assert '"roi_boundary"' in runner
+
+
 def test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles_morphology():
     script = (ROOT / "scripts" / "verify-industrial-subsystem.ps1").read_text(encoding="utf-8")
     assert "fallback/tb_color.vvp" not in script
@@ -168,6 +178,7 @@ if __name__ == "__main__":
     test_industrial_build_argument_overrides_are_parsed()
     test_qor_gate_parses_and_rejects_non_converged_reports()
     test_morphology_declares_explicit_eram_wrapper_and_simulation_path()
+    test_roi_parameters_reach_both_morphology_passes_and_boundary_regression()
     test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles_morphology()
     test_legacy_industrial_verification_includes_full_frame_and_threshold_gates()
     test_legacy_industrial_verification_covers_approved_modes_and_osd_led()

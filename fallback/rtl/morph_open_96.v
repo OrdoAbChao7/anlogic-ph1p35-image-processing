@@ -107,7 +107,11 @@ endmodule
 module morph_filter_96 #(
   parameter integer IMG_WIDTH  = 1280,
   parameter integer IMG_HEIGHT = 720,
-  parameter integer OPERATION  = 0
+  parameter integer OPERATION  = 0,
+  parameter integer ROI_X      = 0,
+  parameter integer ROI_Y      = 0,
+  parameter integer ROI_WIDTH  = 0,
+  parameter integer ROI_HEIGHT = 0
 )(
   input  wire       I_clk,
   input  wire       I_rst_n,
@@ -126,6 +130,10 @@ module morph_filter_96 #(
 
   localparam integer GROUPS = IMG_WIDTH / 4;
   localparam integer GROUP_BITS = (GROUPS <= 1) ? 1 : $clog2(GROUPS + 1);
+  localparam integer ROI_FULL = (ROI_X == 0) && (ROI_Y == 0) &&
+                                (ROI_WIDTH == 0) && (ROI_HEIGHT == 0);
+  localparam integer ROI_RIGHT = ROI_X + ROI_WIDTH - 1;
+  localparam integer ROI_BOTTOM = ROI_Y + ROI_HEIGHT - 1;
 
   // Ping-pong row memories.  A word contains four binary pixels.
   wire [3:0] mem0_group;
@@ -220,51 +228,82 @@ module morph_filter_96 #(
 
   // Apply one 3x3 operation to four horizontally adjacent output pixels.
   // tl/tc/tr are top-row groups, ml/mc/mr middle-row groups, and bl/bc/br
-  // bottom-row groups.  The edge flags select replicated horizontal borders.
+  // bottom-row groups.  CENTER_X_BASE/CENTER_Y identify the first output
+  // pixel in this group.  ROI edges are replicated before the operation and
+  // pixels outside the ROI are forced back to zero, so a partial ROI has the
+  // same BORDER_REPLICATE semantics as the software crop.
   function [3:0] morph_group;
     input [3:0] tl, tc, tr;
     input [3:0] ml, mc, mr;
     input [3:0] bl, bc, br;
-    input       left_edge;
-    input       right_edge;
+    input integer center_x_base;
+    input integer center_y;
     integer i;
+    integer center_x;
     reg top_l, top_c, top_r;
     reg mid_l, mid_c, mid_r;
     reg bot_l, bot_c, bot_r;
+    reg [3:0] top_word, mid_word, bot_word;
+    reg inside_x, inside_y;
     begin
+      top_word = tc;
+      mid_word = mc;
+      bot_word = bc;
+      if (!ROI_FULL && (center_y == ROI_Y))
+        top_word = mc;
+      if (!ROI_FULL && (center_y == ROI_BOTTOM))
+        bot_word = mc;
+
       for (i = 0; i < 4; i = i + 1) begin
-        top_c = tc[i];
-        mid_c = mc[i];
-        bot_c = bc[i];
+        center_x = center_x_base + i;
+        inside_x = ROI_FULL || ((center_x >= ROI_X) && (center_x <= ROI_RIGHT));
+        inside_y = ROI_FULL || ((center_y >= ROI_Y) && (center_y <= ROI_BOTTOM));
+        top_c = top_word[i];
+        mid_c = mid_word[i];
+        bot_c = bot_word[i];
 
-        if (i == 0)
-          top_l = left_edge ? tc[0] : tl[3];
+        if ((center_x == 0) || (!ROI_FULL && (center_x == ROI_X)))
+          top_l = top_word[i];
+        else if (i == 0)
+          top_l = tl[3];
         else
-          top_l = tc[i-1];
-        if (i == 3)
-          top_r = right_edge ? tc[3] : tr[0];
+          top_l = top_word[i-1];
+        if ((center_x == IMG_WIDTH-1) || (!ROI_FULL && (center_x == ROI_RIGHT)))
+          top_r = top_word[i];
+        else if (i == 3)
+          top_r = tr[0];
         else
-          top_r = tc[i+1];
+          top_r = top_word[i+1];
 
-        if (i == 0)
-          mid_l = left_edge ? mc[0] : ml[3];
+        if ((center_x == 0) || (!ROI_FULL && (center_x == ROI_X)))
+          mid_l = mid_word[i];
+        else if (i == 0)
+          mid_l = ml[3];
         else
-          mid_l = mc[i-1];
-        if (i == 3)
-          mid_r = right_edge ? mc[3] : mr[0];
+          mid_l = mid_word[i-1];
+        if ((center_x == IMG_WIDTH-1) || (!ROI_FULL && (center_x == ROI_RIGHT)))
+          mid_r = mid_word[i];
+        else if (i == 3)
+          mid_r = mr[0];
         else
-          mid_r = mc[i+1];
+          mid_r = mid_word[i+1];
 
-        if (i == 0)
-          bot_l = left_edge ? bc[0] : bl[3];
+        if ((center_x == 0) || (!ROI_FULL && (center_x == ROI_X)))
+          bot_l = bot_word[i];
+        else if (i == 0)
+          bot_l = bl[3];
         else
-          bot_l = bc[i-1];
-        if (i == 3)
-          bot_r = right_edge ? bc[3] : br[0];
+          bot_l = bot_word[i-1];
+        if ((center_x == IMG_WIDTH-1) || (!ROI_FULL && (center_x == ROI_RIGHT)))
+          bot_r = bot_word[i];
+        else if (i == 3)
+          bot_r = br[0];
         else
-          bot_r = bc[i+1];
+          bot_r = bot_word[i+1];
 
-        if (OPERATION == 0)
+        if (!inside_x || !inside_y)
+          morph_group[i] = 1'b0;
+        else if (OPERATION == 0)
           morph_group[i] = top_l & top_c & top_r &
                            mid_l & mid_c & mid_r &
                            bot_l & bot_c & bot_r;
@@ -278,16 +317,23 @@ module morph_filter_96 #(
 
   wire process_group = active && !flush_pending &&
                         (virtual_row || I_tvalid);
+  wire [11:0] next_center_x_base = (group_index == 0) ? 12'd0 :
+                                    ((group_index - 1'b1) << 2);
+  wire [11:0] last_center_x_base = (GROUPS - 1) << 2;
+  wire [11:0] next_center_y = virtual_row ? IMG_HEIGHT-1 :
+                               ((row_index == 0) ? 0 : row_index-1);
+  wire [11:0] last_center_y = virtual_row ? IMG_HEIGHT-1 :
+                               ((row_index == 0) ? 0 : row_index-1);
   wire [3:0] next_mask = morph_group(
       left_top, prev_top, cur_top,
       left_mid, prev_mid, cur_mid,
       left_bot, prev_bot, cur_bot,
-      (group_index == 1), 1'b0);
+      next_center_x_base, next_center_y);
   wire [3:0] last_mask = morph_group(
       left_top, prev_top, prev_top,
       left_mid, prev_mid, prev_mid,
       left_bot, prev_bot, prev_bot,
-      (GROUPS == 1), 1'b1);
+      last_center_x_base, last_center_y);
 
   // When the source has no blank cycle between rows, the last group of the
   // previous row is emitted while group zero of the next row is captured.
@@ -458,7 +504,11 @@ endmodule
 
 module morph_open_96 #(
   parameter integer IMG_WIDTH  = 1280,
-  parameter integer IMG_HEIGHT = 720
+  parameter integer IMG_HEIGHT = 720,
+  parameter integer ROI_X      = 0,
+  parameter integer ROI_Y      = 0,
+  parameter integer ROI_WIDTH  = 0,
+  parameter integer ROI_HEIGHT = 0
 )(
   input  wire       I_clk,
   input  wire       I_rst_n,
@@ -478,7 +528,8 @@ module morph_open_96 #(
   wire [3:0] erode_mask;
 
   morph_filter_96 #(
-    .IMG_WIDTH(IMG_WIDTH), .IMG_HEIGHT(IMG_HEIGHT), .OPERATION(0)
+    .IMG_WIDTH(IMG_WIDTH), .IMG_HEIGHT(IMG_HEIGHT), .OPERATION(0),
+    .ROI_X(ROI_X), .ROI_Y(ROI_Y), .ROI_WIDTH(ROI_WIDTH), .ROI_HEIGHT(ROI_HEIGHT)
   ) u_erode (
     .I_clk(I_clk), .I_rst_n(I_rst_n),
     .I_tvalid(I_tvalid), .I_tlast(I_tlast), .I_tuser(I_tuser), .I_mask(I_mask),
@@ -487,7 +538,8 @@ module morph_open_96 #(
   );
 
   morph_filter_96 #(
-    .IMG_WIDTH(IMG_WIDTH), .IMG_HEIGHT(IMG_HEIGHT), .OPERATION(1)
+    .IMG_WIDTH(IMG_WIDTH), .IMG_HEIGHT(IMG_HEIGHT), .OPERATION(1),
+    .ROI_X(ROI_X), .ROI_Y(ROI_Y), .ROI_WIDTH(ROI_WIDTH), .ROI_HEIGHT(ROI_HEIGHT)
   ) u_dilate (
     .I_clk(I_clk), .I_rst_n(I_rst_n),
     .I_tvalid(erode_valid), .I_tlast(erode_last), .I_tuser(erode_user),

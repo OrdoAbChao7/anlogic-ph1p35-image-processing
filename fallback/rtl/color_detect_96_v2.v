@@ -205,7 +205,8 @@ module color_detect_96_v2 #(
   wire morph_valid, morph_last, morph_user, morph_frame_end, morph_invalid;
   wire [3:0] morph_mask;
   morph_open_96 #(
-    .IMG_WIDTH(IMG_WIDTH), .IMG_HEIGHT(IMG_HEIGHT)
+    .IMG_WIDTH(IMG_WIDTH), .IMG_HEIGHT(IMG_HEIGHT),
+    .ROI_X(ROI_X), .ROI_Y(ROI_Y), .ROI_WIDTH(ROI_WIDTH), .ROI_HEIGHT(ROI_HEIGHT)
   ) u_morph_open (
     .I_clk(I_clk), .I_rst_n(I_rst_n),
     .I_tvalid(tvalid_d1), .I_tlast(tlast_d1), .I_tuser(tuser_d1),

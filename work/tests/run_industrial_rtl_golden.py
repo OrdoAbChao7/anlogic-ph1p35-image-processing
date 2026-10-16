@@ -49,6 +49,13 @@ def make_frames():
     return [first, empty, noisy, border, shifted, hole, full]
 
 
+def make_roi_boundary_frames():
+    """A small object that touches every side of the selected ROI."""
+    frame = np.zeros((H, W, 3), dtype=np.uint8)
+    frame[2:4, 4:6] = RED
+    return [frame]
+
+
 def write_vectors(stimulus_path, expected_path, frames, params):
     model = IndustrialInspectionAlgorithm()
     with stimulus_path.open("w", encoding="ascii") as stimulus, expected_path.open("w", encoding="ascii") as expected:
@@ -73,7 +80,7 @@ def write_vectors(stimulus_path, expected_path, frames, params):
                 stimulus.write("0 0 0 000000000000000000000000\n")
 
 
-def run_case(name, roi):
+def run_case(name, roi, frames=None):
     output = ROOT / "work" / "output" / "industrial-golden"
     output.mkdir(parents=True, exist_ok=True)
     stimulus = output / f"{name}.stimulus.txt"
@@ -85,7 +92,8 @@ def run_case(name, roi):
         "roi_x": roi[0], "roi_y": roi[1],
         "roi_width": roi[2], "roi_height": roi[3],
     }
-    frames = make_frames() if roi == (0, 0, 0, 0) else [make_frames()[0]]
+    if frames is None:
+        frames = make_frames() if roi == (0, 0, 0, 0) else [make_frames()[0]]
     write_vectors(stimulus, expected, frames, params)
 
     tool_root = ROOT / ".tools"
@@ -117,5 +125,6 @@ def run_case(name, roi):
 
 if __name__ == "__main__":
     run_case("full_frame_roi", (0, 0, 0, 0))
+    run_case("roi_boundary", (4, 2, 2, 2), make_roi_boundary_frames())
     run_case("invalid_roi", (1, 0, 0, 0))
     print("PASS industrial RTL/Python golden comparison")
