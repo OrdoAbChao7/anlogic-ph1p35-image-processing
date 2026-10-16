@@ -64,6 +64,7 @@ module tb_industrial_subsystem;
     .O_cy(cy),
     .O_area(area),
     .O_detected(detected),
+    .O_invalid(detect_invalid),
     .O_frame_sync(frame_sync)
   );
 
@@ -78,6 +79,7 @@ module tb_industrial_subsystem;
     .I_rst_n(rst_n),
     .I_frame_sync(frame_sync),
     .I_detected(detected),
+    .I_invalid(detect_invalid),
     .I_xmin(xmin),
     .I_xmax(xmax),
     .I_ymin(ymin),

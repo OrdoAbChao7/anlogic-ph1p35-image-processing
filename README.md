@@ -64,6 +64,15 @@ python .\work\models\reference_model.py --self-test
 
 **2026-10-17 固定红色零件 v1：** 已完成软件模型、硬件等价模型和独立 RTL 仿真回归；当前 TD 构建和 Stage G 上板仍按 [实验记录](docs/experiments/2026-10-17-industrial-inspection-stage-e.md) 记录，未有板级证据前不宣称稳定可用。
 
-当前可下载位流：[industrial-v1/camera_to_dsi_display_compress.bit](release/industrial-v1/camera_to_dsi_display_compress.bit)，SHA-256：`886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`。该文件尚未在板卡上实测。
+当前可下载位流：[industrial-v1/camera_to_dsi_display_compress.bit](release/industrial-v1/camera_to_dsi_display_compress.bit)，SHA-256：`84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c`。该文件尚未在板卡上实测；源码、报告和输入路径记录在 [industrial-v1-manifest.json](release/industrial-v1/industrial-v1-manifest.json)。
+
+重新构建时，向 `scripts/build_industrial_td.py` 显式传入 TD 可执行文件、`DefaultFlow.tcl` 和官方 SC520 基线 `Runs` 目录；也可以使用 `FPGA_TD_EXE`、`FPGA_FLOW_TCL`、`FPGA_BASELINE_RUNS` 环境变量。脚本会把位流、`route.qor`、`final_timing.rpt` 和 provenance manifest 写入 `release/industrial-v1/`。
+
+```powershell
+python scripts/build_industrial_td.py `
+  --td-exe E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe `
+  --flow-tcl E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl `
+  --baseline-runs E:/Projects/FPGA/HX1P35A2026/lab_ex1_mipi_hdmi_SC520_original/lab_ex1_mipi_hdmi_SC520/lab_ex1_mipi_hdmi/td_project/camera_to_dsi_display_Runs
+```
 
 上板记录模板：[industrial-v1-stage-g-template.md](docs/evidence/industrial-v1-stage-g-template.md)。

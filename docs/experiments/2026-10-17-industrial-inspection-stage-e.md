@@ -54,3 +54,12 @@
 - `project`：当前发布文件 `release/industrial-v1/camera_to_dsi_display_compress.bit` 大小 `1,339,505 bytes`，SHA-256 为 `886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`。此前 `6817f...` 哈希对应修正前位流，仅保留为历史记录，不再代表当前发布文件。
 - `unknown`：本次仍未下载至 PH1P35，未连接 SC520CS/HDMI，也没有 LED、冷启动、热复位、长稳或显示效果证据；Stage G 仍未通过。TD 构建脚本依赖本机工具和官方基线工程绝对路径，干净环境复现仍需后续处理。
 - `project`：上板操作与原始证据填写模板见 `docs/evidence/industrial-v1-stage-g-template.md`。
+
+## 2026-10-17 本轮 TD 重建与发布证据校正
+
+- `project`：提交 `abd35f7` 后使用显式 `--td-exe`、`--flow-tcl` 和 `--baseline-runs` 参数重新执行完整 TD 流程；综合、布局、布线、Hold Fix、Route QoR、最终时序和 bitgen 均以本轮日志完成，TD exit code 为 `0`。
+- `project`：本轮 `route.qor` 为 Setup WNS `+142 ps`、Setup TNS `0`、Hold WNS `+21 ps`、Hold TNS `0`、违规端点 `0`；资源为 `18,463 slices / 87.02%`、`35 RAM`、`24 DSP`。
+- `project`：当前压缩位流大小 `1,339,505 bytes`，SHA-256 为 `84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c`；对应未压缩位流 SHA-256 为 `74d24e83668df5ef5f43847b126b92af9479abcecd717c7843ec4b423ad23a6f`。
+- `project`：`release/industrial-v1/industrial-v1-manifest.json` 记录源码哈希、Git 提交、TD 输入路径、位流哈希、`route.qor` 和 `final_timing.rpt` 哈希；不再只依赖口头路径说明。
+- `project`：补齐 `tb_industrial_subsystem.v` 的 `O_invalid → I_invalid` 连接后，联合 RTL 仿真重新通过；Icarus 仅剩形态学数组 `@*` 敏感列表告警，未发现浮空 INVALID 端口。
+- `unknown`：仍无 PH1P35、SC520CS、HDMI 的下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟和长稳均未验证。DDR 初始化宏的 `SYN-5011/SYN-5025` 告警仍需逐条归类，Slice 占用仍高于 80% 目标。

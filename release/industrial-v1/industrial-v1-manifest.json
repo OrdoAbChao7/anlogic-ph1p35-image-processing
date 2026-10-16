@@ -1,0 +1,75 @@
+{
+  "project": "PH1P35 fixed-red industrial inspection v1",
+  "target_device": "PH1P35MDG324",
+  "git_commit": "abd35f7d1a7bbd87b4153fe4b4d8bd209711c403",
+  "git_status": "M fallback/tb_color.vvp\n M release/industrial-v1/camera_to_dsi_display_compress.bit\n?? release/industrial-v1/camera_to_dsi_display.bit\n?? release/industrial-v1/final_timing.rpt\n?? release/industrial-v1/industrial-v1-manifest.json\n?? release/industrial-v1/route.qor",
+  "build_inputs": {
+    "td_exe": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
+    "flow_tcl": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
+    "baseline_runs": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs"
+  },
+  "sources": [
+    {
+      "path": "work/rtl/video_cartoon_luma.v",
+      "sha256": "4c6e356eedee30742ace163d06bd330c4ae09a5314d64d7a3e82fdf64f5d2339"
+    },
+    {
+      "path": "fallback/td_source/design_top_wrapper.v",
+      "sha256": "851c42b1e9fda4fc8f55db0f76712d06b072216336db9dca7fc108057df12d9b"
+    },
+    {
+      "path": "fallback/td_source/isp/isp_top.v",
+      "sha256": "0d1cbaa130a6424602223289b5682a127ee29f22ffd027f44efa387e59c4ad7a"
+    },
+    {
+      "path": "fallback/rtl/morph_open_96.v",
+      "sha256": "0fff1c580068c8d76191bbbb4540e5621ff1e13ba5ba6cacf997c4af79b55d98"
+    },
+    {
+      "path": "fallback/rtl/color_detect_96_v2.v",
+      "sha256": "bcf0c2bb5bed8755a020628e873a18d05f4d8cf84ccf5fedbfa592b2c07b0b2a"
+    },
+    {
+      "path": "fallback/rtl/defect_classifier.v",
+      "sha256": "37421c1e86f95b3d6e785aae3ff14c6d690df10e3d30258dad222e495f9f7895"
+    },
+    {
+      "path": "fallback/rtl/bbox_draw_overlay.v",
+      "sha256": "29df2b9937dd32221b039ac57284edbc057d9221dc6367a8be8511fc81739a28"
+    },
+    {
+      "path": "fallback/rtl/anlogic_logo_rom.v",
+      "sha256": "fb55bc3da23e79e5fd9cc1c9210dddf99b8fa8595f59336f2e5447725c2d161d"
+    },
+    {
+      "path": "fallback/rtl/industrial_osd_overlay.v",
+      "sha256": "c2d9c14cd794fbb4a8e2cc95dd520e02085f5ea6b8188d8c1b0eda020e0fb403"
+    },
+    {
+      "path": "fallback/rtl/mode_controller.v",
+      "sha256": "f792c7385c1427480df26f068392ba3d4b1889008a238889d2d1bd8c6c9ea0cf"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "release/industrial-v1/camera_to_dsi_display.bit",
+      "size_bytes": 1789539,
+      "sha256": "74d24e83668df5ef5f43847b126b92af9479abcecd717c7843ec4b423ad23a6f"
+    },
+    {
+      "path": "release/industrial-v1/camera_to_dsi_display_compress.bit",
+      "size_bytes": 1339505,
+      "sha256": "84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c"
+    },
+    {
+      "path": "release/industrial-v1/route.qor",
+      "size_bytes": 1313,
+      "sha256": "484038fa9fb43fd25f5a65ed74b203c48bdc4e49e687abfbebb8902486dc59e4"
+    },
+    {
+      "path": "release/industrial-v1/final_timing.rpt",
+      "size_bytes": 4355699,
+      "sha256": "adf67af4affc15b82f6b797793e5838b6de6d2bd99da5176faea586d298245e0"
+    }
+  ]
+}

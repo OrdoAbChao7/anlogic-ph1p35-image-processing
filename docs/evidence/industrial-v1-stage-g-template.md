@@ -4,9 +4,9 @@
 
 ## 版本绑定
 
-- Git commit：`2594814`（或实际下载版本）
+- Git commit：`abd35f7`（本轮 TD 构建绑定提交；或实际下载版本）
 - Bitstream：`release/industrial-v1/camera_to_dsi_display_compress.bit`
-- SHA-256：`886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`
+- SHA-256：`84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c`
 - 板卡型号/序列号：
 - SC520CS 模组版本：
 - TD Programmer 版本：

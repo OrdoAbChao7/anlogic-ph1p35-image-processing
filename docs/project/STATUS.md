@@ -204,3 +204,6 @@
 
 > 2026-10-17 TD correction:
 > 审计后将 TD 构建入口切换到登记册冻结的 `s3_luma`（`work/rtl/video_cartoon_luma.v`），并统一 `Sobel threshold=240`；新增三模式逐周期仿真 1102 周期 PASS 和 OSD/LED 联调 PASS。修正版位流仍为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`；上述旧哈希不再代表当前发布文件。无板卡下载和显示器实测，Stage G 仍未通过。
+
+> 2026-10-17 TD rebuild correction:
+> 提交 `abd35f7` 后使用显式 TD/基线路径重跑完整流程并成功 bitgen。当前压缩位流 SHA-256 为 `84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c`；`route.qor`/`final_timing.rpt` 与源码哈希见 `release/industrial-v1/industrial-v1-manifest.json`。最终 Setup WNS +142 ps、Hold WNS +21 ps、TNS 0，Slice 18,463/87.02%、RAM 35、DSP 24。`tb_industrial_subsystem.v` 的 INVALID 端口连接已补齐并复跑通过。无板卡下载、摄像头/HDMI/LED/冷启动/热复位/长稳证据，Stage G 仍未通过。
