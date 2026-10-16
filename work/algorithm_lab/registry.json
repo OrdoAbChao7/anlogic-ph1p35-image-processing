@@ -66,7 +66,7 @@
       "roi_width": 0,
       "roi_height": 0
     },
-    "model_sha256": "8341bb307de148a1e853c57bf512c6ae12d257cff6753b9aa11aa8580ac12205",
+    "model_sha256": "2060196dcb962468e2496a1d9115856aa60bc090dbf97b066cdf89130726418c",
     "params_sha256": "8a0d117b5a8ba3e8db52c9e06034988c9b8f6d266c7d8be4be1abdcc638f5d88",
     "sample_image_hashes": {
       "workpiece_empty_conveyor.png": "3da9a64327d35c12c215fadc0fd6b64072b7aa3ad899007ed6192fd3c1faf62e",
@@ -78,8 +78,14 @@
     "hardware_equivalent_contract": {
       "q10_shift": 10,
       "q10_bias": 131072,
-      "red_cb_exclusive": [85, 125],
-      "red_cr_exclusive": [135, 200],
+      "red_cb_exclusive": [
+        85,
+        125
+      ],
+      "red_cr_exclusive": [
+        135,
+        200
+      ],
       "dark_y_exclusive_upper": 60,
       "morphology_border": "replicate",
       "roi_zero_at_origin": "full_frame",

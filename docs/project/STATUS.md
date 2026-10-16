@@ -195,3 +195,9 @@
 - `project`：YOLO/Micro-CNN、INT8 MAC、NMS、多类别多目标检测和 WM8978 语音不再作为第一版交付门槛；历史研究资料保留但不进入当前实现依赖。
 - `project`：现场运行交付目标冻结为一个内嵌逻辑、Logo、字体和参数的 `.bit` 文件；源代码、约束、构建日志和校验哈希仍作为可复现工程交付物保存。
 - `project`：变更提案和设计说明见 [`docs/decisions/2026-10-16-adopt-fixed-red-inspection-v1.md`](../decisions/2026-10-16-adopt-fixed-red-inspection-v1.md) 与 [`docs/superpowers/specs/2026-10-16-fixed-red-inspection-v1-design.md`](../superpowers/specs/2026-10-16-fixed-red-inspection-v1-design.md)。
+
+> 2026-10-17 fixed-red v1 status:
+> 当前固定红色零件 v1 已完成软件模型和 RTL 仿真层的阶段性验证：形态学、Q10 检测、PASS/NG/NO_OBJECT/INVALID、框线、按键消抖/帧边界模式和 OSD 静态编译均有记录。TD 构建与硬件上板仍以 docs/experiments/2026-10-17-industrial-inspection-stage-e.md 的本次日志为准；没有新 bitstream 和板级实测时，不得把历史构建或截图当作本版本证据。
+
+> 2026-10-17 TD build result:
+> 本轮 Tang Dynasty v6.2.168116 / PH1P35MDG324 Speed 3 已完成综合、布局、布线、Hold Fix、bitgen：Setup WNS +142 ps、Setup TNS 0、Hold WNS +21 ps、Hold TNS 0；Slice 18,463/87.02%，RAM 35，DSP 24。时序通过但资源占用高于项目目标的 80% 上限；发布位流为 release/industrial-v1/camera_to_dsi_display_compress.bit，SHA-256 6817f946be06340ede434146a17f343ecc68dbf4e3f2e492252b3c79354d7b49。尚未上板。

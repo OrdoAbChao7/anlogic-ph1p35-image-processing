@@ -20,13 +20,14 @@ module tb_industrial_subsystem;
 
   // Color detect v2 outputs
   wire [10:0] xmin, xmax, ymin, ymax, cx, cy;
-  wire [18:0] area;
+  wire [19:0] area;
   wire        detected;
+  wire        detect_invalid;
   wire        frame_sync;
 
   // Defect classifier outputs
   wire [10:0] meas_w, meas_h;
-  wire        is_pass, is_ng, is_no_obj;
+  wire        is_pass, is_ng, is_no_obj, is_invalid, led_det;
   wire        led_pass, led_ng;
 
   // HDMI overlay signals
@@ -46,7 +47,7 @@ module tb_industrial_subsystem;
     .CB_MIN(85),
     .CB_MAX(125),
     .CR_MIN(135),
-    .CR_MAX(240),
+    .CR_MAX(200),
     .MIN_AREA(10)
   ) u_detect (
     .I_clk(clk),
@@ -200,14 +201,7 @@ module tb_industrial_subsystem;
     $display("\n>>> Simulating Frame 1: Standard Workpiece (Nominal 120x80) <<<");
     send_frame(580, 120, 320, 80, 1);
 
-    // Trigger frame boundary latch
-    @(posedge clk);
-    #1;
-    tuser <= 1'b1;
-    @(posedge clk);
-    #1;
-    tuser <= 1'b0;
-    repeat(2) @(posedge clk);
+    repeat(1400) @(posedge clk);
     #5;
 
     $display("Frame 1 Latch: detected=%b, xmin=%d, xmax=%d, ymin=%d, ymax=%d, Area=%d",
@@ -243,13 +237,7 @@ module tb_industrial_subsystem;
     $display("\n>>> Simulating Frame 2: Oversized Workpiece (Width 165 > 135) <<<");
     send_frame(580, 165, 320, 80, 1);
 
-    @(posedge clk);
-    #1;
-    tuser <= 1'b1;
-    @(posedge clk);
-    #1;
-    tuser <= 1'b0;
-    repeat(2) @(posedge clk);
+    repeat(1400) @(posedge clk);
     #5;
 
     $display("Frame 2 Latch: detected=%b, xmin=%d, xmax=%d, ymin=%d, ymax=%d, Area=%d",
@@ -285,13 +273,7 @@ module tb_industrial_subsystem;
     $display("\n>>> Simulating Frame 3: Empty Conveyor (No Workpiece) <<<");
     send_frame(0, 0, 0, 0, 0);
 
-    @(posedge clk);
-    #1;
-    tuser <= 1'b1;
-    @(posedge clk);
-    #1;
-    tuser <= 1'b0;
-    repeat(2) @(posedge clk);
+    repeat(1400) @(posedge clk);
     #5;
 
     $display("Frame 3 Latch: detected=%b, Area=%d, NO_OBJ=%b, PASS=%b, NG=%b",

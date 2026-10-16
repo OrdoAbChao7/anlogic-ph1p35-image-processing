@@ -40,3 +40,8 @@ __pycache__/
 *.db
 .DS_Store
 Thumbs.db
+
+# The current fixed-red v1 compressed bitstream is an intentional release artifact.
+!release/
+!release/industrial-v1/
+!release/industrial-v1/*.bit

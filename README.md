@@ -1,6 +1,6 @@
 # 安路 PH1P35 实时图像处理竞赛项目
 
-面向 2026 FPGA 创新设计竞赛安路赛道题目二，计划在 HX1P35A / PH1P35MDG324 上实现 SC520CS MIPI 采集、ISP 预处理、DDR2 帧缓存、HDMI 显示，以及 Sobel、卡通化和 INT8 YOLO-tiny 硬件检测，并联动 OSD、LED 和 WM8978 语音播报。
+面向 2026 FPGA 创新设计竞赛安路赛道题目二，当前固定红色零件 v1 在 HX1P35A / PH1P35MDG324 上实现 SC520CS MIPI 采集、ISP 预处理、DDR2 帧缓存、HDMI 显示、原图/Sobel/卡通化、红色零件检测、OSD 和 LED 联动。YOLO 已从本版本范围移除；WM8978 仍是后续可选扩展。
 
 ## 先从这里开始
 
@@ -61,3 +61,5 @@ python .\work\models\reference_model.py --self-test
 官方资料分享入口及文件名见 `preboard/06-package-manifest.md`。本机取得的官方压缩包和解压工程尚未整理成可移植、可公开分发的工程；原始 TD 工程含生成物和本机绝对路径。因此，本仓库当前不能单独重建 Bitstream。取得来源许可和完成工程审计后，再将必要的 RTL、约束和 IP 配置作为可复现工程纳入版本控制。
 
 项目目标、阶段门和验收证据以 `AGENTS.md` 为准；未确认的硬件参数、模型接口和外设管脚记录在 `docs/research/known-gaps.md`。
+
+**2026-10-17 固定红色零件 v1：** 已完成软件模型、硬件等价模型和独立 RTL 仿真回归；当前 TD 构建和 Stage G 上板仍按 [实验记录](docs/experiments/2026-10-17-industrial-inspection-stage-e.md) 记录，未有板级证据前不宣称稳定可用。

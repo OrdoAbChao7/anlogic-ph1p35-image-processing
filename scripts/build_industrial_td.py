@@ -22,9 +22,13 @@ ROOT = Path(__file__).resolve().parents[1]
 TD_EXE = Path("E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe")
 FLOW_TCL = Path("E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl")
 ORIG_RUNS = Path("E:/Projects/FPGA/HX1P35A2026/lab_ex1_mipi_hdmi_SC520_original/lab_ex1_mipi_hdmi_SC520/lab_ex1_mipi_hdmi/td_project/camera_to_dsi_display_Runs")
-WORK_PROJECT = ROOT / "work" / "td_industrial" / "td_project"
-WORK_RUNS = WORK_PROJECT / "camera_to_dsi_display_Runs"
+WORK_PROJECT = ROOT / "work" / "td_industrial"
+WORK_RUNS = WORK_PROJECT / "td_project" / "camera_to_dsi_display_Runs"
 RELEASE_DIR = ROOT / "work" / "output" / "industrial-release"
+TRACKED_RTL = ROOT / "fallback" / "rtl"
+TRACKED_VIDEO = ROOT / "work" / "rtl" / "video_cartoon.v"
+TRACKED_TOP = ROOT / "fallback" / "td_source" / "design_top_wrapper.v"
+TRACKED_ISP = ROOT / "fallback" / "td_source" / "isp" / "isp_top.v"
 
 
 def sha256(path: Path) -> str:
@@ -37,6 +41,34 @@ def sha256(path: Path) -> str:
 
 def setup_runs():
     print("[1/5] Setting up synthesis and physical design runs for Industrial Inspection...")
+
+    # Refresh vendor-project application sources from the tracked RTL.
+    for rtl_name in ["morph_open_96.v", "color_detect_96_v2.v", "defect_classifier.v", "bbox_draw_overlay.v", "anlogic_logo_rom.v", "industrial_osd_overlay.v", "mode_controller.v"]:
+        src = TRACKED_RTL / rtl_name
+        dst = WORK_PROJECT / "user_source" / "hdl_source" / rtl_name
+        if not src.exists():
+            raise FileNotFoundError(f"Tracked RTL missing: {src}")
+        shutil.copy2(src, dst)
+    if not TRACKED_VIDEO.exists():
+        raise FileNotFoundError(f"Tracked video RTL missing: {TRACKED_VIDEO}")
+    shutil.copy2(TRACKED_VIDEO, WORK_PROJECT / "user_source" / "hdl_source" / "video_cartoon.v")
+    if not TRACKED_TOP.exists() or not TRACKED_ISP.exists():
+        raise FileNotFoundError("Tracked TD top integration sources are missing")
+    shutil.copy2(TRACKED_TOP, WORK_PROJECT / "user_source" / "hdl_source" / "design_top_wrapper.v")
+    (WORK_PROJECT / "user_source" / "hdl_source" / "isp").mkdir(parents=True, exist_ok=True)
+    shutil.copy2(TRACKED_ISP, WORK_PROJECT / "user_source" / "hdl_source" / "isp" / "isp_top.v")
+    top_src = WORK_PROJECT / "user_source" / "hdl_source" / "design_top_wrapper.v"
+    isp_src = WORK_PROJECT / "user_source" / "hdl_source" / "isp" / "isp_top.v"
+    required_top = ["O_ind_result_toggle", "mode_controller", "industrial_osd_overlay", "ind_toggle_meta", "S_osd_out_data"]
+    required_isp = ["O_ind_invalid", "O_ind_result_toggle", "O_led_det"]
+    for marker in required_top:
+        if marker not in top_src.read_text(encoding="utf-8", errors="replace"):
+            raise RuntimeError(f"TD top wrapper missing required integration marker: {marker}")
+    for marker in required_isp:
+        if marker not in isp_src.read_text(encoding="utf-8", errors="replace"):
+            raise RuntimeError(f"TD ISP top missing required integration marker: {marker}")
+    print("      synchronized tracked industrial RTL into TD source tree")
+    print("      verified industrial top wrapper and ISP integration markers")
     syn_dir = WORK_RUNS / "syn_1"
     phy_dir = WORK_RUNS / "phy_1"
     syn_dir.mkdir(parents=True, exist_ok=True)
@@ -56,7 +88,15 @@ def setup_runs():
     shutil.copy2(ORIG_RUNS / "phy_1" / "settings.cfg", phy_dir / "settings.cfg")
 
     # 2. Patch prj files with custom modules
-    extra_entries = """            <File Path="../../../user_source/hdl_source/video_cartoon.v">
+    extra_entries = """            <File Path="../../../user_source/hdl_source/anlogic_logo_rom.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="55"/>
+                </FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/mode_controller.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&amp;R" Val="true"/>
@@ -64,7 +104,7 @@ def setup_runs():
                     <Attr Name="CompileOrder" Val="56"/>
                 </FileInfo>
             </File>
-            <File Path="../../../user_source/hdl_source/color_detect_96_v2.v">
+            <File Path="../../../user_source/hdl_source/morph_open_96.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&amp;R" Val="true"/>
@@ -72,7 +112,7 @@ def setup_runs():
                     <Attr Name="CompileOrder" Val="57"/>
                 </FileInfo>
             </File>
-            <File Path="../../../user_source/hdl_source/defect_classifier.v">
+            <File Path="../../../user_source/hdl_source/video_cartoon.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&amp;R" Val="true"/>
@@ -80,7 +120,7 @@ def setup_runs():
                     <Attr Name="CompileOrder" Val="58"/>
                 </FileInfo>
             </File>
-            <File Path="../../../user_source/hdl_source/bbox_draw_overlay.v">
+            <File Path="../../../user_source/hdl_source/color_detect_96_v2.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&amp;R" Val="true"/>
@@ -88,7 +128,31 @@ def setup_runs():
                     <Attr Name="CompileOrder" Val="59"/>
                 </FileInfo>
             </File>
-"""
+            <File Path="../../../user_source/hdl_source/defect_classifier.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="60"/>
+                </FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/bbox_draw_overlay.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="61"/>
+                </FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/industrial_osd_overlay.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="62"/>
+                </FileInfo>
+            </File>
+        """
 
     orig_syn_prj = (ORIG_RUNS / "syn_1" / "camera_to_dsi_display.prj").read_text(encoding="utf-8")
     if "bbox_draw_overlay.v" not in orig_syn_prj:
