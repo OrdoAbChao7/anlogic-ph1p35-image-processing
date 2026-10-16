@@ -13,7 +13,7 @@
   - 逐帧锁存并输出有效帧标志 `valid_frame`
 
 ### 1.2 现有实现状态评估
-- **模块状态**：`IMPLEMENTED_UNVERIFIED`（已编写完整 Verilog，并在 Lab3 中引脚绑定，但缺乏针对零件测量的标定机制和形态学滤波）。
+- **原始模块状态**：`IMPLEMENTED_UNVERIFIED`；原Lab3源保留。2026-10-14修复候选在`fallback/project/`，九组回归及两轮TD构建通过，仍缺工位视觉与真实上板验收。
 - **局限性**：易受椒盐噪声干扰，缺乏开闭运算，尚未对尺寸异常进行 PASS/NG 判定。
 
 ---
@@ -22,11 +22,11 @@
 
 | 阶段编号 | 任务名称 | 目标交付物 | 当前状态 |
 |---|---|---|---|
-| **F1** | 现有代码复用与模块重构 | 将 `color_detect_96.v` 整合至备用工作区，规范端口与时钟域 | `IMPLEMENTED_UNVERIFIED` |
+| **F1** | 现有代码复用与模块重构 | 修复颜色分割、帧统计及流式BBox，独立备用工作区 | `SIM_PASS` / `BUILD_PASS`（修复候选，待上板） |
 | **F2** | 基础视觉预处理与滤波 | 增加 3×3 腐蚀/膨胀形态学滤波核，消除孤立毛刺 | `PLANNED` |
 | **F3** | 几何特征与尺寸测量 | 增加长宽比、质心计算，以及毫米级像素标定转换模块 | `PLANNED` |
 | **F4** | PASS/NG 缺陷判定器 | 设定公差范围，输出零件合格判定，驱动 LED 与 HDMI OSD 显示框 | `PLANNED` |
-| **F5** | 独立 TD 工程交付包 | 建立备用工作区的一键编译脚本与完整 README 说明 | `IN_PROGRESS` |
+| **F5** | 独立 TD 工程交付包 | 构建/回归/导出脚本、工程、位流、报告和校验清单 | `BUILD_PASS`（候选导出，硬件验收未通过） |
 
 
 ---
@@ -43,4 +43,10 @@
 | **F4** | PASS/NG 缺陷判定器与 OSD | `05_vision_bbox_template`<br>(`import/dual_cam/bounding_box.v`<br>`import/other/motion_border_overlay.v`)<br>`06_ph1p35_vision_baseline`<br>(`rtl/overlay/logo_overlay.v`) | • 05 的次帧视频流动态绘制边界框（落在线框范围强制替换为绿/红像素）<br>• 06 的官方安路 Logo ROM 叠加与状态文字 OSD | 边框叠加逻辑经历与视频一致的流水延迟，避免线框与画面错位。 |
 | **F5** | 独立 TD 工程交付包 | `06_ph1p35_vision_baseline`<br>(`rtl/app/vision_pipeline.v`<br>`vendor_reference/`)<br>`04_ph1p35_bbox_cnn`<br>(`doc/route_failure_notes.md`) | • 06 的平台层（官方原语/IP）与应用层（视觉流水线）严格解耦架构<br>• 04 的重大教训：严禁用 Verilog 组合逻辑展开大型查找表（导致布线 3 小时崩溃） | 保持时序收敛（Setup WNS > 0），特征图或权重严格使用 BRAM IP/MIF 实例化。 |
 
-*注：本映射仅作为各阶段实现的架构与算法依据，F1~F5 的实现与验证状态维持不变。*
+*注：2026-10-13 的映射只提供参考依据，当日未改变实现状态；后续修复状态见 2026-10-14 记录。*
+
+## 2026-10-14 修复与候选导出
+
+修复清单和测试范围见 [修复记录](experiments/2026-10-14-industrial-repair.md)，指标/告警与位流绑定见 [构建摘要](build/industrial-repair/build-summary.md)。独立工程入口为`fallback/project/td_project/camera_to_dsi_display.al`，下载文件为`fallback/release/industrial-color-bbox-20261014/industrial_color_bbox.bit`。
+
+本轮未增加F2滤波、F3标定或F4缺陷判定，也未取得工业效果VISUAL_APPROVED。颜色阈值和全局单目标BBox能力保持原范围；修复授权不等于工位验收通过。

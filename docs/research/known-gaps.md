@@ -100,3 +100,22 @@
   - 本项目为 SC520CS RAW10 2-lane MIPI 输入、DDR2 四帧缓存，下游处理存在 96-bit 4 像素并行流（如 `color_detect_96.v`）与 HDMI 24-bit 单像素流的位宽匹配问题；不能直接把单像素时钟域模块无缝连接到 4 像素流。
 - **多目标连通域资源开销**：04 的 `digit_multi_bbox.v` 虽能在 PH1P35 综合，但其 3×3 采样 Bitmap 依赖双 Bank BRAM 与复杂的 Run-length 状态机扫描，在密集目标或大噪声场景下的最坏情况吞吐与丢框率尚未经过硬件测量。
 - **未验证前禁止关闭**：上述缺口在取得当前板卡真实下载波形与实测数据前，必须保持 `OPEN`，严禁直接宣称“已解决”。
+
+## 2026-10-16 功能整合方案复核新增缺口
+
+本轮仅审计与设计，未修改RTL、未运行TD、未生成位流、未上板；详见 [整合方案](../development/integration-plan.md)。下列事实为project或inferred，均未关闭硬件验收门。
+
+| 项目 | 新证据 / 影响 | 关闭方法与当前状态 |
+|---|---|---|
+| 当前候选资源口径 | 最终route.qor为16123/21216 Slice（75.99%）、39/108 ERAM20K、25/40 DSP；旧变体“剩32DSP”和旧ADR容量不适用 | 新增功能按此基线逐步实现；严格<80% Slice最多净增849；能否共存仍OPEN |
+| STA覆盖与新增OSD余量 | final_timing.rpt覆盖95.92%，MIPI Setup +70ps，HDMI Setup +104ps；PHY-5060/5016/5079/5088未关闭 | 逐端点约束/CDC审计与真实板级证据；不以正WNS判完整签核 |
+| 实际输出刷新率 | 报告像素时钟75.002MHz与VTC 1650×750推导约60.6077Hz（inferred），不是已实现30fps | 分别测相机唯一新帧率、HDMI刷新率、检测更新率；不能混用显示CNT |
+| 四帧槽和结果对应 | video_in有四槽轮转，video_out于显示帧事件选读槽；现无完整帧ID/代次/metadata提交协议 | 查写完成、读槽所有权、覆盖与重复显示；整组CDC绑定实际槽和绘框快照后回归；OPEN |
+| ready及FIFO异常语义 | 顶层S_ISP_O_tready、isp_top内awb_O_tready未见驱动；full/empty未形成完整保护，I_mipi_rx_error绑0 | 审计真实依赖、厂商FIFO时序、SOF/复位和短帧；定义非背压消费/错误失效，不随意tie-high |
+| Sobel实际算法与存储 | .al实际引用td_project/import/edge_detect_96.v，先相邻对平均、640横向采样后复制；异步行RAM关键路径含DRAM/LUT | 同算法软件模型、边界/空间偏移验证；同步RAM优化须等价回归，不凭ram_style声称BRAM推断 |
+| 卡通候选接口/延迟 | video_cartoon_luma.v为24bit/1ppc、6级流水，与96bit/4ppc母工程不匹配；登记册估计4拍不能沿用 | 按ADR-002做DDR前4ppc适配及跨lane窗口；区域填充仍未实现；新效果重新视觉验收 |
+| 按键和外设 | F的A4用于模式，N2/J14用于增益；规划B4卡通键未接；顶层无检测LED/执行器/WM8978链路 | 原理图/实物核验B4及外设电气、Codec时钟/配置、PCM容量后再设计；不挪用增益键 |
+| 首版颜色框和延迟边界 | 框使用上一捕获帧结果；文字尚未接；单全局框不能证明多目标数量 | 文字绑定相同绘框快照并显示帧龄；多目标需新算法；四槽端到端<2ms继续OPEN |
+| 来源/效果审批 | 当前恢复包253项哈希匹配，属于BUILD_PASS候选；visual_approved=false、hardware_verified=false | 保存恢复点不等于效果通过；P1提供具体预览后由用户明确批准，保留软件先行门禁 |
+
+原始缺口与历史记录保留。PROJECT_GOAL、PHASES、acceptance-matrix和AGENTS本轮不变。
