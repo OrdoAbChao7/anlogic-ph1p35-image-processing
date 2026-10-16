@@ -1,0 +1,418 @@
+{
+  "boundary": {
+    "morphology_border": "replicate",
+    "q10_threshold_vectors": {
+      "dark_y_59": "included",
+      "dark_y_60": "excluded",
+      "red_in_range_120_80_40": "included",
+      "red_in_range_150_30_30": "included",
+      "red_strict_lower_cb_85": "excluded"
+    },
+    "roi_policy": "zero geometry at origin means full frame; all other zero/incomplete/out-of-bounds ROI is INVALID"
+  },
+  "contract": {
+    "morphology_border": "replicate",
+    "params_ok": true,
+    "params_sha256_ok": true,
+    "plugin_sha256": "8341bb307de148a1e853c57bf512c6ae12d257cff6753b9aa11aa8580ac12205",
+    "plugin_sha256_ok": true,
+    "q10_bias": 131072,
+    "q10_shift": 10,
+    "registry_status": "VISUAL_APPROVED",
+    "sample_hashes_ok": true,
+    "version": "v1.0-approved",
+    "version_ok": true
+  },
+  "generated_at": "2026-10-16",
+  "pass": true,
+  "samples": [
+    {
+      "dimensions": {
+        "height": 720,
+        "width": 1280
+      },
+      "expected_verdict": "NO_OBJECT",
+      "hardware_metrics": {
+        "area_px": 0,
+        "detected": false,
+        "height_error": 0,
+        "height_px": 0,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "NO_OBJECT",
+        "width_error": 0,
+        "width_px": 0,
+        "x_max": 0,
+        "x_min": 0,
+        "y_max": 0,
+        "y_min": 0
+      },
+      "input_sha256": "3da9a64327d35c12c215fadc0fd6b64072b7aa3ad899007ed6192fd3c1faf62e",
+      "metrics_equal": true,
+      "name": "workpiece_empty_conveyor.png",
+      "pass": true,
+      "processed_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "raw_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "reference_metrics": {
+        "area_px": 0,
+        "detected": false,
+        "height_error": 0,
+        "height_px": 0,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "NO_OBJECT",
+        "width_error": 0,
+        "width_px": 0,
+        "x_max": 0,
+        "x_min": 0,
+        "y_max": 0,
+        "y_min": 0
+      }
+    },
+    {
+      "dimensions": {
+        "height": 720,
+        "width": 1280
+      },
+      "expected_verdict": "PASS",
+      "hardware_metrics": {
+        "area_px": 9801,
+        "detected": true,
+        "height_error": 1,
+        "height_px": 81,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "PASS",
+        "width_error": 1,
+        "width_px": 121,
+        "x_max": 700,
+        "x_min": 580,
+        "y_max": 400,
+        "y_min": 320
+      },
+      "input_sha256": "bb0c3bb1cb6aacd2197078b77b3f5d2d6fe50ce6c7e02bddf221e35cbb9ab361",
+      "metrics_equal": true,
+      "name": "workpiece_noisy_speckles.png",
+      "pass": true,
+      "processed_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "raw_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "reference_metrics": {
+        "area_px": 9801,
+        "detected": true,
+        "height_error": 1,
+        "height_px": 81,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "PASS",
+        "width_error": 1,
+        "width_px": 121,
+        "x_max": 700,
+        "x_min": 580,
+        "y_max": 400,
+        "y_min": 320
+      }
+    },
+    {
+      "dimensions": {
+        "height": 720,
+        "width": 1280
+      },
+      "expected_verdict": "PASS",
+      "hardware_metrics": {
+        "area_px": 9801,
+        "detected": true,
+        "height_error": 1,
+        "height_px": 81,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "PASS",
+        "width_error": 1,
+        "width_px": 121,
+        "x_max": 700,
+        "x_min": 580,
+        "y_max": 400,
+        "y_min": 320
+      },
+      "input_sha256": "9c836cc414b1736fb9fbaecd20b9b0ca5021d7165aeafb59b4e5df91aaa8dd08",
+      "metrics_equal": true,
+      "name": "workpiece_normal_pass.png",
+      "pass": true,
+      "processed_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "raw_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "reference_metrics": {
+        "area_px": 9801,
+        "detected": true,
+        "height_error": 1,
+        "height_px": 81,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "PASS",
+        "width_error": 1,
+        "width_px": 121,
+        "x_max": 700,
+        "x_min": 580,
+        "y_max": 400,
+        "y_min": 320
+      }
+    },
+    {
+      "dimensions": {
+        "height": 720,
+        "width": 1280
+      },
+      "expected_verdict": "NG",
+      "hardware_metrics": {
+        "area_px": 13446,
+        "detected": true,
+        "height_error": 1,
+        "height_px": 81,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "NG",
+        "width_error": 46,
+        "width_px": 166,
+        "x_max": 745,
+        "x_min": 580,
+        "y_max": 400,
+        "y_min": 320
+      },
+      "input_sha256": "f7b3799ba9009ce1c9b86122f81b44263fca087ea0704c44872da80d6616d21a",
+      "metrics_equal": true,
+      "name": "workpiece_oversized_ng.png",
+      "pass": true,
+      "processed_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "raw_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "reference_metrics": {
+        "area_px": 13446,
+        "detected": true,
+        "height_error": 1,
+        "height_px": 81,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "NG",
+        "width_error": 46,
+        "width_px": 166,
+        "x_max": 745,
+        "x_min": 580,
+        "y_max": 400,
+        "y_min": 320
+      }
+    },
+    {
+      "dimensions": {
+        "height": 720,
+        "width": 1280
+      },
+      "expected_verdict": "NG",
+      "hardware_metrics": {
+        "area_px": 4816,
+        "detected": true,
+        "height_error": 24,
+        "height_px": 56,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "NG",
+        "width_error": 34,
+        "width_px": 86,
+        "x_max": 665,
+        "x_min": 580,
+        "y_max": 375,
+        "y_min": 320
+      },
+      "input_sha256": "f48c3216b417024229b02e9ca0eeb1f3126bb0a28db20b20b690d7e505705842",
+      "metrics_equal": true,
+      "name": "workpiece_undersized_ng.png",
+      "pass": true,
+      "processed_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "raw_mask": {
+        "different_pixels": 0,
+        "equal": true,
+        "mae": 0.0,
+        "max_abs_error": 0,
+        "psnr_db": "inf",
+        "shape": [
+          720,
+          1280
+        ]
+      },
+      "reference_metrics": {
+        "area_px": 4816,
+        "detected": true,
+        "height_error": 24,
+        "height_px": 56,
+        "invalid_reason": null,
+        "nominal_h": 80,
+        "nominal_w": 120,
+        "roi": {
+          "height": 720,
+          "width": 1280,
+          "x": 0,
+          "y": 0
+        },
+        "verdict": "NG",
+        "width_error": 34,
+        "width_px": 86,
+        "x_max": 665,
+        "x_min": 580,
+        "y_max": 375,
+        "y_min": 320
+      }
+    }
+  ],
+  "schema": "industrial_inspection.stage_d.v1",
+  "scope": "software-only hardware-equivalent verification; no RTL, TD build, or board evidence",
+  "stage": "D"
+}

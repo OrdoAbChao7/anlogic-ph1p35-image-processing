@@ -372,7 +372,25 @@
       </div>
 
       <div>
-        <div class="section-title">4. 成果导出与用户验收</div>
+        <div class="section-title">4. 参数预设</div>
+        <div class="form-group">
+          <label for="preset-name">预设名称（字母、数字、_、-）：</label>
+          <input id="preset-name" type="text" maxlength="64" placeholder="red_roi_default">
+        </div>
+        <div class="form-group">
+          <label for="preset-select">已保存预设：</label>
+          <select id="preset-select">
+            <option value="">（无）</option>
+          </select>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-outline" style="flex:1;" onclick="saveParameterPreset()">保存参数</button>
+          <button class="btn btn-outline" style="flex:1;" onclick="loadParameterPreset()">加载参数</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">5. 成果导出与用户验收</div>
         <div class="btn-group" style="flex-direction: column;">
           <button class="btn btn-outline" onclick="exportExperiment()">
             <span>💾 导出实验记录与参数 JSON</span>
@@ -556,6 +574,7 @@
     let activeTab = "multi-view";
     let yoloSample = "";
     let yoloLoaded = false;
+    let parameterPresets = [];
 
     async function loadYoloSamples() {
       const res = await fetch('/api/yolo/samples');
@@ -692,6 +711,7 @@
 
       // 渲染动态参数面板
       renderParameterControls(currentAlgo.parameters);
+      loadParameterPresets();
       runProcessing();
     }
 
@@ -764,6 +784,80 @@
         }
       });
       return res;
+    }
+
+    function setParamValues(params) {
+      if (!currentAlgo) return;
+      currentAlgo.parameters.forEach(p => {
+        const el = document.getElementById(`param-${p.id}`);
+        if (!el || params[p.id] === undefined) return;
+        el.value = params[p.id];
+        const value = document.getElementById(`val-${p.id}`);
+        if (value) value.textContent = params[p.id];
+      });
+    }
+
+    async function loadParameterPresets() {
+      if (!currentAlgo) return;
+      const select = document.getElementById('preset-select');
+      select.innerHTML = '<option value="">（无）</option>';
+      const res = await fetch(`/api/params/${encodeURIComponent(currentAlgo.algorithm_id)}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      parameterPresets = data.presets || [];
+      parameterPresets.forEach(preset => {
+        const option = document.createElement('option');
+        option.value = preset.name;
+        option.textContent = preset.name;
+        select.appendChild(option);
+      });
+    }
+
+    async function saveParameterPreset() {
+      if (!currentAlgo) return;
+      const name = document.getElementById('preset-name').value.trim();
+      if (!name) {
+        alert('请先输入预设名称。');
+        return;
+      }
+      const res = await fetch('/api/params/save', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          algorithm_id: currentAlgo.algorithm_id,
+          name,
+          parameters: getParamValues()
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.detail || '参数保存失败。');
+        return;
+      }
+      await loadParameterPresets();
+      document.getElementById('preset-select').value = name;
+      alert(`参数预设已保存：${name}`);
+    }
+
+    async function loadParameterPreset() {
+      if (!currentAlgo) return;
+      const name = document.getElementById('preset-select').value;
+      if (!name) {
+        alert('请先选择已保存的预设。');
+        return;
+      }
+      const res = await fetch('/api/params/load', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({algorithm_id: currentAlgo.algorithm_id, name})
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.detail || '参数加载失败。');
+        return;
+      }
+      setParamValues(data.parameters || {});
+      runProcessing();
     }
 
     function onSampleSelect() {

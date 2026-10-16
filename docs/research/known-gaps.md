@@ -100,3 +100,24 @@
   - 本项目为 SC520CS RAW10 2-lane MIPI 输入、DDR2 四帧缓存，下游处理存在 96-bit 4 像素并行流（如 `color_detect_96.v`）与 HDMI 24-bit 单像素流的位宽匹配问题；不能直接把单像素时钟域模块无缝连接到 4 像素流。
 - **多目标连通域资源开销**：04 的 `digit_multi_bbox.v` 虽能在 PH1P35 综合，但其 3×3 采样 Bitmap 依赖双 Bank BRAM 与复杂的 Run-length 状态机扫描，在密集目标或大噪声场景下的最坏情况吞吐与丢框率尚未经过硬件测量。
 - **未验证前禁止关闭**：上述缺口在取得当前板卡真实下载波形与实测数据前，必须保持 `OPEN`，严禁直接宣称“已解决”。
+
+## 2026-10-13 工业视觉子系统实现与验证缺口
+
+- **阶段门约束（Stage C 待验收）**：Algorithm Lab 已完成 5 组工位对比（`VISUAL_REVIEW_PENDING`），在用户明确审查并签署 `VISUAL_APPROVED` 前，禁止将算法直接挂入正式板级视频工程并生成位流。
+- **物理毫米标定缺口**：当前尺寸测量精确到像素单位（例如标准件 $120\times 80\text{ px}$），未在固定物距与焦距工位下使用标准块标定前，不输出且不宣称绝对毫米值。
+- **离线 RTL 子系统待板级集成**：`color_detect_96_v2.v`、`defect_classifier.v`、`bbox_draw_overlay.v` 已通过 Icarus Verilog 联合仿真验证（`SIM_PASS`），待 Stage C 批准后方可执行板级 DDR2/HDMI 视频总线集成与 TD 时序综合。
+
+## 2026-10-16 工业视觉 Algorithm Lab 契约补全后的状态
+
+- **已补充（project）**：Algorithm Lab 工业视觉插件现支持统一 ROI 参数、非法 ROI 的 `INVALID` 结果、参数预设保存/加载；新增契约测试 `4/4 PASS`，既有工业样本回归 `5/5 PASS`。证据见 [`../experiments/2026-10-16-industrial-inspection-algorithm-lab.md`](../experiments/2026-10-16-industrial-inspection-algorithm-lab.md)。
+- **仍开放（unknown / project risk）**：ROI 只使用像素坐标，未完成镜头、物距和标定块对应的毫米换算；不得据此报告物理尺寸精度。
+- **仍开放（project）**：`fallback/rtl/color_detect_96_v2.v` 的面积输出为 19 bit，最大值不足以表示 1280×720 全帧；RTL `CR_MAX=240` 与软件硬件等价模型使用的 `cr<200` 仍未统一。该缺口阻止 F1 行为契约关闭。
+- **仍开放（project）**：Fallback TD 最终时序有正裕量，但 `PHY-5079`、`PHY-5088` 时钟告警未逐条分类，构建脚本依赖外部绝对路径，干净环境可重建性未关闭。
+- **阶段门保持**：本次没有调用 `/api/approve`，工业视觉仍为 `VISUAL_REVIEW_PENDING`；在用户明确 `VISUAL_APPROVED` 前禁止新的正式 RTL/整机视频集成。
+
+## 2026-10-16 用户批准后的 Stage D 状态
+
+- **已关闭（project）**：用户明确确认工业视觉预览为 `VISUAL_APPROVED`，冻结版本 `v1.0-approved`。参数、源码和五个合成样本的哈希已绑定到 `work/algorithm_lab/registry.json`，并保存批准参数快照。
+- **已关闭（project）**：Stage D 硬件等价软件模型回归通过。五个冻结样本的 raw mask 与形态学后 mask 逐像素一致，`different_pixels=0`、`MAE=0`、`PSNR=inf`；判定、BBox、面积、尺寸和 ROI 坐标一致。Q10 阈值边界、`Y=60/59`、ROI 四边和 `BORDER_REPLICATE` 已有自动化证据，详见 [`../experiments/2026-10-16-industrial-inspection-stage-d.md`](../experiments/2026-10-16-industrial-inspection-stage-d.md)。
+- **仍开放（project，Stage E 阻塞）**：`fallback/rtl/color_detect_96_v2.v` 的 19-bit 面积输出不足以表示 1280×720 全帧，且 RTL `CR_MAX=240` 与当前软件硬件等价模型严格 `cr<200` 不一致；在 RTL 契约修复和仿真回归前不得进入正式视频集成。
+- **仍开放（project，Stage F/G）**：TD 构建中的 `PHY-5079`、`PHY-5088` 告警分类、构建脚本外部绝对路径、干净环境复现、板级下载/HDMI/LED/长稳和毫米标定仍未关闭。Stage D 通过不改变这些状态。

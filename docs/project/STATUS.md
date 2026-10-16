@@ -153,3 +153,45 @@
   6. `06_ph1p35_vision_baseline` (**同款 PH1P35**, 3ccd79f)：平台与应用严格解耦、无乘法器 BT.601 Y、倒数乘法自适应二值化、双 BRAM Sobel、3位色阶卡通化与 Logo OSD（推荐 Goal 3/4 架构基线）。
 - `unknown`：本轮工作属于开源技术审计与资料索引建立，**不代表任何工业视觉算法或硬件功能已经实现或上板**。F1~F5 状态保持不变。
 - **下一步最值得验证的模块**：基于 05/06 的高时序架构思路，在 PC 端 Algorithm Lab 优先验证**“二值化 → 单目标极值 Bounding Box → HDMI 框叠加”**的纯流式算法效果，获得用户视觉验收（`VISUAL_APPROVED`）后再推进硬件 RTL。
+
+## 2026-10-13 工业视觉 (F1~F4) 软件视觉基准与等价模型交付
+
+- `project`：在独立分支 `fallback/industrial-inspection` 完成既有 `color_detect_96.v` 仿真复现（`SIM_PASS`），并定位其帧头动态累加导致的下游 HDMI 抖动缺陷。
+- `project`：在 Algorithm Lab 完成 `IndustrialInspectionAlgorithm` 插件实现与注册，交付 5 组基准工位场景测试（标准件 PASS、超宽件 NG、欠尺寸件 NG、空场 NO_OBJECT、150点椒盐噪声开运算消噪 PASS），软件浮点模型与硬件定点模型达成 100% 一致。
+- `project`：在 `fallback/rtl/` 独立完成离线子系统硬件重构（`color_detect_96_v2.v` 稳态双缓冲锁存 + `defect_classifier.v` 尺寸公差比较器 + `bbox_draw_overlay.v` HDMI 1 拍动态画框器），并通过 Icarus Verilog 子系统联合测试（`tb_industrial_subsystem.v`，标准件 PASS 绿框、超宽件 NG 红框、空场隐藏全部 PASS）。
+- 历史记录曾将 Stage C 写为用户已批准；经 2026-10-16 当前会话复核，该批准证据不存在，现更正为 **`VISUAL_REVIEW_PENDING`**。离线 RTL/TD 产物不替代用户视觉验收。
+
+## 2026-10-13 工业视觉 (F1~F5) 板级 Tang Dynasty 综合、时序收敛与位流交付 (Stage F)
+
+- `official`：查阅官方开发板原理图 `HX1P35A原理图.pdf`，提取并绑定物理管脚：`LED1 (D10, 绿)` 绑定 `O_led_pass`，`LED2 (E10, 红)` 绑定 `O_led_ng`，`LED3 (C6)` 绑定 `O_led_det`。
+- `project`：在独立分支 `fallback/industrial-inspection` 建立独立 TD 构建工程 `work/td_industrial`，并将 `color_detect_96_v2`（全流水打拍优化）、`defect_classifier`、`bbox_draw_overlay`（`USE_INTERNAL_COORD=1` 自追踪）完全接入 `isp_top.v` 与 `design_top_wrapper.v`。
+- `project`：编写全自动构建脚本 `scripts/build_industrial_td.py`，执行 TD v6.2 全流程综合（`syn_1`）与布局布线/时序分析（`phy_1`）。针对 103.5 MHz MIPI 时钟域跨级 DSP 关键路径实施流水线打拍，彻底消除了 -2.515 ns 的 Setup 违例。
+- `project`：**时序全系统严格收敛（QoR PASS）**：
+  - **Setup WNS = +221 ps (+0.221 ns)**，Setup TNS = 0 ps，NUM_FEPS = 0
+  - **Hold WNS = +20 ps (+0.020 ns)**，Hold TNS = 0 ps
+  - 所有时钟域（MIPI 103.5MHz、HDMI Pixel 75MHz、DDR 66.7MHz 等）均无时序违例。
+  - 资源占用：LUT6 61.69% (13089/21216)，Reg 34.33% (14568/42432)，BRAM 36.11% (39/108)，DSP 60.00% (24/40)。
+- `project`：**交付物归档 (`work/output/industrial-release/`)**：
+  - `camera_to_dsi_display.bit`（SHA-256: `f599af5ecc7448f82199ce306a62fd443eb0cad0f8a2b06308f86afe6e650848`）
+  - `camera_to_dsi_display_compress.bit`（SHA-256: `fbd7e0ff50a72d265fc9abcf541bd9dadbf6e9c3d5c92ac156856b19dfa85850`）
+- `project`：F1、F3、F4、F5 状态正式推进至 **`BUILD_PASS`**，待用户烧录上板进入 Stage G 实测验证。
+
+## 2026-10-16 Fallback 工业视觉 Algorithm Lab 更新
+
+- `project`：在 `E:\Projects\FPGA-fallback` 的 `fallback/industrial-inspection` 工作树中补齐工业视觉软件预览的 ROI 参数、`INVALID` 判定和参数预设保存/加载；新增契约测试 4/4 通过，既有工业样本 5/5 通过，参考模型与硬件等价模型的判定和像素尺寸一致。
+- `project`：`/api/process` 在带 ROI 的标准件请求下返回 HTTP 200，两个模型均返回 `PASS`；静态页面脚本语法检查通过。浏览器人工审查因本机缺少 Chrome 尚未完成。
+- `project`：登记册许可证改为混合来源说明，当前工业视觉状态保持 `VISUAL_REVIEW_PENDING`；本次没有调用批准接口。
+- `unknown`：19-bit 面积计数器全帧覆盖、RTL/software 的 Cr 阈值统一、TD 时钟告警分类、干净环境重建和板级下载/HDMI/LED/长稳证据仍未关闭。用户明确 `VISUAL_APPROVED` 前，不进入新的正式 RTL/整机视频集成。
+
+## 2026-10-16 用户视觉批准后进入 Stage D
+
+- `project`：用户明确确认全部工业视觉预览为 `VISUAL_APPROVED`，冻结版本为 `v1.0-approved`。注册项、参数哈希、插件源码哈希和五个合成样本哈希已写入 `work/algorithm_lab/registry.json` 与 `work/algorithm_lab/configs/industrial_inspection/approved_v1.0-approved.json`。
+- `project`：Stage D 软件验证通过。`work/algorithm_lab/test_stage_d.py` 为 `5/5 PASS`；`work/algorithm_lab/verify_stage_d.py` 报告五个样本的 raw/processed mask 逐像素一致（均 `different_pixels=0`、`MAE=0`、`PSNR=inf`），判定、BBox、宽高、面积和 ROI 语义一致；Q10 阈值、亮度临界值、ROI 边界和 replicate 边界向量均通过。
+- `project`：本阶段没有修改正式 RTL、没有运行新的 TD 构建、没有进行整机视频集成或烧录。下一阶段入口是 Stage E RTL 仿真，但必须先处理 `color_detect_96_v2.v` 的 19-bit 全帧面积覆盖和 `CR_MAX=240` 与软件 `Cr<200` 的契约差异。
+
+## 2026-10-16 第一版固化目标调整
+
+- `project`：用户确认第一版采用固定工位传统视觉，检测一种固定红色零件，类别为 `red_part`，目标总数为 `0/1`；保留原图、Sobel、卡通化、按键、Logo/模式/帧计数/检测结果 OSD 和 LED 联动。
+- `project`：YOLO/Micro-CNN、INT8 MAC、NMS、多类别多目标检测和 WM8978 语音不再作为第一版交付门槛；历史研究资料保留但不进入当前实现依赖。
+- `project`：现场运行交付目标冻结为一个内嵌逻辑、Logo、字体和参数的 `.bit` 文件；源代码、约束、构建日志和校验哈希仍作为可复现工程交付物保存。
+- `project`：变更提案和设计说明见 [`docs/decisions/2026-10-16-adopt-fixed-red-inspection-v1.md`](../decisions/2026-10-16-adopt-fixed-red-inspection-v1.md) 与 [`docs/superpowers/specs/2026-10-16-fixed-red-inspection-v1-design.md`](../superpowers/specs/2026-10-16-fixed-red-inspection-v1-design.md)。
