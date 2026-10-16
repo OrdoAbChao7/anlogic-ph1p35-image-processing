@@ -121,3 +121,11 @@
 - **已关闭（project）**：Stage D 硬件等价软件模型回归通过。五个冻结样本的 raw mask 与形态学后 mask 逐像素一致，`different_pixels=0`、`MAE=0`、`PSNR=inf`；判定、BBox、面积、尺寸和 ROI 坐标一致。Q10 阈值边界、`Y=60/59`、ROI 四边和 `BORDER_REPLICATE` 已有自动化证据，详见 [`../experiments/2026-10-16-industrial-inspection-stage-d.md`](../experiments/2026-10-16-industrial-inspection-stage-d.md)。
 - **仍开放（project，Stage E 阻塞）**：`fallback/rtl/color_detect_96_v2.v` 的 19-bit 面积输出不足以表示 1280×720 全帧，且 RTL `CR_MAX=240` 与当前软件硬件等价模型严格 `cr<200` 不一致；在 RTL 契约修复和仿真回归前不得进入正式视频集成。
 - **仍开放（project，Stage F/G）**：TD 构建中的 `PHY-5079`、`PHY-5088` 告警分类、构建脚本外部绝对路径、干净环境复现、板级下载/HDMI/LED/长稳和毫米标定仍未关闭。Stage D 通过不改变这些状态。
+
+## 2026-10-17 固定红色 v1 缺口校正
+
+- **已关闭（project）**：`color_detect_96_v2.v` 已使用 20-bit 面积计数，红色分割已统一为 Q10 偏置 `131072`、`85<Cb<125`、`135<Cr<200`；当前边界、全帧和工业样本回归通过。此前关于 19-bit 面积和 `CR_MAX=240` 的记录保留为历史缺口，不再描述当前 RTL。
+- **已关闭（project）**：批准的卡通化版本为 `s3_luma`，TD 构建入口已切换到 `work/rtl/video_cartoon_luma.v`，冻结 Sobel 阈值为 `240`；三模式逐周期 1102 周期比对通过。
+- **已关闭（project）**：OSD/LED 联调已覆盖 `NO_OBJECT` 文本尾部、PASS 状态和检测 LED；`NO_OBJECT` 文本映射缺陷已修复。
+- **仍开放（unknown / measured）**：没有 PH1P35、SC520CS、HDMI 的下载和显示实测，因此 Stage G、冷启动、热复位、模式视觉效果、LED 管脚和长稳仍未验证。
+- **仍开放（project risk）**：当前修正版 Slice 占用 `87.02%`，高于项目目标 `80%`；TD 仍有厂商 DDR 初始化宏的 undriven-pin warnings 未逐条归类；构建脚本依赖本机 TD 工具和官方基线工程绝对路径，干净环境重建未关闭。

@@ -121,6 +121,8 @@ module industrial_osd_overlay #(
             11:if(invalid) text_char="L"; else if(pass) text_char=" "; else if(ng) text_char=" "; else text_char="B";
             12:if(invalid) text_char="I"; else if(pass) text_char=" "; else if(ng) text_char=" "; else text_char="J";
             13:if(invalid) text_char="D"; else if(pass) text_char=" "; else if(ng) text_char=" "; else text_char="E";
+            14:if(invalid) text_char=" "; else if(pass) text_char=" "; else if(ng) text_char=" "; else text_char="C";
+            15:if(invalid) text_char=" "; else if(pass) text_char=" "; else if(ng) text_char=" "; else text_char="T";
             default:text_char=" ";
           endcase
         end

@@ -24,9 +24,14 @@ FLOW_TCL = Path("E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl")
 ORIG_RUNS = Path("E:/Projects/FPGA/HX1P35A2026/lab_ex1_mipi_hdmi_SC520_original/lab_ex1_mipi_hdmi_SC520/lab_ex1_mipi_hdmi/td_project/camera_to_dsi_display_Runs")
 WORK_PROJECT = ROOT / "work" / "td_industrial"
 WORK_RUNS = WORK_PROJECT / "td_project" / "camera_to_dsi_display_Runs"
-RELEASE_DIR = ROOT / "work" / "output" / "industrial-release"
+# Keep the one-file download artifact in the tracked release directory so a
+# clean build and the README point to the same output.
+RELEASE_DIR = ROOT / "release" / "industrial-v1"
 TRACKED_RTL = ROOT / "fallback" / "rtl"
-TRACKED_VIDEO = ROOT / "work" / "rtl" / "video_cartoon.v"
+# The approved cartoon contract is s3_luma.  The TD project still receives the
+# source under the module's historical filename, because the top-level wrapper
+# instantiates the module as ``video_cartoon``.
+TRACKED_VIDEO = ROOT / "work" / "rtl" / "video_cartoon_luma.v"
 TRACKED_TOP = ROOT / "fallback" / "td_source" / "design_top_wrapper.v"
 TRACKED_ISP = ROOT / "fallback" / "td_source" / "isp" / "isp_top.v"
 

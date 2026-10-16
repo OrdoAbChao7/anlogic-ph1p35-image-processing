@@ -42,3 +42,13 @@
 1. 在有板卡、SC520CS 和 HDMI 显示器后下载发布位流，记录冷启动、热复位、三种模式和 PASS/NG/NO_OBJECT/INVALID。
 2. 处理 Slice 87.02% 资源风险和厂商告警，再决定是否冻结发布版本。
 3. 在板级证据齐全前，不能把本版本写成可上板稳定。
+
+## 2026-10-17 修正版回归与位流归档
+
+- `project`：审计发现 TD 构建入口实际使用逐通道量化 `video_cartoon.v`，与登记册冻结的 `s3_luma` 版本不一致；已将 `scripts/build_industrial_td.py` 切换为 `work/rtl/video_cartoon_luma.v`，并将 HDMI 集成阈值统一为冻结值 `Sobel threshold=240`。
+- `project`：新增 `work/tests/run_cartoon_luma_sim.py`，16×8 多帧输入覆盖 Original/Sobel/Cartoon、帧边界切换、帧内请求变化、空白周期和 sideband 延迟，Icarus 逐周期比较 `1102` 周期全部通过。
+- `project`：新增 `fallback/tb_osd_led_joint.v`，验证 `NO_OBJECT` 状态文本完整显示 `NO_OBJECT` 的尾部 `C/T` 字符，并验证分类器状态与 PASS LED/检测 LED 同步；测试通过。
+- `project`：修复 `industrial_osd_overlay.v` 的 `NO_OBJECT` 文本映射（补齐位置 14/15 的 `C/T`）。固定红色检测、模式、OSD/LED 和软件回归均重新通过。
+- `project`：修正版 TD 产物已完成综合、布局、布线、Hold Fix、最终时序和 bitgen；`route.qor` 为 Setup WNS `+142 ps`、TNS `0`、Hold WNS `+21 ps`、TNS `0`、违规端点 `0`，资源为 `18,463 slices / 87.02%`、`35 RAM`、`24 DSP`。
+- `project`：当前发布文件 `release/industrial-v1/camera_to_dsi_display_compress.bit` 大小 `1,339,505 bytes`，SHA-256 为 `886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`。此前 `6817f...` 哈希对应修正前位流，仅保留为历史记录，不再代表当前发布文件。
+- `unknown`：本次仍未下载至 PH1P35，未连接 SC520CS/HDMI，也没有 LED、冷启动、热复位、长稳或显示效果证据；Stage G 仍未通过。TD 构建脚本依赖本机工具和官方基线工程绝对路径，干净环境复现仍需后续处理。

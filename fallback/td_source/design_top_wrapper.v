@@ -899,7 +899,7 @@ assign S_raw_tuser  = S_axis_tuser;
     video_cartoon #(
         .WIDTH          ( 1280 ),
         .HEIGHT         ( 720  ),
-        .EDGE_THRESHOLD ( 12'd160 )
+        .EDGE_THRESHOLD ( 12'd240 )
     ) u_video_cartoon (
         .clk            ( S_hdmi_pixel_clk     ),
         .rst_n          ( S_hdmi_rst_n         ),

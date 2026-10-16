@@ -41,3 +41,16 @@
 | **实时包围盒与面积统计** | `color_detect_96.v` | `IMPLEMENTED_UNVERIFIED` | 动态统计 xmin/ymin/xmax/ymax 及面积 |
 | **形态学滤波 (开闭运算)**| `fallback/morphology/` | `PLANNED` | 规划消除孤立噪点 |
 | **工件尺寸公差判定** | `fallback/defect_eval/` | `PLANNED` | 判定合格/异常并输出控制信号 |
+
+---
+
+## 4. 当前固定红色 v1 验收矩阵（2026-10-17）
+
+| 要求 | 当前证据 | 状态边界 |
+|---|---|---|
+| Original/Sobel/Cartoon 帧边界切换 | `work/tests/run_cartoon_luma_sim.py`，1102 周期逐周期通过 | `SIM_PASS`；未上板 |
+| 红色 Q10 分割、3×3 opening、BBox、面积 | `tb_morph_open_96.v`、`tb_color_detect_96_v2.v`、`tb_color_detect_96_v2_boundaries.v` | `SIM_PASS`；未上板 |
+| PASS/NG/NO_OBJECT/INVALID 与 LED | `tb_defect_classifier.v`、`tb_osd_led_joint.v`、`tb_industrial_subsystem.v` | `SIM_PASS`；管脚未实测 |
+| Logo、模式、帧计数、类别、尺寸和状态 OSD | `fallback/rtl/industrial_osd_overlay.v`，整机 TD 集成；OSD/LED 联调 | `BUILD_PASS`；显示效果未实测 |
+| 单文件下载 | `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905` | 已归档；未下载 |
+| Timing/resource | `route.qor`：Setup WNS +142 ps、Hold WNS +21 ps、TNS 0；Slice 87.02% | 时序通过；资源风险 |

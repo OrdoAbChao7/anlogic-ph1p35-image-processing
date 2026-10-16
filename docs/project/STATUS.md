@@ -4,7 +4,7 @@
 > 修改 PROJECT_GOAL.md 中定义的目标或验收标准须提变更提案。  
 > 用户口头反馈记录为 `USER_REPORTED_ON_BOARD`，不等于硬件验证通过。
 
-最后更新：2026-10-12（Y2 软件预研）
+最后更新：2026-10-17（固定红色 v1 修正版回归与 TD 位流归档）
 
 ---
 
@@ -27,14 +27,14 @@
 
 | 阶段 | 内容 | 当前状态 | 关键证据 |
 |---|---|---|---|
-| **G1** | 视频采集与显示闭环 | `BUILD_PASS` / `USER_REPORTED_ON_BOARD` | 位流 SHA: `A311...6010`（Lab1）；用户报告原图可显示 |
-| **G2** | 接口 / 时钟 / ISP 基线审计 | `BLOCKED` | 待 G1 硬件闭环通过；接口草案存在 |
-| **G3** | 卡通化与基础模式 | `SIM_PASS`（部分）/ `BUILD_PASS`（候选） | 见下方 G3 详情 |
-| **G4** | Sobel 实时流水线 | `IMPLEMENTED_UNVERIFIED` | Sobel 算法研究已有；RTL 待仿真 |
-| **G5** | YOLO-tiny 检测 | `PLANNED` / `PE_SIM_PASS`；Y2 软件候选 `FAIL` | 单个 INT8 PE RTL 仿真通过；Y1 模型直接部署 NO-GO，Y2 微型模型仅 128 输入匹配 2 个瓶子且误报严重；整网/硬件均未通过 |
-| **G6** | OSD + 外设联动 | `PLANNED` | 基础 OSD 模块存在于组员工程 |
-| **G7** | 优化与创新 | `PLANNED` | 待 G3–G6 稳定后 |
-| **G8** | 冻结 / 发布 / 答辩 | `PLANNED` | — |
+| **G1** | 视频采集与显示闭环 | `BUILD_PASS`，硬件待验证 | 当前 fixed-red v1 已生成整机位流；无本轮下载/显示实测 |
+| **G2** | 接口 / 时钟 / ISP 基线审计 | `IMPLEMENTED_UNVERIFIED` | TD 通过时序；硬件接口、CDC 和告警归类仍待实测/审计 |
+| **G3** | 卡通化与基础模式 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `run_cartoon_luma_sim.py` 1102 周期逐周期通过；当前 TD 使用批准 s3_luma |
+| **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
+| **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
+| **G6** | OSD + LED 联动（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `tb_osd_led_joint.v` 与整机 OSD 集成；WM8978 不在 v1 范围 |
+| **G7** | 优化与创新 | `RISK` | Slice 87.02%，高于项目 80% 目标；尚无量化优化对照 |
+| **G8** | 冻结 / 发布 / 答辩 | `IN_PROGRESS` | 单 `.bit` 已归档；板级、长稳和答辩材料未完成 |
 
 ---
 
@@ -201,3 +201,6 @@
 
 > 2026-10-17 TD build result:
 > 本轮 Tang Dynasty v6.2.168116 / PH1P35MDG324 Speed 3 已完成综合、布局、布线、Hold Fix、bitgen：Setup WNS +142 ps、Setup TNS 0、Hold WNS +21 ps、Hold TNS 0；Slice 18,463/87.02%，RAM 35，DSP 24。时序通过但资源占用高于项目目标的 80% 上限；发布位流为 release/industrial-v1/camera_to_dsi_display_compress.bit，SHA-256 6817f946be06340ede434146a17f343ecc68dbf4e3f2e492252b3c79354d7b49。尚未上板。
+
+> 2026-10-17 TD correction:
+> 审计后将 TD 构建入口切换到登记册冻结的 `s3_luma`（`work/rtl/video_cartoon_luma.v`），并统一 `Sobel threshold=240`；新增三模式逐周期仿真 1102 周期 PASS 和 OSD/LED 联调 PASS。修正版位流仍为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`；上述旧哈希不再代表当前发布文件。无板卡下载和显示器实测，Stage G 仍未通过。

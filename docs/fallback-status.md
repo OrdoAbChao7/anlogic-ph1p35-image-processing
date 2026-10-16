@@ -113,9 +113,15 @@
    - 将 USB JTAG 下载器连接至 PC。
 2. **下载位流**：
    - 打开 Tang Dynasty 编程器（Programmer）。
-   - 添加位流：`E:\Projects\FPGA-fallback\work\output\industrial-release\camera_to_dsi_display_compress.bit`。
+   - 添加位流：`E:\Projects\FPGA-fallback\release\industrial-v1\camera_to_dsi_display_compress.bit`。
    - 点击 **Program** 烧录至 PH1P35 SRAM。
 3. **视觉测试**：
    - **空场测试**：无工件时，HDMI 画面显示原始/卡通化摄像头画面，无任何边框，`LED1/LED2/LED3` 均熄灭。
    - **标准件检测 (PASS)**：将标称尺寸约 $120\times 80$ 像素的红色工件置于视场中央，HDMI 画面实时紧贴工件绘制 **绿色高亮边界框**，板载 `LED1 (D10)` 与 `LED3 (C6)` 稳定常亮，`LED2` 熄灭。
    - **超差件检测 (NG)**：将宽度超标（$>135$ 像素）的工件置于视场中，HDMI 画面边界框立即切换为 **红色高亮警示框**，板载 `LED2 (E10)` 点亮报警，`LED1` 熄灭。
+
+## 8. 当前固定红色 v1 状态校正（2026-10-17）
+
+当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的修正版记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，三模式、固定红色检测、OSD/LED 联调和 TD 时序/位流生成均有当前工作区证据；发布位流 SHA-256 为 `886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`。旧表中 2026-10-13/历史变体的资源、时序和哈希不能用于描述当前版本。
+
+当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、资源占用高于 80% 目标，以及从无本机绝对路径的干净环境重建。
