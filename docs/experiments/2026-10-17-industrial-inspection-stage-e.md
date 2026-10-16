@@ -62,4 +62,5 @@
 - `project`：当前压缩位流大小 `1,339,505 bytes`，SHA-256 为 `84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c`；对应未压缩位流 SHA-256 为 `74d24e83668df5ef5f43847b126b92af9479abcecd717c7843ec4b423ad23a6f`。
 - `project`：`release/industrial-v1/industrial-v1-manifest.json` 记录源码哈希、Git 提交、TD 输入路径、位流哈希、`route.qor` 和 `final_timing.rpt` 哈希；不再只依赖口头路径说明。
 - `project`：补齐 `tb_industrial_subsystem.v` 的 `O_invalid → I_invalid` 连接后，联合 RTL 仿真重新通过；Icarus 仅剩形态学数组 `@*` 敏感列表告警，未发现浮空 INVALID 端口。
+- `project`：本轮 TD 的 `SYN-5011/5025`、`HDL-5314/5317/5323`、`SYN-5065`、`PHY-5060/5016/5079/5088` 和 `PRJ-5611` 已按来源和风险建立归类记录，见 `docs/evidence/industrial-v1-td-warning-audit.md`；它们仍是 OPEN，不因正 WNS 自动关闭。
 - `unknown`：仍无 PH1P35、SC520CS、HDMI 的下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟和长稳均未验证。DDR 初始化宏的 `SYN-5011/SYN-5025` 告警仍需逐条归类，Slice 占用仍高于 80% 目标。

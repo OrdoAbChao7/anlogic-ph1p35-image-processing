@@ -129,3 +129,9 @@
 - **已关闭（project）**：OSD/LED 联调已覆盖 `NO_OBJECT` 文本尾部、PASS 状态和检测 LED；`NO_OBJECT` 文本映射缺陷已修复。
 - **仍开放（unknown / measured）**：没有 PH1P35、SC520CS、HDMI 的下载和显示实测，因此 Stage G、冷启动、热复位、模式视觉效果、LED 管脚和长稳仍未验证。
 - **仍开放（project risk）**：当前修正版 Slice 占用 `87.02%`，高于项目目标 `80%`；TD 仍有厂商 DDR 初始化宏的 undriven-pin warnings 未逐条归类；构建脚本依赖本机 TD 工具和官方基线工程绝对路径，干净环境重建未关闭。
+
+## 2026-10-17 TD 告警与构建复现校正
+
+- **已补充（project）**：本轮完整 TD 构建已使用显式工具/基线路径参数完成，产物、源码哈希和报告哈希见 `release/industrial-v1/industrial-v1-manifest.json`。
+- **仍开放（project risk）**：本轮 `SYN-5011/5025`、`HDL-5314/5317/5323`、`SYN-5065`、`PHY-5060/5016/5079/5088` 和 `PRJ-5611` 已建立逐类归档，但尚未逐项完成 IP/时钟/板级关闭；详见 [`industrial-v1-td-warning-audit.md`](../evidence/industrial-v1-td-warning-audit.md)。
+- **仍开放（measured）**：无 PH1P35、SC520CS、HDMI 实机证据，Stage G、LED 管脚、模式视觉效果、帧率/延迟和长稳不能从本轮软件/TD证据推断。
