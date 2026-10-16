@@ -84,3 +84,10 @@
 - `project`：压缩位流 `release/industrial-v1/camera_to_dsi_display_compress.bit` 大小 `1,356,145 bytes`，SHA-256 `77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`；未压缩位流大小 `1,789,539 bytes`，SHA-256 `278aac832d22e570ec6c00455084cf6c7aed421d52e68f37e77b30c7145e03d0`。
 - `project`：工业 RTL/Golden、卡通化逐周期、构建/top/OSD 契约、工业视觉 5 项基准、Stage D/contract 测试均通过；`fallback/tb_osd_led_joint.v` 重新编译并运行通过。
 - `unknown`：仍无 PH1P35、SC520CS、HDMI 的下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟和长稳均未验证。厂商 IP/时钟告警和 `PHY-7022` 仍 OPEN。
+
+## 2026-10-17 形态学打包优化候选的拒绝记录
+
+- `project`：按 TDD 先新增 `work/tests/test_morph_packed_contract.py`；旧版逐位 `morph_group` 实现下该测试按预期失败。随后将 4 个像素的水平邻域改为打包位向量，Icarus 形态学连续帧、工业 RTL/Golden 回归均通过。
+- `project`：完整 TD 构建在 `optimize_gate -packarea` / `update_pll_param` 阶段以 `3221225786 (0xC000013A)` 异常退出，未进入布局布线，也没有生成新的发布位流。异常前的 gate area 报告显示候选 `u_morph_open` 约 `4619` logic LUT；没有证据证明资源改善。
+- `project`：按单变量回退纪律恢复原始 `morph_open_96.v`，删除只服务于失败候选的 TDD 探针，并重新通过工业 RTL/Golden、形态学、三模式、契约和 OSD/LED 联调回归。当前发布位流仍绑定上一版已成功构建的 OSD 优化源码，失败候选不进入发布包。
+- `unknown`：`0xC000013A` 的 TD 工具异常未能在本轮进一步分解为 RTL 根因或 TD 自身崩溃；在没有独立最小 TD 重现和收益证据前，不再沿该候选继续扩大改动。

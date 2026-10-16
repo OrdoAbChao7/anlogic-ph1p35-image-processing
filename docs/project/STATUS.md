@@ -28,7 +28,7 @@
 | 阶段 | 内容 | 当前状态 | 关键证据 |
 |---|---|---|---|
 | **G1** | 视频采集与显示闭环 | `BUILD_PASS`，硬件待验证 | 当前 fixed-red v1 已生成整机位流；无本轮下载/显示实测 |
-| **G2** | 接口 / 时钟 / ISP 基线审计 | `IMPLEMENTED_UNVERIFIED` | TD 通过时序；硬件接口、CDC 和告警归类仍待实测/审计 |
+| **G2** | 接口 / 时钟 / ISP 基线审计 | `IMPLEMENTED_UNVERIFIED` | 已形成 [代码级接口审计](../architecture/sc520-interface-contract.md)；硬件接口、CDC 波形和告警关闭仍待实测 |
 | **G3** | 卡通化与基础模式 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `run_cartoon_luma_sim.py` 1102 周期逐周期通过；当前 TD 使用批准 s3_luma |
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
 | **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
@@ -56,7 +56,7 @@
 
 ---
 
-## G3 详情
+## G3 详情（历史候选与当前 fixed-red v1 证据分开记录）
 
 **目标**：三种显示模式 + 卡通化 RTL 经过仿真和上板验证
 
@@ -67,7 +67,7 @@
 | `video_cartoon_luma.v`（s3_luma 亮度量化） | `SIM_PASS` / `BUILD_PASS` | 仿真：5329 周期小尺寸 + 1188032 周期全尺寸通过；TD构建：Setup WNS +143ps, Hold WNS +20ps, 位流 `s3_luma.bit` (71c8...abc6) 生成 |
 | cartoon-release 位流 | `USER_REPORTED_ON_BOARD` | SHA-256: `8284e7a90d3c36c20440d6e989800b4912683c5157e153cb64b3722f33bdd9f3`；用户反馈视觉效果差 |
 | Sobel 轮廓融合 | `IMPLEMENTED_UNVERIFIED` | 阈值已验证软件模型，上板效果待确认 |
-| 区域连通填充 | `PLANNED` | 未实现 |
+| 区域连通填充 | `OUT_OF_SCOPE` | fixed-red v1 使用冻结的 3×3 opening；区域连通填充不是当前批准版本门槛 |
 | 按键模式切换上板 | `USER_REPORTED_ON_BOARD` | 用户报告切换可实现 |
 | **G3 阶段门** | **未通过** | 待用户对 s3_luma 候选位流进行上板测试与视觉验收 |
 
@@ -79,11 +79,11 @@
 |---|---|---|
 | G1 硬件闭环 | 无可确认的下载+硬件证据链 | 实物接线 + 下载 + HDMI 观察 + 记录 |
 | G2 接口审计 | G1 未通过 | G1 通过后执行（可提前只读审计） |
-| 卡通效果上板通过 | 已有位流效果差；新候选待下载 | 新 s3_luma 构建通过 + 上板对比 |
+| 卡通效果上板通过 | 当前 s3_luma 已完成仿真和整机 TD 构建，但没有本轮板级视觉证据 | 下载当前 fixed-red v1 位流 + 上板对比 |
 | PHY-5060/5079/5088 告警 | 时钟告警未分类 | 逐条记录来源 + 上板观察 |
-| OSD 安路 Logo | RTL 未实现 | 设计 + 仿真 + 集成 |
-| YOLO Micro-CNN | Y2 候选权重与 x86 INT8 已固定，但独立测试仅 128 输入有 2 个瓶子 TP 且误报严重；工位数据和验收指标未冻结 | 工位分批数据 + 预设指标 → 重训并通过独立测试 → 视觉验收 |
-| WM8978 语音 | 管脚 / 时序 / Codec 配置未核对 | 原理图核对 + I2S 驱动 |
+| OSD 安路 Logo | RTL、OSD/LED 联调和整机 TD 已完成；屏幕效果未实测 | 下载当前 fixed-red v1 位流 + 记录屏幕与管脚证据 |
+| YOLO Micro-CNN | `OUT_OF_SCOPE`；fixed-red v1 已按用户确认舍弃 YOLO | 如未来恢复目标检测，另立版本和阶段门 |
+| WM8978 语音 | `OUT_OF_SCOPE`；PROJECT_GOAL 明确不纳入 v1 | 如未来加入，另立板级接口与音频阶段门 |
 
 ---
 
