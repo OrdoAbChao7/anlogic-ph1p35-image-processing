@@ -1,8 +1,8 @@
 {
   "project": "PH1P35 fixed-red industrial inspection v1",
   "target_device": "PH1P35MDG324",
-  "git_commit": "13253b037e2822337b76aa655e99b445f16d1d54",
-  "git_status": " M fallback/tb_color.vvp",
+  "git_commit": "0e37828ee1ed37d95593f2b8191f8fbc7a3d0abf",
+  "git_status": "M fallback/tb_color.vvp",
   "build_inputs": {
     "td_exe": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
     "flow_tcl": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
@@ -15,7 +15,7 @@
     },
     {
       "path": "fallback/td_source/design_top_wrapper.v",
-      "sha256": "a0a69f18f85d336ed7d09bebc6e5a91654df060559fa9135a42e577cf38ba2ab"
+      "sha256": "16fd445ac0a6b354b74fa890d7dd12e246b9943009fdf21143b770c54b688b8c"
     },
     {
       "path": "fallback/td_source/isp/isp_top.v",
@@ -54,22 +54,22 @@
     {
       "path": "release/industrial-v1/camera_to_dsi_display.bit",
       "size_bytes": 1789539,
-      "sha256": "0a089d254a3124ec3462bfc2e6eaa2682f075beca4c44fe551c78ac2696b9be1"
+      "sha256": "8a6c3a246a3a2ee7e2477818e71df2945be26bc1563a7810dd7ef002dcf38ac0"
     },
     {
       "path": "release/industrial-v1/camera_to_dsi_display_compress.bit",
-      "size_bytes": 1371697,
-      "sha256": "cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b"
+      "size_bytes": 1367025,
+      "sha256": "92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5"
     },
     {
       "path": "release/industrial-v1/route.qor",
       "size_bytes": 1313,
-      "sha256": "7a0155176a3ff2d7bf05e525506ccaeaa44b28994bc107d14ea77c4419db9797"
+      "sha256": "3d7843f146238f7e72b979d7a58da3988c2df3ebfa405786dbe8b801107f7732"
     },
     {
       "path": "release/industrial-v1/final_timing.rpt",
-      "size_bytes": 4749766,
-      "sha256": "c16b8c40f0c7ccd55adfdca0aad0a1e099077631fb1f8aba323ad9ae8499c842"
+      "size_bytes": 4787594,
+      "sha256": "a7b0e7dccf988eb1f84ce8b2cdda5baf9a47e9cdb794bb957c860c33907ec1f6"
     }
   ]
 }
