@@ -122,13 +122,13 @@
 
 ## 8. 当前固定红色 v1 状态校正（2026-10-17）
 
-当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的最新记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，并恢复官方 720p `uivtc`/`hdmi_mixer` 时序链路；三模式、固定红色检测、OSD/LED 联调和 TD 位流生成均有当前工作区证据。当前显式 ERAM 优化版压缩位流 SHA-256 为 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`，资源为 `17,958/84.64%` slices、`43 RAM`、`24 DSP`、Setup WNS `+114 ps`、Hold WNS `+20 ps`。旧表中的资源、时序和哈希不能用于描述当前版本。
+当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的最新记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，并恢复官方 720p `uivtc`/`hdmi_mixer` 时序链路；三模式、固定红色检测、ROI 边界 Opening、OSD/LED 联调和 TD 位流生成均有当前工作区证据。当前压缩位流 SHA-256 为 `07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74`，资源为 `17,730/83.57%` slices、`43 RAM`、`24 DSP`、Setup WNS `+101 ps`、Hold WNS `+20 ps`。旧表中的资源、时序和哈希不能用于描述当前版本。
 
-当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、84.64% Slice 资源仍高于 80% 目标，以及从无本机绝对路径的干净环境重建。
+当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、83.57% Slice 资源仍高于 80% 目标，以及从无本机绝对路径的干净环境重建。
 
 ## 9. 2026-10-17 本轮重建证据
 
-- `project`：源码提交 `1af7ae2d0c70428d3f3031e1cb0445a0d11af54` 已加入 ISP 输出 ready 显式 tie-high 契约，并使用显式 TD/基线路径完成完整综合、布局、布线、Hold Fix、QoR、时序和 bitgen，TD exit code `0`。
-- `project`：当前报告位于 `release/industrial-v1/route.qor` 与 `release/industrial-v1/final_timing.rpt`；Setup WNS `+114 ps`、Hold WNS `+20 ps`、TNS 均为 `0`，Slice `17,958/84.64%`、RAM `43`、DSP `24`、DRAMHARDCON `229`，STA coverage `96.46%`。
-- `project`：当前推荐下载文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`；同目录 manifest 绑定了本轮源码和全部发布文件哈希。
-- `project`：`tb_industrial_subsystem.v` 已补齐 INVALID 信号连接，重新编译联合仿真通过；没有硬件实测，因此不改变 Stage G 待上板状态。
+- `project`：源码提交 `2eec6701ab2635b2133485cabb2876491d050770` 修复了部分 ROI 的 `BORDER_REPLICATE` 语义：ROI 边缘在两级形态学窗口中复制，ROI 外输出强制为零；使用显式 TD/基线路径完成完整综合、布局、布线、Hold Fix、QoR、时序和 bitgen，TD exit code `0`。
+- `project`：当前报告位于 `release/industrial-v1/route.qor` 与 `release/industrial-v1/final_timing.rpt`；Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS 均为 `0`，Slice `17,730/83.57%`、RAM `43`、DSP `24`、DRAMHARDCON `229`，STA coverage `96.42%`。
+- `project`：当前推荐下载文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74`；同目录 manifest 绑定了本轮源码和全部发布文件哈希。
+- `project`：Golden 回归新增 2×2 ROI 边界件，修复前实际 `area=0` 与冻结模型 `area=4` 不一致，修复后正常帧、ROI 边界帧和非法 ROI 均通过；没有硬件实测，因此不改变 Stage G 待上板状态。

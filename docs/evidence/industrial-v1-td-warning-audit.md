@@ -1,15 +1,15 @@
 # fixed-red v1 TD 告警归类记录
 
-本记录对应当前 fixed-red v1 显式 ERAM 构建，源码提交为 `1af7ae2d0c70428d3f3031e1cb0445a0d11af54`；发布位流、报告和输入哈希以 `release/industrial-v1/industrial-v1-manifest.json` 为准。工具为 Tang Dynasty `v6.2.168116`，器件为 `PH1P35MDG324 / Speed 3`。
+本记录对应当前 fixed-red v1 显式 ERAM 构建，源码提交为 `2eec6701ab2635b2133485cabb2876491d050770`；发布位流、报告和输入哈希以 `release/industrial-v1/industrial-v1-manifest.json` 为准。工具为 Tang Dynasty `v6.2.168116`，器件为 `PH1P35MDG324 / Speed 3`。
 
 当前告警来自本次构建日志：
 
-- 综合：`work/td_industrial/td_project/camera_to_dsi_display_Runs/syn_1/td_20261017_041451.log`
-- 物理实现：`work/td_industrial/td_project/camera_to_dsi_display_Runs/phy_1/td_20261017_041812.log`
+- 综合：`work/td_industrial/td_project/camera_to_dsi_display_Runs/syn_1/td_20261017_044127.log`
+- 物理实现：`work/td_industrial/td_project/camera_to_dsi_display_Runs/phy_1/td_20261017_044435.log`
 
 ## 结论摘要
 
-本轮 TD 各阶段 exit code 为 `0`。Route QoR 为 Setup WNS `+114 ps`、Hold WNS `+20 ps`、TNS `0`、违规端点 `0`；Slice `17,958/84.64%`、RAM `43`、DSP `24`，STA coverage `96.46%`。四个形态学行缓存显式映射为 `PH1P_LOGIC_ERAM`，ISP 输出 ready 已显式 tie-high；正时序不能自动关闭结构性告警，以下当前日志告警全部保持 **OPEN**，也没有任何板卡证据。
+本轮 TD 各阶段 exit code 为 `0`。Route QoR 为 Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS `0`、违规端点 `0`；Slice `17,730/83.57%`、RAM `43`、DSP `24`，STA coverage `96.42%`。四个形态学行缓存显式映射为 `PH1P_LOGIC_ERAM`，ROI 边界复制语义已随源码重建，ISP 输出 ready 已显式 tie-high；正时序不能自动关闭结构性告警，以下当前日志告警全部保持 **OPEN**，也没有任何板卡证据。
 
 | 告警 | 定位 | 当前归类 | 是否关闭 |
 |---|---|---|---|

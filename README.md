@@ -64,7 +64,7 @@ python .\work\models\reference_model.py --self-test
 
 **2026-10-17 固定红色零件 v1：** 已完成软件模型、硬件等价模型和独立 RTL 仿真回归；当前 TD 构建和 Stage G 上板仍按 [实验记录](docs/experiments/2026-10-17-industrial-inspection-stage-e.md) 记录，未有板级证据前不宣称稳定可用。
 
-当前可下载位流：[industrial-v1/camera_to_dsi_display_compress.bit](release/industrial-v1/camera_to_dsi_display_compress.bit)，大小 `1,367,025 bytes`，SHA-256：`92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5`。本轮 TD 最终 Setup WNS `+114 ps`、Hold WNS `+20 ps`、TNS 均为 `0`；Slice `17,958/84.64%`、RAM `43`、DSP `24`、STA coverage `96.46%`。四个形态学行缓存仍各使用 1 个 ERAM；新增顶层 ISP 输出 ready 显式 tie-high 契约已随本轮源码重建。仍未在板卡上实测。源码、报告和输入路径记录在 [industrial-v1-manifest.json](release/industrial-v1/industrial-v1-manifest.json)。
+当前可下载位流：[industrial-v1/camera_to_dsi_display_compress.bit](release/industrial-v1/camera_to_dsi_display_compress.bit)，大小 `1,368,945 bytes`，SHA-256：`07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74`。本轮 TD 最终 Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS 均为 `0`；Slice `17,730/83.57%`、RAM `43`、DSP `24`、STA coverage `96.42%`。形态学行缓存和 ROI 边界复制语义已随本轮源码重建；新增顶层 ISP 输出 ready 显式 tie-high 契约仍在。仍未在板卡上实测。源码、报告和输入路径记录在 [industrial-v1-manifest.json](release/industrial-v1/industrial-v1-manifest.json)。
 
 重新构建时，向 `scripts/build_industrial_td.py` 显式传入 TD 可执行文件、`DefaultFlow.tcl` 和官方 SC520 基线 `Runs` 目录；也可以使用 `FPGA_TD_EXE`、`FPGA_FLOW_TCL`、`FPGA_BASELINE_RUNS` 环境变量。脚本会把位流、`route.qor`、`final_timing.rpt` 和 provenance manifest 写入 `release/industrial-v1/`。
 

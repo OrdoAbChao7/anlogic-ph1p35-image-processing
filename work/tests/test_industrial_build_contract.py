@@ -125,6 +125,14 @@ def test_legacy_industrial_verification_covers_approved_modes_and_osd_led():
     assert "industrial_osd_overlay.v" in script
 
 
+def test_legacy_industrial_verification_covers_mode_and_classifier_contracts():
+    script = (ROOT / "scripts" / "verify-industrial-subsystem.ps1").read_text(encoding="utf-8")
+    assert "tb_mode_controller.v" in script
+    assert "tb_defect_classifier.v" in script
+    assert "mode_controller_run" in script
+    assert "defect_classifier_run" in script
+
+
 def test_cartoon_streaming_regression_exposes_full_frame_mode():
     runner = (ROOT / "work" / "tests" / "run_cartoon_luma_sim.py").read_text(encoding="utf-8")
     assert "--full-frame" in runner
@@ -161,9 +169,9 @@ def test_current_requirement_and_warning_audits_bind_the_eram_build():
     requirement_audit = (ROOT / "docs" / "evidence" / "industrial-v1-requirement-audit.md").read_text(encoding="utf-8")
     warning_audit = (ROOT / "docs" / "evidence" / "industrial-v1-td-warning-audit.md").read_text(encoding="utf-8")
     for text in (requirement_audit, warning_audit):
-        assert "17,958" in text
-        assert "84.64%" in text
-        assert "Setup WNS `+114 ps`" in text
+        assert "17,730" in text
+        assert "83.57%" in text
+        assert "Setup WNS `+101 ps`" in text
         assert "Hold WNS `+20 ps`" in text
     assert "77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4" not in requirement_audit
     assert "PHY-7022" not in warning_audit
@@ -182,6 +190,7 @@ if __name__ == "__main__":
     test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles_morphology()
     test_legacy_industrial_verification_includes_full_frame_and_threshold_gates()
     test_legacy_industrial_verification_covers_approved_modes_and_osd_led()
+    test_legacy_industrial_verification_covers_mode_and_classifier_contracts()
     test_cartoon_streaming_regression_exposes_full_frame_mode()
     test_release_docs_bind_the_current_bitstream_manifest()
     test_manifest_records_external_td_input_provenance()

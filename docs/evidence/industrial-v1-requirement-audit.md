@@ -1,6 +1,6 @@
 # fixed-red v1 第一版要求逐项审计
 
-审计对象：fixed-red v1 当前发布位流对应的源码提交 `1af7ae2d0c70428d3f3031e1cb0445a0d11af54`；发布目录中的 `industrial-v1-manifest.json` 是位流、源码和报告哈希的最终权威。本表严格区分仿真/构建证据与真实板卡证据。没有 PH1P35、SC520CS 和 HDMI 实物参与的项目，不能标记 `VERIFIED_ON_BOARD`。
+审计对象：fixed-red v1 当前发布位流对应的源码提交 `2eec6701ab2635b2133485cabb2876491d050770`；发布目录中的 `industrial-v1-manifest.json` 是位流、源码和报告哈希的最终权威。本表严格区分仿真/构建证据与真实板卡证据。没有 PH1P35、SC520CS 和 HDMI 实物参与的项目，不能标记 `VERIFIED_ON_BOARD`。
 
 ## 功能审计
 
@@ -21,22 +21,22 @@
 | 模式、帧计数、类别、数量、宽高、状态 OSD | `fallback/rtl/industrial_osd_overlay.v`；`tb_osd_led_joint.v` 覆盖状态文本和联动 | `PASS`（RTL + build） | `NOT_RUN` |
 | 检测框 | `fallback/rtl/bbox_draw_overlay.v`；PASS 绿色、NG 红色、空场清除旧框 | `PASS`（子系统 RTL） | `NOT_RUN` |
 | LED 联动 | classifier LED 互斥；OSD/LED 联调通过；最终管脚仍需板卡确认 | `PASS`（RTL） | `NOT_RUN` |
-| 单文件下载 | 推荐 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `92eee3cde5e29c86ba5ba3b2b8c2387c2ed9c1b9b683274285fdcf72135070e5` | `PASS`（bitgen） | `NOT_RUN` |
+| 单文件下载 | 推荐 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74` | `PASS`（bitgen） | `NOT_RUN` |
 
 ## 本轮证据
 
-- 软件/Golden：`python work/tests/run_industrial_rtl_golden.py`，正常 7 帧 + 非法 ROI 1 帧通过。
+- 软件/Golden：`python work/tests/run_industrial_rtl_golden.py`，正常 7 帧 + ROI 边界 1 帧 + 非法 ROI 1 帧通过；ROI Opening 使用与 Stage D 一致的 `BORDER_REPLICATE`。
 - 三模式：`python work/tests/run_cartoon_luma_sim.py`，1102 周期通过。
 - RTL：重新编译并运行 morph、full-frame color、threshold boundary、classifier、industrial subsystem、mode controller、OSD/LED，全部 exit code `0`；工业子系统补齐 `O_invalid → I_invalid` 后再次通过。
 - 软件模型：`test_industrial_inspection.py` `5/5`、`test_stage_d.py` `5/5`、`test_industrial_contract.py` `4/4`。
-- TD：Tang Dynasty `v6.2.168116`；本版显式使用四个 `PH1P_LOGIC_ERAM` 形态学行缓存，并将 ISP 输出 ready 明确 tie-high。`route.qor` Setup WNS `+114 ps`、Hold WNS `+20 ps`、TNS 均 `0`、违规端点 `0`；Slice `17,958/84.64%`、RAM `43`、DSP `24`，STA coverage `96.46%`。这些是当前工程构建结果，不等同于上板验证。
+- TD：Tang Dynasty `v6.2.168116`；本版显式使用四个 `PH1P_LOGIC_ERAM` 形态学行缓存，并将 ISP 输出 ready 明确 tie-high。`route.qor` Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS 均 `0`、违规端点 `0`；Slice `17,730/83.57%`、RAM `43`、DSP `24`，STA coverage `96.42%`。这些是当前工程构建结果，不等同于上板验证。
 - 发布 provenance：`release/industrial-v1/industrial-v1-manifest.json`，同时记录源码、报告、位流和输入路径哈希。
 
 ## 当前未完成项
 
 1. Stage G：尚未下载到真实 PH1P35，未连接 SC520CS/HDMI，未验证摄像头锁定、画面、三模式视觉效果、检测框、LED、冷启动、热复位、重复下载、帧率、延迟和长稳。
 2. TD 告警：`SYN-5011/5013/5025`、`HDL-5001/5007/5106/5314/5317/5323/5369`、`SYN-5041/5065`、`PHY-5060/5016/5079/5088`、`PRJ-5611` 已按当前日志归类但仍 OPEN，见 `industrial-v1-td-warning-audit.md`；正 WNS 不会自动关闭结构性告警。
-3. 资源：当前 ERAM 版本 Slice `84.64%`，仍高于项目 `80%` 目标但未达到旧版 95% 资源告警阈值；仍需干净环境重建和真实板卡证据，不能据此关闭发布风险或宣称上板可用。
+3. 资源：当前 ERAM 版本 Slice `83.57%`，仍高于项目 `80%` 目标但未达到旧版 95% 资源告警阈值；仍需干净环境重建和真实板卡证据，不能据此关闭发布风险或宣称上板可用。
 4. 干净环境：构建脚本已取消对单一本机路径的强依赖，改为 CLI/环境变量输入；但官方基线 `Runs`、TD 安装和厂商 IP 仍需在新机器提供，尚未形成完全自包含的无授权工程包。
 
 YOLO/Micro-CNN、WM8978、多类别多目标和毫米级标定不属于本版验收范围，不能作为当前 fixed-red v1 的缺陷项。

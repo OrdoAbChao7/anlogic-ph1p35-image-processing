@@ -33,7 +33,7 @@
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
 | **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
 | **G6** | OSD + LED 联动（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `tb_osd_led_joint.v` 与整机 OSD 集成；WM8978 不在 v1 范围 |
-| **G7** | 优化与创新 | `RISK` | 显式 ERAM 行缓存将 Slice 从 95.02% 降至 84.64%，仍高于项目 80% 目标；缺硬件演示、告警关闭和第二个可证明创新点 |
+| **G7** | 优化与创新 | `RISK` | 显式 ERAM 行缓存将 Slice 从 95.02% 降至 83.57%，仍高于项目 80% 目标；缺硬件演示、告警关闭和第二个可证明创新点 |
 | **G8** | 冻结 / 发布 / 答辩 | `IN_PROGRESS` | 单 `.bit` 已归档；板级、长稳和答辩材料未完成 |
 
 ---
@@ -221,7 +221,7 @@
 > 修复 `scripts/verify-industrial-subsystem.ps1`：输出不再覆盖用户已有的 `fallback/tb_color.vvp`，显式加入形态学 RTL 和 `MORPH_SIMULATION`；一键执行的 Python 5 样本、基线颜色检测和工业子系统联合仿真三段全部通过，exit code `0`。该结果仍是软件/RTL 证据，不改变 Stage G 的待上板状态。
 
 > 2026-10-17 full v1 regression gate:
-> `scripts/verify-industrial-subsystem.ps1` 已扩展为 8 段一键回归并实际 exit code `0`：Algorithm Lab 5/5、Stage D 5/5、工业合同 4/4、基线检测、1280×720 全前景 `area=921600`/BBox 全幅、严格 Q10 边界、工业子系统、三模式 1102 周期、OSD/Logo/LED 联调全部 PASS。该证据加强了软件/RTL 层验收，但不改变无板卡、无 SC520CS/HDMI 显示、无 LED 管脚、无帧率/延迟/长稳测量的 Stage G 未通过状态。
+> `scripts/verify-industrial-subsystem.ps1` 已扩展为 10 段一键回归并实际 exit code `0`：Algorithm Lab 5/5、Stage D 5/5、工业合同 4/4、基线检测、1280×720 全前景 `area=921600`/BBox 全幅、严格 Q10 边界、工业子系统、三模式 1102 周期、OSD/Logo/LED 联调、模式控制器去抖/帧边界和四态分类器互斥全部 PASS。该证据加强了软件/RTL 层验收，但不改变无板卡、无 SC520CS/HDMI 显示、无 LED 管脚、无帧率/延迟/长稳测量的 Stage G 未通过状态。
 
 > 2026-10-17 release documentation binding:
 > `test_release_docs_bind_the_current_bitstream_manifest` 已通过；README、Stage G 模板和 fallback 状态入口均已与 `release/industrial-v1/industrial-v1-manifest.json` 及当前压缩位流 SHA-256 `cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b` 对齐。该校验只保证文件与文档一致，不新增板级验证。
@@ -231,3 +231,6 @@
 
 > 2026-10-17 full-frame three-mode regression:
 > `run_cartoon_luma_sim.py --full-frame` 使用同一 Icarus Testbench 和 Golden Model，完成 `1280×720` Original/Sobel/Cartoon 三帧、帧边界模式提交、空拍和 sideband 对齐，共 `2,775,640` cycles 全部通过。该证据加强 RTL/流接口覆盖，不替代三模式真实 HDMI 视觉验收。
+
+> 2026-10-17 ROI Opening contract and rebuild:
+> 在现有 `run_industrial_rtl_golden.py` 中加入 2×2 目标贴合部分 ROI 四边的回归；旧实现得到 `area=0`，与 Stage D 的 `BORDER_REPLICATE` 期望 `area=4` 不一致。提交 `2eec6701ab2635b2133485cabb2876491d050770` 后，两级形态学窗口按 ROI 边界复制并将 ROI 外结果清零，正常 7 帧、ROI 边界 1 帧和非法 ROI 1 帧全部通过。随后完成本轮完整 TD 构建：Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS `0`、Slice `17,730/83.57%`、RAM `43`、DSP `24`、STA coverage `96.42%`；压缩位流 SHA-256 为 `07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74`。无板卡下载，Stage G 仍未通过。

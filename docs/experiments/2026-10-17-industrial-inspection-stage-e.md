@@ -132,7 +132,7 @@
 ## 2026-10-17 一键回归扩展至第一版功能集
 
 - `project`：按 TDD 先为回归入口增加“全帧面积/阈值边界/三模式/OSD-LED”契约；契约在脚本尚未扩展时按预期失败，随后完成实现。
-- `project`：`scripts/verify-industrial-subsystem.ps1` 现执行 8 段门禁：Algorithm Lab 5/5、Stage D 5/5、工业合同 4/4、基线颜色检测、`1280×720` 全前景、严格 Q10 端点、工业子系统、三模式 1102 周期、OSD/Logo/LED 联调。完整脚本 exit code `0`，所有段落 PASS。
+- `project`：`scripts/verify-industrial-subsystem.ps1` 现执行 10 段门禁：Algorithm Lab 5/5、Stage D 5/5、工业合同 4/4、基线颜色检测、`1280×720` 全前景、严格 Q10 端点、工业子系统、三模式 1102 周期、OSD/Logo/LED 联调、模式控制器去抖/帧边界和四态分类器互斥。完整脚本 exit code `0`，所有段落 PASS。
 - `project`：新增强证据：`tb_color_detect_96_v2.v` 实际报告 `area=921600`、BBox `0,0,1279,719`；`tb_color_detect_96_v2_boundaries.v` 五组阈值向量全部通过；`run_cartoon_luma_sim.py` 1102 周期逐周期通过；`tb_osd_led_joint.v` 验证 `NO_OBJECT` 文本尾部和 PASS/检测 LED 联动。
 - `project`：为防止下载入口与实际位流脱节，新增发布文档一致性契约，按 manifest 和文件实际 SHA-256 校验 README、Stage G 模板及 fallback 状态入口；修正它们引用的旧版 `77fd...` 哈希和资源数据，当前入口统一指向显式 ERAM 位流 `cbc361...`。
 - `project`：Icarus 仍报告既有 timescale 继承警告；它们不影响本轮 `$fatal` 断言和结果比较，但尚未作为厂商告警关闭依据。该回归没有增加板级证据，Stage G、摄像头/HDMI/LED 实物效果、帧率/延迟、冷启动/热复位和长稳仍未验证。
@@ -150,3 +150,12 @@
 - `project`：扩展既有 `run_cartoon_luma_sim.py`，新增 `--full-frame`，不改变 Testbench、Golden Model 或算法参数；先由 build contract 复现入口缺失，再完成实现。
 - `project`：`python work/tests/run_cartoon_luma_sim.py --full-frame` 实际 exit code `0`，完成 Original/Sobel/Cartoon 各一帧 `1280×720`，覆盖帧首、行末、空拍、帧边界模式提交和 sideband，Icarus 逐周期比较共 `2,775,640` cycles 全部通过。
 - `unknown`：该回归证明仿真流接口和行缓存尺寸在软件/RTL层一致，不证明真实 SC520CS 速率、DDR2 行为、HDMI 显示效果或板级长稳。
+
+## 2026-10-17 ROI Opening 边界修复与重新发布
+
+- `project`：按 TDD 在 `run_industrial_rtl_golden.py` 增加 2×2 目标贴合部分 ROI 四边的向量；旧实现实际输出 `area=0`，冻结 Stage D 模型要求 `area=4`，先得到可复现失败。
+- `project`：提交 `2eec6701ab2635b2133485cabb2876491d050770` 修改 `morph_filter_96` 的静态 ROI 窗口语义：ROI 上下边界复制垂直邻居，左右边界按实际像素坐标复制水平邻居，ROI 外输出清零；两级 erosion/dilation 均传递同一 ROI 参数。
+- `project`：`python work/tests/run_industrial_rtl_golden.py` 通过正常 7 帧、ROI 边界 1 帧和非法 ROI 1 帧；随后 `scripts/verify-industrial-subsystem.ps1` 八段回归 exit code `0`，包含 `1280×720` 全前景 `area=921600`、严格 Q10 边界、工业子系统、三模式和 OSD/LED 联调。
+- `project`：使用同一 TD `v6.2.168116`、器件 `PH1P35MDG324 / Speed 3` 和外部输入哈希重新完成综合、布局、布线、Hold Fix、Route QoR、最终时序和 bitgen；最终 Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS `0`、违规端点 `0`、STA coverage `96.42%`，资源 `17,730 slices / 83.57%`、`43 RAM`、`24 DSP`、`229 DRAMHARDCON`。
+- `project`：新压缩位流 `release/industrial-v1/camera_to_dsi_display_compress.bit` 大小 `1,368,945 bytes`，SHA-256 `07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74`；未压缩位流 SHA-256 `33e88de7686d875d4d1d7970a290a5898978a4d810ef4d035e47f448cd78512a`。manifest 同时绑定源文件、TD/Flow/基线输入、route.qor 和 final_timing.rpt 哈希。
+- `unknown`：仍无 PH1P35、SC520CS、HDMI 下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟、长稳、厂商告警关闭和完全自包含重建仍未完成。
