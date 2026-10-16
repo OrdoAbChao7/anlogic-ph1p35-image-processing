@@ -869,6 +869,56 @@ assign S_raw_tuser  = S_axis_tuser;
     );
 
 
+    // Generate the real 720p timing used by the DDR video reader and all
+    // downstream pixel-processing stages.  These signals must not be left
+    // floating: video_out uses the VSYNC edge to schedule frame reads, while
+    // the mode, bbox, and OSD stages consume the mixer timing sidebands.
+    uivtc #(
+        .H_ActiveSize ( 1280 ),
+        .H_FrameSize  ( 1650 ),
+        .H_SyncStart  ( 1390 ),
+        .H_SyncEnd    ( 1430 ),
+        .V_ActiveSize ( 720  ),
+        .V_FrameSize  ( 750  ),
+        .V_SyncStart  ( 725  ),
+        .V_SyncEnd    ( 730  )
+    ) u_hdmi_vtc (
+        .I_vtc_rstn     ( S_hdmi_rst_n     ),
+        .I_vtc_clk      ( S_hdmi_pixel_clk ),
+        .O_vtc_vs       ( S_hdmi_vsync     ),
+        .O_vtc_hs       ( S_hdmi_hsync     ),
+        .O_vtc_de_valid ( S_hdmi_de        ),
+        .O_vtc_user     ( S_hdmi_user      ),
+        .O_vtc_last     ( S_hdmi_last      )
+    );
+
+    // Convert the DDR reader's pixel stream into the same timed RGB stream
+    // consumed by the three display modes.  The OSD remains the final pixel
+    // stage below, so this mixer only owns base-video timing and read enable.
+    hdmi_mixer #(
+        .H_OFFSET  ( 0    ),
+        .V_OFFSET  ( 0    ),
+        .IMG_WIDTH ( 1280 ),
+        .IMG_HEIGHT( 720  ),
+        .DEBUG_MODE( 0    )
+    ) u_hdmi_mixer (
+        .I_clk           ( S_hdmi_pixel_clk   ),
+        .I_rst_n         ( S_hdmi_rst_n       ),
+        .I_video_vsync   ( S_hdmi_vsync       ),
+        .I_video_hsync   ( S_hdmi_hsync       ),
+        .I_video_de      ( S_hdmi_de          ),
+        .I_video_user    ( S_hdmi_user        ),
+        .I_video_last    ( S_hdmi_last        ),
+        .I_debug_status  ( S_hdmi_debug_status),
+        .O_video_rd_en   ( S_hdmi_window_rd_en),
+        .I_video_rd_data ( S_video_rd_data    ),
+        .O_hdmi_vsync    ( S_hdmi_out_vsync   ),
+        .O_hdmi_hsync    ( S_hdmi_out_hsync   ),
+        .O_hdmi_de       ( S_hdmi_out_de      ),
+        .O_hdmi_data     ( S_hdmi_out_data    )
+    );
+
+
 
 
     // --- video_cartoon pipeline wires ---
