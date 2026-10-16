@@ -1,8 +1,8 @@
 {
   "project": "PH1P35 fixed-red industrial inspection v1",
   "target_device": "PH1P35MDG324",
-  "git_commit": "660bee5b2f247032eae5bc29ab29f2db105aa46a",
-  "git_status": "M fallback/tb_color.vvp\n M release/industrial-v1/camera_to_dsi_display.bit\n M release/industrial-v1/camera_to_dsi_display_compress.bit\n M release/industrial-v1/final_timing.rpt\n M release/industrial-v1/route.qor",
+  "git_commit": "e27c1c1fd185b620882bfaaf62b7b9e788a3aa7e",
+  "git_status": "M fallback/rtl/industrial_osd_overlay.v\n M fallback/tb_color.vvp\n M release/industrial-v1/camera_to_dsi_display.bit\n M release/industrial-v1/camera_to_dsi_display_compress.bit\n M release/industrial-v1/final_timing.rpt\n M release/industrial-v1/route.qor\n?? work/tests/test_osd_font_contract.py",
   "build_inputs": {
     "td_exe": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
     "flow_tcl": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
@@ -43,7 +43,7 @@
     },
     {
       "path": "fallback/rtl/industrial_osd_overlay.v",
-      "sha256": "c2d9c14cd794fbb4a8e2cc95dd520e02085f5ea6b8188d8c1b0eda020e0fb403"
+      "sha256": "7a49fc51826a435b38245fea4f72c5a57d18cf2e91da78d7f075aa3e0610a007"
     },
     {
       "path": "fallback/rtl/mode_controller.v",
@@ -54,22 +54,22 @@
     {
       "path": "release/industrial-v1/camera_to_dsi_display.bit",
       "size_bytes": 1789539,
-      "sha256": "dde77154113b0a17a2e1f1e4364be2b331ef21c2dfdafcc731d38a4f37814e74"
+      "sha256": "278aac832d22e570ec6c00455084cf6c7aed421d52e68f37e77b30c7145e03d0"
     },
     {
       "path": "release/industrial-v1/camera_to_dsi_display_compress.bit",
-      "size_bytes": 1356849,
-      "sha256": "e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f"
+      "size_bytes": 1356145,
+      "sha256": "77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4"
     },
     {
       "path": "release/industrial-v1/route.qor",
       "size_bytes": 1313,
-      "sha256": "11081b71881513930d6bc06bd62e4843ef380c308533ba4b6d541276c795750c"
+      "sha256": "64b3c412967a849f5febf88776b04ad044865e8f024434c20341ba9a5bb16732"
     },
     {
       "path": "release/industrial-v1/final_timing.rpt",
-      "size_bytes": 4823565,
-      "sha256": "d9ea4bbbea8e478f91849de02ffb7351372bbfe22793eb659a7ca3849aeca73e"
+      "size_bytes": 4831035,
+      "sha256": "6c03157e94b0498eff4a73c5a8a545c6c7fb2082b59f493098ae9c485c28f3c3"
     }
   ]
 }

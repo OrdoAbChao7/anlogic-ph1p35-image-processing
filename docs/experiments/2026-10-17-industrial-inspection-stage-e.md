@@ -74,3 +74,13 @@
 - `project`：压缩位流 `release/industrial-v1/camera_to_dsi_display_compress.bit` 大小 `1,356,849 bytes`，SHA-256 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f`；未压缩位流大小 `1,789,539 bytes`，SHA-256 `dde77154113b0a17a2e1f1e4364be2b331ef21c2dfdafcc731d38a4f37814e74`。
 - `project`：本轮软件/RTL回归 `run_industrial_rtl_golden.py`、`run_cartoon_luma_sim.py`、两个 build/top contract、工业视觉基准集和 Stage D/contract 测试均通过；FPGA Agent doctor 为 `Overall Environment Status: PASS`。
 - `unknown`：仍无 PH1P35、SC520CS、HDMI 的下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟和长稳均未验证。`SYN-5011/5025`、`HDL-5314/5317/5323`、`SYN-5065`、`PHY-5060/5016/5079/5088`、`PHY-7022` 和 `PRJ-5611` 仍 OPEN。
+
+## 2026-10-17 OSD 字库资源优化后的最新 TD 构建
+
+- `project`：按 TDD 先新增 `work/tests/test_osd_font_contract.py`，在旧版整字动态选位实现上正确失败；随后将 `fallback/rtl/industrial_osd_overlay.v` 的 35-bit glyph ROM 改为按字符和行输出 5-bit `glyph_row`，保持字符图案、OSD 状态文本和像素时序契约不变。
+- `project`：使用同一 TD `v6.2.168116`、器件 `PH1P35MDG324 / Speed 3` 和官方基线 Runs 完成综合、布局、布线、Hold Fix、bitgen，exit code `0`。
+- `project`：最终 Setup WNS `+116 ps`、Setup TNS `0`、Hold WNS `+20 ps`、Hold TNS `0`、违规端点 `0`；STA coverage `95.71%`。
+- `project`：资源为 `20,159 slices / 95.02%`、`39 RAM`、`24 DSP`、`229 DRAMHARDCON`；相对上一版 `20,861/98.33%` 减少 `702 slices`，`PHY-7022` 仍 OPEN。
+- `project`：压缩位流 `release/industrial-v1/camera_to_dsi_display_compress.bit` 大小 `1,356,145 bytes`，SHA-256 `77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`；未压缩位流大小 `1,789,539 bytes`，SHA-256 `278aac832d22e570ec6c00455084cf6c7aed421d52e68f37e77b30c7145e03d0`。
+- `project`：工业 RTL/Golden、卡通化逐周期、构建/top/OSD 契约、工业视觉 5 项基准、Stage D/contract 测试均通过；`fallback/tb_osd_led_joint.v` 重新编译并运行通过。
+- `unknown`：仍无 PH1P35、SC520CS、HDMI 的下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟和长稳均未验证。厂商 IP/时钟告警和 `PHY-7022` 仍 OPEN。

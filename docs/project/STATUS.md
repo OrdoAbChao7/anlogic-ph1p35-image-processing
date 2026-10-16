@@ -33,7 +33,7 @@
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
 | **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
 | **G6** | OSD + LED 联动（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `tb_osd_led_joint.v` 与整机 OSD 集成；WM8978 不在 v1 范围 |
-| **G7** | 优化与创新 | `RISK` | Slice 98.33%，高于项目 80% 目标并触发 PHY-7022；尚无量化优化对照 |
+| **G7** | 优化与创新 | `RISK` | Slice 95.02%，高于项目 80% 目标并触发 PHY-7022；OSD 逐行字库优化减少 702 slices，但资源余量仍不足 |
 | **G8** | 冻结 / 发布 / 答辩 | `IN_PROGRESS` | 单 `.bit` 已归档；板级、长稳和答辩材料未完成 |
 
 ---
@@ -210,3 +210,6 @@
 
 > 2026-10-17 latest TD rebuild:
 > 提交 `660bee5`（恢复官方 720p `uivtc` 与 `hdmi_mixer` 集成）后重新完成综合、布局、布线、Hold Fix 和 bitgen。当前压缩位流大小 `1,356,849 bytes`，SHA-256 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f`；未压缩位流 SHA-256 `dde77154113b0a17a2e1f1e4364be2b331ef21c2dfdafcc731d38a4f37814e74`。最终 Setup WNS +101 ps、Hold WNS +20 ps、TNS 0，Slice 20,861/98.33%、RAM 39、DSP 26；PHY-7022、厂商 IP 和时钟告警仍 OPEN。无板卡下载、摄像头/HDMI/LED/冷启动/热复位/长稳证据，Stage G 仍未通过。
+
+> 2026-10-17 OSD QoR optimization:
+> 在上述稳定 HDMI 时序基线之上，将 OSD 字库从 35-bit 整字动态选位改为逐行 5-bit 查表，保持 OSD/LED/模式契约不变。TD `v6.2.168116` / `PH1P35MDG324 Speed 3` 完整构建成功，最终 Setup WNS +116 ps、Hold WNS +20 ps、TNS 0，Slice 20,159/95.02%、RAM 39、DSP 24、DRAMHARDCON 229。压缩位流大小 `1,356,145 bytes`，SHA-256 `77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`。相对上一版减少 702 slices；PHY-7022 和板级 Stage G 仍未关闭。

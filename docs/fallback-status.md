@@ -122,13 +122,13 @@
 
 ## 8. 当前固定红色 v1 状态校正（2026-10-17）
 
-当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的最新记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，并恢复官方 720p `uivtc`/`hdmi_mixer` 时序链路；三模式、固定红色检测、OSD/LED 联调和 TD 位流生成均有当前工作区证据。当前压缩位流 SHA-256 为 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f`。旧表中的资源、时序和哈希不能用于描述当前版本。
+当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的最新记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，并恢复官方 720p `uivtc`/`hdmi_mixer` 时序链路；三模式、固定红色检测、OSD/LED 联调和 TD 位流生成均有当前工作区证据。当前优化版压缩位流 SHA-256 为 `77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`。旧表中的资源、时序和哈希不能用于描述当前版本。
 
-当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、PHY-7022 资源占用 98.33% 高于 80% 目标，以及从无本机绝对路径的干净环境重建。
+当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、PHY-7022 资源占用 95.02% 高于 80% 目标，以及从无本机绝对路径的干净环境重建。
 
 ## 9. 2026-10-17 本轮重建证据
 
-- `project`：提交 `660bee5` 后，`scripts/build_industrial_td.py` 使用显式 TD/基线路径完成 TD 综合、布局、布线、Hold Fix、QoR、时序和 bitgen，TD exit code `0`。
-- `project`：当前报告位于 `release/industrial-v1/route.qor` 与 `release/industrial-v1/final_timing.rpt`；Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS 均为 `0`，Slice `20,861/98.33%`、RAM `39`、DSP `26`。
-- `project`：当前推荐下载文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f`；同目录 manifest 绑定了本轮源码和全部发布文件哈希。
+- `project`：构建时 HEAD 为 `e27c1c1`，并在 OSD 字库逐行查表优化工作树上使用显式 TD/基线路径完成 TD 综合、布局、布线、Hold Fix、QoR、时序和 bitgen，TD exit code `0`。
+- `project`：当前报告位于 `release/industrial-v1/route.qor` 与 `release/industrial-v1/final_timing.rpt`；Setup WNS `+116 ps`、Hold WNS `+20 ps`、TNS 均为 `0`，Slice `20,159/95.02%`、RAM `39`、DSP `24`、DRAMHARDCON `229`。
+- `project`：当前推荐下载文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`；同目录 manifest 绑定了本轮源码和全部发布文件哈希。
 - `project`：`tb_industrial_subsystem.v` 已补齐 INVALID 信号连接，重新编译联合仿真通过；没有硬件实测，因此不改变 Stage G 待上板状态。

@@ -131,47 +131,423 @@ module industrial_osd_overlay #(
     end
   endfunction
 
-  function [34:0] glyph_bits;
-    input [7:0] c;
-    begin
-      case(c)
-        "A": glyph_bits=35'b01110_10001_10001_11111_10001_10001_10001;
-        "B": glyph_bits=35'b11110_10001_10001_11110_10001_10001_11110;
-        "C": glyph_bits=35'b01111_10000_10000_10000_10000_10000_01111;
-        "D": glyph_bits=35'b11110_10001_10001_10001_10001_10001_11110;
-        "E": glyph_bits=35'b11111_10000_10000_11110_10000_10000_11111;
-        "F": glyph_bits=35'b11111_10000_10000_11110_10000_10000_10000;
-        "G": glyph_bits=35'b01111_10000_10000_10111_10001_10001_01111;
-        "H": glyph_bits=35'b10001_10001_10001_11111_10001_10001_10001;
-        "I": glyph_bits=35'b11111_00100_00100_00100_00100_00100_11111;
-        "J": glyph_bits=35'b00111_00010_00010_00010_00010_10010_01100;
-        "K": glyph_bits=35'b10001_10010_10100_11000_10100_10010_10001;
-        "L": glyph_bits=35'b10000_10000_10000_10000_10000_10000_11111;
-        "M": glyph_bits=35'b10001_11011_10101_10101_10001_10001_10001;
-        "N": glyph_bits=35'b10001_11001_10101_10011_10001_10001_10001;
-        "O": glyph_bits=35'b01110_10001_10001_10001_10001_10001_01110;
-        "P": glyph_bits=35'b11110_10001_10001_11110_10000_10000_10000;
-        "R": glyph_bits=35'b11110_10001_10001_11110_10100_10010_10001;
-        "S": glyph_bits=35'b01111_10000_10000_01110_00001_00001_11110;
-        "T": glyph_bits=35'b11111_00100_00100_00100_00100_00100_00100;
-        "U": glyph_bits=35'b10001_10001_10001_10001_10001_10001_01110;
-        "W": glyph_bits=35'b10001_10001_10001_10101_10101_10101_01010;
-        "Y": glyph_bits=35'b10001_10001_01010_00100_00100_00100_00100;
-        "0": glyph_bits=35'b01110_10001_10011_10101_11001_10001_01110;
-        "1": glyph_bits=35'b00100_01100_00100_00100_00100_00100_01110;
-        "2": glyph_bits=35'b01110_10001_00001_00010_00100_01000_11111;
-        "3": glyph_bits=35'b11110_00001_00001_01110_00001_00001_11110;
-        "4": glyph_bits=35'b00010_00110_01010_10010_11111_00010_00010;
-        "5": glyph_bits=35'b11111_10000_10000_11110_00001_00001_11110;
-        "6": glyph_bits=35'b00110_01000_10000_11110_10001_10001_01110;
-        "7": glyph_bits=35'b11111_00001_00010_00100_01000_01000_01000;
-        "8": glyph_bits=35'b01110_10001_10001_01110_10001_10001_01110;
-        "9": glyph_bits=35'b01110_10001_10001_01111_00001_00010_11100;
-        ":": glyph_bits=35'b00000_00100_00100_00000_00100_00100_00000;
-        "_": glyph_bits=35'b00000_00000_00000_00000_00000_00000_11111;
-        default: glyph_bits=35'd0;
-      endcase
-    end
+  function [4:0] glyph_row;
+      input [7:0] c;
+      input [2:0] row;
+      begin
+        glyph_row = 5'd0;
+        case (c)
+          "A": begin
+            case (row)
+              3'd0: glyph_row = 5'b01110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b11111;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b10001;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "B": begin
+            case (row)
+              3'd0: glyph_row = 5'b11110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b11110;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b11110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "C": begin
+            case (row)
+              3'd0: glyph_row = 5'b01111;
+              3'd1: glyph_row = 5'b10000;
+              3'd2: glyph_row = 5'b10000;
+              3'd3: glyph_row = 5'b10000;
+              3'd4: glyph_row = 5'b10000;
+              3'd5: glyph_row = 5'b10000;
+              3'd6: glyph_row = 5'b01111;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "D": begin
+            case (row)
+              3'd0: glyph_row = 5'b11110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b10001;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b11110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "E": begin
+            case (row)
+              3'd0: glyph_row = 5'b11111;
+              3'd1: glyph_row = 5'b10000;
+              3'd2: glyph_row = 5'b10000;
+              3'd3: glyph_row = 5'b11110;
+              3'd4: glyph_row = 5'b10000;
+              3'd5: glyph_row = 5'b10000;
+              3'd6: glyph_row = 5'b11111;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "F": begin
+            case (row)
+              3'd0: glyph_row = 5'b11111;
+              3'd1: glyph_row = 5'b10000;
+              3'd2: glyph_row = 5'b10000;
+              3'd3: glyph_row = 5'b11110;
+              3'd4: glyph_row = 5'b10000;
+              3'd5: glyph_row = 5'b10000;
+              3'd6: glyph_row = 5'b10000;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "G": begin
+            case (row)
+              3'd0: glyph_row = 5'b01111;
+              3'd1: glyph_row = 5'b10000;
+              3'd2: glyph_row = 5'b10000;
+              3'd3: glyph_row = 5'b10111;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b01111;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "H": begin
+            case (row)
+              3'd0: glyph_row = 5'b10001;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b11111;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b10001;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "I": begin
+            case (row)
+              3'd0: glyph_row = 5'b11111;
+              3'd1: glyph_row = 5'b00100;
+              3'd2: glyph_row = 5'b00100;
+              3'd3: glyph_row = 5'b00100;
+              3'd4: glyph_row = 5'b00100;
+              3'd5: glyph_row = 5'b00100;
+              3'd6: glyph_row = 5'b11111;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "J": begin
+            case (row)
+              3'd0: glyph_row = 5'b00111;
+              3'd1: glyph_row = 5'b00010;
+              3'd2: glyph_row = 5'b00010;
+              3'd3: glyph_row = 5'b00010;
+              3'd4: glyph_row = 5'b00010;
+              3'd5: glyph_row = 5'b10010;
+              3'd6: glyph_row = 5'b01100;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "K": begin
+            case (row)
+              3'd0: glyph_row = 5'b10001;
+              3'd1: glyph_row = 5'b10010;
+              3'd2: glyph_row = 5'b10100;
+              3'd3: glyph_row = 5'b11000;
+              3'd4: glyph_row = 5'b10100;
+              3'd5: glyph_row = 5'b10010;
+              3'd6: glyph_row = 5'b10001;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "L": begin
+            case (row)
+              3'd0: glyph_row = 5'b10000;
+              3'd1: glyph_row = 5'b10000;
+              3'd2: glyph_row = 5'b10000;
+              3'd3: glyph_row = 5'b10000;
+              3'd4: glyph_row = 5'b10000;
+              3'd5: glyph_row = 5'b10000;
+              3'd6: glyph_row = 5'b11111;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "M": begin
+            case (row)
+              3'd0: glyph_row = 5'b10001;
+              3'd1: glyph_row = 5'b11011;
+              3'd2: glyph_row = 5'b10101;
+              3'd3: glyph_row = 5'b10101;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b10001;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "N": begin
+            case (row)
+              3'd0: glyph_row = 5'b10001;
+              3'd1: glyph_row = 5'b11001;
+              3'd2: glyph_row = 5'b10101;
+              3'd3: glyph_row = 5'b10011;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b10001;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "O": begin
+            case (row)
+              3'd0: glyph_row = 5'b01110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b10001;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b01110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "P": begin
+            case (row)
+              3'd0: glyph_row = 5'b11110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b11110;
+              3'd4: glyph_row = 5'b10000;
+              3'd5: glyph_row = 5'b10000;
+              3'd6: glyph_row = 5'b10000;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "R": begin
+            case (row)
+              3'd0: glyph_row = 5'b11110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b11110;
+              3'd4: glyph_row = 5'b10100;
+              3'd5: glyph_row = 5'b10010;
+              3'd6: glyph_row = 5'b10001;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "S": begin
+            case (row)
+              3'd0: glyph_row = 5'b01111;
+              3'd1: glyph_row = 5'b10000;
+              3'd2: glyph_row = 5'b10000;
+              3'd3: glyph_row = 5'b01110;
+              3'd4: glyph_row = 5'b00001;
+              3'd5: glyph_row = 5'b00001;
+              3'd6: glyph_row = 5'b11110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "T": begin
+            case (row)
+              3'd0: glyph_row = 5'b11111;
+              3'd1: glyph_row = 5'b00100;
+              3'd2: glyph_row = 5'b00100;
+              3'd3: glyph_row = 5'b00100;
+              3'd4: glyph_row = 5'b00100;
+              3'd5: glyph_row = 5'b00100;
+              3'd6: glyph_row = 5'b00100;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "U": begin
+            case (row)
+              3'd0: glyph_row = 5'b10001;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b10001;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b01110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "W": begin
+            case (row)
+              3'd0: glyph_row = 5'b10001;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b10101;
+              3'd4: glyph_row = 5'b10101;
+              3'd5: glyph_row = 5'b10101;
+              3'd6: glyph_row = 5'b01010;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "Y": begin
+            case (row)
+              3'd0: glyph_row = 5'b10001;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b01010;
+              3'd3: glyph_row = 5'b00100;
+              3'd4: glyph_row = 5'b00100;
+              3'd5: glyph_row = 5'b00100;
+              3'd6: glyph_row = 5'b00100;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "0": begin
+            case (row)
+              3'd0: glyph_row = 5'b01110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10011;
+              3'd3: glyph_row = 5'b10101;
+              3'd4: glyph_row = 5'b11001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b01110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "1": begin
+            case (row)
+              3'd0: glyph_row = 5'b00100;
+              3'd1: glyph_row = 5'b01100;
+              3'd2: glyph_row = 5'b00100;
+              3'd3: glyph_row = 5'b00100;
+              3'd4: glyph_row = 5'b00100;
+              3'd5: glyph_row = 5'b00100;
+              3'd6: glyph_row = 5'b01110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "2": begin
+            case (row)
+              3'd0: glyph_row = 5'b01110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b00001;
+              3'd3: glyph_row = 5'b00010;
+              3'd4: glyph_row = 5'b00100;
+              3'd5: glyph_row = 5'b01000;
+              3'd6: glyph_row = 5'b11111;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "3": begin
+            case (row)
+              3'd0: glyph_row = 5'b11110;
+              3'd1: glyph_row = 5'b00001;
+              3'd2: glyph_row = 5'b00001;
+              3'd3: glyph_row = 5'b01110;
+              3'd4: glyph_row = 5'b00001;
+              3'd5: glyph_row = 5'b00001;
+              3'd6: glyph_row = 5'b11110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "4": begin
+            case (row)
+              3'd0: glyph_row = 5'b00010;
+              3'd1: glyph_row = 5'b00110;
+              3'd2: glyph_row = 5'b01010;
+              3'd3: glyph_row = 5'b10010;
+              3'd4: glyph_row = 5'b11111;
+              3'd5: glyph_row = 5'b00010;
+              3'd6: glyph_row = 5'b00010;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "5": begin
+            case (row)
+              3'd0: glyph_row = 5'b11111;
+              3'd1: glyph_row = 5'b10000;
+              3'd2: glyph_row = 5'b10000;
+              3'd3: glyph_row = 5'b11110;
+              3'd4: glyph_row = 5'b00001;
+              3'd5: glyph_row = 5'b00001;
+              3'd6: glyph_row = 5'b11110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "6": begin
+            case (row)
+              3'd0: glyph_row = 5'b00110;
+              3'd1: glyph_row = 5'b01000;
+              3'd2: glyph_row = 5'b10000;
+              3'd3: glyph_row = 5'b11110;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b01110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "7": begin
+            case (row)
+              3'd0: glyph_row = 5'b11111;
+              3'd1: glyph_row = 5'b00001;
+              3'd2: glyph_row = 5'b00010;
+              3'd3: glyph_row = 5'b00100;
+              3'd4: glyph_row = 5'b01000;
+              3'd5: glyph_row = 5'b01000;
+              3'd6: glyph_row = 5'b01000;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "8": begin
+            case (row)
+              3'd0: glyph_row = 5'b01110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b01110;
+              3'd4: glyph_row = 5'b10001;
+              3'd5: glyph_row = 5'b10001;
+              3'd6: glyph_row = 5'b01110;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "9": begin
+            case (row)
+              3'd0: glyph_row = 5'b01110;
+              3'd1: glyph_row = 5'b10001;
+              3'd2: glyph_row = 5'b10001;
+              3'd3: glyph_row = 5'b01111;
+              3'd4: glyph_row = 5'b00001;
+              3'd5: glyph_row = 5'b00010;
+              3'd6: glyph_row = 5'b11100;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          ":": begin
+            case (row)
+              3'd0: glyph_row = 5'b00000;
+              3'd1: glyph_row = 5'b00100;
+              3'd2: glyph_row = 5'b00100;
+              3'd3: glyph_row = 5'b00000;
+              3'd4: glyph_row = 5'b00100;
+              3'd5: glyph_row = 5'b00100;
+              3'd6: glyph_row = 5'b00000;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          "_": begin
+            case (row)
+              3'd0: glyph_row = 5'b00000;
+              3'd1: glyph_row = 5'b00000;
+              3'd2: glyph_row = 5'b00000;
+              3'd3: glyph_row = 5'b00000;
+              3'd4: glyph_row = 5'b00000;
+              3'd5: glyph_row = 5'b00000;
+              3'd6: glyph_row = 5'b11111;
+              default: glyph_row = 5'd0;
+            endcase
+          end
+          default: glyph_row = 5'd0;
+        endcase
+      end
   endfunction
 
   integer text_line;
@@ -179,7 +555,7 @@ module industrial_osd_overlay #(
   integer text_row;
   integer text_col;
   reg [7:0] current_char;
-  reg [34:0] current_glyph;
+  reg [4:0] current_row;
   reg        text_on;
   reg [23:0] text_color;
 
@@ -189,7 +565,7 @@ module industrial_osd_overlay #(
     text_row = 0;
     text_col = 0;
     current_char = 8'h20;
-    current_glyph = 35'd0;
+    current_row = 5'd0;
     text_on = 1'b0;
     text_color = 24'hffffff;
     if (I_de && (x >= 12'd180) && (x < 12'd436) &&
@@ -208,8 +584,8 @@ module industrial_osd_overlay #(
       text_col = ((x - 180) & 7) >> 1;
       current_char = text_char(text_line,text_pos,I_mode,frame_counter,I_width,I_height,
                                I_detected,I_pass,I_ng,I_invalid);
-      current_glyph = glyph_bits(current_char);
-      text_on = current_glyph[(6-text_row)*5+(4-text_col)];
+      current_row = glyph_row(current_char, text_row[2:0]);
+      text_on = current_row[4-text_col];
       if (I_invalid) text_color=24'hef4444;
       else if (I_pass) text_color=24'h10b981;
       else if (I_ng) text_color=24'hef4444;
