@@ -24,6 +24,19 @@ def test_hdmi_timing_and_mixer_are_driven_in_the_integrated_top():
     assert not missing, "integrated video timing contract missing: " + ", ".join(missing)
 
 
+def test_isp_output_ready_is_explicitly_always_ready_for_video_input_fifo():
+    source = TOP.read_text(encoding="utf-8")
+    assert re.search(
+        r"assign\s+S_ISP_O_tready\s*=\s*1'b1\s*;",
+        source,
+    ), "ISP output ready must be explicitly tied high because video_in has no backpressure output"
+    assert re.search(
+        r"\.O_tready\s*\(\s*S_ISP_O_tready\s*\)",
+        source,
+    ), "ISP O_tready must use the explicitly driven always-ready contract"
+
+
 if __name__ == "__main__":
     test_hdmi_timing_and_mixer_are_driven_in_the_integrated_top()
+    test_isp_output_ready_is_explicitly_always_ready_for_video_input_fifo()
     print("PASS integrated video timing contract")

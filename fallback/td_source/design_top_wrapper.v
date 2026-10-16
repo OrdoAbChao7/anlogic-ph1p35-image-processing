@@ -95,6 +95,9 @@ module design_top_wrapper (
 	wire 			S_raw_tuser ;
 
 	wire			S_ISP_O_tready;
+	// video_in exposes no backpressure output; its async FIFO is the always-ready
+	// sink for the ISP stream, so make the AXI-stream contract explicit.
+	assign			S_ISP_O_tready = 1'b1;
 	wire [127:0]	S_ISP_O_tdata ;
 	wire 			S_ISP_O_tlast ;
 	wire 			S_ISP_O_tuser ;

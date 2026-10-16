@@ -121,8 +121,27 @@ def test_release_docs_bind_the_current_bitstream_manifest():
     bit_sha = hashlib.sha256(bit_path.read_bytes()).hexdigest()
     artifact = next(item for item in manifest["artifacts"] if item["path"].endswith("camera_to_dsi_display_compress.bit"))
     assert artifact["sha256"] == bit_sha
-    for rel in ("README.md", "docs/evidence/industrial-v1-stage-g-template.md", "docs/fallback-status.md"):
+    for rel in (
+        "README.md",
+        "docs/evidence/industrial-v1-stage-g-template.md",
+        "docs/fallback-status.md",
+        "docs/evidence/industrial-v1-requirement-audit.md",
+    ):
         assert bit_sha in (ROOT / rel).read_text(encoding="utf-8"), f"{rel} is stale for the current release bitstream"
+
+
+def test_current_requirement_and_warning_audits_bind_the_eram_build():
+    requirement_audit = (ROOT / "docs" / "evidence" / "industrial-v1-requirement-audit.md").read_text(encoding="utf-8")
+    warning_audit = (ROOT / "docs" / "evidence" / "industrial-v1-td-warning-audit.md").read_text(encoding="utf-8")
+    for text in (requirement_audit, warning_audit):
+        assert "16,859" in text
+        assert "79.46%" in text
+        assert "Setup WNS `+108 ps`" in text
+        assert "Hold WNS `+20 ps`" in text
+    assert "77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4" not in requirement_audit
+    assert "PHY-7022" not in warning_audit
+    for code in ("SYN-5011", "SYN-5013", "SYN-5025", "SYN-5065", "PHY-5016", "PHY-5060", "PHY-5079", "PHY-5088", "PRJ-5611"):
+        assert code in warning_audit
 
 
 if __name__ == "__main__":
@@ -136,4 +155,5 @@ if __name__ == "__main__":
     test_legacy_industrial_verification_includes_full_frame_and_threshold_gates()
     test_legacy_industrial_verification_covers_approved_modes_and_osd_led()
     test_release_docs_bind_the_current_bitstream_manifest()
+    test_current_requirement_and_warning_audits_bind_the_eram_build()
     print("PASS industrial build contracts")
