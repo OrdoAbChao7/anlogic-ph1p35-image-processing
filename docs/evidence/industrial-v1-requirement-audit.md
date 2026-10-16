@@ -1,6 +1,6 @@
 # fixed-red v1 第一版要求逐项审计
 
-审计版本：`aa6c747` 发布产物，设计源码来自 `abd35f7`；最新告警归类见 `a20e722`。本表严格区分仿真/构建证据与真实板卡证据。没有 PH1P35、SC520CS 和 HDMI 实物参与的项目，不能标记 `VERIFIED_ON_BOARD`。
+审计对象：fixed-red v1 发布提交 `d9633ed`；本轮证据同步提交见当前 Git 历史。TD 构建时 HEAD 和源码哈希见 `industrial-v1-manifest.json`，最新告警归类见本目录的 `industrial-v1-td-warning-audit.md`。本表严格区分仿真/构建证据与真实板卡证据。没有 PH1P35、SC520CS 和 HDMI 实物参与的项目，不能标记 `VERIFIED_ON_BOARD`。
 
 ## 功能审计
 

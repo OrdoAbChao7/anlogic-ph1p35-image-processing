@@ -4,7 +4,7 @@
 
 ## 版本绑定
 
- - Git commit：`e27c1c1`（本轮 TD 构建时 HEAD；实际下载版本以 manifest 和最终提交为准）
+ - Git commit：`d9633ed`（包含本轮 TD 位流对应源码与发布产物；manifest 另记录构建时 HEAD `e27c1c1`）
 - Bitstream：`release/industrial-v1/camera_to_dsi_display_compress.bit`
   - SHA-256：`77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`
 - 板卡型号/序列号：
