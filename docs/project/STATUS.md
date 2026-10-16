@@ -216,3 +216,6 @@
 
 > 2026-10-17 explicit ERAM morphology optimization:
 > 将形态学两级行缓存改为 `PH1P_LOGIC_ERAM` 双口 wrapper，并为 Icarus 保留 `MORPH_SIMULATION` 行为模型。完整 TD `v6.2.168116` / `PH1P35MDG324 Speed 3` 构建和 QoR 门禁通过：Setup WNS +108 ps、Hold WNS +20 ps、TNS 0、Slice 16,859/79.46%、RAM 43、DSP 24、DRAMHARDCON 229、STA coverage 96.58%。相对上述稳定基线减少 3,300 slices、增加 4 RAM；压缩位流大小 `1,371,697 bytes`，SHA-256 `cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b`，未压缩位流 SHA-256 `0a089d254a3124ec3462bfc2e6eaa2682f075beca4c44fe551c78ac2696b9be1`。无板级下载、摄像头/HDMI/LED/冷启动/热复位/长稳证据，Stage G 仍未通过。
+
+> 2026-10-17 verification entry:
+> 修复 `scripts/verify-industrial-subsystem.ps1`：输出不再覆盖用户已有的 `fallback/tb_color.vvp`，显式加入形态学 RTL 和 `MORPH_SIMULATION`；一键执行的 Python 5 样本、基线颜色检测和工业子系统联合仿真三段全部通过，exit code `0`。该结果仍是软件/RTL 证据，不改变 Stage G 的待上板状态。

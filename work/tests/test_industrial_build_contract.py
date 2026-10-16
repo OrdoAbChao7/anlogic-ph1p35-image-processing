@@ -87,6 +87,15 @@ def test_morphology_declares_explicit_eram_wrapper_and_simulation_path():
     assert '"-DMORPH_SIMULATION"' in runner
 
 
+def test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles_morphology():
+    script = (ROOT / "scripts" / "verify-industrial-subsystem.ps1").read_text(encoding="utf-8")
+    assert "fallback/tb_color.vvp" not in script
+    assert "verification_outputs" in script
+    assert "-DMORPH_SIMULATION" in script
+    assert "fallback/rtl/morph_open_96.v" in script
+    assert "Start-Process" in script
+
+
 if __name__ == "__main__":
     test_industrial_build_uses_approved_luma_cartoon_rtl()
     test_industrial_build_writes_the_downloadable_release_directory()
@@ -94,4 +103,5 @@ if __name__ == "__main__":
     test_industrial_build_argument_overrides_are_parsed()
     test_qor_gate_parses_and_rejects_non_converged_reports()
     test_morphology_declares_explicit_eram_wrapper_and_simulation_path()
+    test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles_morphology()
     print("PASS industrial build contracts")

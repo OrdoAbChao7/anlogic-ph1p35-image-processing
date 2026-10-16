@@ -122,3 +122,9 @@
 - `project`：相对稳定基线 `20,159 slices / 95.02%`、`39 RAM`、Setup WNS `+116 ps`、Hold WNS `+20 ps`，减少 `3,300 slices`、增加 `4 RAM`，Setup 裕量减少 `8 ps` 但仍为正；候选位流和报告已更新到 `release/industrial-v1/`。
 - `project`：候选未修改用户已有的 `fallback/tb_color.vvp`；该文件保持未暂存状态，不属于本次提交。
 - `unknown`：尚无 PH1P35/SC520CS/HDMI 实物下载、摄像头画面、LED 管脚和长稳证据；Stage G 仍未通过。`final_timing.rpt` 中的厂商告警仍需逐条分类，不能仅凭 QoR 门禁关闭。
+
+## 2026-10-17 一键工业视觉回归入口修复
+
+- `project`：按 TDD 增加回归入口契约，先验证旧脚本会覆盖用户的 `fallback/tb_color.vvp` 且没有编译形态学源；修复后输出统一进入被忽略的 `work/tests/verification_outputs/`，联合仿真明确加入 `fallback/rtl/morph_open_96.v` 和 `-DMORPH_SIMULATION`。
+- `project`：`scripts/verify-industrial-subsystem.ps1` 实际执行通过，Python Algorithm Lab 5/5、基线 `color_detect_96.v`、工业子系统 `tb_industrial_subsystem.v` 三段均通过，脚本 exit code `0`。联合 Testbench 覆盖标准件 PASS、超宽件 NG、空场 NO_OBJECT 和 PASS/NG 边框颜色。
+- `project`：脚本使用 `Start-Process` 捕获工具日志，并补充 Icarus 内部工具目录和 `.EXE` 扩展名环境修复；因此不会依赖当前 PowerShell 会话是否预置完整 PATH/PATHEXT。
