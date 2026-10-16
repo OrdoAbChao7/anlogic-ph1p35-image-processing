@@ -1,0 +1,16 @@
+﻿{
+    "status":  "BUILD_PASS_CANDIDATE_PENDING_BOARD",
+    "device":  "PH1P35MDG324",
+    "td_version":  "6.2.168116",
+    "top":  "design_top_wrapper",
+    "setup_wns_ps":  70,
+    "setup_tns_ps":  0,
+    "hold_wns_ps":  20,
+    "hold_tns_ps":  0,
+    "slices":  16123,
+    "rams":  39,
+    "dsps":  25,
+    "bit_sha256":  "C41714E9E960A4C393EAB0444B479F790114750B5E4B76CB9F2512806E7AA470",
+    "hardware_verified":  false,
+    "visual_approved":  false
+}
