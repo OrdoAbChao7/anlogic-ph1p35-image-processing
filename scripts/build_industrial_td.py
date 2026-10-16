@@ -14,6 +14,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -48,6 +49,64 @@ def sha256(path: Path) -> str:
         while chunk := f.read(65536):
             h.update(chunk)
     return h.hexdigest()
+
+
+def parse_qor_metrics(content: str) -> dict:
+    """Parse the route QoR fields required before a release can be copied."""
+    fields = {
+        "setup_wns_ps": "Setup WNS",
+        "setup_tns_ps": "Setup TNS",
+        "setup_violated_endpoints": "Num of violated S-EP",
+        "hold_wns_ps": "Hold WNS",
+        "hold_tns_ps": "Hold TNS",
+        "hold_violated_endpoints": "Num of violated H-EP",
+        "slices": "#slices",
+        "slice_percent": "slices percentage",
+        "rams": "#RAMs",
+        "dsps": "#DSPs",
+        "dramhardcon": "#DRAMHARDCON",
+    }
+    metrics = {}
+    for key, label in fields.items():
+        match = re.search(
+            rf"\|\s*{re.escape(label)}\s*\|\s*([-+]?\d+(?:\.\d+)?)%?\s*\|",
+            content,
+            flags=re.IGNORECASE,
+        )
+        if match:
+            value = float(match.group(1))
+            metrics[key] = int(value) if value.is_integer() else value
+    required = [
+        "setup_wns_ps",
+        "setup_tns_ps",
+        "setup_violated_endpoints",
+        "hold_wns_ps",
+        "hold_tns_ps",
+        "hold_violated_endpoints",
+    ]
+    missing = [key for key in required if key not in metrics]
+    if missing:
+        raise RuntimeError("QoR gate: missing required fields: " + ", ".join(missing))
+    return metrics
+
+
+def assert_qor_pass(metrics: dict) -> None:
+    """Fail the build before release collection when routed timing is invalid."""
+    failures = []
+    if metrics["setup_wns_ps"] < 0:
+        failures.append(f"setup WNS={metrics['setup_wns_ps']} ps")
+    if metrics["setup_tns_ps"] != 0:
+        failures.append(f"setup TNS={metrics['setup_tns_ps']} ps")
+    if metrics["setup_violated_endpoints"] != 0:
+        failures.append(f"setup violated endpoints={metrics['setup_violated_endpoints']}")
+    if metrics["hold_wns_ps"] < 0:
+        failures.append(f"hold WNS={metrics['hold_wns_ps']} ps")
+    if metrics["hold_tns_ps"] != 0:
+        failures.append(f"hold TNS={metrics['hold_tns_ps']} ps")
+    if metrics["hold_violated_endpoints"] != 0:
+        failures.append(f"hold violated endpoints={metrics['hold_violated_endpoints']}")
+    if failures:
+        raise RuntimeError("QoR gate failed: " + "; ".join(failures))
 
 
 def parse_args(argv=None):
@@ -351,14 +410,17 @@ def check_qor():
     print("\n[4/5] Checking Timing and Resource QoR...")
     qor_file = WORK_RUNS / "phy_1" / "route.qor"
     if not qor_file.exists():
-        print(f"[WARN] route.qor not found at {qor_file}")
-        return
+        raise RuntimeError(f"QoR gate: route.qor not found at {qor_file}")
 
     content = qor_file.read_text(encoding="utf-8", errors="replace")
+    metrics = parse_qor_metrics(content)
+    assert_qor_pass(metrics)
     print("\n--- route.qor Summary ---")
     for line in content.splitlines():
         if any(k in line for k in ["WNS", "TNS", "Slack", "Slice", "LUT", "Register", "BRAM", "DSP", "RAM", "Clock"]):
             print(" ", line.strip())
+    print("  QoR gate: PASS (timing WNS/TNS and violated endpoints are clean)")
+    return metrics
 
 
 def collect_release():

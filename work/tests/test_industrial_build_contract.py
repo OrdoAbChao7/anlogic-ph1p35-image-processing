@@ -48,9 +48,40 @@ def test_industrial_build_argument_overrides_are_parsed():
     assert args.manifest_only is True
 
 
+def test_qor_gate_parses_and_rejects_non_converged_reports():
+    module = load_build_module()
+    passing = """
+|     Setup WNS             |          116                |
+|     Setup TNS             |            0                |
+|     Num of violated S-EP |            0                |
+|     Hold WNS              |           20                |
+|     Hold TNS              |            0                |
+|     Num of violated H-EP |            0                |
+|     #slices               |        20159                |
+|     slices percentage     |       95.02%                |
+|     #RAMs                 |           39                |
+|     #DSPs                 |           24                |
+"""
+    metrics = module.parse_qor_metrics(passing)
+    assert metrics["setup_wns_ps"] == 116
+    assert metrics["hold_wns_ps"] == 20
+    assert metrics["slices"] == 20159
+    module.assert_qor_pass(metrics)
+
+    failing = passing.replace("116", "-12").replace("0                |            0", "0                |            1", 1)
+    failed = False
+    try:
+        module.assert_qor_pass(module.parse_qor_metrics(failing))
+    except RuntimeError as exc:
+        failed = True
+        assert "QoR gate" in str(exc)
+    assert failed, "negative WNS or violated endpoints must block release"
+
+
 if __name__ == "__main__":
     test_industrial_build_uses_approved_luma_cartoon_rtl()
     test_industrial_build_writes_the_downloadable_release_directory()
     test_industrial_build_exposes_reproducible_external_inputs()
     test_industrial_build_argument_overrides_are_parsed()
+    test_qor_gate_parses_and_rejects_non_converged_reports()
     print("PASS industrial build contracts")

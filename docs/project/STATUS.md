@@ -4,7 +4,7 @@
 > 修改 PROJECT_GOAL.md 中定义的目标或验收标准须提变更提案。  
 > 用户口头反馈记录为 `USER_REPORTED_ON_BOARD`，不等于硬件验证通过。
 
-最后更新：2026-10-17（固定红色 v1 HDMI 时序修复后 TD 位流归档）
+最后更新：2026-10-17（固定红色 v1 发布 QoR 门禁补全）
 
 ---
 
@@ -27,7 +27,7 @@
 
 | 阶段 | 内容 | 当前状态 | 关键证据 |
 |---|---|---|---|
-| **G1** | 视频采集与显示闭环 | `BUILD_PASS`，硬件待验证 | 当前 fixed-red v1 已生成整机位流；无本轮下载/显示实测 |
+| **G1** | 视频采集与显示闭环 | `BUILD_PASS`，硬件待验证 | 当前 fixed-red v1 已生成整机位流；构建脚本已在发布收集前强制校验 route QoR；无本轮下载/显示实测 |
 | **G2** | 接口 / 时钟 / ISP 基线审计 | `IMPLEMENTED_UNVERIFIED` | 已形成 [代码级接口审计](../architecture/sc520-interface-contract.md)；硬件接口、CDC 波形和告警关闭仍待实测 |
 | **G3** | 卡通化与基础模式 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `run_cartoon_luma_sim.py` 1102 周期逐周期通过；当前 TD 使用批准 s3_luma |
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |

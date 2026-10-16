@@ -99,3 +99,10 @@
 - `project`：候选压缩位流 SHA-256 为 `7a5679ce165c78c2201a0c81cc0cd9758804b8402246a88d680227f6cd9328b9`，未压缩位流 SHA-256 为 `d557343c7f0e091e987d4336201ec09a6025519105ead93ae9eed6daf38637e1`；两者均不进入发布包。Q10 源码和专用 TDD 探针已回退/删除。
 - `project`：回退后重新执行完整 TD 构建，工具生成了另一组布局结果：`20,876 slices / 98.40%`、Setup WNS `+115 ps`、Hold WNS `+20 ps`。该结果虽 exit code 为 `0`，但资源显著劣于已审计发布物，已恢复 Git 中的稳定发布位流、报告和 manifest，不以非确定性较差的重建结果覆盖发布基线。
 - `unknown`：当前 PH1P35 资源已接近上限，布局结果存在明显波动；在没有确定性布局策略、资源下降证据和板级收益前，不再继续 Q10 阈值微优化。`PHY-7022` 仍 OPEN。
+
+## 2026-10-17 TD 发布 QoR 门禁补全
+
+- `project`：构建脚本新增 `parse_qor_metrics()` 和 `assert_qor_pass()`，发布收集前强制解析 `route.qor` 的 Setup/Hold WNS、TNS 和违例端点；缺字段、负 WNS、非零 TNS 或违例端点会阻止发布物复制。
+- `project`：按 TDD 先运行 `test_industrial_build_contract.py`，新增测试因门禁接口不存在而失败；实现后该测试通过，实际 fixed-red 发布 `route.qor` 解析为 Setup WNS `+116 ps`、Hold WNS `+20 ps`、TNS `0`、违例端点 `0`。
+- `project`：本轮完整回归中 build/top/OSD 契约、工业 RTL/Golden、卡通化逐周期、工业 5 样本、Stage D 和工业合同测试均通过；FPGA Agent doctor 在主工作区报告 `Overall Environment Status: PASS`。
+- `unknown`：QoR 门禁只约束构建报告与发布收集，不替代 CDC/厂商告警分类、干净环境重建或 Stage G 板级验收；`PHY-7022` 和时钟/IP 告警仍 OPEN。
