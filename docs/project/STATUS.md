@@ -4,7 +4,7 @@
 > 修改 PROJECT_GOAL.md 中定义的目标或验收标准须提变更提案。  
 > 用户口头反馈记录为 `USER_REPORTED_ON_BOARD`，不等于硬件验证通过。
 
-最后更新：2026-10-17（固定红色 v1 修正版回归与 TD 位流归档）
+最后更新：2026-10-17（固定红色 v1 HDMI 时序修复后 TD 位流归档）
 
 ---
 
@@ -33,7 +33,7 @@
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
 | **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
 | **G6** | OSD + LED 联动（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `tb_osd_led_joint.v` 与整机 OSD 集成；WM8978 不在 v1 范围 |
-| **G7** | 优化与创新 | `RISK` | Slice 87.02%，高于项目 80% 目标；尚无量化优化对照 |
+| **G7** | 优化与创新 | `RISK` | Slice 98.33%，高于项目 80% 目标并触发 PHY-7022；尚无量化优化对照 |
 | **G8** | 冻结 / 发布 / 答辩 | `IN_PROGRESS` | 单 `.bit` 已归档；板级、长稳和答辩材料未完成 |
 
 ---
@@ -207,3 +207,6 @@
 
 > 2026-10-17 TD rebuild correction:
 > 提交 `abd35f7` 后使用显式 TD/基线路径重跑完整流程并成功 bitgen。当前压缩位流 SHA-256 为 `84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c`；`route.qor`/`final_timing.rpt` 与源码哈希见 `release/industrial-v1/industrial-v1-manifest.json`。最终 Setup WNS +142 ps、Hold WNS +21 ps、TNS 0，Slice 18,463/87.02%、RAM 35、DSP 24。`tb_industrial_subsystem.v` 的 INVALID 端口连接已补齐并复跑通过。无板卡下载、摄像头/HDMI/LED/冷启动/热复位/长稳证据，Stage G 仍未通过。
+
+> 2026-10-17 latest TD rebuild:
+> 提交 `660bee5`（恢复官方 720p `uivtc` 与 `hdmi_mixer` 集成）后重新完成综合、布局、布线、Hold Fix 和 bitgen。当前压缩位流大小 `1,356,849 bytes`，SHA-256 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f`；未压缩位流 SHA-256 `dde77154113b0a17a2e1f1e4364be2b331ef21c2dfdafcc731d38a4f37814e74`。最终 Setup WNS +101 ps、Hold WNS +20 ps、TNS 0，Slice 20,861/98.33%、RAM 39、DSP 26；PHY-7022、厂商 IP 和时钟告警仍 OPEN。无板卡下载、摄像头/HDMI/LED/冷启动/热复位/长稳证据，Stage G 仍未通过。

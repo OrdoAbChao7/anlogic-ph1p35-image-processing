@@ -64,3 +64,13 @@
 - `project`：补齐 `tb_industrial_subsystem.v` 的 `O_invalid → I_invalid` 连接后，联合 RTL 仿真重新通过；Icarus 仅剩形态学数组 `@*` 敏感列表告警，未发现浮空 INVALID 端口。
 - `project`：本轮 TD 的 `SYN-5011/5025`、`HDL-5314/5317/5323`、`SYN-5065`、`PHY-5060/5016/5079/5088` 和 `PRJ-5611` 已按来源和风险建立归类记录，见 `docs/evidence/industrial-v1-td-warning-audit.md`；它们仍是 OPEN，不因正 WNS 自动关闭。
 - `unknown`：仍无 PH1P35、SC520CS、HDMI 的下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟和长稳均未验证。DDR 初始化宏的 `SYN-5011/SYN-5025` 告警仍需逐条归类，Slice 占用仍高于 80% 目标。
+
+## 2026-10-17 HDMI 时序修复后的最新 TD 重建
+
+- `project`：提交 `660bee5` 恢复官方 SC520 基线中的 `uivtc` 720p 时序发生器和 `hdmi_mixer`，解决集成顶层中 `S_hdmi_vsync/hsync/de` 及 `S_hdmi_out_*` 未驱动的契约缺口；新增 `work/tests/test_video_top_contract.py`，静态契约测试通过。
+- `project`：在同一提交上重新执行 `python scripts/build_industrial_td.py`，TD `v6.2.168116` / `PH1P35MDG324 Speed 3` 综合、布局、布线、Hold Fix、Route QoR、最终时序和 bitgen 全部完成，exit code `0`。
+- `project`：最终 Setup WNS `+101 ps`、Setup TNS `0`、Hold WNS `+20 ps`、Hold TNS `0`、违规端点 `0`；STA coverage `95.71%`。
+- `project`：资源为 `20,861 slices / 98.33%`、`39 RAM`、`26 DSP`、`229 DRAMHARDCON`；`PHY-7022` 资源告警保持 OPEN，不能写成资源余量充足。
+- `project`：压缩位流 `release/industrial-v1/camera_to_dsi_display_compress.bit` 大小 `1,356,849 bytes`，SHA-256 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f`；未压缩位流大小 `1,789,539 bytes`，SHA-256 `dde77154113b0a17a2e1f1e4364be2b331ef21c2dfdafcc731d38a4f37814e74`。
+- `project`：本轮软件/RTL回归 `run_industrial_rtl_golden.py`、`run_cartoon_luma_sim.py`、两个 build/top contract、工业视觉基准集和 Stage D/contract 测试均通过；FPGA Agent doctor 为 `Overall Environment Status: PASS`。
+- `unknown`：仍无 PH1P35、SC520CS、HDMI 的下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟和长稳均未验证。`SYN-5011/5025`、`HDL-5314/5317/5323`、`SYN-5065`、`PHY-5060/5016/5079/5088`、`PHY-7022` 和 `PRJ-5611` 仍 OPEN。

@@ -21,7 +21,7 @@
 | 模式、帧计数、类别、数量、宽高、状态 OSD | `fallback/rtl/industrial_osd_overlay.v`；`tb_osd_led_joint.v` 覆盖状态文本和联动 | `PASS`（RTL + build） | `NOT_RUN` |
 | 检测框 | `fallback/rtl/bbox_draw_overlay.v`；PASS 绿色、NG 红色、空场清除旧框 | `PASS`（子系统 RTL） | `NOT_RUN` |
 | LED 联动 | classifier LED 互斥；OSD/LED 联调通过；最终管脚仍需板卡确认 | `PASS`（RTL） | `NOT_RUN` |
-| 单文件下载 | 推荐 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c` | `PASS`（bitgen） | `NOT_RUN` |
+| 单文件下载 | 推荐 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f` | `PASS`（bitgen） | `NOT_RUN` |
 
 ## 本轮证据
 
@@ -29,14 +29,14 @@
 - 三模式：`python work/tests/run_cartoon_luma_sim.py`，1102 周期通过。
 - RTL：重新编译并运行 morph、full-frame color、threshold boundary、classifier、industrial subsystem、mode controller、OSD/LED，全部 exit code `0`；工业子系统补齐 `O_invalid → I_invalid` 后再次通过。
 - 软件模型：`test_industrial_inspection.py` `5/5`、`test_stage_d.py` `5/5`、`test_industrial_contract.py` `4/4`。
-- TD：Tang Dynasty `v6.2.168116`；`route.qor` Setup WNS `+142 ps`、Hold WNS `+21 ps`、TNS 均 `0`、违规端点 `0`；Slice `18,463/87.02%`、RAM `35`、DSP `24`。
+- TD：Tang Dynasty `v6.2.168116`；`route.qor` Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS 均 `0`、违规端点 `0`；Slice `20,861/98.33%`、RAM `39`、DSP `26`。
 - 发布 provenance：`release/industrial-v1/industrial-v1-manifest.json`，同时记录源码、报告、位流和输入路径哈希。
 
 ## 当前未完成项
 
 1. Stage G：尚未下载到真实 PH1P35，未连接 SC520CS/HDMI，未验证摄像头锁定、画面、三模式视觉效果、检测框、LED、冷启动、热复位、重复下载、帧率、延迟和长稳。
 2. TD 告警：`SYN-5011/5025`、`HDL-5314/5317/5323`、`SYN-5065`、`PHY-5060/5016/5079/5088`、`PRJ-5611` 已归类但仍 OPEN，见 `industrial-v1-td-warning-audit.md`。
-3. 资源：Slice `87.02%` 高于项目目标 `80%`；当前没有以牺牲功能为代价的优化结论。
+3. 资源：Slice `98.33%` 高于项目目标 `80%`，并触发 `PHY-7022`；当前没有以牺牲功能为代价的优化结论。
 4. 干净环境：构建脚本已取消对单一本机路径的强依赖，改为 CLI/环境变量输入；但官方基线 `Runs`、TD 安装和厂商 IP 仍需在新机器提供，尚未形成完全自包含的无授权工程包。
 
 YOLO/Micro-CNN、WM8978、多类别多目标和毫米级标定不属于本版验收范围，不能作为当前 fixed-red v1 的缺陷项。

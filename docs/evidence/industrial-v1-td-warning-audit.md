@@ -1,6 +1,6 @@
 # fixed-red v1 TD 告警归类记录
 
-本记录对应 2026-10-17 本轮完整 TD 构建，源码提交为 `abd35f7`，工具为 Tang Dynasty `v6.2.168116`，器件为 `PH1P35MDG324 / Speed 3`。告警来自：
+本记录对应 2026-10-17 本轮完整 TD 构建，源码提交为 `660bee5`，工具为 Tang Dynasty `v6.2.168116`，器件为 `PH1P35MDG324 / Speed 3`。告警来自：
 
 `work/td_industrial/td_project/camera_to_dsi_display_Runs/syn_1/flow_exec.log`
 
@@ -10,7 +10,7 @@
 
 ## 结论摘要
 
-本轮 TD exit code 为 `0`，Route QoR 为 Setup WNS `+142 ps`、Hold WNS `+21 ps`、TNS `0`。这些数值只证明 STA 报告没有违例，不会自动关闭下面的结构性告警。当前没有对厂商 IP 或时钟网络做未经证据支持的屏蔽和修改，因此告警保持可见并列入 Stage G 风险。
+本轮 TD exit code 为 `0`，Route QoR 为 Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS `0`；Slice `20,861/98.33%`。这些数值只证明 STA 报告没有违例，不会自动关闭下面的结构性告警。当前没有对厂商 IP 或时钟网络做未经证据支持的屏蔽和修改，因此告警保持可见并列入 Stage G 风险。
 
 | 告警 | 定位 | 当前归类 | 是否关闭 |
 |---|---|---|---|
@@ -21,6 +21,7 @@
 | `PHY-5016` | PLL `clkc` 驱动无 location 的 IO，且不是 clock-capable IO | 板级时钟引脚/约束风险，需原理图、约束和上板波形确认 | **OPEN** |
 | `PHY-5079` | 1 个时钟网络使用 local routing resources | 时钟路由风险，需 `analyze_clock -detail` 和上板稳定性证据 | **OPEN** |
 | `PHY-5088` | clock analyzer 检出 buffer 驱动非时钟 sink、clock 驱动其他 clock net | 时钟树结构风险，需逐网审查；未通过关闭告警 | **OPEN** |
+| `PHY-7022` | 物理设计估算 Slice 利用率多次超过 95% 上限，最终 QoR 为 98.33% | 资源和 P&R 余量风险；必须在不删减功能的前提下做量化优化 | **OPEN** |
 | `PRJ-5611` | Logo ROM 与摄像头寄存器文件 CompileOrder 相同 | 工程编译序号冲突；本轮未导致综合失败，但应在后续项目文件整理中固定唯一序号 | **OPEN** |
 
 ## 已确认的边界

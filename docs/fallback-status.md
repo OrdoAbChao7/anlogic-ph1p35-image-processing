@@ -122,13 +122,13 @@
 
 ## 8. 当前固定红色 v1 状态校正（2026-10-17）
 
-当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的修正版记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，三模式、固定红色检测、OSD/LED 联调和 TD 时序/位流生成均有当前工作区证据；发布位流 SHA-256 为 `886efa33c4f79d2f1f1b5fec5945bfce341efe1ab680c0ae53bb976f57038905`。旧表中 2026-10-13/历史变体的资源、时序和哈希不能用于描述当前版本。
+当前发布口径以 `docs/experiments/2026-10-17-industrial-inspection-stage-e.md` 的最新记录为准：TD 已使用批准的 `s3_luma` 卡通化 RTL，并恢复官方 720p `uivtc`/`hdmi_mixer` 时序链路；三模式、固定红色检测、OSD/LED 联调和 TD 位流生成均有当前工作区证据。当前压缩位流 SHA-256 为 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f`。旧表中的资源、时序和哈希不能用于描述当前版本。
 
-当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、资源占用高于 80% 目标，以及从无本机绝对路径的干净环境重建。
+当前仍未关闭：PH1P35 + SC520CS + HDMI 实机下载验证、冷启动/热复位/长稳、摄像头画面与三模式效果、LED 管脚实测、厂商 DDR undriven-pin 告警分类、PHY-7022 资源占用 98.33% 高于 80% 目标，以及从无本机绝对路径的干净环境重建。
 
 ## 9. 2026-10-17 本轮重建证据
 
-- `project`：提交 `abd35f7` 后，`scripts/build_industrial_td.py` 支持 `--td-exe`、`--flow-tcl`、`--baseline-runs` 和环境变量覆盖；本轮用显式路径完成 TD 综合、布局、布线、Hold Fix、QoR、时序和 bitgen，TD exit code `0`。
-- `project`：当前报告位于 `release/industrial-v1/route.qor` 与 `release/industrial-v1/final_timing.rpt`；Setup WNS `+142 ps`、Hold WNS `+21 ps`、TNS 均为 `0`，Slice `18,463/87.02%`、RAM `35`、DSP `24`。
-- `project`：当前推荐下载文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `84a88f85fc1998e400aef8d85afe93707f9c62454651bc1782df7c1f2f5ea03c`；同目录 manifest 绑定了本轮源码和全部发布文件哈希。
+- `project`：提交 `660bee5` 后，`scripts/build_industrial_td.py` 使用显式 TD/基线路径完成 TD 综合、布局、布线、Hold Fix、QoR、时序和 bitgen，TD exit code `0`。
+- `project`：当前报告位于 `release/industrial-v1/route.qor` 与 `release/industrial-v1/final_timing.rpt`；Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS 均为 `0`，Slice `20,861/98.33%`、RAM `39`、DSP `26`。
+- `project`：当前推荐下载文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `e541b310defed61babe91f8a966fca7992f2a06a1154897d8cb3b1b68e9f057f`；同目录 manifest 绑定了本轮源码和全部发布文件哈希。
 - `project`：`tb_industrial_subsystem.v` 已补齐 INVALID 信号连接，重新编译联合仿真通过；没有硬件实测，因此不改变 Stage G 待上板状态。
