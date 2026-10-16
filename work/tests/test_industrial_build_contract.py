@@ -96,6 +96,23 @@ def test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles
     assert "Start-Process" in script
 
 
+def test_legacy_industrial_verification_includes_full_frame_and_threshold_gates():
+    script = (ROOT / "scripts" / "verify-industrial-subsystem.ps1").read_text(encoding="utf-8")
+    assert "tb_color_detect_96_v2.v" in script
+    assert "tb_color_detect_96_v2_boundaries.v" in script
+    assert "full_frame_compile" in script
+    assert "threshold_boundaries_compile" in script
+
+
+def test_legacy_industrial_verification_covers_approved_modes_and_osd_led():
+    script = (ROOT / "scripts" / "verify-industrial-subsystem.ps1").read_text(encoding="utf-8")
+    assert "test_stage_d.py" in script
+    assert "test_industrial_contract.py" in script
+    assert "run_cartoon_luma_sim.py" in script
+    assert "tb_osd_led_joint.v" in script
+    assert "industrial_osd_overlay.v" in script
+
+
 if __name__ == "__main__":
     test_industrial_build_uses_approved_luma_cartoon_rtl()
     test_industrial_build_writes_the_downloadable_release_directory()
@@ -104,4 +121,6 @@ if __name__ == "__main__":
     test_qor_gate_parses_and_rejects_non_converged_reports()
     test_morphology_declares_explicit_eram_wrapper_and_simulation_path()
     test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles_morphology()
+    test_legacy_industrial_verification_includes_full_frame_and_threshold_gates()
+    test_legacy_industrial_verification_covers_approved_modes_and_osd_led()
     print("PASS industrial build contracts")

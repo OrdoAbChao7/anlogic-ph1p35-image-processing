@@ -128,3 +128,10 @@
 - `project`：按 TDD 增加回归入口契约，先验证旧脚本会覆盖用户的 `fallback/tb_color.vvp` 且没有编译形态学源；修复后输出统一进入被忽略的 `work/tests/verification_outputs/`，联合仿真明确加入 `fallback/rtl/morph_open_96.v` 和 `-DMORPH_SIMULATION`。
 - `project`：`scripts/verify-industrial-subsystem.ps1` 实际执行通过，Python Algorithm Lab 5/5、基线 `color_detect_96.v`、工业子系统 `tb_industrial_subsystem.v` 三段均通过，脚本 exit code `0`。联合 Testbench 覆盖标准件 PASS、超宽件 NG、空场 NO_OBJECT 和 PASS/NG 边框颜色。
 - `project`：脚本使用 `Start-Process` 捕获工具日志，并补充 Icarus 内部工具目录和 `.EXE` 扩展名环境修复；因此不会依赖当前 PowerShell 会话是否预置完整 PATH/PATHEXT。
+
+## 2026-10-17 一键回归扩展至第一版功能集
+
+- `project`：按 TDD 先为回归入口增加“全帧面积/阈值边界/三模式/OSD-LED”契约；契约在脚本尚未扩展时按预期失败，随后完成实现。
+- `project`：`scripts/verify-industrial-subsystem.ps1` 现执行 8 段门禁：Algorithm Lab 5/5、Stage D 5/5、工业合同 4/4、基线颜色检测、`1280×720` 全前景、严格 Q10 端点、工业子系统、三模式 1102 周期、OSD/Logo/LED 联调。完整脚本 exit code `0`，所有段落 PASS。
+- `project`：新增强证据：`tb_color_detect_96_v2.v` 实际报告 `area=921600`、BBox `0,0,1279,719`；`tb_color_detect_96_v2_boundaries.v` 五组阈值向量全部通过；`run_cartoon_luma_sim.py` 1102 周期逐周期通过；`tb_osd_led_joint.v` 验证 `NO_OBJECT` 文本尾部和 PASS/检测 LED 联动。
+- `project`：Icarus 仍报告既有 timescale 继承警告；它们不影响本轮 `$fatal` 断言和结果比较，但尚未作为厂商告警关闭依据。该回归没有增加板级证据，Stage G、摄像头/HDMI/LED 实物效果、帧率/延迟、冷启动/热复位和长稳仍未验证。

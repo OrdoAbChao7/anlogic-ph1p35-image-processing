@@ -219,3 +219,6 @@
 
 > 2026-10-17 verification entry:
 > 修复 `scripts/verify-industrial-subsystem.ps1`：输出不再覆盖用户已有的 `fallback/tb_color.vvp`，显式加入形态学 RTL 和 `MORPH_SIMULATION`；一键执行的 Python 5 样本、基线颜色检测和工业子系统联合仿真三段全部通过，exit code `0`。该结果仍是软件/RTL 证据，不改变 Stage G 的待上板状态。
+
+> 2026-10-17 full v1 regression gate:
+> `scripts/verify-industrial-subsystem.ps1` 已扩展为 8 段一键回归并实际 exit code `0`：Algorithm Lab 5/5、Stage D 5/5、工业合同 4/4、基线检测、1280×720 全前景 `area=921600`/BBox 全幅、严格 Q10 边界、工业子系统、三模式 1102 周期、OSD/Logo/LED 联调全部 PASS。该证据加强了软件/RTL 层验收，但不改变无板卡、无 SC520CS/HDMI 显示、无 LED 管脚、无帧率/延迟/长稳测量的 Stage G 未通过状态。
