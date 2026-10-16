@@ -1,81 +1,103 @@
+// Four RGB888 pixels per accepted valid cycle, lane0 in [95:72].
+// Fixed raster: width must be a multiple of four, dimensions <= 2048.
+// SOF may precede data or accompany its first group. No backpressure.
+// Results publish only after a complete frame; valid_frame means target present.
 module color_detect_96 #(
-  parameter IMG_WIDTH  = 1280,
-  parameter IMG_HEIGHT = 720
+  parameter IMG_WIDTH=1280, parameter IMG_HEIGHT=720
 )(
-  input  wire I_clk, I_rst_n,
-  input  wire I_tvalid, I_tlast, I_tuser,
-  input  wire [95:0] I_tdata,               // 4像素×24bit RGB
-  output reg  [10:0] xmin,ymin,xmax,ymax,   // 包围盒
-  output reg  [18:0] area,                  // 目标像素数
-  output reg         valid_frame            // 每帧结果有效
+  input wire I_clk,I_rst_n,I_tvalid,I_tlast,I_tuser,
+  input wire [95:0] I_tdata,
+  output reg [10:0] xmin,ymin,xmax,ymax,
+  output reg [19:0] area,
+  output reg valid_frame
 );
-  localparam GRP = IMG_WIDTH >> 2;          // 每行拍数=320
-  reg [10:0] x_grp, y_pos;
-
-  // ---- 拆4像素 RGB ----
-  wire [7:0] R0=I_tdata[95:88],G0=I_tdata[87:80],B0=I_tdata[79:72];
-  wire [7:0] R1=I_tdata[71:64],G1=I_tdata[63:56],B1=I_tdata[55:48];
-  wire [7:0] R2=I_tdata[47:40],G2=I_tdata[39:32],B2=I_tdata[31:24];
-  wire [7:0] R3=I_tdata[23:16],G3=I_tdata[15:8], B3=I_tdata[7:0];
-
-  // ---- RGB→YCbCr (Q10定点, 系数×1024, 输出>>10得0~255) ----
-  wire signed [17:0] cb0 = 512*$signed(B0)-173*$signed(R0)-339*$signed(G0)+128*1024;
-  wire signed [17:0] cr0 = 512*$signed(R0)-429*$signed(G0)- 83*$signed(B0)+128*1024;
-  wire signed [17:0] cb1 = 512*$signed(B1)-173*$signed(R1)-339*$signed(G1)+128*1024;
-  wire signed [17:0] cr1 = 512*$signed(R1)-429*$signed(G1)- 83*$signed(B1)+128*1024;
-  wire signed [17:0] cb2 = 512*$signed(B2)-173*$signed(R2)-339*$signed(G2)+128*1024;
-  wire signed [17:0] cr2 = 512*$signed(R2)-429*$signed(G2)- 83*$signed(B2)+128*1024;
-  wire signed [17:0] cb3 = 512*$signed(B3)-173*$signed(R3)-339*$signed(G3)+128*1024;
-  wire signed [17:0] cr3 = 512*$signed(R3)-429*$signed(G3)- 83*$signed(B3)+128*1024;
-
-  // ---- 红色阈值判定(4个像素都要) ----
-  wire t0 = (cb0[17:10]>85 && cb0[17:10]<125) && (cr0[17:10]>135 && cr0[17:10]<200);
-  wire t1 = (cb1[17:10]>85 && cb1[17:10]<125) && (cr1[17:10]>135 && cr1[17:10]<200);
-  wire t2 = (cb2[17:10]>85 && cb2[17:10]<125) && (cr2[17:10]>135 && cr2[17:10]<200);
-  wire t3 = (cb3[17:10]>85 && cb3[17:10]<125) && (cr3[17:10]>135 && cr3[17:10]<200);
-
-  // ---- 4像素各自的全局列号 ----
-  wire [11:0] col0 = {x_grp,2'b00};
-  wire [11:0] col1 = {x_grp,2'b00}+1;
-  wire [11:0] col2 = {x_grp,2'b00}+2;
-  wire [11:0] col3 = {x_grp,2'b00}+3;
-
-  // ---- 统计 + 行列计数 ----
+  reg started;
+  reg [10:0] in_x,in_y;
+  wire [10:0] sample_x=I_tuser?11'd0:in_x;
+  wire [10:0] sample_y=I_tuser?11'd0:in_y;
+  wire accept=I_tvalid&&(started||I_tuser);
+  // I_tlast is informational; raster coordinates use the fixed valid-group count.
+  reg q_valid,q_sof,q_end;
+  reg [10:0] q_x,q_y;
+  reg [19:0] cb[0:3],cr[0:3];
+  wire [3:0] hit;
+  genvar g;
+  generate for(g=0;g<4;g=g+1) begin: lanes
+    wire signed [8:0] r=$signed({1'b0,I_tdata[95-g*24 -: 8]});
+    wire signed [8:0] green=$signed({1'b0,I_tdata[87-g*24 -: 8]});
+    wire signed [8:0] b=$signed({1'b0,I_tdata[79-g*24 -: 8]});
+    always @(posedge I_clk or negedge I_rst_n) begin
+      if(!I_rst_n) begin cb[g]<=20'd0;cr[g]<=20'd0;end
+      else if(accept) begin
+        cb[g]<=20'sd512*b-20'sd173*r-20'sd339*green+20'sd131072;
+        cr[g]<=20'sd512*r-20'sd429*green-20'sd83*b+20'sd131072;
+      end
+    end
+    assign hit[g]=(cb[g][17:10]>8'd85)&&(cb[g][17:10]<8'd125)&&
+                  (cr[g][17:10]>8'd135)&&(cr[g][17:10]<8'd200);
+  end endgenerate
   always @(posedge I_clk or negedge I_rst_n) begin
     if(!I_rst_n) begin
-      xmin<=IMG_WIDTH-1; ymin<=IMG_HEIGHT-1; xmax<=0; ymax<=0;
-      area<=0; valid_frame<=0; x_grp<=0; y_pos<=0;
-    end else if(I_tuser) begin
-      // 帧头：上一帧结果锁存输出，本帧清零重统计
-      valid_frame<=1'b1;
-      xmin<=IMG_WIDTH-1; ymin<=IMG_HEIGHT-1; xmax<=0; ymax<=0; area<=0;
-      x_grp<=0; y_pos<=0;
-    end else if(I_tvalid) begin
-      // 统计4个像素：统一计算4像素增量与本周期边界，避免非阻塞赋值覆盖
-      area <= area + (t0 ? 1'b1 : 1'b0) + (t1 ? 1'b1 : 1'b0) + (t2 ? 1'b1 : 1'b0) + (t3 ? 1'b1 : 1'b0);
-      
-      // 更新 X 边界
-      if (t0 && col0 < xmin) xmin <= col0;
-      else if (t1 && col1 < xmin) xmin <= col1;
-      else if (t2 && col2 < xmin) xmin <= col2;
-      else if (t3 && col3 < xmin) xmin <= col3;
-
-      if (t3 && col3 > xmax) xmax <= col3;
-      else if (t2 && col2 > xmax) xmax <= col2;
-      else if (t1 && col1 > xmax) xmax <= col1;
-      else if (t0 && col0 > xmax) xmax <= col0;
-
-      // 更新 Y 边界
-      if ((t0 || t1 || t2 || t3)) begin
-        if (y_pos < ymin) ymin <= y_pos;
-        if (y_pos > ymax) ymax <= y_pos;
+      started<=1'b0;in_x<=0;in_y<=0;
+      q_valid<=0;q_sof<=0;q_end<=0;q_x<=0;q_y<=0;
+    end else begin
+      q_valid<=accept;q_sof<=I_tuser;
+      q_end<=accept&&(sample_x==IMG_WIDTH-4)&&(sample_y==IMG_HEIGHT-1);
+      q_x<=sample_x;q_y<=sample_y;
+      if(I_tuser) begin started<=1'b1;in_x<=0;in_y<=0;end
+      if(accept) begin
+        if(sample_x==IMG_WIDTH-4) begin
+          in_x<=0;
+          if(sample_y==IMG_HEIGHT-1) begin in_y<=0;started<=1'b0;end
+          else in_y<=sample_y+11'd1;
+        end else begin in_x<=sample_x+11'd4;in_y<=sample_y;end
       end
-
-      // 行列计数
-      if(x_grp==GRP-1) begin
-        x_grp<=0;
-        if(y_pos==IMG_HEIGHT-1) y_pos<=0; else y_pos<=y_pos+1;
-      end else x_grp<=x_grp+1;
+    end
+  end
+  reg [19:0] acc_area,next_area;
+  reg [10:0] acc_xmin,acc_ymin,acc_xmax,acc_ymax;
+  reg [10:0] next_xmin,next_ymin,next_xmax,next_ymax;
+  wire any_hit=|hit;
+  wire [1:0] first_lane=hit[0]?2'd0:hit[1]?2'd1:hit[2]?2'd2:2'd3;
+  wire [1:0] last_lane=hit[3]?2'd3:hit[2]?2'd2:hit[1]?2'd1:2'd0;
+  wire [10:0] lo_col={q_x[10:2],first_lane};
+  wire [10:0] hi_col={q_x[10:2],last_lane};
+  wire [1:0] count01={1'b0,hit[0]}+{1'b0,hit[1]};
+  wire [1:0] count23={1'b0,hit[2]}+{1'b0,hit[3]};
+  wire [2:0] hit_count={1'b0,count01}+{1'b0,count23};
+  wire frame_found=(!q_sof&&(acc_area!=0))||(q_valid&&any_hit);
+  always @* begin
+    next_area=acc_area;next_xmin=acc_xmin;next_ymin=acc_ymin;
+    next_xmax=acc_xmax;next_ymax=acc_ymax;
+    if(q_sof) begin
+      next_area=q_valid?{17'd0,hit_count}:20'd0;
+      next_xmin=(q_valid&&any_hit)?lo_col:IMG_WIDTH-1;
+      next_ymin=(q_valid&&any_hit)?q_y:IMG_HEIGHT-1;
+      next_xmax=(q_valid&&any_hit)?hi_col:11'd0;
+      next_ymax=(q_valid&&any_hit)?q_y:11'd0;
+    end else if(q_valid&&any_hit) begin
+      next_area=acc_area+{17'd0,hit_count};
+      if(lo_col<acc_xmin)next_xmin=lo_col;
+      if(hi_col>acc_xmax)next_xmax=hi_col;
+      if(q_y<acc_ymin)next_ymin=q_y;
+      if(q_y>acc_ymax)next_ymax=q_y;
+    end
+  end
+  always @(posedge I_clk or negedge I_rst_n) begin
+    if(!I_rst_n) begin
+      acc_area<=0;acc_xmin<=IMG_WIDTH-1;acc_ymin<=IMG_HEIGHT-1;
+      acc_xmax<=0;acc_ymax<=0;
+      area<=0;xmin<=0;ymin<=0;xmax<=0;ymax<=0;valid_frame<=0;
+    end else begin
+      acc_area<=next_area;acc_xmin<=next_xmin;acc_ymin<=next_ymin;
+      acc_xmax<=next_xmax;acc_ymax<=next_ymax;
+      if(q_end) begin
+        area<=next_area;valid_frame<=frame_found;
+        xmin<=frame_found?next_xmin:11'd0;
+        ymin<=frame_found?next_ymin:11'd0;
+        xmax<=frame_found?next_xmax:11'd0;
+        ymax<=frame_found?next_ymax:11'd0;
+      end
     end
   end
 endmodule
