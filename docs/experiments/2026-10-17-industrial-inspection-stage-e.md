@@ -91,3 +91,11 @@
 - `project`：完整 TD 构建在 `optimize_gate -packarea` / `update_pll_param` 阶段以 `3221225786 (0xC000013A)` 异常退出，未进入布局布线，也没有生成新的发布位流。异常前的 gate area 报告显示候选 `u_morph_open` 约 `4619` logic LUT；没有证据证明资源改善。
 - `project`：按单变量回退纪律恢复原始 `morph_open_96.v`，删除只服务于失败候选的 TDD 探针，并重新通过工业 RTL/Golden、形态学、三模式、契约和 OSD/LED 联调回归。当前发布位流仍绑定上一版已成功构建的 OSD 优化源码，失败候选不进入发布包。
 - `unknown`：`0xC000013A` 的 TD 工具异常未能在本轮进一步分解为 RTL 根因或 TD 自身崩溃；在没有独立最小 TD 重现和收益证据前，不再沿该候选继续扩大改动。
+
+## 2026-10-17 Q10 原始阈值比较候选的拒绝记录
+
+- `project`：按 TDD 先新增 `work/tests/test_color_raw_threshold_contract.py`；旧版 Q10→U8 比较下测试按预期失败，改为在 Q10 域直接比较后，边界测试、工业 RTL/Golden 和 Icarus 语法检查均通过。
+- `project`：完整 TD 构建 exit code 为 `0`，但候选资源为 `20,523 slices / 96.73%`，Setup WNS `+106 ps`、Hold WNS `+20 ps`；相对当前已审计 OSD 优化基线 `20,159 / 95.02%` 增加 `364 slices`，因此没有资源收益，候选被拒绝。
+- `project`：候选压缩位流 SHA-256 为 `7a5679ce165c78c2201a0c81cc0cd9758804b8402246a88d680227f6cd9328b9`，未压缩位流 SHA-256 为 `d557343c7f0e091e987d4336201ec09a6025519105ead93ae9eed6daf38637e1`；两者均不进入发布包。Q10 源码和专用 TDD 探针已回退/删除。
+- `project`：回退后重新执行完整 TD 构建，工具生成了另一组布局结果：`20,876 slices / 98.40%`、Setup WNS `+115 ps`、Hold WNS `+20 ps`。该结果虽 exit code 为 `0`，但资源显著劣于已审计发布物，已恢复 Git 中的稳定发布位流、报告和 manifest，不以非确定性较差的重建结果覆盖发布基线。
+- `unknown`：当前 PH1P35 资源已接近上限，布局结果存在明显波动；在没有确定性布局策略、资源下降证据和板级收益前，不再继续 Q10 阈值微优化。`PHY-7022` 仍 OPEN。
