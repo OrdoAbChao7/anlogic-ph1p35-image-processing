@@ -76,3 +76,5 @@ python scripts/build_industrial_td.py `
 ```
 
 上板记录模板：[industrial-v1-stage-g-template.md](docs/evidence/industrial-v1-stage-g-template.md)。
+
+逐项要求审计：[industrial-v1-requirement-audit.md](docs/evidence/industrial-v1-requirement-audit.md)；TD 告警归类：[industrial-v1-td-warning-audit.md](docs/evidence/industrial-v1-td-warning-audit.md)。
