@@ -134,4 +134,5 @@
 - `project`：按 TDD 先为回归入口增加“全帧面积/阈值边界/三模式/OSD-LED”契约；契约在脚本尚未扩展时按预期失败，随后完成实现。
 - `project`：`scripts/verify-industrial-subsystem.ps1` 现执行 8 段门禁：Algorithm Lab 5/5、Stage D 5/5、工业合同 4/4、基线颜色检测、`1280×720` 全前景、严格 Q10 端点、工业子系统、三模式 1102 周期、OSD/Logo/LED 联调。完整脚本 exit code `0`，所有段落 PASS。
 - `project`：新增强证据：`tb_color_detect_96_v2.v` 实际报告 `area=921600`、BBox `0,0,1279,719`；`tb_color_detect_96_v2_boundaries.v` 五组阈值向量全部通过；`run_cartoon_luma_sim.py` 1102 周期逐周期通过；`tb_osd_led_joint.v` 验证 `NO_OBJECT` 文本尾部和 PASS/检测 LED 联动。
+- `project`：为防止下载入口与实际位流脱节，新增发布文档一致性契约，按 manifest 和文件实际 SHA-256 校验 README、Stage G 模板及 fallback 状态入口；修正它们引用的旧版 `77fd...` 哈希和资源数据，当前入口统一指向显式 ERAM 位流 `cbc361...`。
 - `project`：Icarus 仍报告既有 timescale 继承警告；它们不影响本轮 `$fatal` 断言和结果比较，但尚未作为厂商告警关闭依据。该回归没有增加板级证据，Stage G、摄像头/HDMI/LED 实物效果、帧率/延迟、冷启动/热复位和长稳仍未验证。

@@ -64,7 +64,7 @@ python .\work\models\reference_model.py --self-test
 
 **2026-10-17 固定红色零件 v1：** 已完成软件模型、硬件等价模型和独立 RTL 仿真回归；当前 TD 构建和 Stage G 上板仍按 [实验记录](docs/experiments/2026-10-17-industrial-inspection-stage-e.md) 记录，未有板级证据前不宣称稳定可用。
 
-当前可下载位流：[industrial-v1/camera_to_dsi_display_compress.bit](release/industrial-v1/camera_to_dsi_display_compress.bit)，大小 `1,356,145 bytes`，SHA-256：`77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`。本轮 TD 最终 Setup WNS `+116 ps`、Hold WNS `+20 ps`、TNS 均为 `0`；Slice `20,159/95.02%`、RAM `39`、DSP `24`。相比前一版 `20,861/98.33%`，OSD 字库改为逐行查表后减少 `702 slices`，但仍未在板卡上实测；源码、报告和输入路径记录在 [industrial-v1-manifest.json](release/industrial-v1/industrial-v1-manifest.json)。
+当前可下载位流：[industrial-v1/camera_to_dsi_display_compress.bit](release/industrial-v1/camera_to_dsi_display_compress.bit)，大小 `1,371,697 bytes`，SHA-256：`cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b`。本轮 TD 最终 Setup WNS `+108 ps`、Hold WNS `+20 ps`、TNS 均为 `0`；Slice `16,859/79.46%`、RAM `43`、DSP `24`、STA coverage `96.58%`。相对 OSD 优化基线减少 `3,300 slices`、增加 `4 RAM`，由面积报告确认形态学 4 个行缓存各使用 1 个 ERAM；仍未在板卡上实测。源码、报告和输入路径记录在 [industrial-v1-manifest.json](release/industrial-v1/industrial-v1-manifest.json)。
 
 重新构建时，向 `scripts/build_industrial_td.py` 显式传入 TD 可执行文件、`DefaultFlow.tcl` 和官方 SC520 基线 `Runs` 目录；也可以使用 `FPGA_TD_EXE`、`FPGA_FLOW_TCL`、`FPGA_BASELINE_RUNS` 环境变量。脚本会把位流、`route.qor`、`final_timing.rpt` 和 provenance manifest 写入 `release/industrial-v1/`。
 

@@ -4,9 +4,9 @@
 
 ## 版本绑定
 
- - Git commit：`d9633ed`（包含本轮 TD 位流对应源码与发布产物；manifest 另记录构建时 HEAD `e27c1c1`）
+ - Bitstream source commit：`13253b037e2822337b76aa655e99b445f16d1d54`（与发布 manifest 的 `git_commit` 一致；后续提交仅更新验证入口和文档）
 - Bitstream：`release/industrial-v1/camera_to_dsi_display_compress.bit`
-  - SHA-256：`77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4`
+  - SHA-256：`cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b`
 - 板卡型号/序列号：
 - SC520CS 模组版本：
 - TD Programmer 版本：

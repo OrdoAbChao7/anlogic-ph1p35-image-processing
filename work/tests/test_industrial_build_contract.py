@@ -1,3 +1,5 @@
+import hashlib
+import json
 from pathlib import Path
 import importlib.util
 
@@ -113,6 +115,16 @@ def test_legacy_industrial_verification_covers_approved_modes_and_osd_led():
     assert "industrial_osd_overlay.v" in script
 
 
+def test_release_docs_bind_the_current_bitstream_manifest():
+    manifest = json.loads((ROOT / "release" / "industrial-v1" / "industrial-v1-manifest.json").read_text(encoding="utf-8"))
+    bit_path = ROOT / "release" / "industrial-v1" / "camera_to_dsi_display_compress.bit"
+    bit_sha = hashlib.sha256(bit_path.read_bytes()).hexdigest()
+    artifact = next(item for item in manifest["artifacts"] if item["path"].endswith("camera_to_dsi_display_compress.bit"))
+    assert artifact["sha256"] == bit_sha
+    for rel in ("README.md", "docs/evidence/industrial-v1-stage-g-template.md", "docs/fallback-status.md"):
+        assert bit_sha in (ROOT / rel).read_text(encoding="utf-8"), f"{rel} is stale for the current release bitstream"
+
+
 if __name__ == "__main__":
     test_industrial_build_uses_approved_luma_cartoon_rtl()
     test_industrial_build_writes_the_downloadable_release_directory()
@@ -123,4 +135,5 @@ if __name__ == "__main__":
     test_legacy_industrial_verification_does_not_overwrite_user_vvp_and_compiles_morphology()
     test_legacy_industrial_verification_includes_full_frame_and_threshold_gates()
     test_legacy_industrial_verification_covers_approved_modes_and_osd_led()
+    test_release_docs_bind_the_current_bitstream_manifest()
     print("PASS industrial build contracts")

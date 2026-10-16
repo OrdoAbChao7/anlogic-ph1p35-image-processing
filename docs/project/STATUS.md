@@ -222,3 +222,6 @@
 
 > 2026-10-17 full v1 regression gate:
 > `scripts/verify-industrial-subsystem.ps1` 已扩展为 8 段一键回归并实际 exit code `0`：Algorithm Lab 5/5、Stage D 5/5、工业合同 4/4、基线检测、1280×720 全前景 `area=921600`/BBox 全幅、严格 Q10 边界、工业子系统、三模式 1102 周期、OSD/Logo/LED 联调全部 PASS。该证据加强了软件/RTL 层验收，但不改变无板卡、无 SC520CS/HDMI 显示、无 LED 管脚、无帧率/延迟/长稳测量的 Stage G 未通过状态。
+
+> 2026-10-17 release documentation binding:
+> `test_release_docs_bind_the_current_bitstream_manifest` 已通过；README、Stage G 模板和 fallback 状态入口均已与 `release/industrial-v1/industrial-v1-manifest.json` 及当前压缩位流 SHA-256 `cbc3618af0439a063d4b67a959bbfe5d8bbee4eb2d44c8a03147dd9c2c0d9c1b` 对齐。该校验只保证文件与文档一致，不新增板级验证。
