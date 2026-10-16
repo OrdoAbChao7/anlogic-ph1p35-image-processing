@@ -10,7 +10,9 @@ Steps:
 6. Copy generated bitstream to work/output/industrial-release/ and compute SHA-256.
 """
 
+import argparse
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -19,14 +21,18 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TD_EXE = Path("E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe")
-FLOW_TCL = Path("E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl")
-ORIG_RUNS = Path("E:/Projects/FPGA/HX1P35A2026/lab_ex1_mipi_hdmi_SC520_original/lab_ex1_mipi_hdmi_SC520/lab_ex1_mipi_hdmi/td_project/camera_to_dsi_display_Runs")
+DEFAULT_TD_EXE = Path(os.environ.get("FPGA_TD_EXE", "E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe"))
+DEFAULT_FLOW_TCL = Path(os.environ.get("FPGA_FLOW_TCL", "E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl"))
+DEFAULT_ORIG_RUNS = Path(os.environ.get("FPGA_BASELINE_RUNS", "E:/Projects/FPGA/HX1P35A2026/lab_ex1_mipi_hdmi_SC520_original/lab_ex1_mipi_hdmi_SC520/lab_ex1_mipi_hdmi/td_project/camera_to_dsi_display_Runs"))
 WORK_PROJECT = ROOT / "work" / "td_industrial"
 WORK_RUNS = WORK_PROJECT / "td_project" / "camera_to_dsi_display_Runs"
 # Keep the one-file download artifact in the tracked release directory so a
 # clean build and the README point to the same output.
-RELEASE_DIR = ROOT / "release" / "industrial-v1"
+DEFAULT_RELEASE_DIR = ROOT / "release" / "industrial-v1"
+TD_EXE = DEFAULT_TD_EXE
+FLOW_TCL = DEFAULT_FLOW_TCL
+ORIG_RUNS = DEFAULT_ORIG_RUNS
+RELEASE_DIR = DEFAULT_RELEASE_DIR
 TRACKED_RTL = ROOT / "fallback" / "rtl"
 # The approved cartoon contract is s3_luma.  The TD project still receives the
 # source under the module's historical filename, because the top-level wrapper
@@ -42,6 +48,136 @@ def sha256(path: Path) -> str:
         while chunk := f.read(65536):
             h.update(chunk)
     return h.hexdigest()
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Build the PH1P35 fixed-red industrial-inspection TD project."
+    )
+    parser.add_argument(
+        "--td-exe",
+        default=str(DEFAULT_TD_EXE),
+        help="Tang Dynasty command executable (or FPGA_TD_EXE).",
+    )
+    parser.add_argument(
+        "--flow-tcl",
+        default=str(DEFAULT_FLOW_TCL),
+        help="Tang Dynasty DefaultFlow.tcl (or FPGA_FLOW_TCL).",
+    )
+    parser.add_argument(
+        "--baseline-runs",
+        default=str(DEFAULT_ORIG_RUNS),
+        help="Official SC520 baseline camera_to_dsi_display_Runs directory (or FPGA_BASELINE_RUNS).",
+    )
+    parser.add_argument(
+        "--release-dir",
+        default=str(DEFAULT_RELEASE_DIR),
+        help="Directory for the downloadable bitstream and provenance artifacts.",
+    )
+    parser.add_argument(
+        "--manifest-only",
+        action="store_true",
+        help="Write a provenance manifest for existing release artifacts without running TD.",
+    )
+    return parser.parse_args(argv)
+
+
+def configure(args):
+    global TD_EXE, FLOW_TCL, ORIG_RUNS, RELEASE_DIR
+    TD_EXE = Path(args.td_exe).expanduser()
+    FLOW_TCL = Path(args.flow_tcl).expanduser()
+    ORIG_RUNS = Path(args.baseline_runs).expanduser()
+    RELEASE_DIR = Path(args.release_dir).expanduser()
+
+
+def git_output(*args):
+    try:
+        return subprocess.check_output(
+            ["git", *args], cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL
+        ).strip()
+    except (OSError, subprocess.CalledProcessError):
+        return "unknown"
+
+
+def source_manifest():
+    source_paths = [
+        TRACKED_VIDEO,
+        TRACKED_TOP,
+        TRACKED_ISP,
+        *(TRACKED_RTL / name for name in [
+            "morph_open_96.v",
+            "color_detect_96_v2.v",
+            "defect_classifier.v",
+            "bbox_draw_overlay.v",
+            "anlogic_logo_rom.v",
+            "industrial_osd_overlay.v",
+            "mode_controller.v",
+        ]),
+    ]
+    result = []
+    for path in source_paths:
+        if not path.exists():
+            raise FileNotFoundError(f"Tracked source missing while writing manifest: {path}")
+        result.append({
+            "path": path.relative_to(ROOT).as_posix(),
+            "sha256": sha256(path),
+        })
+    return result
+
+
+def write_release_manifest(bit_files):
+    artifacts = []
+    for path in sorted(bit_files):
+        if not path.exists():
+            continue
+        artifacts.append({
+            "path": path.relative_to(ROOT).as_posix(),
+            "size_bytes": path.stat().st_size,
+            "sha256": sha256(path),
+        })
+    for name in ["route.qor", "final_timing.rpt"]:
+        path = RELEASE_DIR / name
+        if path.exists():
+            artifacts.append({
+                "path": path.relative_to(ROOT).as_posix(),
+                "size_bytes": path.stat().st_size,
+                "sha256": sha256(path),
+            })
+    manifest = {
+        "project": "PH1P35 fixed-red industrial inspection v1",
+        "target_device": "PH1P35MDG324",
+        "git_commit": git_output("rev-parse", "HEAD"),
+        "git_status": git_output("status", "--short"),
+        "build_inputs": {
+            "td_exe": str(TD_EXE.resolve()),
+            "flow_tcl": str(FLOW_TCL.resolve()),
+            "baseline_runs": str(ORIG_RUNS.resolve()),
+        },
+        "sources": source_manifest(),
+        "artifacts": artifacts,
+    }
+    manifest_path = RELEASE_DIR / "industrial-v1-manifest.json"
+    manifest_path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    print(f"  Wrote provenance manifest: {manifest_path}")
+
+
+def validate_inputs():
+    required = {
+        "Tang Dynasty executable": TD_EXE,
+        "DefaultFlow.tcl": FLOW_TCL,
+        "official baseline Runs": ORIG_RUNS,
+    }
+    for label, path in required.items():
+        if not path.exists():
+            raise FileNotFoundError(
+                f"{label} not found: {path}. Supply the location with the corresponding CLI option or environment variable."
+            )
+    for name in ["syn_1/settings.cfg", "phy_1/settings.cfg", "syn_1/camera_to_dsi_display.prj", "phy_1/camera_to_dsi_display.prj"]:
+        path = ORIG_RUNS / name
+        if not path.exists():
+            raise FileNotFoundError(f"Official baseline file missing: {path}")
 
 
 def setup_runs():
@@ -249,16 +385,30 @@ def collect_release():
             shutil.copy2(src, RELEASE_DIR / rpt)
             print(f"  Copied report: {rpt}")
 
+    write_release_manifest(list(RELEASE_DIR.glob("*.bit")))
 
-def main():
+
+def write_existing_release_manifest():
+    print(f"\n[manifest] Collecting provenance for existing artifacts in {RELEASE_DIR}...")
+    RELEASE_DIR.mkdir(parents=True, exist_ok=True)
+    bit_files = list(RELEASE_DIR.glob("*.bit"))
+    if not bit_files:
+        raise FileNotFoundError(f"No .bit files found in {RELEASE_DIR}")
+    write_release_manifest(bit_files)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    configure(args)
     print("=" * 70)
     print("Tang Dynasty Automated Build: PH1P35 Industrial Inspection Subsystem")
     print("=" * 70)
 
-    if not TD_EXE.exists():
-        raise FileNotFoundError(f"TD executable not found: {TD_EXE}")
-    if not FLOW_TCL.exists():
-        raise FileNotFoundError(f"DefaultFlow.tcl not found: {FLOW_TCL}")
+    if args.manifest_only:
+        write_existing_release_manifest()
+        return
+
+    validate_inputs()
 
     setup_runs()
 
