@@ -169,9 +169,9 @@ def test_current_requirement_and_warning_audits_bind_the_eram_build():
     requirement_audit = (ROOT / "docs" / "evidence" / "industrial-v1-requirement-audit.md").read_text(encoding="utf-8")
     warning_audit = (ROOT / "docs" / "evidence" / "industrial-v1-td-warning-audit.md").read_text(encoding="utf-8")
     for text in (requirement_audit, warning_audit):
-        assert "17,730" in text
-        assert "83.57%" in text
-        assert "Setup WNS `+101 ps`" in text
+        assert "16,852" in text
+        assert "79.43%" in text
+        assert "Setup WNS `+103 ps`" in text
         assert "Hold WNS `+20 ps`" in text
     assert "77fd2acdc10d1fea6aadb180767a7b93af7c43748228d5c600669b820f9cf8d4" not in requirement_audit
     assert "PHY-7022" not in warning_audit

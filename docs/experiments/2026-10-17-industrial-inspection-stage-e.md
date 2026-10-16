@@ -159,3 +159,12 @@
 - `project`：使用同一 TD `v6.2.168116`、器件 `PH1P35MDG324 / Speed 3` 和外部输入哈希重新完成综合、布局、布线、Hold Fix、Route QoR、最终时序和 bitgen；最终 Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS `0`、违规端点 `0`、STA coverage `96.42%`，资源 `17,730 slices / 83.57%`、`43 RAM`、`24 DSP`、`229 DRAMHARDCON`。
 - `project`：新压缩位流 `release/industrial-v1/camera_to_dsi_display_compress.bit` 大小 `1,368,945 bytes`，SHA-256 `07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74`；未压缩位流 SHA-256 `33e88de7686d875d4d1d7970a290a5898978a4d810ef4d035e47f448cd78512a`。manifest 同时绑定源文件、TD/Flow/基线输入、route.qor 和 final_timing.rpt 哈希。
 - `unknown`：仍无 PH1P35、SC520CS、HDMI 下载和显示实测；Stage G、冷启动、热复位、LED 管脚、帧率、延迟、长稳、厂商告警关闭和完全自包含重建仍未完成。
+
+## 2026-10-17 第二次完整 TD 构建与重复性审计
+
+- `project`：在发布提交 `8077f9567e546998cbed93671e3ad8b4ac2b8561` 上，使用与第一次相同的 TD `v6.2.168116`、器件 `PH1P35MDG324 / Speed 3`、DefaultFlow 和官方 SC520 基线 Runs，执行同一命令入口 `python scripts/build_industrial_td.py --td-exe ... --flow-tcl ... --baseline-runs ...`。综合、布局、布线、Hold Fix、Route QoR、最终时序和 bitgen 均完成，进程 exit code 为 `0`。
+- `project`：第二次 `route.qor` 为 Setup WNS `+103 ps`、Setup TNS `0`、Hold WNS `+20 ps`、Hold TNS `0`、违规端点 `0`；资源为 `16,852 slices / 79.43%`、`43 RAM`、`24 DSP`、`229 DRAMHARDCON`。`final_timing.rpt` 的 STA coverage 为 `96.52%`。
+- `project`：第二次压缩位流大小 `1,371,249 bytes`，SHA-256 `e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3`；未压缩位流大小 `1,789,539 bytes`，SHA-256 `19e58be3e7586bb7f89136be9a2228db8d37c984ed14f934646ee68adf360653`。第二次 `route.qor` SHA-256 为 `ec408f3e39c297b8f721e73fd73b62deb43c38fff5ce83c7f8fd9e3c333f64a6`，`final_timing.rpt` SHA-256 为 `e9eb1d45d57efe22af5dad8ca92e84200dbf3396faca35820a68e15b9634cfb6`。
+- `project`：与第一次 `07f465...` 位流相比，第二次位流字节不同，但两次均满足 Setup/Hold/TNS/违例端点 QoR 门禁；差异归因于 TangDynasty 默认关闭 seed 后的 P&R 非确定性，不把第一次和第二次混写为同一文件。当前发布目录和 manifest 绑定第二次产物。
+- `project`：本次重复构建关闭了“只生成一次位流”的工程证据缺口，并把 Slice 资源从第一次的 `83.57%` 重新落在 `79.43%`，达到项目 `<80%` 资源目标；这不等于关闭厂商告警、干净环境或 Stage G。
+- `unknown`：当前仍没有 PH1P35、SC520CS 和 HDMI 的真实下载、画面、LED、冷启动、热复位、帧率、延迟或长稳证据；告警代码继续保持 OPEN。

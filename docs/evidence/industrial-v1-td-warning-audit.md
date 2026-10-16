@@ -1,15 +1,15 @@
 # fixed-red v1 TD 告警归类记录
 
-本记录对应当前 fixed-red v1 显式 ERAM 构建，源码提交为 `2eec6701ab2635b2133485cabb2876491d050770`；发布位流、报告和输入哈希以 `release/industrial-v1/industrial-v1-manifest.json` 为准。工具为 Tang Dynasty `v6.2.168116`，器件为 `PH1P35MDG324 / Speed 3`。
+本记录对应当前 fixed-red v1 第二次显式 ERAM 构建，发布提交为 `8077f9567e546998cbed93671e3ad8b4ac2b8561`，功能源码修复提交为 `2eec6701ab2635b2133485cabb2876491d050770`；发布位流、报告和输入哈希以 `release/industrial-v1/industrial-v1-manifest.json` 为准。工具为 Tang Dynasty `v6.2.168116`，器件为 `PH1P35MDG324 / Speed 3`。
 
 当前告警来自本次构建日志：
 
-- 综合：`work/td_industrial/td_project/camera_to_dsi_display_Runs/syn_1/td_20261017_044127.log`
-- 物理实现：`work/td_industrial/td_project/camera_to_dsi_display_Runs/phy_1/td_20261017_044435.log`
+- 综合：`work/td_industrial/td_project/camera_to_dsi_display_Runs/syn_1/flow_exec.log`；本次完整运行汇总：`work/td_industrial/repeat-build-20261017.log`
+- 物理实现：`work/td_industrial/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log`
 
 ## 结论摘要
 
-本轮 TD 各阶段 exit code 为 `0`。Route QoR 为 Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS `0`、违规端点 `0`；Slice `17,730/83.57%`、RAM `43`、DSP `24`，STA coverage `96.42%`。四个形态学行缓存显式映射为 `PH1P_LOGIC_ERAM`，ROI 边界复制语义已随源码重建，ISP 输出 ready 已显式 tie-high；正时序不能自动关闭结构性告警，以下当前日志告警全部保持 **OPEN**，也没有任何板卡证据。
+本轮 TD 各阶段 exit code 为 `0`。第二次 Route QoR 为 Setup WNS `+103 ps`、Hold WNS `+20 ps`、TNS `0`、违规端点 `0`；Slice `16,852/79.43%`、RAM `43`、DSP `24`，STA coverage `96.52%`。四个形态学行缓存显式映射为 `PH1P_LOGIC_ERAM`，ROI 边界复制语义已随源码重建，ISP 输出 ready 已显式 tie-high；正时序不能自动关闭结构性告警，以下当前日志告警全部保持 **OPEN**，也没有任何板卡证据。
 
 | 告警 | 定位 | 当前归类 | 是否关闭 |
 |---|---|---|---|
@@ -31,8 +31,8 @@
 
 ## 已确认的边界
 
-- 当前告警代码来自当前 ERAM 构建日志，而不是沿用旧版资源告警记录；本记录不把已通过的 WNS 当作告警关闭依据。
-- `S_ISP_O_tready` 已在 `fallback/td_source/design_top_wrapper.v` 中明确 tie-high，因为当前 `video_in` 没有反压输出；该修复仍需纳入下一次完整 TD 重建后再确认日志变化。
+- 当前告警代码来自第二次 ERAM 构建日志，而不是沿用旧版资源告警记录；本记录不把已通过的 WNS 当作告警关闭依据。第一次完整构建的位流和报告差异已保留在实验记录中。
+- `S_ISP_O_tready` 已在 `fallback/td_source/design_top_wrapper.v` 中明确 tie-high，因为当前 `video_in` 没有反压输出；第二次完整 TD 日志未再报告该网络未驱动问题。
 - 没有修改厂商 DDR、MIPI、HDMI、PLL 或约束生成文件来换取表面通过。
 - 当前没有 PH1P35 板卡、SC520CS 摄像头和 HDMI 现场证据；冷启动、热复位、锁相、画面、长稳和真实时钟行为仍属于 Stage G 未完成项。
 

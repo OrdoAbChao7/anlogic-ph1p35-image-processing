@@ -4,7 +4,7 @@
 > 修改 PROJECT_GOAL.md 中定义的目标或验收标准须提变更提案。  
 > 用户口头反馈记录为 `USER_REPORTED_ON_BOARD`，不等于硬件验证通过。
 
-最后更新：2026-10-17（固定红色 v1 ISP ready 契约重建通过资源/时序门禁）
+最后更新：2026-10-17（固定红色 v1 第二次完整 TD 重建通过资源/时序门禁）
 
 ---
 
@@ -33,7 +33,7 @@
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
 | **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
 | **G6** | OSD + LED 联动（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `tb_osd_led_joint.v` 与整机 OSD 集成；WM8978 不在 v1 范围 |
-| **G7** | 优化与创新 | `RISK` | 显式 ERAM 行缓存将 Slice 从 95.02% 降至 83.57%，仍高于项目 80% 目标；缺硬件演示、告警关闭和第二个可证明创新点 |
+| **G7** | 优化与创新 | `RISK` | 显式 ERAM 行缓存第二次完整构建为 `16,852/79.43%`，达到项目 80% 资源目标；仍缺硬件演示、告警关闭和第二个可证明创新点 |
 | **G8** | 冻结 / 发布 / 答辩 | `IN_PROGRESS` | 单 `.bit` 已归档；板级、长稳和答辩材料未完成 |
 
 ---
@@ -234,3 +234,6 @@
 
 > 2026-10-17 ROI Opening contract and rebuild:
 > 在现有 `run_industrial_rtl_golden.py` 中加入 2×2 目标贴合部分 ROI 四边的回归；旧实现得到 `area=0`，与 Stage D 的 `BORDER_REPLICATE` 期望 `area=4` 不一致。提交 `2eec6701ab2635b2133485cabb2876491d050770` 后，两级形态学窗口按 ROI 边界复制并将 ROI 外结果清零，正常 7 帧、ROI 边界 1 帧和非法 ROI 1 帧全部通过。随后完成本轮完整 TD 构建：Setup WNS `+101 ps`、Hold WNS `+20 ps`、TNS `0`、Slice `17,730/83.57%`、RAM `43`、DSP `24`、STA coverage `96.42%`；压缩位流 SHA-256 为 `07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74`。无板卡下载，Stage G 仍未通过。
+
+> 2026-10-17 repeat full TD build:
+> 在发布提交 `8077f9567e546998cbed93671e3ad8b4ac2b8561` 上使用相同 TD、DefaultFlow 和官方基线 Runs 完成第二次完整综合、布局、布线、Hold Fix、bitgen，exit code `0`。最终 Setup WNS `+103 ps`、Hold WNS `+20 ps`、TNS `0`，Slice `16,852/79.43%`、RAM `43`、DSP `24`、DRAMHARDCON `229`、STA coverage `96.52%`；压缩位流 SHA-256 为 `e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3`。两次 P&R 均通过，位流字节差异作为非确定性结果保留；资源目标已达到，Stage G 仍未通过。

@@ -4,9 +4,9 @@
 
 ## 版本绑定
 
-  - Bitstream source commit：`2eec6701ab2635b2133485cabb2876491d050770`（与本轮源码重建基线一致）
+  - Bitstream source commit：`8077f9567e546998cbed93671e3ad8b4ac2b8561`（发布提交；功能源码修复提交为 `2eec6701ab2635b2133485cabb2876491d050770`）
 - Bitstream：`release/industrial-v1/camera_to_dsi_display_compress.bit`
-  - SHA-256：`07f46512d36d04db9b02febbe86a73e0ffad05990211de473c438df4afd90a74`
+  - SHA-256：`e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3`
 - 板卡型号/序列号：
 - SC520CS 模组版本：
 - TD Programmer 版本：
