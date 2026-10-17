@@ -1,0 +1,19 @@
+{
+  "algorithm_id": "cartoon",
+  "name": "cartoon_region_fill_v1",
+  "version": "s4-region-fill-v1",
+  "status": "VISUAL_APPROVED",
+  "parameters": {
+    "variant": "s4_region_fill",
+    "quant_levels": "8",
+    "sobel_threshold": 240,
+    "smooth_passes": "0",
+    "edge_source": "quantized"
+  },
+  "algorithm_contract": {
+    "quantization": "per-channel Q(v)=(v[7:5]<<5)|(v[7:5]<<2)|(v[7:5]>>1)",
+    "region_fill": "N==S && S==W && W==E => F=N, otherwise F=C",
+    "border": "BORDER_REPLICATE",
+    "sobel": "Y=(R+2*G+B)>>2, abs(Gx)+abs(Gy)>=240"
+  }
+}
