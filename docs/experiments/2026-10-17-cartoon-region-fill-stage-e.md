@@ -29,6 +29,8 @@
 | 资源 | 17,229 slices（81.21%）、43 RAM、24 DSP、165 DRAMHARDCON |
 | QoR 门 | PASS |
 
+本次候选构建清单绑定提交 `b3df6d634003f4634faae5d1b0644a8b720046e1`；视频 RTL 源文件 SHA-256 为 `645e0d0a165971cabc8dded1a918683a708543a0ae03786ede85afffc2c47d7a`。
+
 关键原始报告：
 
 - `work/td_industrial_region_fill/td_project/camera_to_dsi_display_Runs/syn_1/flow.status`

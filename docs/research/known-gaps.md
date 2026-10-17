@@ -135,3 +135,10 @@
 - **已补充（project）**：本轮完整 TD 构建已使用显式工具/基线路径参数完成，产物、源码哈希和报告哈希见 `release/industrial-v1/industrial-v1-manifest.json`。
 - **仍开放（project risk）**：本轮 `SYN-5011/5025`、`HDL-5314/5317/5323`、`SYN-5065`、`PHY-5060/5016/5079/5088` 和 `PRJ-5611` 已建立逐类归档，但尚未逐项完成 IP/时钟/板级关闭；详见 [`industrial-v1-td-warning-audit.md`](../evidence/industrial-v1-td-warning-audit.md)。
 - **仍开放（measured）**：无 PH1P35、SC520CS、HDMI 实机证据，Stage G、LED 管脚、模式视觉效果、帧率/延迟和长稳不能从本轮软件/TD证据推断。
+
+## 2026-10-17 卡通化区域填充候选校正
+
+- **已关闭（project）**：用户批准 `s4-region-fill-v1`；固定 8 级逐通道量化、四邻居局部填充、量化图 Sobel 阈值 `240` 和 `BORDER_REPLICATE` 已绑定配置与预览报告。软件参考、硬件等价模型、RTL 小尺寸/1280×720 全帧逐周期回归通过。
+- **已关闭（project）**：候选 TD 独立工程已完成综合、布局布线和位流生成；最终 `route.qor` 为 Setup WNS `+160 ps`、TNS `0`、Hold WNS `+20 ps`、TNS `0`，候选资源为 17,229 slices（81.21%）、43 RAM、24 DSP。原始报告和位流哈希见 [`../experiments/2026-10-17-cartoon-region-fill-stage-e.md`](../experiments/2026-10-17-cartoon-region-fill-stage-e.md)。
+- **仍开放（project）**：候选工程依赖本机 TD 工具和官方基线 Runs；本轮是独立目录构建，不等于从干净机器无外部依赖重建，正式发布目录也未替换。
+- **仍开放（measured）**：没有 PH1P35、SC520CS、HDMI 实机下载、模式视觉、帧率/延迟、LED 或长稳证据，不能关闭 Stage G 或声明上板效果。
