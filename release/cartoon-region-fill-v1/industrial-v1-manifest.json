@@ -1,0 +1,40 @@
+{
+  "package": "fixed-red-v1-s4-region-fill-candidate",
+  "status": {
+    "rtl_simulation": "PASS",
+    "td_build": "BUILD_PASS",
+    "hardware_stage_g": "NOT_RUN",
+    "formal_release": "NOT_PROMOTED"
+  },
+  "target_device": "PH1P35MDG324",
+  "source_commit": "dba6c0c28e1feba06a460951d5f8d232459b62e4",
+  "video_source": {
+    "path": "work/rtl/video_cartoon_region_fill.v",
+    "sha256": "985b18caefb0237e56121f29870e037d8660675c7893e2d360f123183d8eeb4b"
+  },
+  "bitstream": {
+    "path": "release/cartoon-region-fill-v1/camera_to_dsi_display_compress.bit",
+    "size_bytes": 1368369,
+    "sha256": "d331d6b7af11b9bb1f8d51826818bf40d3badf87b194251a3587aee4f4c5baf7"
+  },
+  "qor": {
+    "setup_wns_ps": 119,
+    "setup_tns_ps": 0,
+    "hold_wns_ps": 20,
+    "hold_tns_ps": 0,
+    "setup_violated_endpoints": 0,
+    "hold_violated_endpoints": 0,
+    "slices": 17397,
+    "slice_capacity": 21216,
+    "slice_percent": 82.0,
+    "ram": 43,
+    "dsp": 24
+  },
+  "verification": {
+    "industrial_suite": "10/10 PASS",
+    "python_work_tests": "38 PASS",
+    "algorithm_lab_tests": "9 PASS",
+    "full_frame_area": 921600,
+    "hardware": "NOT_RUN"
+  }
+}

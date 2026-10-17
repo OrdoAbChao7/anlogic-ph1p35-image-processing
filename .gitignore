@@ -26,6 +26,10 @@ work/y1_yolo/*.pth
 preboard/output/
 work/output/
 work/algorithm_lab/cache/
+work/algorithm_lab/exports/industrial_inspection_preview/
+work/algorithm_lab/exports/exp_cartoon_*/
+work/td_industrial/
+work/td_industrial_region_fill/
 preboard/inbox/*
 !preboard/inbox/README.md
 __pycache__/
@@ -33,6 +37,14 @@ __pycache__/
 *.log
 *.logw
 *.bit
+*.vvp
 *.db
 .DS_Store
 Thumbs.db
+
+# The current fixed-red v1 compressed bitstream is an intentional release artifact.
+!release/
+!release/industrial-v1/
+!release/industrial-v1/*.bit
+!release/cartoon-region-fill-v1/
+!release/cartoon-region-fill-v1/*.bit

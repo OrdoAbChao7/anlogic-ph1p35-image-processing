@@ -6,6 +6,7 @@ import time
 import shutil
 import uuid
 import zipfile
+import re
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -24,11 +25,13 @@ from plugins.sobel import SobelAlgorithm
 from plugins.cartoon import CartoonAlgorithm
 from plugins.fastestdet import FastestDetAlgorithm
 from plugins.yolo_reference import YoloReferenceAlgorithm
+from plugins.industrial_inspection import IndustrialInspectionAlgorithm
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
 SAMPLES_DIR = BASE_DIR / "samples"
 EXPORTS_DIR = BASE_DIR / "exports"
+PARAMS_DIR = BASE_DIR / "configs"
 REGISTRY_PATH = BASE_DIR / "registry.json"
 CACHE_DIR = BASE_DIR / "cache"
 Y1_DIR = BASE_DIR.parents[0] / "y1_yolo"
@@ -39,6 +42,7 @@ Y2_LAB_DIR = Y2_DIR / "results" / "lab"
 
 CACHE_DIR.mkdir(exist_ok=True)
 EXPORTS_DIR.mkdir(exist_ok=True)
+PARAMS_DIR.mkdir(exist_ok=True)
 Y1_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 Y2_LAB_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -46,6 +50,7 @@ app = FastAPI(title="FPGA Algorithm Lab API")
 
 # Register available algorithm plugins
 PLUGIN_INSTANCES: Dict[str, BaseAlgorithm] = {
+    "industrial_inspection": IndustrialInspectionAlgorithm(),
     "cartoon": CartoonAlgorithm(),
     "sobel": SobelAlgorithm(),
     "threshold": ThresholdAlgorithm(),
@@ -401,6 +406,88 @@ class ProcessRequest(BaseModel):
     algorithm_id: str
     sample_filename: str
     parameters: Dict[str, Any]
+
+
+class ParameterPresetSaveRequest(BaseModel):
+    algorithm_id: str
+    name: str
+    parameters: Dict[str, Any]
+
+
+class ParameterPresetLoadRequest(BaseModel):
+    algorithm_id: str
+    name: str
+
+
+def _validate_algorithm_id(algorithm_id: str):
+    if algorithm_id not in PLUGIN_INSTANCES:
+        raise HTTPException(status_code=400, detail="Unknown algorithm")
+    return algorithm_id
+
+
+def _validate_preset_name(name: str) -> str:
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", name or ""):
+        raise HTTPException(
+            status_code=400,
+            detail="Preset name must contain 1-64 ASCII letters, digits, '_' or '-'.",
+        )
+    return name
+
+
+def _preset_path(algorithm_id: str, name: str) -> Path:
+    _validate_algorithm_id(algorithm_id)
+    _validate_preset_name(name)
+    return PARAMS_DIR / algorithm_id / f"{name}.json"
+
+
+@app.get("/api/params/{algorithm_id}")
+def list_parameter_presets(algorithm_id: str):
+    _validate_algorithm_id(algorithm_id)
+    preset_dir = PARAMS_DIR / algorithm_id
+    presets = []
+    if preset_dir.exists():
+        for path in sorted(preset_dir.glob("*.json")):
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            presets.append({
+                "name": data.get("name", path.stem),
+                "created_at": data.get("created_at"),
+                "parameters": data.get("parameters", {}),
+            })
+    return {"algorithm_id": algorithm_id, "presets": presets}
+
+
+@app.post("/api/params/save")
+def save_parameter_preset(req: ParameterPresetSaveRequest):
+    path = _preset_path(req.algorithm_id, req.name)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "algorithm_id": req.algorithm_id,
+        "name": req.name,
+        "parameters": req.parameters,
+        "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {"status": "success", "algorithm_id": req.algorithm_id, "name": req.name}
+
+
+@app.post("/api/params/load")
+def load_parameter_preset(req: ParameterPresetLoadRequest):
+    path = _preset_path(req.algorithm_id, req.name)
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Parameter preset not found")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=500, detail="Invalid parameter preset") from exc
+    return {
+        "status": "success",
+        "algorithm_id": req.algorithm_id,
+        "name": req.name,
+        "parameters": payload.get("parameters", {}),
+    }
 
 
 def get_image_path(filename: str) -> Path:

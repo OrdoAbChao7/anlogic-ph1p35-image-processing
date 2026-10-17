@@ -1,8 +1,18 @@
 """Comprehensive Cartoonization plugin supporting multiple candidates, smooth passes, and quantization levels."""
 from typing import Dict, Any, Tuple
+import sys
+from pathlib import Path
 import cv2
 import numpy as np
 from .base import BaseAlgorithm
+
+MODEL_ROOT = Path(__file__).resolve().parents[3] / "work" / "models"
+if str(MODEL_ROOT) not in sys.path:
+    sys.path.insert(0, str(MODEL_ROOT))
+from cartoon_region_fill_reference import (  # noqa: E402
+    filter_rgb_streaming as region_fill_filter_rgb,
+    quantize_rgb as region_fill_quantize_rgb,
+)
 
 
 class CartoonAlgorithm(BaseAlgorithm):
@@ -22,6 +32,7 @@ class CartoonAlgorithm(BaseAlgorithm):
                 "default": "s3_luma",
                 "options": [
                     {"label": "S3: Luminance Posterization (video_cartoon_luma.v, preserves tint)", "value": "s3_luma"},
+                    {"label": "S4: 4-neighbour Region Fill + Sobel (candidate)", "value": "s4_region_fill"},
                     {"label": "S1: Direct Per-Channel Color Quant (video_cartoon.v)", "value": "s1_color"},
                     {"label": "S2: Contour Only (Sobel Inverted Mask)", "value": "s2_contour"}
                 ]
@@ -134,6 +145,22 @@ class CartoonAlgorithm(BaseAlgorithm):
         th = int(params.get("sobel_threshold", 240))
         passes = int(params.get("smooth_passes", 1))
         edge_src = params.get("edge_source", "smoothed")
+
+        if variant == "s4_region_fill":
+            if levels != 8:
+                raise ValueError("s4_region_fill requires quant_levels=8")
+            out, edge_mask, filled = region_fill_filter_rgb(
+                image_rgb, threshold=th
+            )
+            quantized = region_fill_quantize_rgb(image_rgb)
+            return out, {
+                "variant": variant,
+                "model_desc": f"FPGA s4_region_fill (8 levels, Sobel Th={th})",
+                "edge_pixels": int(np.count_nonzero(edge_mask)),
+                "filled_pixels": int(np.count_nonzero(np.any(filled != quantized, axis=2))),
+                "hardware_multiplier_needed": False,
+                "line_buffer_rows": 3,
+            }
 
         # 1. Smoothing filter: 3x3 Gaussian-like integer box: [1,2,1; 2,4,2; 1,2,1] >> 4
         kernel = np.array([[1, 2, 1], [2, 4, 2], [1, 2, 1]], dtype=np.float32)

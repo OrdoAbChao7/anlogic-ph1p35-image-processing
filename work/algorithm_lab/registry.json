@@ -1,12 +1,107 @@
 [
   {
+    "algorithm_id": "industrial_inspection",
+    "display_name": "Industrial Inspection F1~F4 (工业视觉分拣)",
+    "category": "Inspection",
+    "status": "VISUAL_APPROVED",
+    "source_reference": "05_vision_bbox_template / 06_ph1p35_vision_baseline / 02_image_algorithm_library",
+    "license": "Mixed/see source audit (reference-only)",
+    "user_approved_version": "v1.0-approved",
+    "software_model_path": "work/algorithm_lab/plugins/industrial_inspection.py",
+    "hardware_model_path": "work/algorithm_lab/plugins/industrial_inspection.py",
+    "rtl_source_path": "fallback/rtl/color_detect_96_v2.v",
+    "testbench_path": "fallback/tb_industrial_subsystem.v",
+    "recommended_params": {
+      "target_color": "red_part",
+      "morphology_mode": "open_3x3",
+      "min_area": 100,
+      "nominal_width": 120,
+      "width_tolerance": 15,
+      "nominal_height": 80,
+      "height_tolerance": 12,
+      "roi_x": 0,
+      "roi_y": 0,
+      "roi_width": 0,
+      "roi_height": 0
+    },
+    "hardware_resources_estimate": {
+      "multipliers": 0,
+      "line_buffers": 2,
+      "pipeline_latency_cycles": 3
+    },
+    "history": [
+      {
+        "timestamp": "2026-10-13",
+        "action": "Added Industrial Inspection F1~F4 visual reference and hardware model; waiting for user visual approval",
+        "status": "VISUAL_REVIEW_PENDING"
+      },
+      {
+        "timestamp": "2026-10-16 23:11:39",
+        "action": "User visually approved version v1.0-approved",
+        "params": {
+          "target_color": "red_part",
+          "morphology_mode": "open_3x3",
+          "min_area": 100,
+          "nominal_width": 120,
+          "width_tolerance": 15,
+          "nominal_height": 80,
+          "height_tolerance": 12,
+          "roi_x": 0,
+          "roi_y": 0,
+          "roi_width": 0,
+          "roi_height": 0
+        }
+      }
+    ],
+    "frozen_params": {
+      "target_color": "red_part",
+      "morphology_mode": "open_3x3",
+      "min_area": 100,
+      "nominal_width": 120,
+      "width_tolerance": 15,
+      "nominal_height": 80,
+      "height_tolerance": 12,
+      "roi_x": 0,
+      "roi_y": 0,
+      "roi_width": 0,
+      "roi_height": 0
+    },
+    "model_sha256": "2060196dcb962468e2496a1d9115856aa60bc090dbf97b066cdf89130726418c",
+    "params_sha256": "8a0d117b5a8ba3e8db52c9e06034988c9b8f6d266c7d8be4be1abdcc638f5d88",
+    "sample_image_hashes": {
+      "workpiece_empty_conveyor.png": "3da9a64327d35c12c215fadc0fd6b64072b7aa3ad899007ed6192fd3c1faf62e",
+      "workpiece_noisy_speckles.png": "bb0c3bb1cb6aacd2197078b77b3f5d2d6fe50ce6c7e02bddf221e35cbb9ab361",
+      "workpiece_normal_pass.png": "9c836cc414b1736fb9fbaecd20b9b0ca5021d7165aeafb59b4e5df91aaa8dd08",
+      "workpiece_oversized_ng.png": "f7b3799ba9009ce1c9b86122f81b44263fca087ea0704c44872da80d6616d21a",
+      "workpiece_undersized_ng.png": "f48c3216b417024229b02e9ca0eeb1f3126bb0a28db20b20b690d7e505705842"
+    },
+    "hardware_equivalent_contract": {
+      "q10_shift": 10,
+      "q10_bias": 131072,
+      "red_cb_exclusive": [
+        85,
+        125
+      ],
+      "red_cr_exclusive": [
+        135,
+        200
+      ],
+      "dark_y_exclusive_upper": 60,
+      "morphology_border": "replicate",
+      "roi_zero_at_origin": "full_frame",
+      "invalid_roi": "INVALID"
+    },
+    "verification_git_head": "651f9bca3490649afbe1449802d1f3e8ae8df0bf",
+    "verification_branch": "fallback/industrial-inspection"
+  },
+  {
     "algorithm_id": "cartoon",
     "display_name": "Cartoonization (卡通化算法套件)",
     "category": "Stylization",
     "status": "VISUAL_APPROVED",
     "source_reference": "amd/mini-isp & work/models/cartoon_luma_reference.py",
     "license": "MIT",
-    "user_approved_version": "v1.0-test",
+    "user_approved_version": "v1.0-approved",
     "software_model_path": "work/models/cartoon_luma_reference.py",
     "hardware_model_path": "work/algorithm_lab/plugins/cartoon.py",
     "rtl_source_path": "work/rtl/video_cartoon_luma.v",
@@ -32,6 +127,17 @@
       {
         "timestamp": "2026-10-12 00:58:16",
         "action": "User visually approved version v1.0-test",
+        "params": {
+          "variant": "s3_luma",
+          "quant_levels": "8",
+          "sobel_threshold": 240,
+          "smooth_passes": "1",
+          "edge_source": "smoothed"
+        }
+      },
+      {
+        "timestamp": "2026-10-16 23:10:08",
+        "action": "User visually approved version v1.0-approved",
         "params": {
           "variant": "s3_luma",
           "quant_levels": "8",

@@ -100,3 +100,46 @@
   - 本项目为 SC520CS RAW10 2-lane MIPI 输入、DDR2 四帧缓存，下游处理存在 96-bit 4 像素并行流（如 `color_detect_96.v`）与 HDMI 24-bit 单像素流的位宽匹配问题；不能直接把单像素时钟域模块无缝连接到 4 像素流。
 - **多目标连通域资源开销**：04 的 `digit_multi_bbox.v` 虽能在 PH1P35 综合，但其 3×3 采样 Bitmap 依赖双 Bank BRAM 与复杂的 Run-length 状态机扫描，在密集目标或大噪声场景下的最坏情况吞吐与丢框率尚未经过硬件测量。
 - **未验证前禁止关闭**：上述缺口在取得当前板卡真实下载波形与实测数据前，必须保持 `OPEN`，严禁直接宣称“已解决”。
+
+## 2026-10-13 工业视觉子系统实现与验证缺口
+
+- **阶段门约束（Stage C 待验收）**：Algorithm Lab 已完成 5 组工位对比（`VISUAL_REVIEW_PENDING`），在用户明确审查并签署 `VISUAL_APPROVED` 前，禁止将算法直接挂入正式板级视频工程并生成位流。
+- **物理毫米标定缺口**：当前尺寸测量精确到像素单位（例如标准件 $120\times 80\text{ px}$），未在固定物距与焦距工位下使用标准块标定前，不输出且不宣称绝对毫米值。
+- **离线 RTL 子系统待板级集成**：`color_detect_96_v2.v`、`defect_classifier.v`、`bbox_draw_overlay.v` 已通过 Icarus Verilog 联合仿真验证（`SIM_PASS`），待 Stage C 批准后方可执行板级 DDR2/HDMI 视频总线集成与 TD 时序综合。
+
+## 2026-10-16 工业视觉 Algorithm Lab 契约补全后的状态
+
+- **已补充（project）**：Algorithm Lab 工业视觉插件现支持统一 ROI 参数、非法 ROI 的 `INVALID` 结果、参数预设保存/加载；新增契约测试 `4/4 PASS`，既有工业样本回归 `5/5 PASS`。证据见 [`../experiments/2026-10-16-industrial-inspection-algorithm-lab.md`](../experiments/2026-10-16-industrial-inspection-algorithm-lab.md)。
+- **仍开放（unknown / project risk）**：ROI 只使用像素坐标，未完成镜头、物距和标定块对应的毫米换算；不得据此报告物理尺寸精度。
+- **仍开放（project）**：`fallback/rtl/color_detect_96_v2.v` 的面积输出为 19 bit，最大值不足以表示 1280×720 全帧；RTL `CR_MAX=240` 与软件硬件等价模型使用的 `cr<200` 仍未统一。该缺口阻止 F1 行为契约关闭。
+- **仍开放（project）**：Fallback TD 最终时序有正裕量，但 `PHY-5079`、`PHY-5088` 时钟告警未逐条分类，构建脚本依赖外部绝对路径，干净环境可重建性未关闭。
+- **阶段门保持**：本次没有调用 `/api/approve`，工业视觉仍为 `VISUAL_REVIEW_PENDING`；在用户明确 `VISUAL_APPROVED` 前禁止新的正式 RTL/整机视频集成。
+
+## 2026-10-16 用户批准后的 Stage D 状态
+
+- **已关闭（project）**：用户明确确认工业视觉预览为 `VISUAL_APPROVED`，冻结版本 `v1.0-approved`。参数、源码和五个合成样本的哈希已绑定到 `work/algorithm_lab/registry.json`，并保存批准参数快照。
+- **已关闭（project）**：Stage D 硬件等价软件模型回归通过。五个冻结样本的 raw mask 与形态学后 mask 逐像素一致，`different_pixels=0`、`MAE=0`、`PSNR=inf`；判定、BBox、面积、尺寸和 ROI 坐标一致。Q10 阈值边界、`Y=60/59`、ROI 四边和 `BORDER_REPLICATE` 已有自动化证据，详见 [`../experiments/2026-10-16-industrial-inspection-stage-d.md`](../experiments/2026-10-16-industrial-inspection-stage-d.md)。
+- **仍开放（project，Stage E 阻塞）**：`fallback/rtl/color_detect_96_v2.v` 的 19-bit 面积输出不足以表示 1280×720 全帧，且 RTL `CR_MAX=240` 与当前软件硬件等价模型严格 `cr<200` 不一致；在 RTL 契约修复和仿真回归前不得进入正式视频集成。
+- **仍开放（project，Stage F/G）**：TD 构建中的 `PHY-5079`、`PHY-5088` 告警分类、构建脚本外部绝对路径、干净环境复现、板级下载/HDMI/LED/长稳和毫米标定仍未关闭。Stage D 通过不改变这些状态。
+
+## 2026-10-17 固定红色 v1 缺口校正
+
+- **已关闭（project）**：`color_detect_96_v2.v` 已使用 20-bit 面积计数，红色分割已统一为 Q10 偏置 `131072`、`85<Cb<125`、`135<Cr<200`；当前边界、全帧和工业样本回归通过。此前关于 19-bit 面积和 `CR_MAX=240` 的记录保留为历史缺口，不再描述当前 RTL。
+- **已关闭（project）**：批准的卡通化版本为 `s3_luma`，TD 构建入口已切换到 `work/rtl/video_cartoon_luma.v`，冻结 Sobel 阈值为 `240`；三模式逐周期 1102 周期比对通过。
+- **已关闭（project）**：OSD/LED 联调已覆盖 `NO_OBJECT` 文本尾部、PASS 状态和检测 LED；`NO_OBJECT` 文本映射缺陷已修复。
+- **仍开放（unknown / measured）**：没有 PH1P35、SC520CS、HDMI 的下载和显示实测，因此 Stage G、冷启动、热复位、模式视觉效果、LED 管脚和长稳仍未验证。
+- **仍开放（project risk）**：当前显式 ERAM 版本 Slice 占用 `84.64%`，仍高于项目目标 `80%`，但当前日志未出现旧版 `PHY-7022` 资源告警；TD 仍有厂商 DDR 初始化宏和时钟/接口 warnings 未逐条关闭，构建脚本依赖本机 TD 工具和官方基线工程，干净环境重建未关闭。
+
+## 2026-10-17 TD 告警与构建复现校正
+
+- **已补充（project）**：本轮完整 TD 构建已使用显式工具/基线路径参数完成，产物、源码哈希和报告哈希见 `release/industrial-v1/industrial-v1-manifest.json`。
+- **仍开放（project risk）**：本轮 `SYN-5011/5025`、`HDL-5314/5317/5323`、`SYN-5065`、`PHY-5060/5016/5079/5088` 和 `PRJ-5611` 已建立逐类归档，但尚未逐项完成 IP/时钟/板级关闭；详见 [`industrial-v1-td-warning-audit.md`](../evidence/industrial-v1-td-warning-audit.md)。
+- **仍开放（measured）**：无 PH1P35、SC520CS、HDMI 实机证据，Stage G、LED 管脚、模式视觉效果、帧率/延迟和长稳不能从本轮软件/TD证据推断。
+
+## 2026-10-17 卡通化区域填充候选校正
+
+- **已关闭（project）**：用户批准 `s4-region-fill-v1`；固定 8 级逐通道量化、四邻居局部填充、量化图 Sobel 阈值 `240` 和 `BORDER_REPLICATE` 已绑定配置与预览报告。软件参考、硬件等价模型、RTL 小尺寸/1280×720 全帧逐周期回归通过。
+- **已关闭（project）**：候选 TD 独立工程已完成综合、布局布线和位流生成；修复后三 bank 行缓存和完整亮度加权公式后，最终 `route.qor` 为 Setup WNS `+119 ps`、TNS `0`、Hold WNS `+20 ps`、TNS `0`，违例端点为 0。原始报告和位流哈希见 [`../experiments/2026-10-17-cartoon-region-fill-stage-e.md`](../experiments/2026-10-17-cartoon-region-fill-stage-e.md)。
+- **仍开放（project risk）**：修复后的候选 Slice 占用为 17,397/21,216，即 82.00%，超过项目期望的 80% 资源目标；需要进一步优化或在发布决策中明确接受余量。
+- **仍开放（project）**：候选工程依赖本机 TD 工具和官方基线 Runs；本轮是独立目录构建，不等于从干净机器无外部依赖重建，正式发布目录也未替换。
+- **仍开放（measured）**：没有 PH1P35、SC520CS、HDMI 实机下载、模式视觉、帧率/延迟、LED 或长稳证据，不能关闭 Stage G 或声明上板效果。

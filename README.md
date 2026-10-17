@@ -1,6 +1,6 @@
 # 安路 PH1P35 实时图像处理竞赛项目
 
-面向 2026 FPGA 创新设计竞赛安路赛道题目二，计划在 HX1P35A / PH1P35MDG324 上实现 SC520CS MIPI 采集、ISP 预处理、DDR2 帧缓存、HDMI 显示，以及 Sobel、卡通化和 INT8 YOLO-tiny 硬件检测，并联动 OSD、LED 和 WM8978 语音播报。
+面向 2026 FPGA 创新设计竞赛安路赛道题目二，当前固定红色零件 v1 在 HX1P35A / PH1P35MDG324 上实现 SC520CS MIPI 采集、ISP 预处理、DDR2 帧缓存、HDMI 显示、原图/Sobel/卡通化、红色零件检测、OSD 和 LED 联动。YOLO 已从本版本范围移除；WM8978 仍是后续可选扩展。
 
 ## 先从这里开始
 
@@ -61,3 +61,20 @@ python .\work\models\reference_model.py --self-test
 官方资料分享入口及文件名见 `preboard/06-package-manifest.md`。本机取得的官方压缩包和解压工程尚未整理成可移植、可公开分发的工程；原始 TD 工程含生成物和本机绝对路径。因此，本仓库当前不能单独重建 Bitstream。取得来源许可和完成工程审计后，再将必要的 RTL、约束和 IP 配置作为可复现工程纳入版本控制。
 
 项目目标、阶段门和验收证据以 `AGENTS.md` 为准；未确认的硬件参数、模型接口和外设管脚记录在 `docs/research/known-gaps.md`。
+
+**2026-10-17 固定红色零件 v1：** 已完成软件模型、硬件等价模型和独立 RTL 仿真回归；当前 TD 构建和 Stage G 上板仍按 [实验记录](docs/experiments/2026-10-17-industrial-inspection-stage-e.md) 记录，未有板级证据前不宣称稳定可用。
+
+当前可下载位流：[industrial-v1/camera_to_dsi_display_compress.bit](release/industrial-v1/camera_to_dsi_display_compress.bit)，大小 `1,371,249 bytes`，SHA-256：`e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3`。第二次完整 TD 构建最终 Setup WNS `+103 ps`、Hold WNS `+20 ps`、TNS 均为 `0`；Slice `16,852/79.43%`、RAM `43`、DSP `24`、STA coverage `96.52%`。形态学行缓存和 ROI 边界复制语义已随本轮源码重建；两次构建均生成位流，P&R 的字节差异已记录为非确定性结果。仍未在板卡上实测。源码、报告和输入路径记录在 [industrial-v1-manifest.json](release/industrial-v1/industrial-v1-manifest.json)。
+
+重新构建时，向 `scripts/build_industrial_td.py` 显式传入 TD 可执行文件、`DefaultFlow.tcl` 和官方 SC520 基线 `Runs` 目录；也可以使用 `FPGA_TD_EXE`、`FPGA_FLOW_TCL`、`FPGA_BASELINE_RUNS` 环境变量。脚本会把位流、`route.qor`、`final_timing.rpt` 和 provenance manifest 写入 `release/industrial-v1/`。
+
+```powershell
+python scripts/build_industrial_td.py `
+  --td-exe E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe `
+  --flow-tcl E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl `
+  --baseline-runs E:/Projects/FPGA/HX1P35A2026/lab_ex1_mipi_hdmi_SC520_original/lab_ex1_mipi_hdmi_SC520/lab_ex1_mipi_hdmi/td_project/camera_to_dsi_display_Runs
+```
+
+上板记录模板：[industrial-v1-stage-g-template.md](docs/evidence/industrial-v1-stage-g-template.md)。
+
+逐项要求审计：[industrial-v1-requirement-audit.md](docs/evidence/industrial-v1-requirement-audit.md)；TD 告警归类：[industrial-v1-td-warning-audit.md](docs/evidence/industrial-v1-td-warning-audit.md)。

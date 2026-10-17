@@ -1,0 +1,115 @@
+{
+  "project": "PH1P35 fixed-red industrial inspection v1",
+  "target_device": "PH1P35MDG324",
+  "git_commit": "8077f9567e546998cbed93671e3ad8b4ac2b8561",
+  "git_status": " M fallback/tb_color.vvp",
+  "build_inputs": {
+    "td_exe": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
+    "flow_tcl": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
+    "baseline_runs": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs"
+  },
+  "build_input_hashes": {
+    "td_exe": {
+      "path": "E:\\Projects\\FPGA\\.tools\\td\\app\\bin\\td_commands_prompt.exe",
+      "exists": true,
+      "size_bytes": 76680976,
+      "sha256": "e2e04ada5e256dccd017240c0f4dcface7f96dca67cde0e56e606ac0e02f827a"
+    },
+    "flow_tcl": {
+      "path": "E:\\Projects\\FPGA\\.tools\\td\\app\\doc\\scripts\\DefaultFlow.tcl",
+      "exists": true,
+      "size_bytes": 7809,
+      "sha256": "d1a5d4291706dac224cc33008d8945e79ed2eb1adf8ce86cca46be564975bade"
+    },
+    "baseline_files": {
+      "syn_1/settings.cfg": {
+        "path": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs\\syn_1\\settings.cfg",
+        "exists": true,
+        "size_bytes": 698,
+        "sha256": "0edb3a700629ede8b9f436782036851e07146991899bd2533622ee221e70c149"
+      },
+      "syn_1/camera_to_dsi_display.prj": {
+        "path": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs\\syn_1\\camera_to_dsi_display.prj",
+        "exists": true,
+        "size_bytes": 24288,
+        "sha256": "63507a5350c9bba7885febda6492b5fdd72ca5a1b51544204026d999bd654c00"
+      },
+      "phy_1/settings.cfg": {
+        "path": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs\\phy_1\\settings.cfg",
+        "exists": true,
+        "size_bytes": 755,
+        "sha256": "082f4f12f328456316e9d4452a85aa12034bd92651c839929ab9afe0214edce8"
+      },
+      "phy_1/camera_to_dsi_display.prj": {
+        "path": "E:\\Projects\\FPGA\\HX1P35A2026\\lab_ex1_mipi_hdmi_SC520_original\\lab_ex1_mipi_hdmi_SC520\\lab_ex1_mipi_hdmi\\td_project\\camera_to_dsi_display_Runs\\phy_1\\camera_to_dsi_display.prj",
+        "exists": true,
+        "size_bytes": 24408,
+        "sha256": "c7b53a6476a64b8e366a0874809f69e6375f3844fccbc38076b70ad56c39b98d"
+      }
+    }
+  },
+  "sources": [
+    {
+      "path": "work/rtl/video_cartoon_luma.v",
+      "sha256": "4c6e356eedee30742ace163d06bd330c4ae09a5314d64d7a3e82fdf64f5d2339"
+    },
+    {
+      "path": "fallback/td_source/design_top_wrapper.v",
+      "sha256": "16fd445ac0a6b354b74fa890d7dd12e246b9943009fdf21143b770c54b688b8c"
+    },
+    {
+      "path": "fallback/td_source/isp/isp_top.v",
+      "sha256": "0d1cbaa130a6424602223289b5682a127ee29f22ffd027f44efa387e59c4ad7a"
+    },
+    {
+      "path": "fallback/rtl/morph_open_96.v",
+      "sha256": "761681aa3c74d674610d29b5b05c311900aa12f4f6d2bfbefd769b2e6c6b7af9"
+    },
+    {
+      "path": "fallback/rtl/color_detect_96_v2.v",
+      "sha256": "dab981254f8db1706706ecc9d93b11b6624324fbc5f0f27b500ca045eb303628"
+    },
+    {
+      "path": "fallback/rtl/defect_classifier.v",
+      "sha256": "37421c1e86f95b3d6e785aae3ff14c6d690df10e3d30258dad222e495f9f7895"
+    },
+    {
+      "path": "fallback/rtl/bbox_draw_overlay.v",
+      "sha256": "29df2b9937dd32221b039ac57284edbc057d9221dc6367a8be8511fc81739a28"
+    },
+    {
+      "path": "fallback/rtl/anlogic_logo_rom.v",
+      "sha256": "fb55bc3da23e79e5fd9cc1c9210dddf99b8fa8595f59336f2e5447725c2d161d"
+    },
+    {
+      "path": "fallback/rtl/industrial_osd_overlay.v",
+      "sha256": "7a49fc51826a435b38245fea4f72c5a57d18cf2e91da78d7f075aa3e0610a007"
+    },
+    {
+      "path": "fallback/rtl/mode_controller.v",
+      "sha256": "f792c7385c1427480df26f068392ba3d4b1889008a238889d2d1bd8c6c9ea0cf"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "release/industrial-v1/camera_to_dsi_display.bit",
+      "size_bytes": 1789539,
+      "sha256": "19e58be3e7586bb7f89136be9a2228db8d37c984ed14f934646ee68adf360653"
+    },
+    {
+      "path": "release/industrial-v1/camera_to_dsi_display_compress.bit",
+      "size_bytes": 1371249,
+      "sha256": "e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3"
+    },
+    {
+      "path": "release/industrial-v1/route.qor",
+      "size_bytes": 1313,
+      "sha256": "ec408f3e39c297b8f721e73fd73b62deb43c38fff5ce83c7f8fd9e3c333f64a6"
+    },
+    {
+      "path": "release/industrial-v1/final_timing.rpt",
+      "size_bytes": 4825884,
+      "sha256": "e9eb1d45d57efe22af5dad8ca92e84200dbf3396faca35820a68e15b9634cfb6"
+    }
+  ]
+}

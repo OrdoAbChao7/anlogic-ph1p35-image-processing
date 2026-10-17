@@ -6,7 +6,7 @@
 module video_cartoon #(
     parameter integer WIDTH = 1280,
     parameter integer HEIGHT = 720,
-    parameter [11:0] EDGE_THRESHOLD = 12'd160
+    parameter [11:0] EDGE_THRESHOLD = 12'd240
 )(
     input wire clk, rst_n,
     input wire i_vs, i_hs, i_de,

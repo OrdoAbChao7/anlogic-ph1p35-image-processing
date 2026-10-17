@@ -21,15 +21,15 @@
 
 ---
 
-## 2. 主线：智能视觉系统
+## 2. 主线：固定工位红色零件实时视觉系统
 
-**主线不变，以下为比赛必须交付项。**
+**本版本采用固定工位传统视觉，不再实现 YOLO/Micro-CNN。以下为第一版必须交付项。**
 
 ### 2.1 视频主链路
 
 ```text
 SC520CS RAW10 → MIPI D-PHY/CSI-2 → ISP（拜耳解码 + 白平衡）→ DDR2
-  → 图像处理（三种模式之一） → HDMI 720p
+  → 图像处理（三种模式） → 固定红色零件检测 → OSD/LED → HDMI 720p
 ```
 
 三种显示模式（按键切换，帧边界生效）：
@@ -40,11 +40,13 @@ SC520CS RAW10 → MIPI D-PHY/CSI-2 → ISP（拜耳解码 + 白平衡）→ DDR2
 | Sobel 边缘检测 | 实时流水线，Line Buffer + 3×3 梯度 |
 | 卡通化 | 颜色量化 + 区域填充 + Sobel 轮廓融合 |
 
-### 2.2 目标检测（YOLO 方向）
+### 2.2 固定红色零件检测
 
-- **结论（2026-10-11 评估）**：完整版 YOLO-tiny **NO-GO**；片上深度剪枝 Micro-CNN / 裁剪 YOLO 架构 **GO**。
-- 检测链路：DDR2 / 视频分叉 → ROI 缩放 → 片上 INT8 MAC 阵列 → NMS → OSD 坐标。
-- 权重、量化参数、候选框解码和 NMS 规则须可追溯；GO/NO-GO 每阶段重评。
+- 检测条件：固定摄像头、固定物距、固定光照、固定背景和固定 ROI。
+- 检测对象：一种固定红色零件，类别固定为 `red_part`，目标总数只输出 `0/1`。
+- 检测链路：RGB 视频分叉 → Q10 YCbCr 分割 → 3×3 开运算 → 面积统计 → 单目标包围盒 → 宽高判定 → OSD/LED。
+- 冻结参数：`85<Cb<125`、`135<Cr<200`、最小面积 `100 px`、标准尺寸 `120×80 px`、宽/高公差 `±15/±12 px`；ROI 参数在真实工位测量后固定。
+- 结果状态：`PASS`、`NG`、`NO_OBJECT`、`INVALID`；未完成毫米标定前只显示像素尺寸。
 
 ### 2.3 OSD 与外设
 
@@ -56,7 +58,7 @@ SC520CS RAW10 → MIPI D-PHY/CSI-2 → ISP（拜耳解码 + 白平衡）→ DDR2
 | 检测框 / 类别 / 总数 | 基础 OSD 不依赖 YOLO |
 | 按键 | 模式切换（A4=边缘，B4=卡通；实物丝印待核对） |
 | LED | 有效检测事件联动 |
-| WM8978 | 语音播报（可选，不影响基础 OSD） |
+| WM8978 | 第一版不纳入；确认板级音频器件和接口后再作为可选扩展 |
 
 ### 2.4 实现约束
 
@@ -67,14 +69,14 @@ SC520CS RAW10 → MIPI D-PHY/CSI-2 → ISP（拜耳解码 + 白平衡）→ DDR2
 
 ---
 
-## 3. 备选路线：传统工业视觉检测
+## 3. 工业视觉实现载体
 
-备选路线独立维护，**不因主线推进而删除**。
+工业视觉 RTL 和 TD 工程继续在 `E:\Projects\FPGA-fallback` 的 `fallback/industrial-inspection` 工作树维护；历史上的“备选路线”称呼不再表示第一版产品范围之外。
 
 检测链路：SC520CS → MIPI → ISP → 灰度 + 形态学滤波 → 阈值分割 → 包围盒 / 面积 / 质心 → 缺陷判定 → OSD + LED。
 
-现有资产：`HX1P35A2026/lab_ex1-3_SC520/user_source/hdl_source/isp/color_detect_96.v`  
-状态：`IMPLEMENTED_UNVERIFIED`
+现有资产：`fallback/rtl/color_detect_96_v2.v`、`fallback/rtl/defect_classifier.v`、`fallback/rtl/bbox_draw_overlay.v`。
+状态：软件 Stage D 已通过；RTL 独立仿真和 TD 构建已有证据，但整机上板仍待验证。
 
 备选路线状态详见 [`../fallback-status.md`](../fallback-status.md)。
 
@@ -85,15 +87,18 @@ SC520CS RAW10 → MIPI D-PHY/CSI-2 → ISP（拜耳解码 + 白平衡）→ DDR2
 | 类别 | 内容 |
 |---|---|
 | **官方必选** | MIPI 视频采集、HDMI 显示、至少一种算法、OSD |
-| **计划中** | Sobel 流水线、卡通化（颜色量化+轮廓）、INT8 Micro-CNN 检测、Logo OSD、外设联动 |
-| **已实现（待上板验证）** | 卡通化 RTL（三个候选版本，见 STATUS.md）；Sobel 已有参考 RTL；INT8 PE 模块已有基础结构 |
-| **尚未实现** | 完整 OSD 叠加、NMS、WM8978 语音、区域连通填充 |
+| **计划中** | Sobel 流水线、卡通化（颜色量化+轮廓）、固定红色零件检测、Logo OSD、帧计数、按键和 LED 联动 |
+| **已实现（待整机上板验证）** | 工业视觉软件模型和 Stage D 等价回归；工业视觉独立 RTL/TD 资产；卡通化候选 RTL；Sobel 参考 RTL |
+| **第一版不纳入** | YOLO/Micro-CNN、INT8 MAC/NMS、多类别多目标检测、WM8978 语音 |
 
 ---
 
 ## 5. 非目标
 
 - 不使用软核 CPU（赛题约束）
+- 第一版不实现 YOLO/Micro-CNN；保留历史研究资料但不作为交付依赖
+- 第一版不以 WM8978 作为通过门槛
+- 第一版检测只覆盖固定工位的一种红色零件、单目标 `0/1`
 - 不使用第三方 PHY/CSI-2/DDR IP（直接移植到 PH1P35 需官方支持）
 - 不移植其他 FPGA 平台的底层原语和约束
 - 上板前不声明任何实时性能或精度指标为"已达成"
@@ -104,6 +109,6 @@ SC520CS RAW10 → MIPI D-PHY/CSI-2 → ISP（拜耳解码 + 白平衡）→ DDR2
 
 | 日期 | 提案内容 | 状态 |
 |---|---|---|
-| （无）| — | — |
+| 2026-10-16 | 采用固定红色零件传统视觉作为第一版主线；移除 YOLO/Micro-CNN 和 WM8978 第一版门槛；要求单 `.bit` 现场下载交付 | 用户确认 |
 
 > 所有正式变更须存档到 `docs/decisions/` 并在此索引。
