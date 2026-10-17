@@ -46,3 +46,5 @@ Thumbs.db
 !release/
 !release/industrial-v1/
 !release/industrial-v1/*.bit
+!release/cartoon-region-fill-v1/
+!release/cartoon-region-fill-v1/*.bit
