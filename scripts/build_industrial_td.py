@@ -25,7 +25,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TD_EXE = Path(os.environ.get("FPGA_TD_EXE", "E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe"))
 DEFAULT_FLOW_TCL = Path(os.environ.get("FPGA_FLOW_TCL", "E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl"))
 DEFAULT_ORIG_RUNS = Path(os.environ.get("FPGA_BASELINE_RUNS", "E:/Projects/FPGA/HX1P35A2026/lab_ex1_mipi_hdmi_SC520_original/lab_ex1_mipi_hdmi_SC520/lab_ex1_mipi_hdmi/td_project/camera_to_dsi_display_Runs"))
-WORK_PROJECT = ROOT / "work" / "td_industrial"
+DEFAULT_WORK_PROJECT = ROOT / "work" / "td_industrial"
+WORK_PROJECT = DEFAULT_WORK_PROJECT
 WORK_RUNS = WORK_PROJECT / "td_project" / "camera_to_dsi_display_Runs"
 # Keep the one-file download artifact in the tracked release directory so a
 # clean build and the README point to the same output.
@@ -162,6 +163,16 @@ def parse_args(argv=None):
         help="Directory for the downloadable bitstream and provenance artifacts.",
     )
     parser.add_argument(
+        "--video-rtl",
+        default=str(TRACKED_VIDEO),
+        help="Tracked video RTL source; defaults to the approved s3_luma implementation.",
+    )
+    parser.add_argument(
+        "--work-project",
+        default=str(DEFAULT_WORK_PROJECT),
+        help="Isolated TD project workspace; defaults to work/td_industrial.",
+    )
+    parser.add_argument(
         "--manifest-only",
         action="store_true",
         help="Write a provenance manifest for existing release artifacts without running TD.",
@@ -170,11 +181,14 @@ def parse_args(argv=None):
 
 
 def configure(args):
-    global TD_EXE, FLOW_TCL, ORIG_RUNS, RELEASE_DIR
-    TD_EXE = Path(args.td_exe).expanduser()
-    FLOW_TCL = Path(args.flow_tcl).expanduser()
-    ORIG_RUNS = Path(args.baseline_runs).expanduser()
-    RELEASE_DIR = Path(args.release_dir).expanduser()
+    global TD_EXE, FLOW_TCL, ORIG_RUNS, RELEASE_DIR, TRACKED_VIDEO, WORK_PROJECT, WORK_RUNS
+    TD_EXE = Path(args.td_exe).expanduser().resolve()
+    FLOW_TCL = Path(args.flow_tcl).expanduser().resolve()
+    ORIG_RUNS = Path(args.baseline_runs).expanduser().resolve()
+    RELEASE_DIR = Path(args.release_dir).expanduser().resolve()
+    TRACKED_VIDEO = Path(args.video_rtl).expanduser().resolve()
+    WORK_PROJECT = Path(args.work_project).expanduser().resolve()
+    WORK_RUNS = WORK_PROJECT / "td_project" / "camera_to_dsi_display_Runs"
 
 
 def git_output(*args):
@@ -270,6 +284,27 @@ def validate_inputs():
 
 def setup_runs():
     print("[1/5] Setting up synthesis and physical design runs for Industrial Inspection...")
+
+    # A candidate build may use a fresh workspace. Seed it from the tracked
+    # TD project skeleton, but never copy an old synthesis/P&R run into the
+    # candidate workspace. The default workspace is left untouched.
+    if not WORK_PROJECT.exists():
+        baseline_project = ROOT / "work" / "td_industrial"
+        if not baseline_project.exists():
+            raise FileNotFoundError(
+                f"TD project skeleton missing: {baseline_project}"
+            )
+        shutil.copytree(
+            baseline_project,
+            WORK_PROJECT,
+            ignore=shutil.ignore_patterns(
+                "camera_to_dsi_display_Runs",
+                "*.log",
+                "*.err.log",
+                "*.out.log",
+            ),
+        )
+        print(f"      seeded isolated TD workspace from {baseline_project}")
 
     # Refresh vendor-project application sources from the tracked RTL.
     for rtl_name in ["morph_open_96.v", "color_detect_96_v2.v", "defect_classifier.v", "bbox_draw_overlay.v", "anlogic_logo_rom.v", "industrial_osd_overlay.v", "mode_controller.v"]:

@@ -29,7 +29,7 @@
 |---|---|---|---|
 | **G1** | 视频采集与显示闭环 | `BUILD_PASS`，硬件待验证 | 当前 fixed-red v1 已生成整机位流；构建脚本已在发布收集前强制校验 route QoR；无本轮下载/显示实测 |
 | **G2** | 接口 / 时钟 / ISP 基线审计 | `IMPLEMENTED_UNVERIFIED` | 已形成 [代码级接口审计](../architecture/sc520-interface-contract.md)；硬件接口、CDC 波形和告警关闭仍待实测 |
-| **G3** | 卡通化与基础模式 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `run_cartoon_luma_sim.py` 1102 周期逐周期通过；当前 TD 使用批准 s3_luma |
+| **G3** | 卡通化与基础模式 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 基线和批准的 `s4-region-fill-v1` 均已完成仿真；s4 候选独立 TD 构建最终 QoR 通过，未替换正式发布位流 |
 | **G4** | Sobel 实时流水线 | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | s3_luma 三模式回归与 TD 时序报告 |
 | **G5** | 固定红色传统视觉检测（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | 5 组工业样本 100% 一致；RTL 子系统和整机 TD 已通过 |
 | **G6** | OSD + LED 联动（v1） | `SIM_PASS` / `BUILD_PASS`，硬件待验证 | `tb_osd_led_joint.v` 与整机 OSD 集成；WM8978 不在 v1 范围 |
@@ -67,7 +67,7 @@
 | `video_cartoon_luma.v`（s3_luma 亮度量化） | `SIM_PASS` / `BUILD_PASS` | 仿真：5329 周期小尺寸 + 1188032 周期全尺寸通过；TD构建：Setup WNS +143ps, Hold WNS +20ps, 位流 `s3_luma.bit` (71c8...abc6) 生成 |
 | cartoon-release 位流 | `USER_REPORTED_ON_BOARD` | SHA-256: `8284e7a90d3c36c20440d6e989800b4912683c5157e153cb64b3722f33bdd9f3`；用户反馈视觉效果差 |
 | Sobel 轮廓融合 | `IMPLEMENTED_UNVERIFIED` | 阈值已验证软件模型，上板效果待确认 |
-| 区域连通填充 | `OUT_OF_SCOPE` | fixed-red v1 使用冻结的 3×3 opening；区域连通填充不是当前批准版本门槛 |
+| 局部区域填充 `s4-region-fill-v1` | `SIM_PASS` / `BUILD_PASS` | 用户批准记录、13/13 软件回归、1280×720 RTL 全帧通过；候选 route QoR：Setup WNS +160 ps、Hold WNS +20 ps；见 `docs/experiments/2026-10-17-cartoon-region-fill-stage-e.md` |
 | 按键模式切换上板 | `USER_REPORTED_ON_BOARD` | 用户报告切换可实现 |
 | **G3 阶段门** | **未通过** | 待用户对 s3_luma 候选位流进行上板测试与视觉验收 |
 

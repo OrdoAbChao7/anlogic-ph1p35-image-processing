@@ -29,6 +29,7 @@ work/algorithm_lab/cache/
 work/algorithm_lab/exports/industrial_inspection_preview/
 work/algorithm_lab/exports/exp_cartoon_*/
 work/td_industrial/
+work/td_industrial_region_fill/
 preboard/inbox/*
 !preboard/inbox/README.md
 __pycache__/
