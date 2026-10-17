@@ -77,6 +77,19 @@ class CartoonRegionFillBuildContractTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 build_td.assert_no_user_owned_artifacts(staging)
 
+    def test_manifest_only_rejects_user_owned_vvp_in_release(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            release = Path(tmp) / "release"
+            release.mkdir()
+            (release / "tb_color.vvp").write_bytes(b"user-owned")
+            original_release = build_td.RELEASE_DIR
+            try:
+                build_td.RELEASE_DIR = release
+                with self.assertRaises(RuntimeError):
+                    build_td.write_existing_release_manifest()
+            finally:
+                build_td.RELEASE_DIR = original_release
+
     def test_source_manifest_never_includes_user_owned_vvp(self):
         source_paths = [entry["path"] for entry in build_td.source_manifest()]
         self.assertTrue(any(path.endswith("video_cartoon_luma.v") for path in source_paths))

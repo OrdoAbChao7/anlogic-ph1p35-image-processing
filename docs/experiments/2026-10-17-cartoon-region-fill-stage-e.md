@@ -31,7 +31,7 @@
 | 资源 | 17,397 slices（82.00%）、43 RAM、24 DSP、229 DRAMHARDCON |
 | QoR 门 | PASS |
 
-本次候选构建清单绑定提交 `c458986`；视频 RTL 源文件 SHA-256 为 `985b18caefb0237e56121f29870e037d8660675c7893e2d360f123183d8eeb4b`。
+候选位流的 RTL/构建脚本内容对应提交 `c458986`；最终 `industrial-v1-manifest.json` 在后续文档提交后刷新，清单中的 `git_commit` 记录清单刷新提交。视频 RTL 源文件 SHA-256 为 `985b18caefb0237e56121f29870e037d8660675c7893e2d360f123183d8eeb4b`。
 
 关键原始报告：
 

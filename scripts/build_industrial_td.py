@@ -546,6 +546,7 @@ def collect_release():
 def write_existing_release_manifest():
     print(f"\n[manifest] Collecting provenance for existing artifacts in {RELEASE_DIR}...")
     RELEASE_DIR.mkdir(parents=True, exist_ok=True)
+    assert_no_user_owned_artifacts(RELEASE_DIR)
     bit_files = list(RELEASE_DIR.glob("*.bit"))
     if not bit_files:
         raise FileNotFoundError(f"No .bit files found in {RELEASE_DIR}")
