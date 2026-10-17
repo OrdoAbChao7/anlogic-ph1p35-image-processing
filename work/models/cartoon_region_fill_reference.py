@@ -77,6 +77,57 @@ def sobel_edges(quantized: np.ndarray, threshold: int = 240) -> np.ndarray:
     return ((np.abs(gx) + np.abs(gy)) >= int(threshold)).astype(np.uint8) * 255
 
 
+def _causal_windows(quantized: np.ndarray) -> tuple[np.ndarray, ...]:
+    """Return the RTL line-buffer window ending at each accepted pixel."""
+    padded = np.pad(quantized, ((2, 0), (2, 0), (0, 0)), mode="edge")
+    return (
+        padded[:-2, :-2],
+        padded[:-2, 1:-1],
+        padded[:-2, 2:],
+        padded[1:-1, :-2],
+        padded[1:-1, 1:-1],
+        padded[1:-1, 2:],
+        padded[2:, :-2],
+        padded[2:, 1:-1],
+        padded[2:, 2:],
+    )
+
+
+def filter_rgb_streaming(
+    rgb: np.ndarray, threshold: int = 240
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Return the hardware-equivalent causal-window result.
+
+    The output at (y, x) uses the causal window [y-2:y, x-2:x], matching the
+    existing line-buffer RTL and its fixed sideband latency.
+    """
+    quantized = quantize_rgb(rgb)
+    a, b, c, d, e, f, g, h, i = _causal_windows(quantized)
+    same_neighbours = (
+        np.all(b == h, axis=2)
+        & np.all(h == d, axis=2)
+        & np.all(d == f, axis=2)
+    )
+    filled = np.where(same_neighbours[..., None], b, e).astype(np.uint8)
+
+    def y_value(pixel: np.ndarray) -> np.ndarray:
+        return (
+            (pixel[:, :, 0].astype(np.int32) >> 2)
+            + (pixel[:, :, 1].astype(np.int32) >> 1)
+            + (pixel[:, :, 2].astype(np.int32) >> 2)
+        )
+
+    ya, yb, yc = y_value(a), y_value(b), y_value(c)
+    yd, yf = y_value(d), y_value(f)
+    yg, yh, yi = y_value(g), y_value(h), y_value(i)
+    gx = -ya + yc - 2 * yd + 2 * yf - yg + yi
+    gy = -ya - 2 * yb - yc + yg + 2 * yh + yi
+    edge = ((np.abs(gx) + np.abs(gy)) >= int(threshold)).astype(np.uint8) * 255
+    cartoon = filled.copy()
+    cartoon[edge != 0] = 0
+    return cartoon, edge, filled
+
+
 def filter_rgb(
     rgb: np.ndarray, threshold: int = 240
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:

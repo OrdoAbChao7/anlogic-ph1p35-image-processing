@@ -8,7 +8,7 @@ from typing import Iterable
 
 import numpy as np
 
-from cartoon_region_fill_reference import filter_rgb
+from cartoon_region_fill_reference import filter_rgb_streaming
 
 
 LATENCY_CYCLES = 6
@@ -25,7 +25,7 @@ def build_expected_frame(rgb: np.ndarray, mode: int) -> np.ndarray:
     """Return the RGB frame expected at the module output for one mode."""
     if mode not in (0, 1, 2):
         raise ValueError("mode must be 0 (raw), 1 (edge), or 2 (cartoon)")
-    cartoon, edge, _ = filter_rgb(rgb, threshold=240)
+    cartoon, edge, _ = filter_rgb_streaming(rgb, threshold=240)
     if mode == 0:
         return rgb.copy()
     if mode == 1:

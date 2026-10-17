@@ -10,7 +10,7 @@ MODEL_ROOT = Path(__file__).resolve().parents[3] / "work" / "models"
 if str(MODEL_ROOT) not in sys.path:
     sys.path.insert(0, str(MODEL_ROOT))
 from cartoon_region_fill_reference import (  # noqa: E402
-    filter_rgb as region_fill_filter_rgb,
+    filter_rgb_streaming as region_fill_filter_rgb,
     quantize_rgb as region_fill_quantize_rgb,
 )
 

@@ -15,7 +15,7 @@
 - 量化固定为 `Q(v)=(v[7:5]<<5)|(v[7:5]<<2)|(v[7:5]>>1)`，逐通道 RGB888。
 - 局部区域填充固定为 `N==S && S==W && W==E` 时 `F=N`，否则 `F=C`。
 - Sobel 使用量化窗口亮度 `Y=(R+2*G+B)>>2`，阈值固定 `240`。
-- 图像边界使用 `BORDER_REPLICATE`；空白区不推进坐标；模式只在新帧首个有效像素生效。
+- 图像边界使用 causal `BORDER_REPLICATE`；窗口右下锚定当前采样，实际复制上/左边界；空白区不推进坐标；模式只在新帧首个有效像素生效。
 - RTL 纯 Verilog、一像素/拍、无背压；旁带信号与 RGB 使用相同延迟，目标延迟 6 cycles，最终以波形冻结。
 - 不修改 `work/rtl/video_cartoon_luma.v`、`work/algorithm_lab/configs/industrial_inspection/approved_v1.0-approved.json` 或用户已有的 `fallback/tb_color.vvp`。
 - 未重新获得候选视觉 `VISUAL_APPROVED` 前，不把候选加入正式发布位流或替换 registry 的批准版本。

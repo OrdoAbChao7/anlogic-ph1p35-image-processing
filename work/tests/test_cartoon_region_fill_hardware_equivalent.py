@@ -16,7 +16,7 @@ from cartoon_region_fill_hardware_equivalent import (  # noqa: E402
     generate_vectors,
     write_vectors,
 )
-from cartoon_region_fill_reference import filter_rgb  # noqa: E402
+from cartoon_region_fill_reference import filter_rgb_streaming  # noqa: E402
 
 
 class CartoonRegionFillHardwareEquivalentTests(unittest.TestCase):
@@ -24,7 +24,7 @@ class CartoonRegionFillHardwareEquivalentTests(unittest.TestCase):
         rgb = np.zeros((5, 6, 3), dtype=np.uint8)
         rgb[1:4, 2:5] = [220, 20, 20]
         rgb[2, 3] = [20, 20, 220]
-        cartoon, edge, filled = filter_rgb(rgb)
+        cartoon, edge, filled = filter_rgb_streaming(rgb)
         np.testing.assert_array_equal(build_expected_frame(rgb, 2), cartoon)
         np.testing.assert_array_equal(build_expected_frame(rgb, 1), np.repeat(edge[:, :, None], 3, axis=2))
         np.testing.assert_array_equal(build_expected_frame(rgb, 0), rgb)

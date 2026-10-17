@@ -9,7 +9,7 @@
 ## 候选输入与参数
 
 - 候选配置：`work/algorithm_lab/configs/industrial_inspection/cartoon_region_fill_v1.json`
-- 算法：逐通道 8 级量化、四邻居局部区域填充、量化图 Sobel 轮廓融合
+- 算法：逐通道 8 级量化、四邻居局部区域填充、量化图 Sobel 轮廓融合；硬件等价路径采用右下锚定的 causal `3×3` 窗口
 - 参数：`quant_levels=8`、`sobel_threshold=240`、`BORDER_REPLICATE`
 - 预览脚本：`work/tests/render_cartoon_region_fill_preview.py --approved`
 - 预览报告：`work/output/cartoon-region-fill-candidate/visual-review.json`
