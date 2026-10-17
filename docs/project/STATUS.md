@@ -237,3 +237,6 @@
 
 > 2026-10-17 repeat full TD build:
 > 在发布提交 `8077f9567e546998cbed93671e3ad8b4ac2b8561` 上使用相同 TD、DefaultFlow 和官方基线 Runs 完成第二次完整综合、布局、布线、Hold Fix、bitgen，exit code `0`。最终 Setup WNS `+103 ps`、Hold WNS `+20 ps`、TNS `0`，Slice `16,852/79.43%`、RAM `43`、DSP `24`、DRAMHARDCON `229`、STA coverage `96.52%`；压缩位流 SHA-256 为 `e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3`。两次 P&R 均通过，位流字节差异作为非确定性结果保留；资源目标已达到，Stage G 仍未通过。
+
+> 2026-10-17 s4 candidate package:
+> 批准的 `s4-region-fill-v1` 使用提交 `dba6c0c28e1feba06a460951d5f8d232459b62e4` 的完整顶层完成独立 TD 构建，Setup WNS `+119 ps`、Hold WNS `+20 ps`、TNS `0`、违例端点 `0`，Slice `17,397/82.00%`、RAM `43`、DSP `24`。压缩位流已作为候选发布包提交到 GitHub 提交 `414dd492af63c14c2041ac47daae6e0a86bcfc9d`：[`release/cartoon-region-fill-v1`](../../release/cartoon-region-fill-v1/)，SHA-256 `d331d6b7af11b9bb1f8d51826818bf40d3badf87b194251a3587aee4f4c5baf7`。包状态为 `BUILD_PASS / HARDWARE_NOT_RUN`，未替换正式 `release/industrial-v1`，Stage G 仍未通过。
