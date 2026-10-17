@@ -67,7 +67,7 @@
 | `video_cartoon_luma.v`（s3_luma 亮度量化） | `SIM_PASS` / `BUILD_PASS` | 仿真：5329 周期小尺寸 + 1188032 周期全尺寸通过；TD构建：Setup WNS +143ps, Hold WNS +20ps, 位流 `s3_luma.bit` (71c8...abc6) 生成 |
 | cartoon-release 位流 | `USER_REPORTED_ON_BOARD` | SHA-256: `8284e7a90d3c36c20440d6e989800b4912683c5157e153cb64b3722f33bdd9f3`；用户反馈视觉效果差 |
 | Sobel 轮廓融合 | `IMPLEMENTED_UNVERIFIED` | 阈值已验证软件模型，上板效果待确认 |
-| 局部区域填充 `s4-region-fill-v1` | `SIM_PASS` / `BUILD_PASS` | 用户批准记录、13/13 软件回归、1280×720 RTL 全帧通过；候选 route QoR：Setup WNS +160 ps、Hold WNS +20 ps；见 `docs/experiments/2026-10-17-cartoon-region-fill-stage-e.md` |
+| 局部区域填充 `s4-region-fill-v1` | `SIM_PASS` / `BUILD_PASS`，资源风险 | 用户批准记录、修复后三 bank RTL 与 1280×720 全帧通过；候选 route QoR：Setup WNS +119 ps、Hold WNS +20 ps；Slice 82.00% 高于项目期望 80%，未替换正式发布位流 |
 | 按键模式切换上板 | `USER_REPORTED_ON_BOARD` | 用户报告切换可实现 |
 | **G3 阶段门** | **未通过** | 待用户对 s3_luma 候选位流进行上板测试与视觉验收 |
 

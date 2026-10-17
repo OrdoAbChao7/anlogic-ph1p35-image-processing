@@ -45,9 +45,12 @@ def local_fill(quantized: np.ndarray) -> np.ndarray:
 
 def _luma(quantized: np.ndarray) -> np.ndarray:
     return (
-        (quantized[:, :, 0].astype(np.int32) >> 2)
-        + (quantized[:, :, 1].astype(np.int32) >> 1)
-        + (quantized[:, :, 2].astype(np.int32) >> 2)
+        (
+            quantized[:, :, 0].astype(np.int32)
+            + 2 * quantized[:, :, 1].astype(np.int32)
+            + quantized[:, :, 2].astype(np.int32)
+        )
+        >> 2
     )
 
 
@@ -112,9 +115,12 @@ def filter_rgb_streaming(
 
     def y_value(pixel: np.ndarray) -> np.ndarray:
         return (
-            (pixel[:, :, 0].astype(np.int32) >> 2)
-            + (pixel[:, :, 1].astype(np.int32) >> 1)
-            + (pixel[:, :, 2].astype(np.int32) >> 2)
+            (
+                pixel[:, :, 0].astype(np.int32)
+                + 2 * pixel[:, :, 1].astype(np.int32)
+                + pixel[:, :, 2].astype(np.int32)
+            )
+            >> 2
         )
 
     ya, yb, yc = y_value(a), y_value(b), y_value(c)

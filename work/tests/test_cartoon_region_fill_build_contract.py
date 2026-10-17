@@ -2,6 +2,7 @@
 
 import importlib.util
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -39,6 +40,42 @@ class CartoonRegionFillBuildContractTests(unittest.TestCase):
         self.assertEqual(args.video_rtl, "work/rtl/video_cartoon_region_fill.v")
         self.assertEqual(args.work_project, "work/td_industrial_region_fill")
         self.assertEqual(args.release_dir, "work/output/cartoon-region-fill-td")
+
+    def test_candidate_build_rejects_default_output_paths(self):
+        original = (
+            build_td.TD_EXE,
+            build_td.FLOW_TCL,
+            build_td.ORIG_RUNS,
+            build_td.RELEASE_DIR,
+            build_td.TRACKED_VIDEO,
+            build_td.WORK_PROJECT,
+            build_td.WORK_RUNS,
+        )
+        try:
+            with self.assertRaises(ValueError):
+                build_td.configure(
+                    build_td.parse_args(
+                        ["--video-rtl", "work/rtl/video_cartoon_region_fill.v"]
+                    )
+                )
+        finally:
+            (
+                build_td.TD_EXE,
+                build_td.FLOW_TCL,
+                build_td.ORIG_RUNS,
+                build_td.RELEASE_DIR,
+                build_td.TRACKED_VIDEO,
+                build_td.WORK_PROJECT,
+                build_td.WORK_RUNS,
+            ) = original
+
+    def test_staging_rejects_user_owned_vvp(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            staging = Path(tmp) / "staging"
+            staging.mkdir()
+            (staging / "tb_color.vvp").write_bytes(b"user-owned")
+            with self.assertRaises(RuntimeError):
+                build_td.assert_no_user_owned_artifacts(staging)
 
     def test_source_manifest_never_includes_user_owned_vvp(self):
         source_paths = [entry["path"] for entry in build_td.source_manifest()]

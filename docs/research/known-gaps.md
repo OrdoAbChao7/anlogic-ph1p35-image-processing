@@ -139,6 +139,7 @@
 ## 2026-10-17 卡通化区域填充候选校正
 
 - **已关闭（project）**：用户批准 `s4-region-fill-v1`；固定 8 级逐通道量化、四邻居局部填充、量化图 Sobel 阈值 `240` 和 `BORDER_REPLICATE` 已绑定配置与预览报告。软件参考、硬件等价模型、RTL 小尺寸/1280×720 全帧逐周期回归通过。
-- **已关闭（project）**：候选 TD 独立工程已完成综合、布局布线和位流生成；最终 `route.qor` 为 Setup WNS `+160 ps`、TNS `0`、Hold WNS `+20 ps`、TNS `0`，候选资源为 17,229 slices（81.21%）、43 RAM、24 DSP。原始报告和位流哈希见 [`../experiments/2026-10-17-cartoon-region-fill-stage-e.md`](../experiments/2026-10-17-cartoon-region-fill-stage-e.md)。
+- **已关闭（project）**：候选 TD 独立工程已完成综合、布局布线和位流生成；修复后三 bank 行缓存和完整亮度加权公式后，最终 `route.qor` 为 Setup WNS `+119 ps`、TNS `0`、Hold WNS `+20 ps`、TNS `0`，违例端点为 0。原始报告和位流哈希见 [`../experiments/2026-10-17-cartoon-region-fill-stage-e.md`](../experiments/2026-10-17-cartoon-region-fill-stage-e.md)。
+- **仍开放（project risk）**：修复后的候选 Slice 占用为 17,397/21,216，即 82.00%，超过项目期望的 80% 资源目标；需要进一步优化或在发布决策中明确接受余量。
 - **仍开放（project）**：候选工程依赖本机 TD 工具和官方基线 Runs；本轮是独立目录构建，不等于从干净机器无外部依赖重建，正式发布目录也未替换。
 - **仍开放（measured）**：没有 PH1P35、SC520CS、HDMI 实机下载、模式视觉、帧率/延迟、LED 或长稳证据，不能关闭 Stage G 或声明上板效果。

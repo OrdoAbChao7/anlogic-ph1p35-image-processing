@@ -39,7 +39,8 @@ TRACKED_RTL = ROOT / "fallback" / "rtl"
 # The approved cartoon contract is s3_luma.  The TD project still receives the
 # source under the module's historical filename, because the top-level wrapper
 # instantiates the module as ``video_cartoon``.
-TRACKED_VIDEO = ROOT / "work" / "rtl" / "video_cartoon_luma.v"
+DEFAULT_TRACKED_VIDEO = ROOT / "work" / "rtl" / "video_cartoon_luma.v"
+TRACKED_VIDEO = DEFAULT_TRACKED_VIDEO
 TRACKED_TOP = ROOT / "fallback" / "td_source" / "design_top_wrapper.v"
 TRACKED_ISP = ROOT / "fallback" / "td_source" / "isp" / "isp_top.v"
 
@@ -189,6 +190,32 @@ def configure(args):
     TRACKED_VIDEO = Path(args.video_rtl).expanduser().resolve()
     WORK_PROJECT = Path(args.work_project).expanduser().resolve()
     WORK_RUNS = WORK_PROJECT / "td_project" / "camera_to_dsi_display_Runs"
+    validate_build_isolation()
+
+
+def validate_build_isolation():
+    """Prevent a non-default video candidate from writing baseline outputs."""
+    if TRACKED_VIDEO != DEFAULT_TRACKED_VIDEO:
+        if WORK_PROJECT == DEFAULT_WORK_PROJECT:
+            raise ValueError(
+                "Candidate video RTL requires an isolated --work-project; "
+                f"refusing to use {DEFAULT_WORK_PROJECT}"
+            )
+        if RELEASE_DIR == DEFAULT_RELEASE_DIR:
+            raise ValueError(
+                "Candidate video RTL requires an isolated --release-dir; "
+                f"refusing to use {DEFAULT_RELEASE_DIR}"
+            )
+
+
+def assert_no_user_owned_artifacts(root: Path):
+    """Fail if a user-owned simulation artifact enters a staged tree."""
+    if not root.exists():
+        return
+    forbidden = [path for path in root.rglob("tb_color.vvp") if path.is_file()]
+    if forbidden:
+        joined = ", ".join(str(path) for path in forbidden)
+        raise RuntimeError(f"User-owned artifact entered build tree: {joined}")
 
 
 def git_output(*args):
@@ -321,6 +348,7 @@ def setup_runs():
     shutil.copy2(TRACKED_TOP, WORK_PROJECT / "user_source" / "hdl_source" / "design_top_wrapper.v")
     (WORK_PROJECT / "user_source" / "hdl_source" / "isp").mkdir(parents=True, exist_ok=True)
     shutil.copy2(TRACKED_ISP, WORK_PROJECT / "user_source" / "hdl_source" / "isp" / "isp_top.v")
+    assert_no_user_owned_artifacts(WORK_PROJECT / "user_source")
     top_src = WORK_PROJECT / "user_source" / "hdl_source" / "design_top_wrapper.v"
     isp_src = WORK_PROJECT / "user_source" / "hdl_source" / "isp" / "isp_top.v"
     required_top = ["O_ind_result_toggle", "mode_controller", "industrial_osd_overlay", "ind_toggle_meta", "S_osd_out_data"]
@@ -490,6 +518,7 @@ def check_qor():
 def collect_release():
     print(f"\n[5/5] Collecting release artifacts into {RELEASE_DIR}...")
     RELEASE_DIR.mkdir(parents=True, exist_ok=True)
+    assert_no_user_owned_artifacts(RELEASE_DIR)
     phy_dir = WORK_RUNS / "phy_1"
 
     bit_files = list(phy_dir.glob("*.bit"))

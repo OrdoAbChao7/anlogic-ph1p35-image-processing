@@ -22,25 +22,37 @@ module video_cartoon #(
     reg [1:0] edge_sync, toon_sync;
     reg [1:0] active_mode;
     reg [11:0] x, y, x0, y0;
-    reg parity, parity0;
     wire [1:0] requested = toon_sync[1] ? TOON : (edge_sync[1] ? EDGE : RAW);
     wire [1:0] selected = (i_de && x==0 && y==0) ? requested : active_mode;
 
-    // Alternating row banks: each bank stores the row two positions behind
-    // the current row. Synchronous read-first RAM inference is retained.
+    // Three-bank row ring: the current row is written to one bank while the
+    // two preceding rows are read from the other two banks. This deliberately
+    // avoids same-address read/write in a vendor RAM, so the causal window
+    // does not depend on an unspecified block-RAM read-during-write mode.
     (* ram_style = "block" *) reg [23:0] bank0[0:WIDTH-1];
     (* ram_style = "block" *) reg [23:0] bank1[0:WIDTH-1];
-    reg [23:0] q0, q1;
+    (* ram_style = "block" *) reg [23:0] bank2[0:WIDTH-1];
+    reg [23:0] q_top_row, q_mid_row;
+    reg [1:0] row_mod3;
     always @(posedge clk) begin
         if(i_de && !i_vs && rst_n) begin
-            q0 <= bank0[x];
-            if(!parity) bank0[x] <= i_rgb;
-        end
-    end
-    always @(posedge clk) begin
-        if(i_de && !i_vs && rst_n) begin
-            q1 <= bank1[x];
-            if(parity) bank1[x] <= i_rgb;
+            case(row_mod3)
+                2'd0: begin
+                    q_top_row <= bank1[x];
+                    q_mid_row <= bank2[x];
+                    bank0[x] <= i_rgb;
+                end
+                2'd1: begin
+                    q_top_row <= bank2[x];
+                    q_mid_row <= bank0[x];
+                    bank1[x] <= i_rgb;
+                end
+                default: begin
+                    q_top_row <= bank0[x];
+                    q_mid_row <= bank1[x];
+                    bank2[x] <= i_rgb;
+                end
+            endcase
         end
     end
 
@@ -52,7 +64,7 @@ module video_cartoon #(
     always @(posedge clk or negedge rst_n) begin
         if(!rst_n) begin
             edge_sync<=0; toon_sync<=0; active_mode<=RAW;
-            x<=0; y<=0; x0<=0; y0<=0; parity<=0; parity0<=0;
+            x<=0; y<=0; x0<=0; y0<=0; row_mod3<=0;
             vs_pipe<=0; hs_pipe<=0; de_pipe<=0; overlay_pipe<=0;
             for(k=0;k<5;k=k+1) begin raw_pipe[k]<=0; color_pipe[k]<=0; end
             for(k=0;k<6;k=k+1) mode_pipe[k]<=RAW;
@@ -60,15 +72,21 @@ module video_cartoon #(
             edge_sync<={edge_sync[0],i_edge_req};
             toon_sync<={toon_sync[0],i_toon_req};
             if(i_de && x==0 && y==0) active_mode<=requested;
-            if(i_vs) begin x<=0; y<=0; parity<=0; end
+            if(i_vs) begin x<=0; y<=0; row_mod3<=0; end
             else if(i_de) begin
                 if(x==WIDTH-1) begin
                     x<=0;
-                    if(y==HEIGHT-1) begin y<=0; parity<=0; end
-                    else begin y<=y+12'd1; parity<=~parity; end
+                    if(y==HEIGHT-1) begin
+                        y<=0;
+                        row_mod3<=0;
+                    end else begin
+                        y<=y+12'd1;
+                        if(row_mod3==2) row_mod3<=0;
+                        else row_mod3<=row_mod3+1'b1;
+                    end
                 end else x<=x+12'd1;
             end
-            x0<=x; y0<=y; parity0<=parity;
+            x0<=x; y0<=y;
             vs_pipe<={vs_pipe[4:0],i_vs};
             hs_pipe<={hs_pipe[4:0],i_hs};
             de_pipe<={de_pipe[4:0],i_de};
@@ -86,8 +104,8 @@ module video_cartoon #(
     assign o_de=de_pipe[5];
     assign o_mode=mode_pipe[5];
 
-    wire [23:0] middle = (y0==0) ? raw_pipe[0] : (parity0 ? q0 : q1);
-    wire [23:0] top = (y0<2) ? middle : (parity0 ? q1 : q0);
+    wire [23:0] middle = (y0==0) ? raw_pipe[0] : q_mid_row;
+    wire [23:0] top = (y0<2) ? middle : q_top_row;
     wire [23:0] bottom = raw_pipe[0];
     reg [23:0] top_l1,top_l2,mid_l1,mid_l2,bot_l1,bot_l2;
     wire [23:0] a=(x0==0)?top:top_l2, b=(x0==0)?top:top_l1, c=top;
@@ -119,7 +137,7 @@ module video_cartoon #(
     function [9:0] luma_q;
         input [23:0] p;
         begin
-            luma_q={2'b0,p[23:18]}+{1'b0,p[15:9]}+{2'b0,p[7:2]};
+            luma_q=({2'b0,p[23:16]}+{1'b0,p[15:8],1'b0}+{2'b0,p[7:0]})>>2;
         end
     endfunction
 

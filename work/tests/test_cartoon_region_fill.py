@@ -13,8 +13,9 @@ sys.path.insert(0, str(ROOT / "work" / "models"))
 class CartoonRegionFillReferenceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        from cartoon_region_fill_reference import filter_rgb, local_fill, quantize_rgb
+        from cartoon_region_fill_reference import _luma, filter_rgb, local_fill, quantize_rgb
 
+        cls.luma = staticmethod(_luma)
         cls.filter_rgb = staticmethod(filter_rgb)
         cls.local_fill = staticmethod(local_fill)
         cls.quantize_rgb = staticmethod(quantize_rgb)
@@ -24,6 +25,10 @@ class CartoonRegionFillReferenceTests(unittest.TestCase):
         rgb = np.repeat(values[:, None, None], 3, axis=2)
         result = self.quantize_rgb(rgb)[:, 0, 0]
         np.testing.assert_array_equal(result, [0, 0, 36, 36, 73, 255])
+
+    def test_luma_keeps_weighted_sum_before_shift(self):
+        quantized = np.array([[[0, 73, 146]]], dtype=np.uint8)
+        self.assertEqual(int(self.luma(quantized)[0, 0]), 73)
 
     def test_cross_fill_replaces_only_a_single_pixel_hole(self):
         red = np.array([220, 20, 20], dtype=np.uint8)
