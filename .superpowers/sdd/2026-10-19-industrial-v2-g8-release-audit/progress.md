@@ -9,4 +9,5 @@ Task 2: repository release audit script complete.
 Task 3: complete. `python -B scripts/verify_industrial_v2_release.py --strict` returned exit 1 with `release_status=BLOCKED`; V1 baseline SHA matched and visual approval was the only explicit PASS.
 Task 4: complete as a candidate-only step. `industrial_v2_feature_spine` compiles and passes `TB_INDUSTRIAL_V2_FEATURE_SPINE_PASS`; it exposes the required frame-result, motion, statistics, calibration and safety boundaries.
 Task 5: complete as a candidate-only step. The 96-bit stream adapters pass the isolated `TB_STREAM_ADAPTERS_96_PASS` test and define frame/line/sample/statistics boundaries.
-Task 6: pending; add result-to-HDMI CDC and formal TD source-list integration. Do not rerun TD or claim release until those contracts are reviewed.
+Task 6: complete as a candidate-only step. The stable-payload/toggle result CDC passes a dual-clock test, including separated events, complete payload preservation and overflow protection.
+Task 7: pending; wire source adapters and result CDC into the formal TD source list/top-level and run the required static/TD gates. Do not claim release.

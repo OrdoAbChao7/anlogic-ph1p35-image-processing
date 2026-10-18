@@ -29,3 +29,4 @@
 | V2 G8 audit summary | `docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md` | BLOCKED; TD/hardware/package pending |
 | V2 G8 feature spine | `docs/experiments/2026-10-19-industrial-v2-g8-feature-spine.md`, `fallback/rtl/integration/industrial_v2_feature_spine.v` | SIM_PASS; formal top/CDC/TD pending |
 | V2 G8 ISP stream adapters | `docs/experiments/2026-10-19-industrial-v2-g8-stream-adapters.md`, `fallback/rtl/integration/motion_grid_adapter_96.v`, `fallback/rtl/integration/frame_stats_96.v` | SIM_PASS; formal source-list/CDC pending |
+| V2 G8 result CDC | `docs/experiments/2026-10-19-industrial-v2-g8-result-cdc.md`, `fallback/rtl/integration/industrial_v2_result_cdc.v` | SIM_PASS; formal HDMI wiring/TD pending |
