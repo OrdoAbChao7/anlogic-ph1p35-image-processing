@@ -17,11 +17,12 @@ SYN-3001 : Collect 10200 PI 7040 PO (119 timing unconstrained) for mapping
 - Flow: `E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl`
 - Input package: `fallback/td_package`
 - Candidate project: `work/td_industrial_formal_display`
-- Expected release directory: `work/release_candidates/industrial-v2-formal-display`；本次未生成
+- Evidence extract: `docs/evidence/industrial-v2-g8-td-candidate-attempt-log.txt`
 
 ## 可审计观察
 
-- `syn_1/flow_exec.log` 未出现 `ERROR` 或 `FATAL`，但也没有综合完成标志。
+- `docs/evidence/industrial-v2-g8-td-candidate-attempt-log.txt` 保存了 `syn_1` 日志的关键摘录；原始隔离工作树在记录后清理。
+- 日志未出现 `ERROR` 或 `FATAL`，但也没有综合完成标志。
 - 日志包含 `SYN-5011` DDR PHY undriven-pin warning、`SYN-5025 Using 0 for all undriven pins and nets`，这些告警尚未分类关闭。
 - 日志明确报告 `119 timing unconstrained`，因此不能据此推断时序收敛。
 - `phy_1` 仅保留输入配置，未开始可验收的物理实现阶段。

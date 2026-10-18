@@ -286,7 +286,7 @@
         "fallback/sim/integration/tb_industrial_v2_display_tracking.v",
         "fallback/td_source/design_top_wrapper.v",
         "docs/experiments/2026-10-19-industrial-v2-g8-td-candidate-attempt.md",
-        "work/td_industrial_formal_display/td_project/camera_to_dsi_display_Runs/syn_1/flow_exec.log",
+        "docs/evidence/industrial-v2-g8-td-candidate-attempt-log.txt",
         "scripts/verify_industrial_v2_release.py"
       ],
       "unresolved": [
