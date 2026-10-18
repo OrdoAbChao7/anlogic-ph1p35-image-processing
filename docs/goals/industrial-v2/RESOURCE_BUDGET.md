@@ -31,3 +31,7 @@ The independent G4 motion trial estimates one `160*120*8 = 153600-bit` history s
 ## G5 measurement status
 
 G5 adds internal event, safety and fixed-pulse control logic only. External GPIO and actuator resource/electrical impact are `NOT_MEASURED`; no pin or drive strength is inferred from this RTL.
+
+## G6 measurement status
+
+The independent frame-stat AWB controller uses arithmetic only; its Slice/DSP/timing impact is `NOT_MEASURED` until an isolated TD trial. Existing AWB IP/resource usage remains the frozen project baseline, not a G6 result.

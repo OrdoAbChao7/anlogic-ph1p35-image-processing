@@ -195,7 +195,36 @@
       "best_candidate":"EXPERIMENTAL",
       "next_action":"Continue G6 software/RTL work; do not bind G5 to GPIO until official board and actuator evidence is available"
     },
-    "V2-G6": {"status":"NOT_STARTED","objective":"Frame-statistics lighting adaptation and AWB optimization","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":["SC520CS sensor-write contract requires official evidence"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Audit existing AWB first"},
+    "V2-G6": {
+      "status":"BLOCKED",
+      "objective":"Frame-statistics lighting adaptation and AWB optimization",
+      "prerequisites":["V2-G1"],
+      "completion":75,
+      "commands":[
+        "python -B -m pytest -q work/tests/test_v2_awb.py work/tests/test_v2_sort.py work/tests/test_v2_motion.py work/tests/test_v2_latency.py work/tests/test_v2_tracker.py work/tests/test_v2_roi_contract.py",
+        "iverilog/vvp tb_awb_frame_gain_controller",
+        "G1-G6 RTL regression",
+        "python -B -m pytest -q work/tests",
+        "python -B work/algorithm_lab/verify_stage_d.py"
+      ],
+      "evidence":[
+        "docs/superpowers/specs/2026-10-19-industrial-v2-g6-awb-design.md",
+        "docs/superpowers/plans/2026-10-19-industrial-v2-g6-awb.md",
+        "docs/experiments/2026-10-19-industrial-v2-g6-awb-model.md",
+        "docs/experiments/2026-10-19-industrial-v2-g6-awb-rtl.md",
+        "docs/experiments/2026-10-19-industrial-v2-g6-summary.md"
+      ],
+      "unresolved":[
+        "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
+        "New controller is not instantiated in formal isp_top",
+        "SC520CS AE/I2C/register contract is unknown; sensor configuration was not changed",
+        "TD synthesis/implementation/Bitgen and V2 QoR not run",
+        "No real lighting samples or hardware image/detection metrics"
+      ],
+      "resource_baseline":"Independent controller only; Slice/RAM/DSP/WNS/TNS NOT_MEASURED",
+      "best_candidate":"EXPERIMENTAL",
+      "next_action":"Continue G7 calibration software/RTL work; integrate AWB only after official sensor and QoR evidence"
+    },
     "V2-G7": {"status":"NOT_STARTED","objective":"Calibrated dimensions and explainable shape validation","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":["Physical calibration samples and workcell geometry missing"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after calibration inputs exist"},
     "V2-G8": {"status":"NOT_STARTED","objective":"Single-Bitstream integration and release","prerequisites":["V2-G1","V2-G2","V2-G3","V2-G4","V2-G5","V2-G6","V2-G7"],"completion":0,"commands":[],"evidence":[],"unresolved":["Hardware, long-stability and release package not complete"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Blocked until all phase gates pass"}
   }

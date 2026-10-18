@@ -20,3 +20,5 @@
 | V2 G4 summary | `docs/experiments/2026-10-19-industrial-v2-g4-summary.md` | BLOCKED; 160x120 history QoR not measured |
 | V2 G5 sort model/RTL | `docs/experiments/2026-10-19-industrial-v2-g5-*.md` | SOFTWARE_PASS/RTL_PASS/virtual actuator; GPIO pending |
 | V2 G5 summary | `docs/experiments/2026-10-19-industrial-v2-g5-summary.md` | BLOCKED; no real mechanical closure |
+| V2 G6 AWB audit/model/RTL | `docs/experiments/2026-10-19-industrial-v2-g6-*.md` | SOFTWARE_PASS/RTL_PASS; ISP/TD/hardware pending |
+| V2 G6 summary | `docs/experiments/2026-10-19-industrial-v2-g6-summary.md` | BLOCKED; no real lighting data |
