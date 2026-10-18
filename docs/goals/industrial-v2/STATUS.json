@@ -94,9 +94,9 @@
       ],
       "unresolved":[
         "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
-        "Tracker/history/overlay are not yet instantiated in the formal top-level",
-        "TD synthesis/implementation/Bitgen not run for G2",
-        "No V2 resource/timing report",
+        "Tracker/history/overlay are integrated through the formal feature spine and included in the combined TD candidate; separate G2 hardware evidence is absent",
+        "Combined V2 TD synthesis/implementation/Bitgen passed; no isolated G2-only QoR trial was run",
+        "Combined V2 QoR is available; feature-isolated G2 resource attribution is not measured",
         "No real moving-target or board evidence"
       ],
       "resource_baseline":"V1 historical values only; no G2 QoR measured",
@@ -126,9 +126,9 @@
       ],
       "unresolved":[
         "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
-        "Latency monitors are not yet instantiated in the formal top-level",
-        "TD synthesis/implementation/Bitgen not run for G3",
-        "No V2 resource/timing report",
+        "Latency monitors are integrated through the formal feature spine and included in the combined TD candidate",
+        "Combined V2 TD synthesis/implementation/Bitgen passed; physical HDMI/display E2E evidence is absent",
+        "Combined V2 QoR is available; physical latency and isolated G3 resource attribution are not measured",
         "No physical HDMI/display E2E measurement or hardware evidence"
       ],
       "resource_baseline":"V1 historical values only; no G3 QoR measured",
@@ -156,9 +156,9 @@
       ],
       "unresolved":[
         "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
-        "Motion grid adapter and motion overlay are not yet instantiated in the formal top-level",
-        "TD synthesis/implementation/Bitgen not run for G4",
-        "No V2 resource/timing report; 153600-bit history is an architecture estimate only",
+        "Motion grid adapter and motion feature spine are integrated in the formal top-level; the 160x120 history still needs a feature-isolated QoR attribution",
+        "Combined V2 TD synthesis/implementation/Bitgen passed",
+        "Combined V2 resource/timing is measured; the 153600-bit history and moving-target hardware behavior remain unvalidated",
         "No HDMI or real moving-target hardware evidence"
       ],
       "resource_baseline":"153600-bit logical history estimate; Slice/RAM/DSP/WNS/TNS NOT_MEASURED",
@@ -187,7 +187,7 @@
       "unresolved":[
         "Formal G2/G4 prerequisites remain blocked by top-level and TD gates",
         "HX1P35A GPIO/pin/electrical contract and external actuator are unknown",
-        "TD synthesis/implementation/Bitgen not run for G5",
+        "Combined V2 TD synthesis/implementation/Bitgen passed; GPIO/electrical and mechanical closure remain unvalidated",
         "No V2 resource/timing report",
         "No real mechanical closed-loop experiment"
       ],
@@ -218,7 +218,7 @@
         "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
         "New controller is not instantiated in formal isp_top",
         "SC520CS AE/I2C/register contract is unknown; sensor configuration was not changed",
-        "TD synthesis/implementation/Bitgen and V2 QoR not run",
+        "Combined V2 TD synthesis/implementation/Bitgen and QoR passed; SC520CS lighting data remain unvalidated",
         "No real lighting samples or hardware image/detection metrics"
       ],
       "resource_baseline":"Independent controller only; Slice/RAM/DSP/WNS/TNS NOT_MEASURED",
@@ -247,7 +247,7 @@
       "unresolved":[
         "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
         "No real calibration reference, workcell geometry, lighting or repeatability data",
-        "TD synthesis/implementation/Bitgen and V2 QoR not run",
+        "Combined V2 TD synthesis/implementation/Bitgen and QoR passed; physical calibration remains unvalidated",
         "No formal OSD/main verdict integration or hardware measurement",
         "Rotation and multi-object separation remain out of scope"
       ],
@@ -296,21 +296,18 @@
         "scripts/verify_industrial_v2_release.py"
       ],
       "unresolved": [
-        "G1-G7 formal top-level/TD gates remain blocked; no single V2 Bitstream exists",
-        "Feature spine passes same-clock simulation but is not instantiated in the formal TD top-level",
-        "Formal top still lacks CSI/ISP-to-grid/statistics source-list/top-level wiring",
-        "Stream adapters pass isolated simulation but are not yet in the formal TD source list/top-level",
-        "Result CDC and HDMI tracking/overlay are connected as a candidate; source-side motion/AWB/calibration/sort fields remain tied to zero",
-        "The OSD-BCD formal display candidate has TD/QoR/Bitgen evidence, but the seven upgrades are not all integrated into one formal top-level",
-        "The candidate final QoR passes at Setup WNS +132ps/TNS 0 and Hold WNS +20ps/TNS 0; the full V2 release still requires feature integration, warning/CDC/constraint audit and clean-package verification",
-        "V2 Slice/RAM/DSP/WNS/TNS, warning, CDC and constraint audits are not measured",
+        "G1-G7 individual phase gates remain blocked by hardware/physical evidence and the Stage D registry/plugin SHA mismatch; the combined formal top now has a TD/STA/Bitgen candidate",
+        "The post-AWB CSI/ISP stream is connected to the motion-grid and frame-statistics adapters in the formal top-level",
+        "The feature spine, all seven feature dependencies, and staged result CDC are in the formal TD source list",
+        "Combined candidate QoR passes at Setup WNS +100ps/TNS 0 and Hold WNS +20ps/TNS 0; Slice 18261/21216 = 86.07%, RAM 43, DSP 24",
+        "TD reported PHY-5079 clock-local-routing and PHY-5088 clock-analyzer warnings; warning/CDC/constraint audit remains open",
         "Full work/tests retains 8 frozen-vs-later contract failures and Stage D registry/plugin SHA mismatch remains",
         "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",
-        "Release README, manifest and reproducible V2 package are absent"
+        "The candidate README/manifest/Bitstream are present, but the final release package remains intentionally absent until hardware and warning gates close"
       ],
-      "resource_baseline": "V1 historical values only; V2 QoR NOT_MEASURED",
-      "best_candidate": "BLOCKED",
-      "next_action": "Close formal top/TD/hardware evidence gates, then rerun the strict audit from a clean release candidate"
+      "resource_baseline": "Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, Setup WNS +100ps, Hold WNS +20ps, TNS 0; warning and hardware gates remain open",
+      "best_candidate": "TD_PASS_CANDIDATE",
+      "next_action": "Audit and reduce clock warnings, then execute SC520CS/HDMI, calibration, reset/long-run, performance and actuator acceptance before final package freeze"
     }
   }
 }

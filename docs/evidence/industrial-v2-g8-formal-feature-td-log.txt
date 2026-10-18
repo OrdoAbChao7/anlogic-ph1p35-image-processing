@@ -1,0 +1,25 @@
+Industrial Vision V2 G8 formal feature-spine TD candidate evidence
+Date: 2026-10-19 (Asia/Shanghai)
+Worktree: E:/Projects/FPGA-v2
+Branch: goal/industrial-v2-advanced
+TD executable: E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe
+TD flow: E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl
+TD version: Tang Dynasty v6.2.168116
+Device: PH1P35MDG324
+
+Build command:
+python -B scripts/build_industrial_td.py --td-exe E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe --flow-tcl E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl --baseline-runs E:/Projects/FPGA-v2/fallback/td_package/td_project/camera_to_dsi_display_Runs --input-package E:/Projects/FPGA-v2/fallback/td_package --work-project E:/Projects/FPGA-v2/work/td_industrial_v2_formal_feature_spine --release-dir E:/Projects/FPGA-v2/release/candidates/industrial-v2-formal-feature-spine
+
+Result: synthesis exit 0; physical design/Bitgen exit 0; QoR gate PASS.
+Setup WNS: +100 ps; Setup TNS: 0; failed setup endpoints: 0.
+Hold WNS: +20 ps; Hold TNS: 0; failed hold endpoints: 0.
+Slices: 18261/21216 (86.07%); RAM: 43; DSP: 24; DRAMHARDCON: 229.
+Bitstream: camera_to_dsi_display_compress.bit
+Bitstream size: 1367985 bytes
+Bitstream SHA-256: 60aea582cff6fa2d5a03eaa5f1d9aab4bdc142371af86053d04f8acf40e9ebc1
+
+Warnings retained for audit:
+PHY-5079 CRITICAL-WARNING: one clock net utilizes local routing resources.
+PHY-5088 WARNING: clock analyzer detected buffers driving non-clock sinks/other clock nets.
+
+Boundary: no board download, SC520CS/HDMI run, physical calibration, cold reset, long-stability, performance, or actuator acceptance was performed. The source manifest emitted by the build is a pre-commit provenance snapshot; it must be regenerated after the implementation commit before package freeze.

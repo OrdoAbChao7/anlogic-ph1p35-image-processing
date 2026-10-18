@@ -716,11 +716,17 @@ assign S_raw_tuser  = S_axis_tuser;
 
     wire [10:0] ind_xmin, ind_xmax, ind_ymin, ind_ymax;
     wire [10:0] ind_meas_w, ind_meas_h;
+    wire [19:0] ind_area;
     wire        ind_detected, ind_pass, ind_ng, ind_no_obj, ind_invalid;
     wire        ind_led_pass, ind_led_ng, ind_led_det;
     wire        ind_result_toggle;
+    wire [95:0] ind_awb_tdata;
+    wire        ind_awb_tlast, ind_awb_tuser, ind_awb_tvalid;
     reg  [15:0] ind_v2_frame_id;
     reg         ind_v2_toggle_d;
+    wire [15:0] ind_source_frame_id = ind_v2_frame_id +
+                                      (S_ISP_O_tuser ? 16'd1 : 16'd0);
+    wire        ind_result_event = ind_result_toggle ^ ind_v2_toggle_d;
     wire [11:0] ind_cx_sum = {1'b0, ind_xmin} + {1'b0, ind_xmax};
     wire [11:0] ind_cy_sum = {1'b0, ind_ymin} + {1'b0, ind_ymax};
     wire [10:0] ind_v2_cx = ind_cx_sum >> 1;
@@ -733,7 +739,7 @@ assign S_raw_tuser  = S_axis_tuser;
             ind_v2_frame_id <= 16'd0;
             ind_v2_toggle_d <= 1'b0;
         end else begin
-            if (ind_result_toggle != ind_v2_toggle_d)
+            if (S_ISP_O_tuser)
                 ind_v2_frame_id <= ind_v2_frame_id + 16'd1;
             ind_v2_toggle_d <= ind_result_toggle;
         end
@@ -768,7 +774,12 @@ assign S_raw_tuser  = S_axis_tuser;
         .O_led_pass       ( ind_led_pass         ),
         .O_led_ng         ( ind_led_ng           ),
         .O_led_det         ( ind_led_det          ),
-        .O_ind_result_toggle ( ind_result_toggle )
+        .O_ind_result_toggle ( ind_result_toggle ),
+        .O_ind_area          ( ind_area           ),
+        .O_ind_awb_tdata     ( ind_awb_tdata      ),
+        .O_ind_awb_tlast     ( ind_awb_tlast      ),
+        .O_ind_awb_tuser     ( ind_awb_tuser      ),
+        .O_ind_awb_tvalid    ( ind_awb_tvalid     )
         );
 
     // LEDs consume the same HDMI-domain atomic result as the OSD and BBox.
@@ -1020,32 +1031,243 @@ assign S_raw_tuser  = S_axis_tuser;
     wire [15:0] v2_hdmi_pass_count, v2_hdmi_ng_count;
     wire        v2_hdmi_sort_pulse, v2_hdmi_safe_enable;
 
+    // ------------------------------------------------------------------
+    // V2 source-domain feature integration.
+    //
+    // The ISP exposes the post-AWB 4-pixel stream used by the detector.  The
+    // motion and statistics adapters therefore observe the same raster and
+    // clock domain instead of reconstructing a second video path.  The
+    // feature spine publishes a staged result toggle only after its registered
+    // result fields have settled; the result CDC below then transports one
+    // atomic frame result into the HDMI clock domain.
+    // ------------------------------------------------------------------
+    wire        v2_motion_frame_start;
+    wire        v2_motion_frame_end;
+    wire        v2_motion_sample_valid;
+    wire [15:0] v2_motion_frame_id;
+    wire [7:0]  v2_motion_sample_x;
+    wire [6:0]  v2_motion_sample_y;
+    wire [7:0]  v2_motion_y_value;
+    wire        v2_motion_adapter_invalid;
+
+    motion_grid_adapter_96 #(
+        .INPUT_WIDTH    ( 1280 ),
+        .INPUT_HEIGHT   ( 720  ),
+        .GRID_WIDTH     ( 160  ),
+        .GRID_HEIGHT    ( 120  ),
+        .X_STEP         ( 8    ),
+        .Y_STEP         ( 6    ),
+        .FRAME_ID_WIDTH ( 16   )
+    ) u_v2_motion_grid_adapter (
+        .I_clk          ( S_csi_rx_clk       ),
+        .I_rst_n        ( S_rst_n             ),
+        .I_tuser        ( ind_awb_tuser       ),
+        .I_tlast        ( ind_awb_tlast       ),
+        .I_tvalid       ( ind_awb_tvalid      ),
+        .I_frame_id     ( ind_source_frame_id ),
+        .I_tdata        ( ind_awb_tdata       ),
+        .O_frame_start  ( v2_motion_frame_start ),
+        .O_frame_end    ( v2_motion_frame_end   ),
+        .O_sample_valid ( v2_motion_sample_valid ),
+        .O_frame_id     ( v2_motion_frame_id    ),
+        .O_sample_x     ( v2_motion_sample_x    ),
+        .O_sample_y     ( v2_motion_sample_y    ),
+        .O_y_value      ( v2_motion_y_value     ),
+        .O_invalid      ( v2_motion_adapter_invalid )
+    );
+
+    wire        v2_stats_valid;
+    wire [15:0] v2_stats_frame_id;
+    wire [31:0] v2_stats_sum_r, v2_stats_sum_g, v2_stats_sum_b;
+    wire [31:0] v2_stats_pixel_count;
+    wire [7:0]  v2_stats_mean_luma;
+    wire        v2_stats_invalid;
+
+    frame_stats_96 #(
+        .INPUT_WIDTH    ( 1280 ),
+        .INPUT_HEIGHT   ( 720  ),
+        .FRAME_ID_WIDTH ( 16   )
+    ) u_v2_frame_stats (
+        .I_clk          ( S_csi_rx_clk       ),
+        .I_rst_n        ( S_rst_n             ),
+        .I_tuser        ( ind_awb_tuser       ),
+        .I_tlast        ( ind_awb_tlast       ),
+        .I_tvalid       ( ind_awb_tvalid      ),
+        .I_frame_id     ( ind_source_frame_id ),
+        .I_tdata        ( ind_awb_tdata       ),
+        .O_stats_valid  ( v2_stats_valid      ),
+        .O_frame_id     ( v2_stats_frame_id    ),
+        .O_sum_r        ( v2_stats_sum_r       ),
+        .O_sum_g        ( v2_stats_sum_g       ),
+        .O_sum_b        ( v2_stats_sum_b       ),
+        .O_pixel_count  ( v2_stats_pixel_count ),
+        .O_mean_luma    ( v2_stats_mean_luma   ),
+        .O_invalid      ( v2_stats_invalid     )
+    );
+
+    wire [15:0] v2_gain_r, v2_gain_g, v2_gain_b;
+    wire        v2_gain_update_valid;
+    wire        v2_scene_protected;
+    wire        v2_src_dimension_valid, v2_src_shape_valid;
+    wire        v2_src_calibration_invalid;
+    wire [31:0] v2_src_width_mm_q16_16, v2_src_height_mm_q16_16;
+    wire [8:0]  v2_src_occupancy_q8;
+    wire [15:0] v2_src_aspect_q8;
+    wire        v2_src_safe_enable, v2_src_sort_request, v2_src_sort_pulse;
+    wire        v2_src_sort_busy, v2_src_sort_accepted, v2_src_sort_rejected;
+    wire        v2_src_sort_timeout;
+    wire [15:0] v2_src_pass_count, v2_src_ng_count;
+    wire        v2_src_track_valid, v2_src_track_enter, v2_src_track_exit;
+    wire [1:0]  v2_src_tracking_state;
+    wire [10:0] v2_src_track_cx, v2_src_track_cy;
+    wire        v2_src_motion_valid, v2_src_motion;
+    wire [23:0] v2_src_motion_count;
+    wire        v2_src_latency_proc_valid, v2_src_latency_video_valid;
+    wire        v2_src_latency_e2e_valid, v2_src_frame_gap, v2_src_tag_mismatch;
+    wire [31:0] v2_src_latency_proc_cycles, v2_src_latency_video_cycles;
+    wire [31:0] v2_src_latency_e2e_cycles;
+    reg         v2_src_toggle;
+
+    // Candidate-only calibration values from the software contract.  These
+    // constants are deliberately documented as provisional until a physical
+    // workcell calibration is captured; they keep the RTL result path active
+    // without changing the sensor or board configuration.
+    localparam [31:0] V2_SCALE_X_Q16_16       = 32'd32768;
+    localparam [31:0] V2_SCALE_Y_Q16_16       = 32'd16384;
+    localparam [31:0] V2_NOMINAL_WIDTH_Q16_16 = 32'd3932160;
+    localparam [31:0] V2_NOMINAL_HEIGHT_Q16_16= 32'd1310720;
+    localparam [31:0] V2_TOL_WIDTH_Q16_16     = 32'd131072;
+    localparam [31:0] V2_TOL_HEIGHT_Q16_16    = 32'd131072;
+
+    industrial_v2_feature_spine u_industrial_v2_feature_spine (
+        .I_clk                    ( S_csi_rx_clk       ),
+        .I_rst_n                  ( S_rst_n             ),
+        .I_frame_start            ( S_ISP_O_tuser       ),
+        .I_frame_valid            ( S_ISP_O_tuser       ),
+        .I_frame_id               ( ind_source_frame_id ),
+        .I_result_valid           ( ind_result_event    ),
+        .I_detected               ( ind_detected        ),
+        .I_invalid                ( ind_invalid || v2_motion_adapter_invalid || v2_stats_invalid ),
+        .I_xmin                   ( ind_xmin            ),
+        .I_xmax                   ( ind_xmax            ),
+        .I_ymin                   ( ind_ymin            ),
+        .I_ymax                   ( ind_ymax            ),
+        .I_cx                     ( ind_v2_cx           ),
+        .I_cy                     ( ind_v2_cy           ),
+        .I_area                   ( ind_area            ),
+        .I_verdict_valid          ( ind_result_event    ),
+        .I_verdict_pass           ( ind_pass            ),
+        .I_verdict_invalid        ( ind_invalid         ),
+        .I_motion_frame_start     ( v2_motion_frame_start ),
+        .I_motion_frame_end       ( v2_motion_frame_end   ),
+        .I_motion_sample_valid    ( v2_motion_sample_valid ),
+        .I_motion_frame_id        ( v2_motion_frame_id    ),
+        .I_motion_sample_x        ( v2_motion_sample_x    ),
+        .I_motion_sample_y        ( v2_motion_sample_y    ),
+        .I_motion_y_value         ( v2_motion_y_value     ),
+        .I_video_valid            ( 1'b0                ),
+        .I_video_de               ( 1'b0                ),
+        .I_video_hsync            ( 1'b0                ),
+        .I_video_vsync            ( 1'b0                ),
+        .I_video_rgb              ( 24'd0               ),
+        .I_video_x                ( 11'd0               ),
+        .I_video_y                ( 11'd0               ),
+        .O_video_de               (                     ),
+        .O_video_hsync            (                     ),
+        .O_video_vsync            (                     ),
+        .O_video_rgb              (                     ),
+        .I_frame_stats_valid      ( v2_stats_valid      ),
+        .I_sum_r                  ( v2_stats_sum_r       ),
+        .I_sum_g                  ( v2_stats_sum_g       ),
+        .I_sum_b                  ( v2_stats_sum_b       ),
+        .I_pixel_count            ( v2_stats_pixel_count ),
+        .I_mean_luma              ( v2_stats_mean_luma   ),
+        .O_gain_r                 ( v2_gain_r             ),
+        .O_gain_g                 ( v2_gain_g             ),
+        .O_gain_b                 ( v2_gain_b             ),
+        .O_gain_update_valid      ( v2_gain_update_valid ),
+        .O_scene_protected        ( v2_scene_protected   ),
+        .I_calibration_valid      ( 1'b1                 ),
+        .I_scale_x_q16_16         ( V2_SCALE_X_Q16_16    ),
+        .I_scale_y_q16_16         ( V2_SCALE_Y_Q16_16    ),
+        .I_nominal_width_q16_16   ( V2_NOMINAL_WIDTH_Q16_16 ),
+        .I_nominal_height_q16_16  ( V2_NOMINAL_HEIGHT_Q16_16 ),
+        .I_tolerance_width_q16_16 ( V2_TOL_WIDTH_Q16_16  ),
+        .I_tolerance_height_q16_16( V2_TOL_HEIGHT_Q16_16 ),
+        .I_occupancy_min_q8       ( 9'd200              ),
+        .I_aspect_min_q8           ( 16'd320             ),
+        .I_aspect_max_q8           ( 16'd448             ),
+        .O_dimension_valid         ( v2_src_dimension_valid ),
+        .O_shape_valid             ( v2_src_shape_valid     ),
+        .O_calibration_invalid     ( v2_src_calibration_invalid ),
+        .O_width_mm_q16_16         ( v2_src_width_mm_q16_16  ),
+        .O_height_mm_q16_16        ( v2_src_height_mm_q16_16 ),
+        .O_occupancy_q8            ( v2_src_occupancy_q8     ),
+        .O_aspect_q8               ( v2_src_aspect_q8        ),
+        .I_arm                    ( 1'b0                 ),
+        .I_external_fault         ( 1'b0                 ),
+        .I_clear_fault            ( 1'b0                 ),
+        .O_safe_enable            ( v2_src_safe_enable   ),
+        .O_sort_request           ( v2_src_sort_request  ),
+        .O_sort_pulse             ( v2_src_sort_pulse    ),
+        .O_sort_busy              ( v2_src_sort_busy     ),
+        .O_sort_accepted          ( v2_src_sort_accepted ),
+        .O_sort_rejected          ( v2_src_sort_rejected ),
+        .O_sort_timeout           ( v2_src_sort_timeout  ),
+        .O_pass_count             ( v2_src_pass_count    ),
+        .O_ng_count               ( v2_src_ng_count      ),
+        .O_track_valid            ( v2_src_track_valid   ),
+        .O_tracking_state         ( v2_src_tracking_state ),
+        .O_track_cx               ( v2_src_track_cx       ),
+        .O_track_cy               ( v2_src_track_cy       ),
+        .O_track_enter            ( v2_src_track_enter    ),
+        .O_track_exit             ( v2_src_track_exit     ),
+        .O_motion_valid           ( v2_src_motion_valid   ),
+        .O_motion                 ( v2_src_motion         ),
+        .O_motion_count           ( v2_src_motion_count   ),
+        .O_latency_proc_valid     ( v2_src_latency_proc_valid ),
+        .O_latency_proc_cycles    ( v2_src_latency_proc_cycles ),
+        .O_latency_video_valid    ( v2_src_latency_video_valid ),
+        .O_latency_video_cycles   ( v2_src_latency_video_cycles ),
+        .O_latency_e2e_valid      ( v2_src_latency_e2e_valid ),
+        .O_latency_e2e_cycles     ( v2_src_latency_e2e_cycles ),
+        .O_frame_gap              ( v2_src_frame_gap ),
+        .O_tag_mismatch           ( v2_src_tag_mismatch )
+    );
+
+    always @(posedge S_csi_rx_clk or negedge S_rst_n) begin
+        if (!S_rst_n)
+            v2_src_toggle <= 1'b0;
+        else if (ind_result_event)
+            v2_src_toggle <= ~v2_src_toggle;
+    end
+
     industrial_v2_result_cdc u_industrial_v2_result_cdc (
         .I_src_clk             ( S_csi_rx_clk       ),
         .I_dst_clk             ( S_hdmi_pixel_clk   ),
         .I_rst_n               ( S_hdmi_rst_n       ),
-        .I_src_toggle          ( ind_result_toggle  ),
-        .I_src_frame_id        ( ind_v2_frame_id    ),
+        .I_src_toggle          ( v2_src_toggle       ),
+        .I_src_frame_id        ( ind_source_frame_id ),
         .I_src_xmin            ( ind_xmin            ),
         .I_src_xmax            ( ind_xmax            ),
         .I_src_ymin            ( ind_ymin            ),
         .I_src_ymax            ( ind_ymax            ),
         .I_src_cx              ( ind_v2_cx           ),
         .I_src_cy              ( ind_v2_cy           ),
-        .I_src_width_mm_q16_16 ( 32'd0              ),
-        .I_src_height_mm_q16_16( 32'd0              ),
+        .I_src_width_mm_q16_16 ( v2_src_width_mm_q16_16  ),
+        .I_src_height_mm_q16_16( v2_src_height_mm_q16_16 ),
         .I_src_detected        ( ind_detected        ),
         .I_src_pass            ( ind_pass             ),
         .I_src_ng              ( ind_ng               ),
         .I_src_invalid         ( ind_invalid          ),
-        .I_src_dimension_valid ( 1'b0                ),
-        .I_src_shape_valid     ( 1'b0                ),
-        .I_src_motion          ( 1'b0                ),
-        .I_src_motion_count    ( 24'd0               ),
-        .I_src_pass_count      ( 16'd0               ),
-        .I_src_ng_count        ( 16'd0               ),
-        .I_src_sort_pulse      ( 1'b0                ),
-        .I_src_safe_enable     ( 1'b0                ),
+        .I_src_dimension_valid ( v2_src_dimension_valid ),
+        .I_src_shape_valid     ( v2_src_shape_valid     ),
+        .I_src_motion          ( v2_src_motion           ),
+        .I_src_motion_count    ( v2_src_motion_count     ),
+        .I_src_pass_count      ( v2_src_pass_count       ),
+        .I_src_ng_count        ( v2_src_ng_count         ),
+        .I_src_sort_pulse      ( v2_src_sort_pulse       ),
+        .I_src_safe_enable     ( v2_src_safe_enable      ),
         .O_dst_valid           ( v2_hdmi_result_valid),
         .O_dst_frame_id        ( v2_hdmi_frame_id    ),
         .O_dst_xmin            ( v2_hdmi_xmin        ),

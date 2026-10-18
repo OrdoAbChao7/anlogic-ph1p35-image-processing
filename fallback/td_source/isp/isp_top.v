@@ -28,7 +28,15 @@ module isp_top (
     output wire         O_led_pass,
     output wire         O_led_ng,
     output wire         O_led_det,
-    output wire         O_ind_result_toggle
+    output wire         O_ind_result_toggle,
+    output wire [19:0]  O_ind_area,
+    // Post-AWB four-pixel stream exposed for source-domain V2 feature taps.
+    // The formal wrapper consumes this bus for motion sampling and frame
+    // statistics; it is the same stream used by the detector below.
+    output wire [95:0]  O_ind_awb_tdata,
+    output wire         O_ind_awb_tlast,
+    output wire         O_ind_awb_tuser,
+    output wire         O_ind_awb_tvalid
 );
 
 // Frozen v1 inspection ROI. Coordinates are half-open [x0,x1) x [y0,y1).
@@ -226,6 +234,11 @@ awb #(
     assign O_led_ng       = ind_led_ng;
     assign O_led_det      = ind_led_det;
     assign O_ind_result_toggle = ind_result_toggle;
+    assign O_ind_area     = ind_area;
+    assign O_ind_awb_tdata  = awb_O_tdata;
+    assign O_ind_awb_tlast  = awb_O_tlast;
+    assign O_ind_awb_tuser  = awb_O_tuser;
+    assign O_ind_awb_tvalid = awb_O_tvalid;
 
 endmodule
 

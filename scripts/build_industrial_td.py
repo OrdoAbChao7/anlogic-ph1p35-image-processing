@@ -85,9 +85,20 @@ TRACKED_RTL_FILES = {
     "mode_controller.v": TRACKED_RTL / "control" / "mode_controller.v",
     "industrial_v2_result_cdc.v": TRACKED_RTL / "integration" / "industrial_v2_result_cdc.v",
     "industrial_v2_display_tracking.v": TRACKED_RTL / "integration" / "industrial_v2_display_tracking.v",
+    "industrial_v2_feature_spine.v": TRACKED_RTL / "integration" / "industrial_v2_feature_spine.v",
+    "motion_grid_adapter_96.v": TRACKED_RTL / "integration" / "motion_grid_adapter_96.v",
+    "frame_stats_96.v": TRACKED_RTL / "integration" / "frame_stats_96.v",
     "temporal_tracker.v": TRACKED_RTL / "inspection" / "temporal_tracker.v",
     "trajectory_history.v": TRACKED_RTL / "inspection" / "trajectory_history.v",
+    "frame_tag_monitor.v": TRACKED_RTL / "inspection" / "frame_tag_monitor.v",
+    "latency_monitor.v": TRACKED_RTL / "inspection" / "latency_monitor.v",
+    "motion_diff_160.v": TRACKED_RTL / "inspection" / "motion_diff_160.v",
+    "dimension_calibrator.v": TRACKED_RTL / "inspection" / "dimension_calibrator.v",
     "tracking_overlay.v": TRACKED_RTL / "display" / "tracking_overlay.v",
+    "awb_frame_gain_controller.v": TRACKED_RTL / "isp" / "awb_frame_gain_controller.v",
+    "sort_event_controller.v": TRACKED_RTL / "control" / "sort_event_controller.v",
+    "sort_safety_interlock.v": TRACKED_RTL / "control" / "sort_safety_interlock.v",
+    "sort_pulse_generator.v": TRACKED_RTL / "control" / "sort_pulse_generator.v",
 }
 # These files intentionally override vendor snapshots only in the isolated TD
 # work tree. The original package remains available as an untouched baseline.
@@ -564,12 +575,48 @@ def setup_runs():
                 </FileInfo>
             </File>
         """
+    v2_extra_entries = """            <File Path="../../../user_source/hdl_source/industrial_v2_feature_spine.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="70"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/motion_grid_adapter_96.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="71"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/frame_stats_96.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="72"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/frame_tag_monitor.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="73"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/latency_monitor.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="74"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/motion_diff_160.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="75"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/dimension_calibrator.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="76"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/awb_frame_gain_controller.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="77"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/sort_event_controller.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="78"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/sort_safety_interlock.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="79"/></FileInfo>
+            </File>
+            <File Path="../../../user_source/hdl_source/sort_pulse_generator.v">
+                <FileInfo><Attr Name="UsedInSyn" Val="true"/><Attr Name="UsedInP&amp;R" Val="true"/><Attr Name="BelongTo" Val="design_1"/><Attr Name="CompileOrder" Val="80"/></FileInfo>
+            </File>
+        """
 
     orig_syn_prj = (input_runs / "syn_1" / "camera_to_dsi_display.prj").read_text(encoding="utf-8")
     if "bbox_draw_overlay.v" not in orig_syn_prj:
         orig_syn_prj = orig_syn_prj.replace("        </Verilog>", extra_entries + "        </Verilog>")
     elif "inspection_result_cdc.v" not in orig_syn_prj:
         orig_syn_prj = orig_syn_prj.replace("        </Verilog>", extra_entries[extra_entries.index('            <File Path="../../../user_source/hdl_source/inspection_result_cdc.v">'): ] + "        </Verilog>")
+    if "industrial_v2_feature_spine.v" not in orig_syn_prj:
+        orig_syn_prj = orig_syn_prj.replace("        </Verilog>", v2_extra_entries + "        </Verilog>")
     (syn_dir / "camera_to_dsi_display.prj").write_text(orig_syn_prj, encoding="utf-8")
 
     orig_phy_prj = (input_runs / "phy_1" / "camera_to_dsi_display.prj").read_text(encoding="utf-8")
@@ -577,6 +624,8 @@ def setup_runs():
         orig_phy_prj = orig_phy_prj.replace("        </Verilog>", extra_entries + "        </Verilog>")
     elif "inspection_result_cdc.v" not in orig_phy_prj:
         orig_phy_prj = orig_phy_prj.replace("        </Verilog>", extra_entries[extra_entries.index('            <File Path="../../../user_source/hdl_source/inspection_result_cdc.v">'): ] + "        </Verilog>")
+    if "industrial_v2_feature_spine.v" not in orig_phy_prj:
+        orig_phy_prj = orig_phy_prj.replace("        </Verilog>", v2_extra_entries + "        </Verilog>")
     (phy_dir / "camera_to_dsi_display.prj").write_text(orig_phy_prj, encoding="utf-8")
 
     print(f"      syn_1 configured: {syn_dir}")
