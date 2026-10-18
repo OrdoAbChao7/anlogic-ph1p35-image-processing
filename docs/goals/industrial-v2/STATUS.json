@@ -274,12 +274,17 @@
         "docs/experiments/2026-10-19-industrial-v2-g8-feature-spine.md",
         "fallback/rtl/integration/industrial_v2_feature_spine.v",
         "fallback/sim/integration/tb_industrial_v2_feature_spine.v",
+        "docs/experiments/2026-10-19-industrial-v2-g8-stream-adapters.md",
+        "fallback/rtl/integration/motion_grid_adapter_96.v",
+        "fallback/rtl/integration/frame_stats_96.v",
+        "fallback/sim/integration/tb_stream_adapters_96.v",
         "scripts/verify_industrial_v2_release.py"
       ],
       "unresolved": [
         "G1-G7 formal top-level/TD gates remain blocked; no single V2 Bitstream exists",
         "Feature spine passes same-clock simulation but is not instantiated in the formal TD top-level",
         "CSI/ISP to motion-grid/statistics adapters and result-to-HDMI CDC are not implemented",
+        "Stream adapters pass isolated simulation but are not yet in the formal TD source list",
         "V2 Slice/RAM/DSP/WNS/TNS, warning, CDC and constraint audits are not measured",
         "Full work/tests retains 8 frozen-vs-later contract failures and Stage D registry/plugin SHA mismatch remains",
         "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",
