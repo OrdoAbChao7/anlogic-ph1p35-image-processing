@@ -102,6 +102,13 @@ def build_audit() -> dict:
         "docs/evidence/industrial-v2-td-build.md",
         "release/industrial-v2/td-reports",
     )
+    candidate_qor_paths = (
+        "docs/experiments/2026-10-19-industrial-v2-g8-osd-bcd-td.md",
+        "release/candidates/industrial-v2-osd-bcd/route.qor",
+        "release/candidates/industrial-v2-osd-bcd/final_timing.rpt",
+    )
+    candidate_qor_evidence = existing_paths(candidate_qor_paths)
+    candidate_qor_complete = not missing_paths(candidate_qor_paths)
     v2_release_complete = not missing_paths(v2_release_paths)
 
     gates = [
@@ -128,16 +135,18 @@ def build_audit() -> dict:
         Gate(
             "td_full_build",
             PASS if all((ROOT / path).exists() for path in td_v2_paths) else BLOCKED,
-            existing_paths(td_v2_paths),
-            ("no complete V2 TD synthesis/place/route/hold-fix/STA/bitgen evidence",)
+            existing_paths(td_v2_paths) + candidate_qor_evidence,
+            ("complete seven-feature V2 TD evidence is not bound to the final release package",)
             if not all((ROOT / path).exists() for path in td_v2_paths)
             else (),
         ),
         Gate(
             "resource_timing_budget",
             BLOCKED,
-            ("docs/goals/industrial-v2/RESOURCE_BUDGET.md",),
-            ("V2 Slice/RAM/DSP/WNS/TNS are not measured",),
+            ("docs/goals/industrial-v2/RESOURCE_BUDGET.md",) + candidate_qor_evidence,
+            ("candidate QoR is measured, but it is not the complete seven-feature V2 release budget",)
+            if candidate_qor_complete
+            else ("V2 Slice/RAM/DSP/WNS/TNS are not measured",),
         ),
         Gate(
             "warnings_cdc_constraints_audit",

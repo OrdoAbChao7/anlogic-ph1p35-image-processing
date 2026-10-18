@@ -86,19 +86,26 @@
     {
       "name": "td_full_build",
       "status": "BLOCKED",
-      "evidence": [],
+      "evidence": [
+        "docs/experiments/2026-10-19-industrial-v2-g8-osd-bcd-td.md",
+        "release/candidates/industrial-v2-osd-bcd/route.qor",
+        "release/candidates/industrial-v2-osd-bcd/final_timing.rpt"
+      ],
       "blockers": [
-        "no complete V2 TD synthesis/place/route/hold-fix/STA/bitgen evidence"
+        "complete seven-feature V2 TD evidence is not bound to the final release package"
       ]
     },
     {
       "name": "resource_timing_budget",
       "status": "BLOCKED",
       "evidence": [
-        "docs/goals/industrial-v2/RESOURCE_BUDGET.md"
+        "docs/goals/industrial-v2/RESOURCE_BUDGET.md",
+        "docs/experiments/2026-10-19-industrial-v2-g8-osd-bcd-td.md",
+        "release/candidates/industrial-v2-osd-bcd/route.qor",
+        "release/candidates/industrial-v2-osd-bcd/final_timing.rpt"
       ],
       "blockers": [
-        "V2 Slice/RAM/DSP/WNS/TNS are not measured"
+        "candidate QoR is measured, but it is not the complete seven-feature V2 release budget"
       ]
     },
     {
@@ -166,7 +173,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "987b54ea1e355a9183c8856558316e73a7ae75a1",
+  "commit": "2f5902b954364f12e1a61d8bf7cb85c1ef645b02",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",
