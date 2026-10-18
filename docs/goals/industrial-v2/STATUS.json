@@ -285,6 +285,8 @@
         "fallback/rtl/integration/industrial_v2_display_tracking.v",
         "fallback/sim/integration/tb_industrial_v2_display_tracking.v",
         "fallback/td_source/design_top_wrapper.v",
+        "docs/experiments/2026-10-19-industrial-v2-g8-td-candidate-attempt.md",
+        "work/td_industrial_formal_display/td_project/camera_to_dsi_display_Runs/syn_1/flow_exec.log",
         "scripts/verify_industrial_v2_release.py"
       ],
       "unresolved": [
@@ -294,6 +296,7 @@
         "Stream adapters pass isolated simulation but are not yet in the formal TD source list/top-level",
         "Result CDC and HDMI tracking/overlay are connected as a candidate; source-side motion/AWB/calibration/sort fields remain tied to zero",
         "TD source synchronization, elaboration, synthesis, implementation, Bitgen, CDC and timing gates have not run for this candidate",
+        "The isolated TD candidate reached syn_1 Map Gate but exited without completion marker, QoR report or Bitstream; 119 timing-unconstrained endpoints and DDR PHY undriven-pin warnings remain open",
         "V2 Slice/RAM/DSP/WNS/TNS, warning, CDC and constraint audits are not measured",
         "Full work/tests retains 8 frozen-vs-later contract failures and Stage D registry/plugin SHA mismatch remains",
         "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",
