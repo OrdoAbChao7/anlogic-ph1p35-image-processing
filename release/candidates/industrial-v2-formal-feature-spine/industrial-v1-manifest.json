@@ -1,7 +1,7 @@
 {
   "project": "PH1P35 fixed-red industrial inspection v1",
   "target_device": "PH1P35MDG324",
-  "git_commit": "c25efa3244fe78083479a13a65a58cc7cba266f3",
+  "git_commit": "bf38628356bd6939e5820867d69e6b8037c69e3a",
   "git_status": "",
   "build_inputs": {
     "td_exe": ".tools/td/app/bin/td_commands_prompt.exe",
