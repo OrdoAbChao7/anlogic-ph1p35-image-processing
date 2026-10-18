@@ -23,3 +23,7 @@ G2 tracker/history/overlay are also independent software/RTL units only. Their r
 ## G3 measurement status
 
 G3 latency/frame-tag monitors are independent software/RTL units only. Their resource impact and timing are `NOT_MEASURED` until an isolated TD trial is allowed by the baseline and top-level gates. Physical HDMI/display E2E remains `N/A` without a controlled measurement setup.
+
+## G4 measurement status
+
+The independent G4 motion trial estimates one `160*120*8 = 153600-bit` history store. This is a logical capacity estimate, not a PH1P35 ERAM/Slice report. Slice/RAM/DSP/WNS/TNS remain `NOT_MEASURED` until a TD resource trial is authorized by the formal top-level and baseline gates.

@@ -16,3 +16,5 @@
 | V2 G2 summary | `docs/experiments/2026-10-19-industrial-v2-g2-summary.md` | BLOCKED; top/TD/hardware pending |
 | V2 G3 latency model/frame tags/monitor | `docs/experiments/2026-10-19-industrial-v2-g3-*.md` | SOFTWARE_PASS/RTL_PASS; top/TD/hardware pending |
 | V2 G3 summary | `docs/experiments/2026-10-19-industrial-v2-g3-summary.md` | BLOCKED; internal latency only |
+| V2 G4 motion model/RTL | `docs/experiments/2026-10-19-industrial-v2-g4-*.md` | SOFTWARE_PASS/RTL_PASS; top/TD/hardware pending |
+| V2 G4 summary | `docs/experiments/2026-10-19-industrial-v2-g4-summary.md` | BLOCKED; 160x120 history QoR not measured |

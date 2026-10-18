@@ -14,8 +14,8 @@
     "morphology_border": "replicate",
     "params_ok": true,
     "params_sha256_ok": true,
-    "plugin_sha256": "8341bb307de148a1e853c57bf512c6ae12d257cff6753b9aa11aa8580ac12205",
-    "plugin_sha256_ok": true,
+    "plugin_sha256": "08f929d45e1ffdab60cc12fd74b2c21b95bf1f74d4b3658f56739202e3f095bb",
+    "plugin_sha256_ok": false,
     "q10_bias": 131072,
     "q10_shift": 10,
     "registry_status": "VISUAL_APPROVED",
@@ -24,7 +24,7 @@
     "version_ok": true
   },
   "generated_at": "2026-10-16",
-  "pass": true,
+  "pass": false,
   "samples": [
     {
       "dimensions": {

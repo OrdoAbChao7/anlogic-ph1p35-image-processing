@@ -6,5 +6,5 @@ Ruling: no `/bin/bash`/WSL relay is available for `sdd-workspace`; this plan-sco
 
 Task 1: software motion model complete (RED missing-module collection failure; GREEN 8 passed).
 Task 2: RTL motion monitor complete (RED unknown-module compile failure; GREEN TB_MOTION_DIFF_160_PASS).
-Task 3: pending.
+Task 3: affected regression complete (26 targeted Python tests passed; 11 RTL entries passed; full work/tests 72 passed / 8 baseline contract failures; Stage D SHA blocker retained).
 Task 4: pending.
