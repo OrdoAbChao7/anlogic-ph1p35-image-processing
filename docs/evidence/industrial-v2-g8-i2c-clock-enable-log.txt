@@ -1,0 +1,24 @@
+Industrial V2 G8 I2C clock-enable candidate evidence
+=====================================================
+
+Directed RTL simulation:
+  Original vendor uii2c: PASS original write_read busy=0 bus_error=0 rd_data=00 scl_transitions=79
+  Clock-enable candidate: PASS write_read busy=0 bus_error=0 rd_data=00 scl_transitions=79
+
+Isolated TD build:
+  TD: 6.2.168116
+  Flow: DefaultFlow.tcl
+  Placement seed: 1
+  QoR: Setup WNS +100 ps, Setup TNS 0, Setup violated endpoints 0
+        Hold WNS +20 ps, Hold TNS 0, Hold violated endpoints 0
+        Slice 18222/21216 (85.89%), RAM 43, DSP 24, DRAMHARDCON 229
+  Bitstream bytes: 1367025
+  Bitstream SHA-256: 36ae214e3de2fb1bc7206cb5adecde12a4419cb09c1189dcf2c4f84bb860f233
+
+Final critical-warning lines:
+  PHY-5060: O_cam_24m_syn_3 has mixed fanouts of 202 clock pins; 1 data/ctrl pins.
+  PHY-5079: Marked 1 clock net(s) utilize the local routing resources.
+
+Decision:
+  Timing and Bitgen PASS; resource gate FAIL because 85.89% > 85%.
+  Not promoted to release/industrial-v2 and not a hardware result.
