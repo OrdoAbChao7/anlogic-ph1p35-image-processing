@@ -11,5 +11,5 @@
 - [x] V2-G4: Implement and verify fixed ROI frame difference in software and independent RTL; TD/top-level/hardware resource gates remain blocked.
 - [x] V2-G5: Implement and verify safe sort event controller and virtual actuator; external GPIO/mechanical closure remains blocked pending official evidence.
 - [x] V2-G6: Audit existing AWB and implement independent frame-statistics AWB candidate; ISP/SC520CS/TD/hardware gates remain blocked.
-- [ ] V2-G7: Calibrate dimensions and validate shape features.
+- [x] V2-G7: Implement and verify calibration/shape candidates in software and independent RTL; physical calibration and TD gates remain blocked.
 - [ ] V2-G8: Integrate, long-stability test and freeze release package.

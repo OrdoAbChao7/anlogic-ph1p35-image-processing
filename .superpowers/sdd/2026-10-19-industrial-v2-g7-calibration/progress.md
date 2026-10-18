@@ -6,5 +6,5 @@ Ruling: no real workcell calibration sample or physical geometry is inferred. Th
 
 Task 1: software calibration and shape model complete (RED missing-module collection failure; GREEN 7 passed).
 Task 2: RTL dimension/shape checker complete (RED unknown-module compile failure; GREEN TB_DIMENSION_CALIBRATOR_PASS).
-Task 3: pending.
+Task 3: affected regression complete (49 targeted Python tests passed; 14 RTL entries passed; full work/tests 95 passed / 8 baseline contract failures; Stage D SHA blocker retained).
 Task 4: pending.

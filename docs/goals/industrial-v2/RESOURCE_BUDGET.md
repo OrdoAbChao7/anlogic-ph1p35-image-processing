@@ -35,3 +35,7 @@ G5 adds internal event, safety and fixed-pulse control logic only. External GPIO
 ## G6 measurement status
 
 The independent frame-stat AWB controller uses arithmetic only; its Slice/DSP/timing impact is `NOT_MEASURED` until an isolated TD trial. Existing AWB IP/resource usage remains the frozen project baseline, not a G6 result.
+
+## G7 measurement status
+
+G7 uses arithmetic-only independent model/RTL candidates. Resource and timing impact are `NOT_MEASURED`; the Q16.16 calibration values are software/contract values until a physical reference and TD report freeze them.
