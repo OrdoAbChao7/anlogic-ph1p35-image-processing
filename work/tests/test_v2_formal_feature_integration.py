@@ -78,3 +78,14 @@ def test_release_audit_binds_the_complete_formal_feature_candidate():
     ):
         assert path in audit
     assert "TD_PASS" in audit
+
+
+def test_release_audit_binds_the_v2_clock_warning_evidence():
+    audit = AUDIT.read_text(encoding="utf-8")
+    for path in (
+        "docs/evidence/industrial-v2-g8-clock-warning-audit.md",
+        "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt",
+    ):
+        assert path in audit
+    assert "PHY-5079" in audit
+    assert "PHY-5088" in audit

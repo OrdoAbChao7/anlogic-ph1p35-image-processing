@@ -293,6 +293,8 @@
         "release/candidates/industrial-v2-osd-bcd/route.qor",
         "release/candidates/industrial-v2-osd-bcd/final_timing.rpt",
         "release/candidates/industrial-v2-osd-bcd/industrial-v1-manifest.json",
+        "docs/evidence/industrial-v2-g8-clock-warning-audit.md",
+        "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt",
         "scripts/verify_industrial_v2_release.py"
       ],
       "unresolved": [

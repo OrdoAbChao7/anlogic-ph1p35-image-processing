@@ -85,6 +85,12 @@ def build_audit() -> dict:
     )
     formal_candidate_evidence = existing_paths(formal_candidate_paths)
     formal_candidate_complete = not missing_paths(formal_candidate_paths)
+    warning_audit_paths = (
+        "docs/evidence/industrial-v2-g8-clock-warning-audit.md",
+        "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt",
+    )
+    warning_audit_evidence = existing_paths(warning_audit_paths)
+    warning_audit_complete = not missing_paths(warning_audit_paths)
     phase_blockers = tuple(
         f"{name} status is {phases.get(name, {}).get('status', 'MISSING')}"
         for name in PHASE_NAMES
@@ -171,8 +177,12 @@ def build_audit() -> dict:
         Gate(
             "warnings_cdc_constraints_audit",
             BLOCKED,
-            ("docs/goals/industrial-v2/STATUS.json",),
-            ("V2 clock/PHY/CDC/undriven/exception audit is not complete",),
+            ("docs/goals/industrial-v2/STATUS.json",) + warning_audit_evidence,
+            (
+                "PHY-5016/PHY-5060/PHY-5079/PHY-5088 remain open; detailed clock analysis and hardware closure are pending",
+            )
+            if warning_audit_complete
+            else ("V2 clock/PHY/CDC/undriven/exception audit is not complete",),
         ),
         Gate(
             "hardware_function_matrix",

@@ -22,4 +22,4 @@ Warnings retained for audit:
 PHY-5079 CRITICAL-WARNING: one clock net utilizes local routing resources.
 PHY-5088 WARNING: clock analyzer detected buffers driving non-clock sinks/other clock nets.
 
-Boundary: no board download, SC520CS/HDMI run, physical calibration, cold reset, long-stability, performance, or actuator acceptance was performed. The source manifest emitted by the build is a pre-commit provenance snapshot; it must be regenerated after the implementation commit before package freeze.
+Boundary: no board download, SC520CS/HDMI run, physical calibration, cold reset, long-stability, performance, or actuator acceptance was performed. The candidate manifest was regenerated after the implementation/audit commits and records a clean provenance snapshot; it is still a candidate-only artifact.

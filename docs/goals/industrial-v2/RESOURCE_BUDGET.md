@@ -54,3 +54,5 @@ The formal seven-feature candidate now has a complete TD synthesis, placement, t
 | Bitstream | `60aea582cff6fa2d5a03eaa5f1d9aab4bdc142371af86053d04f8acf40e9ebc1` | Candidate artifact only; no board acceptance |
 
 Evidence: `docs/experiments/2026-10-19-industrial-v2-g8-formal-feature-td.md`, `release/candidates/industrial-v2-formal-feature-spine/route.qor`, and `release/candidates/industrial-v2-formal-feature-spine/final_timing.rpt`. The formal candidate does not close the release budget because PHY-5079/PHY-5088 warning review, hardware, long-run and physical performance evidence remain open.
+
+A second isolated rebuild from the same source and TD input package produced Slice `18244/21216` (`85.99%`), Setup WNS `+127 ps`, Hold WNS `+20 ps`, TNS `0/0`, and Bitstream SHA-256 `f268aca98be49ccc4feef4c0d34a02976a57654740152d40f35a46e06025998f`. This confirms positive timing in the repeat run but also shows P&R variation; the two runs are retained as audit evidence and neither closes the reproducible-build or hardware gates by itself.
