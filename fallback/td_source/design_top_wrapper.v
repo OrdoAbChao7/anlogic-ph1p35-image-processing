@@ -719,6 +719,25 @@ assign S_raw_tuser  = S_axis_tuser;
     wire        ind_detected, ind_pass, ind_ng, ind_no_obj, ind_invalid;
     wire        ind_led_pass, ind_led_ng, ind_led_det;
     wire        ind_result_toggle;
+    reg  [15:0] ind_v2_frame_id;
+    reg         ind_v2_toggle_d;
+    wire [11:0] ind_cx_sum = {1'b0, ind_xmin} + {1'b0, ind_xmax};
+    wire [11:0] ind_cy_sum = {1'b0, ind_ymin} + {1'b0, ind_ymax};
+    wire [10:0] ind_v2_cx = ind_cx_sum >> 1;
+    wire [10:0] ind_v2_cy = ind_cy_sum >> 1;
+
+    // Source-domain frame ID for the result toggle. This counter is only a
+    // protocol tag; it is not a measured camera frame-rate or latency value.
+    always @(posedge S_csi_rx_clk or negedge S_rst_n) begin
+        if (!S_rst_n) begin
+            ind_v2_frame_id <= 16'd0;
+            ind_v2_toggle_d <= 1'b0;
+        end else begin
+            if (ind_result_toggle != ind_v2_toggle_d)
+                ind_v2_frame_id <= ind_v2_frame_id + 16'd1;
+            ind_v2_toggle_d <= ind_result_toggle;
+        end
+    end
 
     // ISP算法顶层模块 (集成工业目标定位与缺陷检测)
     isp_top u_isp_top (
@@ -990,6 +1009,67 @@ assign S_raw_tuser  = S_axis_tuser;
     wire [10:0] sync_hdmi_width, sync_hdmi_height;
     wire        sync_hdmi_detected, sync_hdmi_pass, sync_hdmi_ng;
     wire        sync_hdmi_invalid;
+    wire        v2_hdmi_result_valid;
+    wire [15:0] v2_hdmi_frame_id;
+    wire [10:0] v2_hdmi_xmin, v2_hdmi_xmax, v2_hdmi_ymin, v2_hdmi_ymax;
+    wire [10:0] v2_hdmi_cx, v2_hdmi_cy;
+    wire        v2_hdmi_detected, v2_hdmi_pass, v2_hdmi_ng, v2_hdmi_invalid;
+    wire        v2_hdmi_shape_valid;
+    wire        v2_hdmi_motion;
+    wire [23:0] v2_hdmi_motion_count;
+    wire [15:0] v2_hdmi_pass_count, v2_hdmi_ng_count;
+    wire        v2_hdmi_sort_pulse, v2_hdmi_safe_enable;
+
+    industrial_v2_result_cdc u_industrial_v2_result_cdc (
+        .I_src_clk             ( S_csi_rx_clk       ),
+        .I_dst_clk             ( S_hdmi_pixel_clk   ),
+        .I_rst_n               ( S_hdmi_rst_n       ),
+        .I_src_toggle          ( ind_result_toggle  ),
+        .I_src_frame_id        ( ind_v2_frame_id    ),
+        .I_src_xmin            ( ind_xmin            ),
+        .I_src_xmax            ( ind_xmax            ),
+        .I_src_ymin            ( ind_ymin            ),
+        .I_src_ymax            ( ind_ymax            ),
+        .I_src_cx              ( ind_v2_cx           ),
+        .I_src_cy              ( ind_v2_cy           ),
+        .I_src_width_mm_q16_16 ( 32'd0              ),
+        .I_src_height_mm_q16_16( 32'd0              ),
+        .I_src_detected        ( ind_detected        ),
+        .I_src_pass            ( ind_pass             ),
+        .I_src_ng              ( ind_ng               ),
+        .I_src_invalid         ( ind_invalid          ),
+        .I_src_dimension_valid ( 1'b0                ),
+        .I_src_shape_valid     ( 1'b0                ),
+        .I_src_motion          ( 1'b0                ),
+        .I_src_motion_count    ( 24'd0               ),
+        .I_src_pass_count      ( 16'd0               ),
+        .I_src_ng_count        ( 16'd0               ),
+        .I_src_sort_pulse      ( 1'b0                ),
+        .I_src_safe_enable     ( 1'b0                ),
+        .O_dst_valid           ( v2_hdmi_result_valid),
+        .O_dst_frame_id        ( v2_hdmi_frame_id    ),
+        .O_dst_xmin            ( v2_hdmi_xmin        ),
+        .O_dst_xmax            ( v2_hdmi_xmax        ),
+        .O_dst_ymin            ( v2_hdmi_ymin        ),
+        .O_dst_ymax            ( v2_hdmi_ymax        ),
+        .O_dst_cx              ( v2_hdmi_cx          ),
+        .O_dst_cy              ( v2_hdmi_cy          ),
+        .O_dst_width_mm_q16_16(                      ),
+        .O_dst_height_mm_q16_16(                     ),
+        .O_dst_detected        ( v2_hdmi_detected    ),
+        .O_dst_pass            ( v2_hdmi_pass        ),
+        .O_dst_ng              ( v2_hdmi_ng          ),
+        .O_dst_invalid         ( v2_hdmi_invalid     ),
+        .O_dst_dimension_valid (                     ),
+        .O_dst_shape_valid     ( v2_hdmi_shape_valid ),
+        .O_dst_motion          ( v2_hdmi_motion      ),
+        .O_dst_motion_count    ( v2_hdmi_motion_count),
+        .O_dst_pass_count      ( v2_hdmi_pass_count  ),
+        .O_dst_ng_count        ( v2_hdmi_ng_count    ),
+        .O_dst_sort_pulse      ( v2_hdmi_sort_pulse  ),
+        .O_dst_safe_enable     ( v2_hdmi_safe_enable ),
+        .O_dst_overflow        (                     )
+    );
 
     // The result CDC holds a newly published source-domain result pending
     // until the HDMI frame boundary.  BBox, OSD and status therefore consume
@@ -1029,6 +1109,36 @@ assign S_raw_tuser  = S_axis_tuser;
     wire        S_bbox_out_hsync;
     wire        S_bbox_out_de;
     wire [23:0] S_bbox_out_data;
+    wire        S_tracking_out_vsync;
+    wire        S_tracking_out_hsync;
+    wire        S_tracking_out_de;
+    wire [23:0] S_tracking_out_data;
+    wire        S_tracking_valid;
+
+    industrial_v2_display_tracking u_industrial_v2_display_tracking (
+        .I_clk          ( S_hdmi_pixel_clk       ),
+        .I_rst_n        ( S_hdmi_rst_n           ),
+        .I_frame_valid  ( v2_hdmi_result_valid   ),
+        .I_frame_id     ( v2_hdmi_frame_id       ),
+        .I_detected     ( v2_hdmi_detected       ),
+        .I_invalid      ( v2_hdmi_invalid        ),
+        .I_cx           ( v2_hdmi_cx              ),
+        .I_cy           ( v2_hdmi_cy              ),
+        .I_de           ( S_cartoon_out_de       ),
+        .I_hsync        ( S_cartoon_out_hsync    ),
+        .I_vsync        ( S_cartoon_out_vsync    ),
+        .I_rgb          ( S_cartoon_out_data     ),
+        .O_de           ( S_tracking_out_de      ),
+        .O_hsync        ( S_tracking_out_hsync   ),
+        .O_vsync        ( S_tracking_out_vsync   ),
+        .O_rgb          ( S_tracking_out_data    ),
+        .O_track_valid  ( S_tracking_valid      ),
+        .O_track_enter  (                     ),
+        .O_track_exit   (                     ),
+        .O_tracking_state(                    ),
+        .O_track_cx     (                     ),
+        .O_track_cy     (                     )
+    );
 
     bbox_draw_overlay #(
         .IMG_WIDTH          ( 1280 ),
@@ -1040,10 +1150,10 @@ assign S_raw_tuser  = S_axis_tuser;
     ) u_bbox_draw_overlay (
         .I_clk        ( S_hdmi_pixel_clk     ),
         .I_rst_n      ( S_hdmi_rst_n         ),
-        .I_de         ( S_cartoon_out_de     ),
-        .I_hsync      ( S_cartoon_out_hsync  ),
-        .I_vsync      ( S_cartoon_out_vsync  ),
-        .I_rgb        ( S_cartoon_out_data   ),
+        .I_de         ( S_tracking_out_de    ),
+        .I_hsync      ( S_tracking_out_hsync ),
+        .I_vsync      ( S_tracking_out_vsync ),
+        .I_rgb        ( S_tracking_out_data  ),
         .I_x          ( 11'd0                ),
         .I_y          ( 11'd0                ),
         .I_detected   ( sync_hdmi_detected   ),

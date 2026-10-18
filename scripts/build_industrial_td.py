@@ -83,6 +83,11 @@ TRACKED_RTL_FILES = {
     "anlogic_logo_rom.v": TRACKED_RTL / "display" / "anlogic_logo_rom.v",
     "industrial_osd_overlay.v": TRACKED_RTL / "display" / "industrial_osd_overlay.v",
     "mode_controller.v": TRACKED_RTL / "control" / "mode_controller.v",
+    "industrial_v2_result_cdc.v": TRACKED_RTL / "integration" / "industrial_v2_result_cdc.v",
+    "industrial_v2_display_tracking.v": TRACKED_RTL / "integration" / "industrial_v2_display_tracking.v",
+    "temporal_tracker.v": TRACKED_RTL / "inspection" / "temporal_tracker.v",
+    "trajectory_history.v": TRACKED_RTL / "inspection" / "trajectory_history.v",
+    "tracking_overlay.v": TRACKED_RTL / "display" / "tracking_overlay.v",
 }
 # These files intentionally override vendor snapshots only in the isolated TD
 # work tree. The original package remains available as an untouched baseline.

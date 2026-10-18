@@ -27,6 +27,7 @@
 | V2 G8 release audit design/plan | `docs/superpowers/specs/2026-10-19-industrial-v2-g8-release-audit-design.md`, `docs/superpowers/plans/2026-10-19-industrial-v2-g8-release-audit.md` | CREATED |
 | V2 G8 strict release audit | `docs/experiments/2026-10-19-industrial-v2-g8-release-audit.json` | BLOCKED; V1 SHA PASS, visual approval PASS only |
 | V2 G8 audit summary | `docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md` | BLOCKED; TD/hardware/package pending |
-| V2 G8 feature spine | `docs/experiments/2026-10-19-industrial-v2-g8-feature-spine.md`, `fallback/rtl/integration/industrial_v2_feature_spine.v` | SIM_PASS; formal top/CDC/TD pending |
-| V2 G8 ISP stream adapters | `docs/experiments/2026-10-19-industrial-v2-g8-stream-adapters.md`, `fallback/rtl/integration/motion_grid_adapter_96.v`, `fallback/rtl/integration/frame_stats_96.v` | SIM_PASS; formal source-list/CDC pending |
-| V2 G8 result CDC | `docs/experiments/2026-10-19-industrial-v2-g8-result-cdc.md`, `fallback/rtl/integration/industrial_v2_result_cdc.v` | SIM_PASS; formal HDMI wiring/TD pending |
+| V2 G8 feature spine | `docs/experiments/2026-10-19-industrial-v2-g8-feature-spine.md`, `fallback/rtl/integration/industrial_v2_feature_spine.v` | SIM_PASS; formal top/TD pending |
+| V2 G8 ISP stream adapters | `docs/experiments/2026-10-19-industrial-v2-g8-stream-adapters.md`, `fallback/rtl/integration/motion_grid_adapter_96.v`, `fallback/rtl/integration/frame_stats_96.v` | SIM_PASS; formal CSI/ISP wiring pending |
+| V2 G8 result CDC | `docs/experiments/2026-10-19-industrial-v2-g8-result-cdc.md`, `fallback/rtl/integration/industrial_v2_result_cdc.v` | SIM_PASS; formal display candidate connected, TD pending |
+| V2 G8 formal display wiring candidate | `docs/experiments/2026-10-19-industrial-v2-g8-formal-display-wiring.md`, `fallback/rtl/integration/industrial_v2_display_tracking.v`, `fallback/td_source/design_top_wrapper.v` | STATIC/SIM PASS; source-side seven-feature integration, TD and hardware pending |
