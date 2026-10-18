@@ -13,3 +13,5 @@ Task 2: complete (tool audit and baseline regressions recorded; gates remain blo
 Task 3: complete (commits include RED old-RTL failure and GREEN TB_MODE_CONTROLLER_PASS in both testbench entry points)
 
 Task 4: complete (RED decimal OSD assertion, root-cause correction for an invalid test coordinate, GREEN PASS OSD status and four-state classifier LED joint contract; hardware/TD gates remain open)
+
+Task 5: complete (ROI Python model/tests, explicit ISP top half-open endpoint constants, ROI masking/BORDER_REPLICATE/half-target RTL regression, invalid-ROI propagation; TD/hardware gates remain open)

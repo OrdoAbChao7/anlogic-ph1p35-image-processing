@@ -31,15 +31,19 @@ module isp_top (
     output wire         O_ind_result_toggle
 );
 
-// Frozen v1 inspection ROI.  Until the camera/fixture is available for
-// calibration, the approved contract uses the complete 1280x720 raster as a
-// fixed ROI.  The detector treats the all-zero geometry as full-frame; keeping
-// the values here (instead of relying on detector defaults) makes the release
-// configuration explicit and auditable.
-localparam integer INDUSTRIAL_ROI_X      = 0;
-localparam integer INDUSTRIAL_ROI_Y      = 0;
-localparam integer INDUSTRIAL_ROI_WIDTH  = 0;
-localparam integer INDUSTRIAL_ROI_HEIGHT = 0;
+// Frozen v1 inspection ROI. Coordinates are half-open [x0,x1) x [y0,y1).
+// Until the camera/fixture is available for calibration, the approved
+// contract uses the complete 1280x720 raster as a fixed ROI. Keep the named
+// endpoints at the integration boundary so later calibration cannot silently
+// change detector semantics or OSD coordinates.
+localparam integer INDUSTRIAL_ROI_X0 = 0;
+localparam integer INDUSTRIAL_ROI_Y0 = 0;
+localparam integer INDUSTRIAL_ROI_X1 = 1280;
+localparam integer INDUSTRIAL_ROI_Y1 = 720;
+localparam integer INDUSTRIAL_ROI_X      = INDUSTRIAL_ROI_X0;
+localparam integer INDUSTRIAL_ROI_Y      = INDUSTRIAL_ROI_Y0;
+localparam integer INDUSTRIAL_ROI_WIDTH  = INDUSTRIAL_ROI_X1 - INDUSTRIAL_ROI_X0;
+localparam integer INDUSTRIAL_ROI_HEIGHT = INDUSTRIAL_ROI_Y1 - INDUSTRIAL_ROI_Y0;
 
 wire         m_aixs_tvalid;  //synthesis keep
   wire [127:0] m_aixs_tdata;  //synthesis keep

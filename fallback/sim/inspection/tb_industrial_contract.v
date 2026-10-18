@@ -32,6 +32,10 @@ module tb_industrial_contract;
   wire invalid_is_pass, invalid_is_ng, invalid_is_no_obj, invalid_is_invalid;
   wire invalid_led_pass, invalid_led_ng, invalid_led_det;
 
+  wire [10:0] roi_xmin, roi_xmax, roi_ymin, roi_ymax, roi_cx, roi_cy;
+  wire [19:0] roi_area;
+  wire roi_detected, roi_invalid, roi_frame_sync;
+
   integer x, y, i;
 
   always #5 clk = ~clk;
@@ -87,6 +91,18 @@ module tb_industrial_contract;
     .O_status(), .O_led_pass(invalid_led_pass),
     .O_led_ng(invalid_led_ng), .O_led_det(invalid_led_det),
     .O_result_toggle()
+  );
+
+  // Explicit half-open ROI [8,24) x [4,12) for boundary and masking tests.
+  color_detect_96_v2 #(
+    .IMG_WIDTH(W), .IMG_HEIGHT(H), .MIN_AREA(1),
+    .ROI_X(8), .ROI_Y(4), .ROI_WIDTH(16), .ROI_HEIGHT(8)
+  ) u_roi_detect (
+    .I_clk(clk), .I_rst_n(rst_n), .I_tvalid(tvalid), .I_tlast(tlast),
+    .I_tuser(tuser), .I_tdata(tdata), .O_xmin(roi_xmin), .O_xmax(roi_xmax),
+    .O_ymin(roi_ymin), .O_ymax(roi_ymax), .O_cx(roi_cx), .O_cy(roi_cy),
+    .O_area(roi_area), .O_detected(roi_detected), .O_invalid(roi_invalid),
+    .O_frame_sync(roi_frame_sync)
   );
 
   task clear_map;
@@ -252,6 +268,31 @@ module tb_industrial_contract;
     // Empty scene clears the previous result and LEDs.
     clear_map(); send_map(0); settle; expect_no_object();
     $display("PASS empty scene NO_OBJECT");
+
+    // ROI masking ignores red interference outside [8,24) x [4,12).
+    clear_map(); set_rect(0, 0, 4, 16); set_rect(12, 5, 8, 6);
+    send_map(0); settle;
+    if (!(roi_detected && !roi_invalid && roi_area == 20'd48 &&
+          roi_xmin == 12 && roi_xmax == 19 && roi_ymin == 5 && roi_ymax == 10))
+      $fatal(1, "ROI external interference mismatch: det=%b inv=%b area=%0d bbox=%0d,%0d,%0d,%0d",
+             roi_detected, roi_invalid, roi_area, roi_xmin, roi_xmax, roi_ymin, roi_ymax);
+    $display("PASS ROI external interference masked");
+
+    // A target touching the ROI top-left edge uses BORDER_REPLICATE.
+    clear_map(); set_rect(8, 4, 8, 6); send_map(1); settle;
+    if (!(roi_detected && !roi_invalid && roi_area == 20'd48 &&
+          roi_xmin == 8 && roi_xmax == 15 && roi_ymin == 4 && roi_ymax == 9))
+      $fatal(1, "ROI edge replicate mismatch: det=%b inv=%b area=%0d bbox=%0d,%0d,%0d,%0d",
+             roi_detected, roi_invalid, roi_area, roi_xmin, roi_xmax, roi_ymin, roi_ymax);
+    $display("PASS ROI edge BORDER_REPLICATE");
+
+    // A target crossing the left edge is clipped to the ROI before opening.
+    clear_map(); set_rect(4, 4, 8, 6); send_map(0); settle;
+    if (!(roi_detected && !roi_invalid && roi_area == 20'd24 &&
+          roi_xmin == 8 && roi_xmax == 11 && roi_ymin == 4 && roi_ymax == 9))
+      $fatal(1, "ROI half-target mismatch: det=%b inv=%b area=%0d bbox=%0d,%0d,%0d,%0d",
+             roi_detected, roi_invalid, roi_area, roi_xmin, roi_xmax, roi_ymin, roi_ymax);
+    $display("PASS ROI half-target clipping");
 
     // Border-replicated opening preserves a valid object touching image edges.
     clear_map(); set_rect(0, 0, 8, 6); send_map(1); settle; expect_pass(8, 6);
