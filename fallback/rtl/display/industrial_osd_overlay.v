@@ -40,7 +40,6 @@ module industrial_osd_overlay #(
   reg [11:0] x;
   reg [11:0] y;
   reg        vsync_d;
-  reg [31:0] frame_counter;
   reg [39:0] frame_digits;
   reg [15:0] width_digits;
   reg [15:0] height_digits;
@@ -58,23 +57,59 @@ module industrial_osd_overlay #(
     end
   endfunction
 
-  function [3:0] decimal_digit;
-    input [31:0] value;
-    input integer place;
+  // Increment the already-decimal frame value one nibble at a time.  This
+  // keeps the frame-boundary update synthesizable without inferring a bank of
+  // 32-bit division/modulo operators on the HDMI clock domain.
+  function [39:0] bcd_increment;
+    input [39:0] value;
+    reg [39:0] result;
+    reg        carry;
     begin
-      case (place)
-        0: decimal_digit = (value / 32'd1) % 10;
-        1: decimal_digit = (value / 32'd10) % 10;
-        2: decimal_digit = (value / 32'd100) % 10;
-        3: decimal_digit = (value / 32'd1000) % 10;
-        4: decimal_digit = (value / 32'd10000) % 10;
-        5: decimal_digit = (value / 32'd100000) % 10;
-        6: decimal_digit = (value / 32'd1000000) % 10;
-        7: decimal_digit = (value / 32'd10000000) % 10;
-        8: decimal_digit = (value / 32'd100000000) % 10;
-        9: decimal_digit = (value / 32'd1000000000) % 10;
-        default: decimal_digit = 0;
-      endcase
+      result = value;
+      carry = 1'b1;
+      if (carry) begin if (result[3:0]   == 4'd9) begin result[3:0]   = 4'd0; end else begin result[3:0]   = result[3:0]   + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[7:4]   == 4'd9) begin result[7:4]   = 4'd0; end else begin result[7:4]   = result[7:4]   + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[11:8]  == 4'd9) begin result[11:8]  = 4'd0; end else begin result[11:8]  = result[11:8]  + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[15:12] == 4'd9) begin result[15:12] = 4'd0; end else begin result[15:12] = result[15:12] + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[19:16] == 4'd9) begin result[19:16] = 4'd0; end else begin result[19:16] = result[19:16] + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[23:20] == 4'd9) begin result[23:20] = 4'd0; end else begin result[23:20] = result[23:20] + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[27:24] == 4'd9) begin result[27:24] = 4'd0; end else begin result[27:24] = result[27:24] + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[31:28] == 4'd9) begin result[31:28] = 4'd0; end else begin result[31:28] = result[31:28] + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[35:32] == 4'd9) begin result[35:32] = 4'd0; end else begin result[35:32] = result[35:32] + 4'd1; carry = 1'b0; end end
+      if (carry) begin if (result[39:36] == 4'd9) begin result[39:36] = 4'd0; end else begin result[39:36] = result[39:36] + 4'd1; end end
+      bcd_increment = result;
+    end
+  endfunction
+
+  // Convert the bounded inspection dimensions to four BCD digits with
+  // subtract/compare stages.  The inputs are at most 11 bits, so this keeps
+  // the frame-boundary conversion small and division-free.
+  function [15:0] dimension_to_bcd;
+    input [10:0] value;
+    reg [10:0] remainder;
+    reg [3:0] thousands;
+    reg [3:0] hundreds;
+    reg [3:0] tens;
+    reg [3:0] ones;
+    begin
+      remainder = value;
+      thousands = 4'd0;
+      hundreds = 4'd0;
+      tens = 4'd0;
+      ones = 4'd0;
+      if (remainder >= 11'd1000) begin thousands = 4'd1; remainder = remainder - 11'd1000; end
+      if (remainder >= 11'd100) begin hundreds = 4'd1; remainder = remainder - 11'd100; end
+      if (remainder >= 11'd90) begin tens = 4'd9; remainder = remainder - 11'd90; end
+      else if (remainder >= 11'd80) begin tens = 4'd8; remainder = remainder - 11'd80; end
+      else if (remainder >= 11'd70) begin tens = 4'd7; remainder = remainder - 11'd70; end
+      else if (remainder >= 11'd60) begin tens = 4'd6; remainder = remainder - 11'd60; end
+      else if (remainder >= 11'd50) begin tens = 4'd5; remainder = remainder - 11'd50; end
+      else if (remainder >= 11'd40) begin tens = 4'd4; remainder = remainder - 11'd40; end
+      else if (remainder >= 11'd30) begin tens = 4'd3; remainder = remainder - 11'd30; end
+      else if (remainder >= 11'd20) begin tens = 4'd2; remainder = remainder - 11'd20; end
+      else if (remainder >= 11'd10) begin tens = 4'd1; remainder = remainder - 11'd10; end
+      ones = remainder[3:0];
+      dimension_to_bcd = {thousands, hundreds, tens, ones};
     end
   endfunction
 
@@ -621,7 +656,7 @@ module industrial_osd_overlay #(
 
   always @(posedge I_clk or negedge I_rst_n) begin
     if (!I_rst_n) begin
-      x <= 0; y <= 0; vsync_d <= 0; frame_counter <= 0;
+      x <= 0; y <= 0; vsync_d <= 0;
       frame_digits <= 0; width_digits <= 0; height_digits <= 0;
       O_vsync <= 0; O_hsync <= 0; O_de <= 0; O_rgb <= 0;
     end else begin
@@ -639,21 +674,9 @@ module industrial_osd_overlay #(
 
       vsync_d <= I_vsync;
       if (I_vsync && !vsync_d) begin
-        frame_counter <= frame_counter + 32'd1;
-        frame_digits <= {decimal_digit(frame_counter + 32'd1, 9),
-                         decimal_digit(frame_counter + 32'd1, 8),
-                         decimal_digit(frame_counter + 32'd1, 7),
-                         decimal_digit(frame_counter + 32'd1, 6),
-                         decimal_digit(frame_counter + 32'd1, 5),
-                         decimal_digit(frame_counter + 32'd1, 4),
-                         decimal_digit(frame_counter + 32'd1, 3),
-                         decimal_digit(frame_counter + 32'd1, 2),
-                         decimal_digit(frame_counter + 32'd1, 1),
-                         decimal_digit(frame_counter + 32'd1, 0)};
-        width_digits <= {decimal_digit(I_width, 3), decimal_digit(I_width, 2),
-                         decimal_digit(I_width, 1), decimal_digit(I_width, 0)};
-        height_digits <= {decimal_digit(I_height, 3), decimal_digit(I_height, 2),
-                          decimal_digit(I_height, 1), decimal_digit(I_height, 0)};
+        frame_digits <= bcd_increment(frame_digits);
+        width_digits <= dimension_to_bcd(I_width);
+        height_digits <= dimension_to_bcd(I_height);
       end
 
       if (I_vsync) begin
