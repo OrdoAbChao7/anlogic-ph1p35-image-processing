@@ -287,6 +287,12 @@
         "fallback/td_source/design_top_wrapper.v",
         "docs/experiments/2026-10-19-industrial-v2-g8-td-candidate-attempt.md",
         "docs/evidence/industrial-v2-g8-td-candidate-attempt-log.txt",
+        "docs/experiments/2026-10-19-industrial-v2-g8-osd-bcd-td.md",
+        "release/candidates/industrial-v2-osd-bcd/README.md",
+        "release/candidates/industrial-v2-osd-bcd/camera_to_dsi_display_compress.bit",
+        "release/candidates/industrial-v2-osd-bcd/route.qor",
+        "release/candidates/industrial-v2-osd-bcd/final_timing.rpt",
+        "release/candidates/industrial-v2-osd-bcd/industrial-v1-manifest.json",
         "scripts/verify_industrial_v2_release.py"
       ],
       "unresolved": [
@@ -295,8 +301,8 @@
         "Formal top still lacks CSI/ISP-to-grid/statistics source-list/top-level wiring",
         "Stream adapters pass isolated simulation but are not yet in the formal TD source list/top-level",
         "Result CDC and HDMI tracking/overlay are connected as a candidate; source-side motion/AWB/calibration/sort fields remain tied to zero",
-        "TD source synchronization, elaboration, synthesis, implementation, Bitgen, CDC and timing gates have not run for this candidate",
-        "The isolated TD candidate reached syn_1 Map Gate but exited without completion marker, QoR report or Bitstream; 119 timing-unconstrained endpoints and DDR PHY undriven-pin warnings remain open",
+        "The OSD-BCD formal display candidate has TD/QoR/Bitgen evidence, but the seven upgrades are not all integrated into one formal top-level",
+        "The candidate final QoR passes at Setup WNS +132ps/TNS 0 and Hold WNS +20ps/TNS 0; the full V2 release still requires feature integration, warning/CDC/constraint audit and clean-package verification",
         "V2 Slice/RAM/DSP/WNS/TNS, warning, CDC and constraint audits are not measured",
         "Full work/tests retains 8 frozen-vs-later contract failures and Stage D registry/plugin SHA mismatch remains",
         "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",

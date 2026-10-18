@@ -32,3 +32,4 @@
 | V2 G8 result CDC | `docs/experiments/2026-10-19-industrial-v2-g8-result-cdc.md`, `fallback/rtl/integration/industrial_v2_result_cdc.v` | SIM_PASS; formal display candidate connected, TD pending |
 | V2 G8 formal display wiring candidate | `docs/experiments/2026-10-19-industrial-v2-g8-formal-display-wiring.md`, `fallback/rtl/integration/industrial_v2_display_tracking.v`, `fallback/td_source/design_top_wrapper.v` | STATIC/SIM PASS; source-side seven-feature integration, TD and hardware pending |
 | V2 G8 TD candidate attempt | `docs/experiments/2026-10-19-industrial-v2-g8-td-candidate-attempt.md`, `docs/evidence/industrial-v2-g8-td-candidate-attempt-log.txt` | INCOMPLETE at `syn_1` Map Gate; no QoR/Bitstream |
+| V2 G8 OSD BCD timing candidate | `docs/experiments/2026-10-19-industrial-v2-g8-osd-bcd-td.md`, `release/candidates/industrial-v2-osd-bcd/` | TD/QoR/Bitgen PASS for candidate; seven-feature integration and hardware pending |
