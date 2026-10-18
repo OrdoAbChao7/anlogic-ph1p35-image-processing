@@ -7,4 +7,4 @@ Ruling: sensor AE/I2C and visual hardware approval are not inferred. The user's 
 Task 1: software frame-stat AWB model complete (RED missing-module collection failure; GREEN 8 passed).
 Task 2: RTL frame-stat AWB controller complete (RED unknown-module compile failure; GREEN TB_AWB_FRAME_GAIN_PASS).
 Task 3: affected regression complete (42 targeted Python tests passed; 13 RTL entries passed; full work/tests 88 passed / 8 baseline contract failures; Stage D SHA blocker retained).
-Task 4: pending.
+Task 4: G6 evidence and status records complete; phase remains BLOCKED at ISP/SC520CS/TD/hardware gates.
