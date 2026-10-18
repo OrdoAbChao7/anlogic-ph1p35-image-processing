@@ -9,3 +9,5 @@ Task 1: software latency model complete (RED missing-module collection failure; 
 Task 2: RTL frame tag monitor complete (RED unknown-module compile failure; GREEN TB_FRAME_TAG_MONITOR_PASS; formal top/TD/hardware gates remain open).
 
 Task 3: RTL latency monitor complete (RED unknown-module compile failure; GREEN TB_LATENCY_MONITOR_PASS; formal top/TD/hardware gates remain open).
+
+Task 4: G3 evidence and status records complete (18 targeted Python tests passed; 10 RTL entries passed; full work/tests remains 64 passed / 8 baseline contract failures; Stage D registry/plugin SHA blocker retained).
