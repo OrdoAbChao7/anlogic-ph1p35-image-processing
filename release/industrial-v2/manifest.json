@@ -3,41 +3,42 @@
   "project": "PH1P35 Industrial Vision V2",
   "release_status": "CANDIDATE_ONLY",
   "target_device": "HX1P35A / PH1P35MDG324",
-  "package_base_commit": "9bc9c8659757ace46033f30c5fe30e13b68a21f6",
-  "td_build_commit": "9bc9c8659757ace46033f30c5fe30e13b68a21f6",
+  "package_base_commit": "98801ed381934ba665573fd6c15026c18c33a289",
+  "td_build_commit": "98801ed381934ba665573fd6c15026c18c33a289",
   "td_version": "6.2.168116",
+  "placement_seed": 1,
   "build_flow": {
-    "kind": "official_default",
+    "kind": "official_default_with_fixed_seed",
     "base": "DefaultFlow.tcl",
     "path": "release/industrial-v2/DefaultFlow.tcl"
   },
   "bitstream": {
     "path": "release/industrial-v2/industrial-v2.bit",
-    "size_bytes": 1369009,
-    "sha256": "a39394977f8902f975ae74a4b8926bec4873fac9fc2065c16da48e79f5980c7c"
+    "size_bytes": 1370289,
+    "sha256": "d6e6a7e12ef7558834904dcc8d2783d5fda827b7fe11c6e407b0119fc3ce1c0d"
   },
   "artifacts": [
     {
       "path": "release/industrial-v2/industrial-v2.bit",
-      "size_bytes": 1369009,
-      "sha256": "a39394977f8902f975ae74a4b8926bec4873fac9fc2065c16da48e79f5980c7c"
+      "size_bytes": 1370289,
+      "sha256": "d6e6a7e12ef7558834904dcc8d2783d5fda827b7fe11c6e407b0119fc3ce1c0d"
     },
     {
       "path": "release/industrial-v2/route.qor",
       "size_bytes": 1313,
-      "sha256": "266893419527bb4098d70996b9feec1cd894c06bff97691b929e928bfcf1a00a"
+      "sha256": "82d66406ac7b377b5e5d4e83e75197d65696dd454e517a36a2c70dd8d3a42a44"
     },
     {
       "path": "release/industrial-v2/final_timing.rpt",
-      "size_bytes": 4777101,
-      "sha256": "3951810aec67119564d526b33e1b7203d0f913d634c809a07271ad5e02d9f621"
+      "size_bytes": 4717646,
+      "sha256": "36468fca40a36a8380b0db1bd4e9904adf910c174578a9b4db048c7cd8378903"
     }
   ],
   "provenance": {
     "project": "PH1P35 fixed-red industrial inspection v1",
     "target_device": "PH1P35MDG324",
-    "git_commit": "9bc9c8659757ace46033f30c5fe30e13b68a21f6",
-    "git_status": "M docs/experiments/2026-10-19-industrial-v2-g8-release-audit.json\n M docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md\n M docs/goals/industrial-v2/EVIDENCE_INDEX.md\n M docs/goals/industrial-v2/STATUS.json\n M scripts/verify_industrial_v2_release.py\n M work/tests/test_v2_release_audit.py\n?? docs/evidence/industrial-v2-current-source-td-rebuild-attempt-log.txt\n?? docs/evidence/industrial-v2-current-source-td-rebuild-attempt.md\n?? release/candidates/industrial-v2-current/\n?? release/industrial-v2/",
+    "git_commit": "98801ed381934ba665573fd6c15026c18c33a289",
+    "git_status": "M docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md\n M docs/experiments/2026-10-19-industrial-v2-g8-release-audit.json\n M docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md\n M docs/goals/industrial-v2/EVIDENCE_INDEX.md\n M docs/goals/industrial-v2/RESOURCE_BUDGET.md\n M docs/goals/industrial-v2/STATUS.json\n M release/candidates/industrial-v2-current/README.md\n M release/industrial-v2/README.md\n M release/industrial-v2/final_timing.rpt\n M release/industrial-v2/industrial-v2.bit\n M release/industrial-v2/manifest.json\n M release/industrial-v2/route.qor\n M release/industrial-v2/td-reports/final_timing.rpt\n M release/industrial-v2/td-reports/route.qor\n M scripts/verify_industrial_v2_release.py\n M work/tests/test_v2_release_audit.py\n?? docs/evidence/industrial-v2-g8-seed1-current-log.txt\n?? docs/experiments/2026-10-19-industrial-v2-g8-seed1-current.md\n?? release/candidates/industrial-v2-seed1-current/",
     "build_inputs": {
       "td_exe": "<FPGA_TD_EXE>",
       "flow_tcl": "release/industrial-v2/DefaultFlow.tcl",
@@ -63,7 +64,7 @@
         "size_bytes": 7809,
         "sha256": "d1a5d4291706dac224cc33008d8945e79ed2eb1adf8ce86cca46be564975bade"
       },
-      "place_seed": null,
+      "place_seed": 1,
       "input_package": {
         "path": "fallback/td_package",
         "exists": true
@@ -220,25 +221,24 @@
     "artifacts": [
       {
         "path": "release/industrial-v2/industrial-v2.bit",
-        "size_bytes": 1369009,
-        "sha256": "a39394977f8902f975ae74a4b8926bec4873fac9fc2065c16da48e79f5980c7c"
+        "size_bytes": 1370289,
+        "sha256": "d6e6a7e12ef7558834904dcc8d2783d5fda827b7fe11c6e407b0119fc3ce1c0d"
       },
       {
         "path": "release/industrial-v2/route.qor",
         "size_bytes": 1313,
-        "sha256": "266893419527bb4098d70996b9feec1cd894c06bff97691b929e928bfcf1a00a"
+        "sha256": "82d66406ac7b377b5e5d4e83e75197d65696dd454e517a36a2c70dd8d3a42a44"
       },
       {
         "path": "release/industrial-v2/final_timing.rpt",
-        "size_bytes": 4777101,
-        "sha256": "3951810aec67119564d526b33e1b7203d0f913d634c809a07271ad5e02d9f621"
+        "size_bytes": 4717646,
+        "sha256": "36468fca40a36a8380b0db1bd4e9904adf910c174578a9b4db048c7cd8378903"
       }
     ]
   },
   "open_gates": [
-    "Slice budget target <=85% is exceeded by this measured candidate at 87.12%",
+    "fixed-seed builds are not byte-identical across repeated runs",
     "PHY-5016/PHY-5060/PHY-5079/PHY-5088 warning closure",
-    "byte-identical fixed-seed reproducibility",
     "V1 full regression contract drift",
     "hardware download and function matrix",
     "cold reset and long-run stability",

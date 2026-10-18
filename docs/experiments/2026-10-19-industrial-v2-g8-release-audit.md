@@ -20,6 +20,7 @@
 |---|---|---|
 | V1 冻结基线 SHA | `PASS` | 期望与实际均为 `b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef` |
 | 七项软件/RTL/TD | `BLOCKED` | 七功能正式顶层与 TD 候选已通过；G1-G7 的硬件/物理证据和冻结基线一致性仍未闭合 |
+| V2 资源/时序预算 | `PASS` | 固定 seed 当前候选 Slice `17125/21216 (80.72%)`，Setup WNS `+104 ps`，Hold WNS `+20 ps`，TNS/违例端点为 `0/0` |
 | 同一 V2 Bitstream | `PASS` | `release/industrial-v2/industrial-v2.bit` 与 README、manifest、TD 报告同包；仅表示包内单一 Bitstream，不表示已上板 |
 | V1 回归 | `BLOCKED` | `work/tests` 保留 8 个冻结基线与后续目录契约漂移失败 |
 | V2 TD/QoR/告警 | `BLOCKED` | current-source 候选 TD/STA/Bitgen PASS；`PHY-5016/5060/5079/5088` 告警审计仍开放，固定种子未实现字节级一致 |

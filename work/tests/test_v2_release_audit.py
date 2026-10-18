@@ -87,3 +87,45 @@ def test_reproducible_package_stays_blocked_when_seed_evidence_is_not_byte_ident
         "fixed placement seed did not produce byte-identical Bitstreams" in blocker
         for blocker in gate.blockers
     )
+
+
+def test_resource_gate_passes_for_clean_qor_under_slice_target():
+    route_qor = """
+|     Setup WNS             |          104                |
+|     Setup TNS             |            0                |
+|     Num of violated S-EP  |            0                |
+|     Hold WNS              |           20                |
+|     Hold TNS              |            0                |
+|     Num of violated H-EP  |            0                |
+|     #slices               |        17125                |
+|     slices percentage     |       80.72%                |
+"""
+
+    gate = VERIFY_MODULE.build_resource_timing_gate(
+        route_qor,
+        evidence=("release/industrial-v2/route.qor",),
+    )
+
+    assert gate.status == "PASS"
+    assert gate.blockers == ()
+
+
+def test_resource_gate_blocks_qor_over_slice_target():
+    route_qor = """
+|     Setup WNS             |          127                |
+|     Setup TNS             |            0                |
+|     Num of violated S-EP  |            0                |
+|     Hold WNS              |           20                |
+|     Hold TNS              |            0                |
+|     Num of violated H-EP  |            0                |
+|     #slices               |        18484                |
+|     slices percentage     |       87.12%                |
+"""
+
+    gate = VERIFY_MODULE.build_resource_timing_gate(
+        route_qor,
+        evidence=("release/industrial-v2/route.qor",),
+    )
+
+    assert gate.status == "BLOCKED"
+    assert any("Slice 87.12% exceeds the <=85% target" in blocker for blocker in gate.blockers)

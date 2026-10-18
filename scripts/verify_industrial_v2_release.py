@@ -67,6 +67,59 @@ def missing_paths(relative_paths: tuple[str, ...]) -> tuple[str, ...]:
     return tuple(path for path in relative_paths if not (ROOT / path).exists())
 
 
+def build_resource_timing_gate(route_qor_text: str, evidence: tuple[str, ...]) -> Gate:
+    """Evaluate the current candidate's measured resource and timing QoR."""
+    labels = {
+        "setup_wns": "Setup WNS",
+        "setup_tns": "Setup TNS",
+        "setup_violations": "Num of violated S-EP",
+        "hold_wns": "Hold WNS",
+        "hold_tns": "Hold TNS",
+        "hold_violations": "Num of violated H-EP",
+        "slice_count": "#slices",
+        "slice_percent": "slices percentage",
+    }
+    values: dict[str, float] = {}
+    for key, label in labels.items():
+        match = re.search(
+            rf"\|\s*{re.escape(label)}\s*\|\s*([+-]?\d+(?:\.\d+)?)",
+            route_qor_text,
+            re.IGNORECASE,
+        )
+        if match:
+            values[key] = float(match.group(1))
+
+    missing = tuple(key for key in labels if key not in values)
+    if missing:
+        return Gate(
+            "resource_timing_budget",
+            BLOCKED,
+            evidence,
+            ("route.qor is missing required QoR metrics: " + ", ".join(missing),),
+        )
+
+    blockers: list[str] = []
+    if values["slice_percent"] > 85.0:
+        blockers.append(
+            f"Slice {values['slice_percent']:.2f}% exceeds the <=85% target"
+        )
+    if values["setup_wns"] < 0:
+        blockers.append(f"Setup WNS={values['setup_wns']:.0f} ps is negative")
+    if values["setup_tns"] != 0 or values["setup_violations"] != 0:
+        blockers.append("Setup TNS or violated endpoints is non-zero")
+    if values["hold_wns"] < 0:
+        blockers.append(f"Hold WNS={values['hold_wns']:.0f} ps is negative")
+    if values["hold_tns"] != 0 or values["hold_violations"] != 0:
+        blockers.append("Hold TNS or violated endpoints is non-zero")
+
+    return Gate(
+        "resource_timing_budget",
+        PASS if not blockers else BLOCKED,
+        evidence,
+        tuple(blockers),
+    )
+
+
 def fixed_seed_is_byte_identical(evidence_paths: tuple[str, ...]) -> bool | None:
     """Read the explicit fixed-seed result without treating evidence presence as success."""
     if not evidence_paths:
@@ -186,6 +239,33 @@ def build_audit() -> dict:
     current_release_qor_evidence = existing_paths(current_release_qor_paths)
     current_release_qor_complete = not missing_paths(current_release_qor_paths)
     v2_release_complete = not missing_paths(v2_release_paths)
+    if current_release_qor_complete:
+        current_route_qor = (ROOT / current_release_qor_paths[0]).read_text(
+            encoding="utf-8", errors="replace"
+        )
+        resource_gate = build_resource_timing_gate(
+            current_route_qor,
+            ("docs/goals/industrial-v2/RESOURCE_BUDGET.md",)
+            + current_release_qor_evidence,
+        )
+    else:
+        resource_gate = Gate(
+            "resource_timing_budget",
+            BLOCKED,
+            ("docs/goals/industrial-v2/RESOURCE_BUDGET.md",)
+            + candidate_qor_evidence
+            + formal_candidate_evidence,
+            (
+                "formal TD_PASS candidate measures Slice 86.07% with Setup WNS +100ps and Hold WNS +20ps, "
+                "but it exceeds the initial <=85% target and still lacks warning closure, hardware and long-run evidence",
+            )
+            if formal_candidate_complete
+            else (
+                "candidate QoR is measured, but it is not the complete seven-feature V2 release budget",
+            )
+            if candidate_qor_complete
+            else ("V2 Slice/RAM/DSP/WNS/TNS are not measured",),
+        )
 
     gates = [
         Gate(
@@ -216,29 +296,7 @@ def build_audit() -> dict:
             if not (formal_candidate_complete or all((ROOT / path).exists() for path in td_v2_paths))
             else (),
         ),
-        Gate(
-            "resource_timing_budget",
-            BLOCKED,
-            ("docs/goals/industrial-v2/RESOURCE_BUDGET.md",)
-            + candidate_qor_evidence
-            + formal_candidate_evidence
-            + current_release_qor_evidence,
-            (
-                "current V2 package candidate measures Slice 87.12% with Setup WNS +127ps and Hold WNS +20ps, "
-                "exceeding the initial <=85% target; warning closure, hardware and long-run evidence remain open",
-            )
-            if current_release_qor_complete
-            else (
-                "formal TD_PASS candidate measures Slice 86.07% with Setup WNS +100ps and Hold WNS +20ps, "
-                "but it exceeds the initial <=85% target and still lacks warning closure, hardware and long-run evidence",
-            )
-            if formal_candidate_complete
-            else (
-                "candidate QoR is measured, but it is not the complete seven-feature V2 release budget",
-            )
-            if candidate_qor_complete
-            else ("V2 Slice/RAM/DSP/WNS/TNS are not measured",),
-        ),
+        resource_gate,
         Gate(
             "warnings_cdc_constraints_audit",
             BLOCKED,

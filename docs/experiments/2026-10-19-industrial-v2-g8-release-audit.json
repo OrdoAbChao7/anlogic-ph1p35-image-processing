@@ -3,7 +3,6 @@
   "gate_count": 12,
   "blocked_gates": [
     "v1_regression",
-    "resource_timing_budget",
     "warnings_cdc_constraints_audit",
     "hardware_function_matrix",
     "performance_traceability",
@@ -101,25 +100,13 @@
     },
     {
       "name": "resource_timing_budget",
-      "status": "BLOCKED",
+      "status": "PASS",
       "evidence": [
         "docs/goals/industrial-v2/RESOURCE_BUDGET.md",
-        "docs/experiments/2026-10-19-industrial-v2-g8-osd-bcd-td.md",
-        "release/candidates/industrial-v2-osd-bcd/route.qor",
-        "release/candidates/industrial-v2-osd-bcd/final_timing.rpt",
-        "docs/experiments/2026-10-19-industrial-v2-g8-formal-feature-td.md",
-        "docs/evidence/industrial-v2-g8-formal-feature-td-log.txt",
-        "release/candidates/industrial-v2-formal-feature-spine/README.md",
-        "release/candidates/industrial-v2-formal-feature-spine/route.qor",
-        "release/candidates/industrial-v2-formal-feature-spine/final_timing.rpt",
-        "release/candidates/industrial-v2-formal-feature-spine/camera_to_dsi_display_compress.bit",
-        "release/candidates/industrial-v2-formal-feature-spine/industrial-v1-manifest.json",
         "release/industrial-v2/route.qor",
         "release/industrial-v2/final_timing.rpt"
       ],
-      "blockers": [
-        "current V2 package candidate measures Slice 87.12% with Setup WNS +127ps and Hold WNS +20ps, exceeding the initial <=85% target; warning closure, hardware and long-run evidence remain open"
-      ]
+      "blockers": []
     },
     {
       "name": "warnings_cdc_constraints_audit",
@@ -193,7 +180,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "075b653f61b6de8efde7c5c6f5efbde16a06bf61",
+  "commit": "98801ed381934ba665573fd6c15026c18c33a289",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",

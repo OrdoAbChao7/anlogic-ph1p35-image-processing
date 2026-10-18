@@ -301,7 +301,13 @@
         "release/industrial-v2/industrial-v2.bit",
         "release/industrial-v2/route.qor",
         "release/industrial-v2/final_timing.rpt",
-        "release/industrial-v2/industrial_v2_clock_detail.tcl",
+        "release/candidates/industrial-v2-seed1-current/README.md",
+        "release/candidates/industrial-v2-seed1-current/camera_to_dsi_display_compress.bit",
+        "release/candidates/industrial-v2-seed1-current/route.qor",
+        "release/candidates/industrial-v2-seed1-current/final_timing.rpt",
+        "release/candidates/industrial-v2-seed1-current/industrial-v1-manifest.json",
+        "docs/experiments/2026-10-19-industrial-v2-g8-seed1-current.md",
+        "docs/evidence/industrial-v2-g8-seed1-current-log.txt",
         "docs/experiments/2026-10-16-industrial-inspection-stage-d.md",
         "work/algorithm_lab/exports/stage_d/stage_d_report.json",
         "scripts/verify_industrial_v2_release.py"
@@ -310,16 +316,16 @@
         "G1-G7 individual phase gates remain blocked by hardware/physical evidence and frozen baseline consistency; the combined formal top now has a TD/STA/Bitgen candidate",
         "The post-AWB CSI/ISP stream is connected to the motion-grid and frame-statistics adapters in the formal top-level",
         "The feature spine, all seven feature dependencies, and staged result CDC are in the formal TD source list",
-        "Combined candidate QoR passes at Setup WNS +100ps/TNS 0 and Hold WNS +20ps/TNS 0; Slice 18261/21216 = 86.07%, RAM 43, DSP 24",
+        "Current fixed-seed candidate QoR passes at Setup WNS +104ps/TNS 0 and Hold WNS +20ps/TNS 0; Slice 17125/21216 = 80.72%, RAM 43, DSP 24; the initial <=85% resource target is met",
         "TD reported PHY-5079 clock-local-routing and PHY-5088 clock-analyzer warnings; warning/CDC/constraint audit remains open",
         "Two complete TD builds with --place-seed 1 both passed final QoR but produced different Bitstream SHA-256 values and Slice counts; exact Bitstream reproducibility remains open",
         "Full work/tests retains 8 frozen-vs-later contract failures; Stage D software verification is PASS",
         "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",
         "A CANDIDATE_ONLY V2 package now contains one seven-feature Bitstream and TD provenance; it is not a final release because warning, reproducibility, hardware and long-run gates remain open"
       ],
-      "resource_baseline": "Current-source default-Flow candidate: Slice 18484/21216 (87.12%), RAM 43, DSP 24, Setup WNS +127ps, Hold WNS +20ps, TNS 0; initial <=85% Slice target is exceeded and warning/hardware/reproducibility gates remain open",
-      "best_candidate": "CANDIDATE_ONLY_V2_PACKAGE",
-      "next_action": "Close PHY warnings and fixed-seed reproducibility, then execute SC520CS/HDMI, calibration, reset/long-run, performance and actuator acceptance before final package freeze"
+      "resource_baseline": "Current-source fixed-seed candidate: Slice 17125/21216 (80.72%), RAM 43, DSP 24, Setup WNS +104ps, Hold WNS +20ps, TNS 0; initial <=85% Slice target is met, but repeated fixed-seed builds are byte-different and warning/hardware gates remain open",
+      "best_candidate": "CANDIDATE_ONLY_V2_PACKAGE_SEED1",
+      "next_action": "Close fixed-seed reproducibility and PHY warnings, then execute SC520CS/HDMI, calibration, reset/long-run, performance and actuator acceptance before final package freeze"
     }
   }
 }
