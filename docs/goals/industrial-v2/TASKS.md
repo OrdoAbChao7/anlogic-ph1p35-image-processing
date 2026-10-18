@@ -6,7 +6,7 @@
 - [x] V2-G1-T2: Add decimal OSD and frame-stable result display.
 - [x] V2-G1-T3: Freeze explicit ROI contract and boundary behavior.
 - [x] V2-G1-T4: Run G1 software/RTL/TD gates and record hardware block; TD and hardware remain blocked by recorded prerequisites.
-- [ ] V2-G2: Implement and verify single-target tracker.
+- [x] V2-G2: Implement and verify single-target tracker in software and independent RTL; formal top-level/TD/hardware gates remain blocked.
 - [ ] V2-G3: Implement and verify latency monitors.
 - [ ] V2-G4: Resource-trial and implement ROI frame difference.
 - [ ] V2-G5: Implement safe sort event controller and virtual actuator.

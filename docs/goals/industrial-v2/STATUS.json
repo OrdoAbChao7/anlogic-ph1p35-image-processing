@@ -72,7 +72,37 @@
       "best_candidate": "EXPERIMENTAL",
       "next_action": "Repair or formally scope frozen baseline consistency, then run isolated TD build before any hardware claim"
     },
-    "V2-G2": {"status":"NOT_STARTED","objective":"Single-target tracking and trajectory overlay","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":[],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after G1"},
+    "V2-G2": {
+      "status":"BLOCKED",
+      "objective":"Single-target tracking and trajectory overlay",
+      "prerequisites":["V2-G1"],
+      "completion":75,
+      "commands":[
+        "python -B -m pytest -q work/tests/test_v2_tracker.py work/tests/test_v2_roi_contract.py",
+        "iverilog/vvp tb_temporal_tracker",
+        "iverilog/vvp tb_trajectory_history",
+        "iverilog/vvp tb_tracking_overlay",
+        "python -B -m pytest -q work/tests",
+        "pwsh -File .\\scripts\\verify-industrial-subsystem.ps1"
+      ],
+      "evidence":[
+        "docs/experiments/2026-10-19-industrial-v2-g2-tracker-model.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-temporal-tracker.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-trajectory-history.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-tracking-overlay.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-summary.md"
+      ],
+      "unresolved":[
+        "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
+        "Tracker/history/overlay are not yet instantiated in the formal top-level",
+        "TD synthesis/implementation/Bitgen not run for G2",
+        "No V2 resource/timing report",
+        "No real moving-target or board evidence"
+      ],
+      "resource_baseline":"V1 historical values only; no G2 QoR measured",
+      "best_candidate":"EXPERIMENTAL",
+      "next_action":"Continue decoupled G3/G4 software and RTL work; integrate only after prerequisite and QoR gates are available"
+    },
     "V2-G3": {"status":"NOT_STARTED","objective":"Internal processing and video latency monitoring","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":[],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after G1"},
     "V2-G4": {"status":"NOT_STARTED","objective":"Fixed ROI frame-difference motion detection","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":[],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create resource trial after G1"},
     "V2-G5": {"status":"NOT_STARTED","objective":"Safe internal sort events and external-control boundary","prerequisites":["V2-G2","V2-G4"],"completion":0,"commands":[],"evidence":[],"unresolved":["External actuator and pins unknown"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after tracker and motion contracts"},
