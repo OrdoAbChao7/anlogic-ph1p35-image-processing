@@ -32,7 +32,7 @@ TB_LATENCY_MONITOR_PASS
 ## 行为结论
 
 - 匹配的结果和视频事件分别发布 `O_proc_valid/O_proc_cycles`、`O_video_valid/O_video_cycles`。
-- 延迟计数与 `LatencyModel` 一致：只累计两次原子观测之间的空闲 `I_clk` 周期，观测事件所在沿不重复计数。
+- 延迟计数与 `LatencyModel` 一致：底层使用自由运行固定宽度计数器和输入时间戳，并扣除此前的结果/视频观测沿，只累计两次原子观测之间的空闲 `I_clk` 周期。
 - 无活动帧、迟到帧或错标签事件只产生 `O_tag_mismatch`，不发布有效延迟。
 - 输入帧号跳变产生一次 `O_frame_gap`；超时清除 pending，下一帧可重新建立测量。
 - `O_e2e_valid=0` 且 `O_e2e_cycles=0`，表示当前没有物理显示链路测量，不代表零延迟。

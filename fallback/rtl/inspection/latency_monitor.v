@@ -31,6 +31,7 @@ module latency_monitor #(
 
   reg [COUNTER_WIDTH-1:0] cycle_counter;
   reg [COUNTER_WIDTH-1:0] input_timestamp;
+  reg [COUNTER_WIDTH-1:0] stage_event_edges;
   reg [COUNTER_WIDTH-1:0] age;
   reg [15:0]              active_frame_id;
   reg [15:0]              last_input_id;
@@ -50,6 +51,7 @@ module latency_monitor #(
     if (!I_rst_n) begin
       cycle_counter    <= {COUNTER_WIDTH{1'b0}};
       input_timestamp  <= {COUNTER_WIDTH{1'b0}};
+      stage_event_edges <= {COUNTER_WIDTH{1'b0}};
       age              <= {COUNTER_WIDTH{1'b0}};
       active_frame_id  <= 16'd0;
       last_input_id    <= 16'd0;
@@ -85,17 +87,25 @@ module latency_monitor #(
         last_input_id   <= I_input_frame_id;
         active_frame_id <= I_input_frame_id;
         input_timestamp <= cycle_counter;
+        stage_event_edges <= {COUNTER_WIDTH{1'b0}};
         age             <= {COUNTER_WIDTH{1'b0}};
         pending         <= 1'b1;
         result_seen     <= 1'b0;
         video_seen      <= 1'b0;
       end else begin
+        // The free-running timestamp includes the current observation edge.
+        // Keep a count of earlier result/video edges so the published value
+        // matches the event-domain model, where observations take no time.
+        if (I_result_valid || I_video_valid)
+          stage_event_edges <= stage_event_edges + {{(COUNTER_WIDTH-1){1'b0}}, 1'b1};
+
         // A result/video event without a matching active frame is an explicit
         // tag error, including a result arriving after timeout.
         if (I_result_valid) begin
           if (result_match_now) begin
             O_proc_valid  <= 1'b1;
-            O_proc_cycles <= age;
+            O_proc_cycles <= cycle_counter - input_timestamp -
+                             stage_event_edges - {{(COUNTER_WIDTH-1){1'b0}}, 1'b1};
             result_seen   <= 1'b1;
           end else begin
             O_tag_mismatch <= 1'b1;
@@ -104,7 +114,8 @@ module latency_monitor #(
         if (I_video_valid) begin
           if (video_match_now) begin
             O_video_valid  <= 1'b1;
-            O_video_cycles <= age;
+            O_video_cycles <= cycle_counter - input_timestamp -
+                              stage_event_edges - {{(COUNTER_WIDTH-1){1'b0}}, 1'b1};
             video_seen     <= 1'b1;
           end else begin
             O_tag_mismatch <= 1'b1;
