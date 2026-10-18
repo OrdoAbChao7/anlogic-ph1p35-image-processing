@@ -7,3 +7,5 @@ Ruling: no `/bin/bash`/WSL relay is available for `sdd-workspace`; this plan-sco
 Task 1: software latency model complete (RED missing-module collection failure; GREEN 6 passed).
 
 Task 2: RTL frame tag monitor complete (RED unknown-module compile failure; GREEN TB_FRAME_TAG_MONITOR_PASS; formal top/TD/hardware gates remain open).
+
+Task 3: RTL latency monitor complete (RED unknown-module compile failure; GREEN TB_LATENCY_MONITOR_PASS; formal top/TD/hardware gates remain open).
