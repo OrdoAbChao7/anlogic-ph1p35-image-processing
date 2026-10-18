@@ -24,19 +24,22 @@ module tb_mode_controller;
     key_edge_n=0; tick; key_edge_n=1; repeat(3) tick;
     frame;
     if(mode!==0) $fatal(1,"bounce changed mode");
-    // Hold edge key long enough; selection waits for frame boundary.
-    key_edge_n=0; repeat(5) tick;
+    // One debounced click requests Sobel but commits only on a frame edge.
+    key_edge_n=0; repeat(5) tick; key_edge_n=1; repeat(5) tick;
     if(mode!==0) $fatal(1,"changed before frame");
     frame;
     if(mode!==1 || !edge_req || cartoon_req) $fatal(1,"Sobel frame commit");
-    // Cartoon has priority while both are held.
-    key_cartoon_n=0; repeat(5) tick; frame;
+    // A held key must not generate another click.
+    repeat(8) tick; frame;
+    if(mode!==1) $fatal(1,"held key retriggered");
+    // The second click advances to Cartoon, and the third wraps to Original.
+    key_edge_n=0; repeat(5) tick; key_edge_n=1; repeat(5) tick; frame;
     if(mode!==2 || edge_req || !cartoon_req) $fatal(1,"Cartoon frame commit");
-    // Release both; original is committed only at next frame.
-    key_edge_n=1; key_cartoon_n=1; repeat(5) tick;
-    if(mode!==2) $fatal(1,"released before frame");
-    frame;
+    key_edge_n=0; repeat(5) tick; key_edge_n=1; repeat(5) tick; frame;
     if(mode!==0 || edge_req || cartoon_req) $fatal(1,"Original frame commit");
+    // The reserved second key does not change the display mode.
+    key_cartoon_n=0; repeat(5) tick; key_cartoon_n=1; repeat(5) tick; frame;
+    if(mode!==0) $fatal(1,"reserved key changed mode");
     $display("TB_MODE_CONTROLLER_PASS");
     $finish;
   end

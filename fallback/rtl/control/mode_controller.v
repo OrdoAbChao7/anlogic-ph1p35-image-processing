@@ -1,6 +1,8 @@
+`timescale 1ns/1ps
 // Debounced, frame-boundary display-mode controller.
-// Buttons are active low. A held key selects the mode; releasing both returns
-// to ORIGINAL. The visible mode only changes on I_frame_start.
+// Buttons are active low. I_key_edge_n is the single-click mode-cycle key:
+// ORIGINAL -> SOBEL -> CARTOON -> ORIGINAL. The visible mode changes only
+// on I_frame_start. I_key_cartoon_n remains reserved for the later OSD page.
 module mode_controller #(
     parameter integer DEBOUNCE_CYCLES = 1000000
 )(
@@ -29,14 +31,16 @@ module mode_controller #(
     wire edge_sample   = ~edge_sync[1];
     wire cartoon_sample = ~cartoon_sync[1];
 
-    always @* begin
-        if (cartoon_pressed)
-            pending_mode = MODE_CARTOON;
-        else if (edge_pressed)
-            pending_mode = MODE_SOBEL;
-        else
-            pending_mode = MODE_ORIGINAL;
-    end
+    function [1:0] next_mode;
+        input [1:0] mode;
+        begin
+            case (mode)
+                MODE_ORIGINAL: next_mode = MODE_SOBEL;
+                MODE_SOBEL:    next_mode = MODE_CARTOON;
+                default:       next_mode = MODE_ORIGINAL;
+            endcase
+        end
+    endfunction
 
     assign O_edge_req   = (O_mode == MODE_SOBEL);
     assign O_cartoon_req = (O_mode == MODE_CARTOON);
@@ -49,6 +53,7 @@ module mode_controller #(
             cartoon_pressed<= 1'b0;
             edge_count     <= 32'd0;
             cartoon_count  <= 32'd0;
+            pending_mode   <= MODE_ORIGINAL;
             O_mode         <= MODE_ORIGINAL;
         end else begin
             edge_sync    <= {edge_sync[0], I_key_edge_n};
@@ -59,6 +64,8 @@ module mode_controller #(
             end else if (DEBOUNCE_CYCLES <= 1 || edge_count >= DEBOUNCE_CYCLES-1) begin
                 edge_pressed <= edge_sample;
                 edge_count   <= 32'd0;
+                if (edge_sample)
+                    pending_mode <= next_mode(pending_mode);
             end else begin
                 edge_count <= edge_count + 32'd1;
             end
