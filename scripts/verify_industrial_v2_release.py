@@ -91,6 +91,11 @@ def build_audit() -> dict:
     )
     warning_audit_evidence = existing_paths(warning_audit_paths)
     warning_audit_complete = not missing_paths(warning_audit_paths)
+    fixed_seed_paths = (
+        "docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md",
+    )
+    fixed_seed_evidence = existing_paths(fixed_seed_paths)
+    fixed_seed_complete = not missing_paths(fixed_seed_paths)
     phase_blockers = tuple(
         f"{name} status is {phases.get(name, {}).get('status', 'MISSING')}"
         for name in PHASE_NAMES
@@ -205,8 +210,10 @@ def build_audit() -> dict:
         Gate(
             "reproducible_build_package",
             PASS if v2_release_complete else BLOCKED,
-            existing_paths(v2_release_paths),
-            tuple(f"missing release artifact: {path}" for path in missing_paths(v2_release_paths)),
+            existing_paths(v2_release_paths) + fixed_seed_evidence,
+            tuple(f"missing release artifact: {path}" for path in missing_paths(v2_release_paths))
+            + (("fixed placement seed did not produce byte-identical Bitstreams; exact reproducibility remains open",)
+               if fixed_seed_complete else ("fixed-seed reproducibility evidence is missing",)),
         ),
         Gate(
             "external_actuator_acceptance",

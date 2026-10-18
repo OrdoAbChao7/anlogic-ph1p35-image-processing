@@ -91,6 +91,12 @@ def test_release_audit_binds_the_v2_clock_warning_evidence():
     assert "PHY-5088" in audit
 
 
+def test_release_audit_binds_fixed_seed_reproducibility_evidence():
+    audit = AUDIT.read_text(encoding="utf-8")
+    assert "docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md" in audit
+    assert "exact reproducibility remains open" in audit
+
+
 def test_td_builder_supports_a_reproducible_placement_seed():
     build = BUILD.read_text(encoding="utf-8")
     assert "--place-seed" in build
