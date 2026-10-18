@@ -42,4 +42,15 @@ G7 uses arithmetic-only independent model/RTL candidates. Resource and timing im
 
 ## G8 measurement status
 
-The strict G8 audit confirms the V1 frozen SHA, but records V2 resource/timing as `NOT_MEASURED`. No sum of independent G1-G7 trials is treated as a final integrated QoR result; only a complete V2 TD report may close this gate.
+The formal seven-feature candidate now has a complete TD synthesis, placement, timing and Bitgen report. This is a `TD_PASS` candidate, not a released V2 package:
+
+| Metric | Formal candidate | Gate interpretation |
+|---|---:|---|
+| Slice | 18,261 / 21,216 (86.07%) | Above the initial <=85% target; below the 90% pause threshold |
+| RAM | 43 | Same count as the frozen V1 baseline; attribution is not isolated by feature |
+| DSP | 24 | Same count as the frozen V1 baseline; attribution is not isolated by feature |
+| Setup WNS/TNS | +100 ps / 0 | Timing pass; warning audit remains open |
+| Hold WNS/TNS | +20 ps / 0 | Timing pass; warning audit remains open |
+| Bitstream | `60aea582cff6fa2d5a03eaa5f1d9aab4bdc142371af86053d04f8acf40e9ebc1` | Candidate artifact only; no board acceptance |
+
+Evidence: `docs/experiments/2026-10-19-industrial-v2-g8-formal-feature-td.md`, `release/candidates/industrial-v2-formal-feature-spine/route.qor`, and `release/candidates/industrial-v2-formal-feature-spine/final_timing.rpt`. The formal candidate does not close the release budget because PHY-5079/PHY-5088 warning review, hardware, long-run and physical performance evidence remain open.

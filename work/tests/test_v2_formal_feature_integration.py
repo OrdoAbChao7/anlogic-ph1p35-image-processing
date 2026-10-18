@@ -5,6 +5,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TOP = ROOT / "fallback" / "td_source" / "design_top_wrapper.v"
 ISP = ROOT / "fallback" / "td_source" / "isp" / "isp_top.v"
 BUILD = ROOT / "scripts" / "build_industrial_td.py"
+AUDIT = ROOT / "scripts" / "verify_industrial_v2_release.py"
 
 
 def test_formal_top_exposes_awb_stream_and_instantiates_all_v2_feature_boundaries():
@@ -65,3 +66,15 @@ def test_td_builder_tracks_all_formal_v2_sources():
         "sort_pulse_generator.v",
     ):
         assert filename in build, f"TD builder source manifest is missing {filename}"
+
+
+def test_release_audit_binds_the_complete_formal_feature_candidate():
+    audit = AUDIT.read_text(encoding="utf-8")
+    for path in (
+        "docs/experiments/2026-10-19-industrial-v2-g8-formal-feature-td.md",
+        "release/candidates/industrial-v2-formal-feature-spine/route.qor",
+        "release/candidates/industrial-v2-formal-feature-spine/final_timing.rpt",
+        "release/candidates/industrial-v2-formal-feature-spine/camera_to_dsi_display_compress.bit",
+    ):
+        assert path in audit
+    assert "TD_PASS" in audit

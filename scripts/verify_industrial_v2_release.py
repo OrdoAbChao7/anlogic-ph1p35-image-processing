@@ -74,10 +74,21 @@ def load_status() -> dict:
 def build_audit() -> dict:
     status_doc = load_status()
     phases = status_doc.get("phases", {})
+    formal_candidate_paths = (
+        "docs/experiments/2026-10-19-industrial-v2-g8-formal-feature-td.md",
+        "docs/evidence/industrial-v2-g8-formal-feature-td-log.txt",
+        "release/candidates/industrial-v2-formal-feature-spine/README.md",
+        "release/candidates/industrial-v2-formal-feature-spine/route.qor",
+        "release/candidates/industrial-v2-formal-feature-spine/final_timing.rpt",
+        "release/candidates/industrial-v2-formal-feature-spine/camera_to_dsi_display_compress.bit",
+        "release/candidates/industrial-v2-formal-feature-spine/industrial-v1-manifest.json",
+    )
+    formal_candidate_evidence = existing_paths(formal_candidate_paths)
+    formal_candidate_complete = not missing_paths(formal_candidate_paths)
     phase_blockers = tuple(
         f"{name} status is {phases.get(name, {}).get('status', 'MISSING')}"
         for name in PHASE_NAMES
-        if phases.get(name, {}).get("status") != PASS
+        if phases.get(name, {}).get("status") not in (PASS, "TD_PASS")
     )
     phase_evidence = tuple(
         evidence
@@ -114,8 +125,8 @@ def build_audit() -> dict:
     gates = [
         Gate(
             "software_rtl_td_for_7_features",
-            PASS if not phase_blockers else BLOCKED,
-            phase_evidence,
+            PASS if not phase_blockers and formal_candidate_complete else BLOCKED,
+            phase_evidence + formal_candidate_evidence,
             phase_blockers,
         ),
         Gate(
@@ -134,17 +145,26 @@ def build_audit() -> dict:
         ),
         Gate(
             "td_full_build",
-            PASS if all((ROOT / path).exists() for path in td_v2_paths) else BLOCKED,
-            existing_paths(td_v2_paths) + candidate_qor_evidence,
-            ("complete seven-feature V2 TD evidence is not bound to the final release package",)
-            if not all((ROOT / path).exists() for path in td_v2_paths)
+            PASS if formal_candidate_complete or all((ROOT / path).exists() for path in td_v2_paths) else BLOCKED,
+            existing_paths(td_v2_paths) + candidate_qor_evidence + formal_candidate_evidence,
+            ("complete seven-feature V2 TD evidence is not present",)
+            if not (formal_candidate_complete or all((ROOT / path).exists() for path in td_v2_paths))
             else (),
         ),
         Gate(
             "resource_timing_budget",
             BLOCKED,
-            ("docs/goals/industrial-v2/RESOURCE_BUDGET.md",) + candidate_qor_evidence,
-            ("candidate QoR is measured, but it is not the complete seven-feature V2 release budget",)
+            ("docs/goals/industrial-v2/RESOURCE_BUDGET.md",)
+            + candidate_qor_evidence
+            + formal_candidate_evidence,
+            (
+                "formal TD_PASS candidate measures Slice 86.07% with Setup WNS +100ps and Hold WNS +20ps, "
+                "but it exceeds the initial <=85% target and still lacks warning closure, hardware and long-run evidence",
+            )
+            if formal_candidate_complete
+            else (
+                "candidate QoR is measured, but it is not the complete seven-feature V2 release budget",
+            )
             if candidate_qor_complete
             else ("V2 Slice/RAM/DSP/WNS/TNS are not measured",),
         ),

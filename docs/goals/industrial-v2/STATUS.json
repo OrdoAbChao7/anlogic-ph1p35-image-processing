@@ -42,10 +42,10 @@
       "next_action": "Record baseline drift and proceed only with isolated software/RTL work; repair or formally scope the frozen baseline before TD merge"
     },
     "V2-G1": {
-      "status": "BLOCKED",
+      "status": "TD_PASS",
       "objective": "Single-click mode, decimal OSD and explicit ROI contract",
       "prerequisites": ["V2-G0"],
-      "completion": 75,
+      "completion": 85,
       "commands": [
         "iverilog/vvp tb_mode_controller (simulation and root entry points)",
         "iverilog/vvp tb_osd_led_joint",
@@ -64,19 +64,19 @@
       "unresolved": [
         "Full pytest remains 52 passed / 8 failed because frozen-vs-later release and path contracts differ",
         "Stage D registry/plugin model SHA mismatch stops industrial regression at stage 2/13",
-        "TD synthesis/implementation/Bitgen not run for V2",
-        "No V2 resource/timing report",
+        "Combined formal seven-feature TD synthesis/implementation/Bitgen passed; hardware behavior remains unvalidated",
+        "Combined candidate QoR is measured; feature-isolated attribution and warning closure remain open",
         "No confirmed hardware downloader, board, camera or HDMI acceptance"
       ],
-      "resource_baseline": "V1 historical values only; no V2 QoR measured",
-      "best_candidate": "EXPERIMENTAL",
-      "next_action": "Repair or formally scope frozen baseline consistency, then run isolated TD build before any hardware claim"
+      "resource_baseline": "Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, WNS +100/+20 ps, TNS 0",
+      "best_candidate": "TD_PASS_CANDIDATE",
+      "next_action": "Close warning, hardware and release-package gates; retain the formal candidate as the TD reference"
     },
     "V2-G2": {
-      "status":"BLOCKED",
+      "status":"TD_PASS",
       "objective":"Single-target tracking and trajectory overlay",
       "prerequisites":["V2-G1"],
-      "completion":75,
+      "completion":85,
       "commands":[
         "python -B -m pytest -q work/tests/test_v2_tracker.py work/tests/test_v2_roi_contract.py",
         "iverilog/vvp tb_temporal_tracker",
@@ -99,15 +99,15 @@
         "Combined V2 QoR is available; feature-isolated G2 resource attribution is not measured",
         "No real moving-target or board evidence"
       ],
-      "resource_baseline":"V1 historical values only; no G2 QoR measured",
-      "best_candidate":"EXPERIMENTAL",
-      "next_action":"Continue decoupled G3/G4 software and RTL work; integrate only after prerequisite and QoR gates are available"
+      "resource_baseline":"Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, WNS +100/+20 ps, TNS 0; feature-isolated attribution not measured",
+      "best_candidate":"TD_PASS_CANDIDATE",
+      "next_action":"Close moving-target and board evidence; retain the combined candidate as the TD reference"
     },
     "V2-G3": {
-      "status":"BLOCKED",
+      "status":"TD_PASS",
       "objective":"Internal processing and video latency monitoring",
       "prerequisites":["V2-G1"],
-      "completion":75,
+      "completion":85,
       "commands":[
         "python -B -m pytest -q work/tests/test_v2_latency.py work/tests/test_v2_tracker.py work/tests/test_v2_roi_contract.py",
         "iverilog/vvp tb_frame_tag_monitor",
@@ -131,15 +131,15 @@
         "Combined V2 QoR is available; physical latency and isolated G3 resource attribution are not measured",
         "No physical HDMI/display E2E measurement or hardware evidence"
       ],
-      "resource_baseline":"V1 historical values only; no G3 QoR measured",
-      "best_candidate":"EXPERIMENTAL",
-      "next_action":"Continue decoupled G4 software and RTL work; integrate only after prerequisite and QoR gates are available"
+      "resource_baseline":"Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, WNS +100/+20 ps, TNS 0; physical and isolated attribution not measured",
+      "best_candidate":"TD_PASS_CANDIDATE",
+      "next_action":"Close physical HDMI/display and latency evidence; retain the combined candidate as the TD reference"
     },
     "V2-G4": {
-      "status":"BLOCKED",
+      "status":"TD_PASS",
       "objective":"Fixed ROI frame-difference motion detection",
       "prerequisites":["V2-G1"],
-      "completion":75,
+      "completion":85,
       "commands":[
         "python -B -m pytest -q work/tests/test_v2_motion.py work/tests/test_v2_latency.py work/tests/test_v2_tracker.py work/tests/test_v2_roi_contract.py",
         "iverilog/vvp tb_motion_diff_160",
@@ -161,15 +161,15 @@
         "Combined V2 resource/timing is measured; the 153600-bit history and moving-target hardware behavior remain unvalidated",
         "No HDMI or real moving-target hardware evidence"
       ],
-      "resource_baseline":"153600-bit logical history estimate; Slice/RAM/DSP/WNS/TNS NOT_MEASURED",
-      "best_candidate":"EXPERIMENTAL",
-      "next_action":"Continue G5 software/RTL work; integrate G4 only after formal top-level and QoR gates are available"
+      "resource_baseline":"Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, WNS +100/+20 ps, TNS 0; feature-isolated motion attribution not measured",
+      "best_candidate":"TD_PASS_CANDIDATE",
+      "next_action":"Close real motion and board evidence; retain the combined candidate as the TD reference"
     },
     "V2-G5": {
-      "status":"BLOCKED",
+      "status":"TD_PASS",
       "objective":"Safe internal sort events and external-control boundary",
       "prerequisites":["V2-G2","V2-G4"],
-      "completion":75,
+      "completion":85,
       "commands":[
         "python -B -m pytest -q work/tests/test_v2_sort.py work/tests/test_v2_motion.py work/tests/test_v2_latency.py work/tests/test_v2_tracker.py work/tests/test_v2_roi_contract.py",
         "iverilog/vvp tb_sort_control",
@@ -191,15 +191,15 @@
         "No V2 resource/timing report",
         "No real mechanical closed-loop experiment"
       ],
-      "resource_baseline":"Internal controller/pulse logic only; Slice/RAM/DSP/WNS/TNS NOT_MEASURED",
-      "best_candidate":"EXPERIMENTAL",
-      "next_action":"Continue G6 software/RTL work; do not bind G5 to GPIO until official board and actuator evidence is available"
+      "resource_baseline":"Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, WNS +100/+20 ps, TNS 0; GPIO and actuator impact not measured",
+      "best_candidate":"TD_PASS_CANDIDATE",
+      "next_action":"Close official GPIO/electrical and actuator evidence; do not claim external control from the candidate alone"
     },
     "V2-G6": {
-      "status":"BLOCKED",
+      "status":"TD_PASS",
       "objective":"Frame-statistics lighting adaptation and AWB optimization",
       "prerequisites":["V2-G1"],
-      "completion":75,
+      "completion":85,
       "commands":[
         "python -B -m pytest -q work/tests/test_v2_awb.py work/tests/test_v2_sort.py work/tests/test_v2_motion.py work/tests/test_v2_latency.py work/tests/test_v2_tracker.py work/tests/test_v2_roi_contract.py",
         "iverilog/vvp tb_awb_frame_gain_controller",
@@ -216,20 +216,20 @@
       ],
       "unresolved":[
         "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
-        "New controller is not instantiated in formal isp_top",
+        "AWB/frame-statistics logic is instantiated in the formal feature path; sensor and lighting behavior remain unvalidated",
         "SC520CS AE/I2C/register contract is unknown; sensor configuration was not changed",
         "Combined V2 TD synthesis/implementation/Bitgen and QoR passed; SC520CS lighting data remain unvalidated",
         "No real lighting samples or hardware image/detection metrics"
       ],
-      "resource_baseline":"Independent controller only; Slice/RAM/DSP/WNS/TNS NOT_MEASURED",
-      "best_candidate":"EXPERIMENTAL",
-      "next_action":"Continue G7 calibration software/RTL work; integrate AWB only after official sensor and QoR evidence"
+      "resource_baseline":"Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, WNS +100/+20 ps, TNS 0; feature-isolated AWB attribution not measured",
+      "best_candidate":"TD_PASS_CANDIDATE",
+      "next_action":"Close SC520CS lighting and hardware image evidence; retain the combined candidate as the TD reference"
     },
     "V2-G7": {
-      "status":"BLOCKED",
+      "status":"TD_PASS",
       "objective":"Calibrated dimensions and explainable shape validation",
       "prerequisites":["V2-G1"],
-      "completion":75,
+      "completion":85,
       "commands":[
         "python -B -m pytest -q work/tests/test_v2_calibration.py work/tests/test_v2_awb.py work/tests/test_v2_sort.py work/tests/test_v2_motion.py work/tests/test_v2_latency.py work/tests/test_v2_tracker.py work/tests/test_v2_roi_contract.py",
         "iverilog/vvp tb_dimension_calibrator",
@@ -251,9 +251,9 @@
         "No formal OSD/main verdict integration or hardware measurement",
         "Rotation and multi-object separation remain out of scope"
       ],
-      "resource_baseline":"Independent fixed-point checker only; Slice/RAM/DSP/WNS/TNS NOT_MEASURED",
-      "best_candidate":"EXPERIMENTAL",
-      "next_action":"Run G8 release audit and preserve G7 as NOT_CALIBRATED until physical evidence is supplied"
+      "resource_baseline":"Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, WNS +100/+20 ps, TNS 0; physical calibration not measured",
+      "best_candidate":"TD_PASS_CANDIDATE",
+      "next_action":"Close physical calibration and main-verdict evidence; retain G7 as not physically calibrated until measured"
     },
     "V2-G8": {
       "status": "BLOCKED",
