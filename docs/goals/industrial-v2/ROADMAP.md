@@ -10,6 +10,6 @@
 | V2-G5 | 内部分拣事件、一次性脉冲和安全互锁 | G2, G4, classifier | BLOCKED: SOFTWARE_PASS/RTL_PASS/virtual actuator; GPIO/TD/HARDWARE pending |
 | V2-G6 | 帧统计自适应增益和 AWB 优化 | G1, ISP audit | BLOCKED: SOFTWARE_PASS/RTL_PASS; ISP/top/TD/HARDWARE pending |
 | V2-G7 | 固定工位标定尺寸和形状验证 | G1, physical calibration | BLOCKED: SOFTWARE_PASS/RTL_PASS; calibration/TD/HARDWARE pending |
-| V2-G8 | 同一 Bitstream 融合、长稳、冻结发布 | G1-G7 | NOT_STARTED |
+| V2-G8 | 同一 Bitstream 融合、长稳、冻结发布 | G1-G7 | BLOCKED: release audit implemented; TD/hardware/package pending |
 
 允许在硬件阻塞期间继续独立软件/RTL 工作，但不得越过依赖把阶段标成 `HARDWARE_PASS`。

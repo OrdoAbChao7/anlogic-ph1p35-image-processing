@@ -255,6 +255,34 @@
       "best_candidate":"EXPERIMENTAL",
       "next_action":"Run G8 release audit and preserve G7 as NOT_CALIBRATED until physical evidence is supplied"
     },
-    "V2-G8": {"status":"NOT_STARTED","objective":"Single-Bitstream integration and release","prerequisites":["V2-G1","V2-G2","V2-G3","V2-G4","V2-G5","V2-G6","V2-G7"],"completion":0,"commands":[],"evidence":[],"unresolved":["Hardware, long-stability and release package not complete"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Blocked until all phase gates pass"}
+    "V2-G8": {
+      "status": "BLOCKED",
+      "objective": "Single-Bitstream integration and release audit",
+      "prerequisites": ["V2-G1", "V2-G2", "V2-G3", "V2-G4", "V2-G5", "V2-G6", "V2-G7"],
+      "completion": 75,
+      "commands": [
+        "python -B -m pytest -q work/tests/test_v2_release_audit.py",
+        "python -B scripts/verify_industrial_v2_release.py --strict",
+        "python -B -m pytest -q work/tests",
+        "python -B work/algorithm_lab/verify_stage_d.py"
+      ],
+      "evidence": [
+        "docs/superpowers/specs/2026-10-19-industrial-v2-g8-release-audit-design.md",
+        "docs/superpowers/plans/2026-10-19-industrial-v2-g8-release-audit.md",
+        "docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md",
+        "docs/experiments/2026-10-19-industrial-v2-g8-release-audit.json",
+        "scripts/verify_industrial_v2_release.py"
+      ],
+      "unresolved": [
+        "G1-G7 formal top-level/TD gates remain blocked; no single V2 Bitstream exists",
+        "V2 Slice/RAM/DSP/WNS/TNS, warning, CDC and constraint audits are not measured",
+        "Full work/tests retains 8 frozen-vs-later contract failures and Stage D registry/plugin SHA mismatch remains",
+        "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",
+        "Release README, manifest and reproducible V2 package are absent"
+      ],
+      "resource_baseline": "V1 historical values only; V2 QoR NOT_MEASURED",
+      "best_candidate": "BLOCKED",
+      "next_action": "Close formal top/TD/hardware evidence gates, then rerun the strict audit from a clean release candidate"
+    }
   }
 }

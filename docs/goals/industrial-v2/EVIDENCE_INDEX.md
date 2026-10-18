@@ -24,3 +24,6 @@
 | V2 G6 summary | `docs/experiments/2026-10-19-industrial-v2-g6-summary.md` | BLOCKED; no real lighting data |
 | V2 G7 calibration model/RTL | `docs/experiments/2026-10-19-industrial-v2-g7-*.md` | SOFTWARE_PASS/RTL_PASS; physical calibration pending |
 | V2 G7 summary | `docs/experiments/2026-10-19-industrial-v2-g7-summary.md` | BLOCKED; NOT_CALIBRATED |
+| V2 G8 release audit design/plan | `docs/superpowers/specs/2026-10-19-industrial-v2-g8-release-audit-design.md`, `docs/superpowers/plans/2026-10-19-industrial-v2-g8-release-audit.md` | CREATED |
+| V2 G8 strict release audit | `docs/experiments/2026-10-19-industrial-v2-g8-release-audit.json` | BLOCKED; V1 SHA PASS, visual approval PASS only |
+| V2 G8 audit summary | `docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md` | BLOCKED; TD/hardware/package pending |

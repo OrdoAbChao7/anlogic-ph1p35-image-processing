@@ -39,3 +39,7 @@ The independent frame-stat AWB controller uses arithmetic only; its Slice/DSP/ti
 ## G7 measurement status
 
 G7 uses arithmetic-only independent model/RTL candidates. Resource and timing impact are `NOT_MEASURED`; the Q16.16 calibration values are software/contract values until a physical reference and TD report freeze them.
+
+## G8 measurement status
+
+The strict G8 audit confirms the V1 frozen SHA, but records V2 resource/timing as `NOT_MEASURED`. No sum of independent G1-G7 trials is treated as a final integrated QoR result; only a complete V2 TD report may close this gate.

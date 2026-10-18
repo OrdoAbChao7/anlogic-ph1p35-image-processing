@@ -12,4 +12,7 @@
 - [x] V2-G5: Implement and verify safe sort event controller and virtual actuator; external GPIO/mechanical closure remains blocked pending official evidence.
 - [x] V2-G6: Audit existing AWB and implement independent frame-statistics AWB candidate; ISP/SC520CS/TD/hardware gates remain blocked.
 - [x] V2-G7: Implement and verify calibration/shape candidates in software and independent RTL; physical calibration and TD gates remain blocked.
-- [ ] V2-G8: Integrate, long-stability test and freeze release package.
+- [x] V2-G8-T1: Implement a strict twelve-gate release audit and bind it to the V1 SHA and V2 phase status.
+- [x] V2-G8-T2: Execute the audit; record V1 baseline PASS and V2 release BLOCKED without inventing TD or hardware evidence.
+- [ ] V2-G8-T3: Integrate all seven features into one formal top-level and run TD/STA/Bitgen.
+- [ ] V2-G8-T4: Execute the board functional matrix, four-hour long-stability plan, external actuator acceptance and reproducible package freeze.
