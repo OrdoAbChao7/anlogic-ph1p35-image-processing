@@ -1,0 +1,36 @@
+Industrial Vision V2 G8 detailed clock-warning audit
+=====================================================
+
+Build commit: 73e4048c7830db069d800fe18e0d542692072d7d
+TD: 6.2.168116
+Placement seed: 1
+Flow modification: analyze_clock -detail inserted immediately after route
+Candidate Bitstream SHA-256: d58a8640d9b3d3d6c19842053ee5159e723842152172c1583ad29602fadb2e3a
+
+Final QoR:
+  Slice:                 17002 / 21216 (80.14%)
+  RAM:                   43
+  DSP:                   24
+  DRAMHARDCON:           229
+  Setup WNS/TNS/FEPS:    +102 ps / 0 / 0
+  Hold WNS/TNS/FEPS:     +20 ps / 0 / 0
+
+Original warning lines:
+  PHY-5060: u_uicfgcs520/u_i2c/scl_clk has mixed fanouts of 1 clock pins; 2 data/ctrl pins.
+  PHY-5060: O_cam_24m_syn_3 has mixed fanouts of 160 clock pins; 1 data/ctrl pin.
+  PHY-5016: PLL clkc is driving an IO without location.
+  PHY-5016: PLL clkc is not driving a clock-capable IO.
+  PHY-5079: Marked 1 clock net utilizes local routing resources.
+  PHY-5088: 1 clkin net and 1 clkout net drive non-clock sinks; clock nets drive other clock nets.
+
+Detailed analyze_clock output:
+  clkin non-clock sink marker: u_uicfgcs520/u_i2c/scl_clk
+  clkout non-clock sink marker: O_cam_24m_syn_3, marker o[2147483647]
+  clock-net cascade: O_cam_24m_dup_1_created_gclkinst_auto_created_sclk_s_0_r_bk3_sclk_outnet
+    -> u_uicfgcs520/u_i2c/scl_clk_reg_syn_9 (AL_PHY_LSLICE) -> u_uicfgcs520/u_i2c/scl_clk (AL_PHY_GCLK)
+  local-routing net: pll_clk_24m / O_cam_24m_dup_1_created_gclkinst_auto_created_sclk_s_0_l_bk6_sclk_outnet
+
+Interpretation:
+  The warning source/sink topology is now known, but official pin/IP contracts,
+  intended I2C clock implementation, and board-level stability evidence are still
+  missing. No warning is closed by this diagnostic run.

@@ -28,11 +28,25 @@
 | `PHY-5079` | 2 个时钟网使用 local routing，标记 1 个；CTS 表中 `scl_clk` 为 `1/3` fanout、12 个 local wire，`pll_clk_24m` 为 `111/112` fanout、3 个 local wire | `OPEN`；需时钟网络详细分析和硬件稳定性证据 |
 | `PHY-5088` | clock analyzer 报告 1 个 clkin 非时钟 sink、1 个 clkout 非时钟 sink，以及 2 个时钟网驱动其他时钟网；前置 DRC 检查曾报告 3 个 clock-net | `OPEN`；需 `analyze_clock -detail` 和逐网 sink/约束审计 |
 
+## 2026-10-19 详细分析重跑
+
+在提交 `73e4048c7830db069d800fe18e0d542692072d7d` 上，使用 placement seed `1` 的隔离派生 Flow，在 `route` 后执行了 `analyze_clock -detail`。构建完整通过，诊断候选位于 `release/candidates/industrial-v2-clock-detail-seed1/`，Bitstream SHA-256 为 `d58a8640d9b3d3d6c19842053ee5159e723842152172c1583ad29602fadb2e3a`。
+
+详细输出确认：
+
+- `u_uicfgcs520/u_i2c/scl_clk` 被标记为 clkin 非时钟 sink 混合 fanout；
+- `O_cam_24m_syn_3` 被标记为 clkout 非时钟 sink 混合 fanout；
+- `O_cam_24m_dup_1...sclk_outnet` 驱动 `u_uicfgcs520/u_i2c/scl_clk_reg_syn_9`，再进入 `u_uicfgcs520/u_i2c/scl_clk`，形成时钟网级联；
+- `pll_clk_24m` / `O_cam_24m_dup_1...sclk_outnet` 使用 local routing；
+- `PHY-5016` 的 PLL `clkc` 无 location 且不是 clock-capable IO 的告警仍存在。
+
+详细摘录见 `docs/evidence/industrial-v2-g8-clock-warning-detail-log.txt`；这次分析补足了 source/sink 定位，但没有补足官方 pin/IP 合同或板级稳定性证据，所以四类告警继续保持 `OPEN`。
+
 ## 工程判断与边界
 
 - `O_cam_24m` 是摄像头外部时钟输出，不能仅因其名字或正时序就把混合 fanout 标为无害。
 - `u_uicfgcs520`、PLL、MIPI、DDR 和板级约束包含厂商/板级边界；本次没有盲改生成 IP、PLL 配置、管脚或时序例外。
-- 本次没有执行 `analyze_clock -detail`，也没有板卡、SC520CS、HDMI、冷启动或长稳证据，因此告警门保持 `BLOCKED`。
+- 早期审计构建没有执行 `analyze_clock -detail`；本节记录的重跑已经执行该命令，但仍没有板卡、SC520CS、HDMI、冷启动或长稳证据，因此告警门保持 `BLOCKED`。
 
 ## 关闭条件
 
