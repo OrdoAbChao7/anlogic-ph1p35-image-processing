@@ -121,10 +121,12 @@
       "name": "warnings_cdc_constraints_audit",
       "status": "BLOCKED",
       "evidence": [
-        "docs/goals/industrial-v2/STATUS.json"
+        "docs/goals/industrial-v2/STATUS.json",
+        "docs/evidence/industrial-v2-g8-clock-warning-audit.md",
+        "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt"
       ],
       "blockers": [
-        "V2 clock/PHY/CDC/undriven/exception audit is not complete"
+        "PHY-5016/PHY-5060/PHY-5079/PHY-5088 remain open; detailed clock analysis and hardware closure are pending"
       ]
     },
     {
@@ -182,7 +184,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "a6c527d23e71160e293dc83db940c0562d4a270a",
+  "commit": "0056b0805db1f21b98ca752255383c96f2929fef",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",
