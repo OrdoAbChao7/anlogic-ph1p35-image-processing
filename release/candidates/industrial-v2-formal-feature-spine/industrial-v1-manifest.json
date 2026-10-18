@@ -1,26 +1,22 @@
 {
   "project": "PH1P35 fixed-red industrial inspection v1",
   "target_device": "PH1P35MDG324",
-  "git_commit": "d1e94c60ad51d82162a1e836913cfde506143a0a",
-  "git_status": "M fallback/td_source/design_top_wrapper.v\n M fallback/td_source/isp/isp_top.v\n M scripts/build_industrial_td.py\n?? release/candidates/industrial-v2-formal-feature-spine/\n?? work/td_build_v2_formal.pid.json\n?? work/td_industrial_v2_formal_feature_spine/\n?? work/tests/test_v2_formal_feature_integration.py",
+  "git_commit": "085263383f831ffda5eba477142e520384aa9e5e",
+  "git_status": "",
   "build_inputs": {
-    "td_exe": "<FPGA_TD_EXE>",
-    "flow_tcl": "<FPGA_FLOW_TCL>",
+    "td_exe": ".tools/td/app/bin/td_commands_prompt.exe",
+    "flow_tcl": ".tools/td/app/doc/scripts/DefaultFlow.tcl",
     "input_package": "fallback/td_package",
     "baseline_runs": "fallback/td_package/td_project/camera_to_dsi_display_Runs"
   },
   "build_input_hashes": {
     "td_exe": {
-      "path": "<FPGA_TD_EXE>",
-      "exists": true,
-      "size_bytes": 76680976,
-      "sha256": "e2e04ada5e256dccd017240c0f4dcface7f96dca67cde0e56e606ac0e02f827a"
+      "path": ".tools/td/app/bin/td_commands_prompt.exe",
+      "exists": false
     },
     "flow_tcl": {
-      "path": "<FPGA_FLOW_TCL>",
-      "exists": true,
-      "size_bytes": 7809,
-      "sha256": "d1a5d4291706dac224cc33008d8945e79ed2eb1adf8ce86cca46be564975bade"
+      "path": ".tools/td/app/doc/scripts/DefaultFlow.tcl",
+      "exists": false
     },
     "input_package": {
       "path": "fallback/td_package",
