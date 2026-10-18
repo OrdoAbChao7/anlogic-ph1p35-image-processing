@@ -89,3 +89,10 @@ def test_release_audit_binds_the_v2_clock_warning_evidence():
         assert path in audit
     assert "PHY-5079" in audit
     assert "PHY-5088" in audit
+
+
+def test_td_builder_supports_a_reproducible_placement_seed():
+    build = BUILD.read_text(encoding="utf-8")
+    assert "--place-seed" in build
+    assert "set_param place seed" in build
+    assert "industrial_v2_fixed_seed.tcl" in build

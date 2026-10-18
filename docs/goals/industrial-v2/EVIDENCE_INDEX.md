@@ -35,3 +35,4 @@
 | V2 G8 OSD BCD timing candidate | `docs/experiments/2026-10-19-industrial-v2-g8-osd-bcd-td.md`, `release/candidates/industrial-v2-osd-bcd/` | TD/QoR/Bitgen PASS for candidate; seven-feature integration and hardware pending |
 | V2 G8 formal feature-spine TD candidate | `docs/experiments/2026-10-19-industrial-v2-g8-formal-feature-td.md`, `release/candidates/industrial-v2-formal-feature-spine/`, `fallback/td_source/design_top_wrapper.v`, `fallback/td_source/isp/isp_top.v` | formal seven-feature top, TD/STA/Bitgen PASS; warning and hardware gates pending |
 | V2 G8 clock warning audit | `docs/evidence/industrial-v2-g8-clock-warning-audit.md`, `docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt` | current isolated TD log; PHY-5016/5060/5079/5088 OPEN |
+| V2 G8 fixed-seed reproducibility audit | `docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md` | two complete TD builds PASS QoR; Bitstream reproducibility OPEN |

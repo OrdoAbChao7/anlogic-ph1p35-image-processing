@@ -59,6 +59,8 @@ DEFAULT_RELEASE_DIR = ROOT / "release" / "industrial-v1"
 FINAL_BITSTREAM_NAME = "camera_to_dsi_display_compress.bit"
 TD_EXE = DEFAULT_TD_EXE
 FLOW_TCL = DEFAULT_FLOW_TCL
+RUN_FLOW_TCL = DEFAULT_FLOW_TCL
+PLACE_SEED = None
 ORIG_RUNS = DEFAULT_ORIG_RUNS
 INPUT_PACKAGE = DEFAULT_INPUT_PACKAGE
 RELEASE_DIR = DEFAULT_RELEASE_DIR
@@ -147,6 +149,8 @@ def build_input_provenance() -> dict:
     return {
         "td_exe": describe_input(TD_EXE, "FPGA_TD_EXE"),
         "flow_tcl": describe_input(FLOW_TCL, "FPGA_FLOW_TCL"),
+        "run_flow_tcl": describe_input(RUN_FLOW_TCL, "FPGA_FLOW_TCL_RUN"),
+        "place_seed": PLACE_SEED,
         "input_package": describe_input(INPUT_PACKAGE, "FPGA_TD_INPUT_PACKAGE"),
         "baseline_files": {
             relative: describe_input(path, "FPGA_BASELINE_RUNS")
@@ -239,6 +243,12 @@ def parse_args(argv=None):
         help="Tang Dynasty DefaultFlow.tcl (or FPGA_FLOW_TCL).",
     )
     parser.add_argument(
+        "--place-seed",
+        type=int,
+        default=None,
+        help="Optional deterministic Tang Dynasty placement seed; the flow is copied into the isolated workspace.",
+    )
+    parser.add_argument(
         "--baseline-runs",
         default=str(DEFAULT_ORIG_RUNS),
         help="Legacy external camera_to_dsi_display_Runs directory (used if --input-package is incomplete).",
@@ -272,9 +282,13 @@ def parse_args(argv=None):
 
 
 def configure(args):
-    global TD_EXE, FLOW_TCL, ORIG_RUNS, INPUT_PACKAGE, RELEASE_DIR, TRACKED_VIDEO, WORK_PROJECT, WORK_RUNS
+    global TD_EXE, FLOW_TCL, RUN_FLOW_TCL, PLACE_SEED, ORIG_RUNS, INPUT_PACKAGE, RELEASE_DIR, TRACKED_VIDEO, WORK_PROJECT, WORK_RUNS
     TD_EXE = Path(args.td_exe).expanduser().resolve()
     FLOW_TCL = Path(args.flow_tcl).expanduser().resolve()
+    RUN_FLOW_TCL = FLOW_TCL
+    PLACE_SEED = args.place_seed
+    if PLACE_SEED is not None and PLACE_SEED < 0:
+        raise ValueError("--place-seed must be non-negative")
     ORIG_RUNS = Path(args.baseline_runs).expanduser().resolve()
     INPUT_PACKAGE = Path(args.input_package).expanduser().resolve()
     RELEASE_DIR = Path(args.release_dir).expanduser().resolve()
@@ -630,12 +644,37 @@ def setup_runs():
 
     print(f"      syn_1 configured: {syn_dir}")
     print(f"      phy_1 configured: {phy_dir}")
+    prepare_flow_tcl()
+
+
+def prepare_flow_tcl():
+    """Derive an isolated flow script when a reproducible placement seed is requested."""
+    global RUN_FLOW_TCL
+    RUN_FLOW_TCL = FLOW_TCL
+    if PLACE_SEED is None:
+        return
+
+    marker = "### Editable zone for opt_place ###"
+    flow_text = FLOW_TCL.read_text(encoding="utf-8")
+    if marker not in flow_text:
+        raise RuntimeError(
+            f"Cannot inject --place-seed: flow marker missing from {FLOW_TCL}"
+        )
+    injection = (
+        f"{marker}\n"
+        "  # Reproducible V2 candidate placement seed.\n"
+        f"  set_param place seed {PLACE_SEED}"
+    )
+    derived = WORK_PROJECT / "industrial_v2_fixed_seed.tcl"
+    derived.write_text(flow_text.replace(marker, injection, 1), encoding="utf-8")
+    RUN_FLOW_TCL = derived
+    print(f"      placement seed {PLACE_SEED} injected into {derived}")
 
 
 def run_step(step_name: str, step_dir: Path):
     print(f"\n[RUN] Starting {step_name} in {step_dir}...")
     t0 = time.time()
-    tcl_path = FLOW_TCL.resolve().as_posix()
+    tcl_path = RUN_FLOW_TCL.resolve().as_posix()
     cmd = [str(TD_EXE.resolve()), tcl_path]
 
     log_file = step_dir / "flow_exec.log"
