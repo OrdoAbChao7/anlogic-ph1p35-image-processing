@@ -4,8 +4,8 @@
 //
 // The overlay consumes the same frame-stable result bus as the bounding box.
 // It embeds the Anlogic logo ROM and a small synthesizable 5x7 character set.
-// Frame count is shown in hexadecimal to avoid a divider on the pixel path;
-// width/height are shown as three hexadecimal digits (pixel units).
+// Frame count, width and height are shown as decimal digits. The conversion is
+// snapshotted on the frame boundary so the pixel path only selects characters.
 // ============================================================================
 
 module industrial_osd_overlay #(
@@ -41,6 +41,9 @@ module industrial_osd_overlay #(
   reg [11:0] y;
   reg        vsync_d;
   reg [31:0] frame_counter;
+  reg [39:0] frame_digits;
+  reg [15:0] width_digits;
+  reg [15:0] height_digits;
 
   wire [14:0] logo_addr = ((y << 7) + (y << 5)) + x;
   wire [24:0] logo_pixel;
@@ -55,13 +58,33 @@ module industrial_osd_overlay #(
     end
   endfunction
 
+  function [3:0] decimal_digit;
+    input [31:0] value;
+    input integer place;
+    begin
+      case (place)
+        0: decimal_digit = (value / 32'd1) % 10;
+        1: decimal_digit = (value / 32'd10) % 10;
+        2: decimal_digit = (value / 32'd100) % 10;
+        3: decimal_digit = (value / 32'd1000) % 10;
+        4: decimal_digit = (value / 32'd10000) % 10;
+        5: decimal_digit = (value / 32'd100000) % 10;
+        6: decimal_digit = (value / 32'd1000000) % 10;
+        7: decimal_digit = (value / 32'd10000000) % 10;
+        8: decimal_digit = (value / 32'd100000000) % 10;
+        9: decimal_digit = (value / 32'd1000000000) % 10;
+        default: decimal_digit = 0;
+      endcase
+    end
+  endfunction
+
   function [7:0] text_char;
     input integer line;
     input integer pos;
     input [1:0] mode;
-    input [31:0] frame;
-    input [10:0] width;
-    input [10:0] height;
+    input [39:0] frame_digits_in;
+    input [15:0] width_digits_in;
+    input [15:0] height_digits_in;
     input detected;
     input pass;
     input ng;
@@ -86,10 +109,11 @@ module industrial_osd_overlay #(
         1: begin
           case (pos)
             0:text_char="F"; 1:text_char="R"; 2:text_char="A"; 3:text_char="M"; 4:text_char="E"; 5:text_char=":";
-            6:text_char=hex_ascii(frame[31:28]); 7:text_char=hex_ascii(frame[27:24]);
-            8:text_char=hex_ascii(frame[23:20]); 9:text_char=hex_ascii(frame[19:16]);
-            10:text_char=hex_ascii(frame[15:12]); 11:text_char=hex_ascii(frame[11:8]);
-            12:text_char=hex_ascii(frame[7:4]); 13:text_char=hex_ascii(frame[3:0]);
+            6:text_char=hex_ascii(frame_digits_in[39:36]); 7:text_char=hex_ascii(frame_digits_in[35:32]);
+            8:text_char=hex_ascii(frame_digits_in[31:28]); 9:text_char=hex_ascii(frame_digits_in[27:24]);
+            10:text_char=hex_ascii(frame_digits_in[23:20]); 11:text_char=hex_ascii(frame_digits_in[19:16]);
+            12:text_char=hex_ascii(frame_digits_in[15:12]); 13:text_char=hex_ascii(frame_digits_in[11:8]);
+            14:text_char=hex_ascii(frame_digits_in[7:4]); 15:text_char=hex_ascii(frame_digits_in[3:0]);
             default:text_char=" ";
           endcase
         end
@@ -104,10 +128,12 @@ module industrial_osd_overlay #(
           case (pos)
             0:text_char="N"; 1:text_char=":"; 2:text_char=detected ? "1" : "0";
             4:text_char="W"; 5:text_char=":";
-            6:text_char=hex_ascii(width[10:8]); 7:text_char=hex_ascii(width[7:4]);
-            8:text_char=hex_ascii(width[3:0]); 10:text_char="H"; 11:text_char=":";
-            12:text_char=hex_ascii(height[10:8]); 13:text_char=hex_ascii(height[7:4]);
-            14:text_char=hex_ascii(height[3:0]);
+            6:text_char=hex_ascii(width_digits_in[15:12]); 7:text_char=hex_ascii(width_digits_in[11:8]);
+            8:text_char=hex_ascii(width_digits_in[7:4]); 9:text_char=hex_ascii(width_digits_in[3:0]);
+            11:text_char="H"; 12:text_char=":";
+            13:text_char=hex_ascii(height_digits_in[15:12]); 14:text_char=hex_ascii(height_digits_in[11:8]);
+            15:text_char=hex_ascii(height_digits_in[7:4]);
+            16:text_char=hex_ascii(height_digits_in[3:0]);
             default:text_char=" ";
           endcase
         end
@@ -582,7 +608,7 @@ module industrial_osd_overlay #(
       text_pos = (x - 180) >> 3;
       text_row = (y - (8 + text_line*24)) >> 1;
       text_col = ((x - 180) & 7) >> 1;
-      current_char = text_char(text_line,text_pos,I_mode,frame_counter,I_width,I_height,
+      current_char = text_char(text_line,text_pos,I_mode,frame_digits,width_digits,height_digits,
                                I_detected,I_pass,I_ng,I_invalid);
       current_row = glyph_row(current_char, text_row[2:0]);
       text_on = current_row[4-text_col];
@@ -596,6 +622,7 @@ module industrial_osd_overlay #(
   always @(posedge I_clk or negedge I_rst_n) begin
     if (!I_rst_n) begin
       x <= 0; y <= 0; vsync_d <= 0; frame_counter <= 0;
+      frame_digits <= 0; width_digits <= 0; height_digits <= 0;
       O_vsync <= 0; O_hsync <= 0; O_de <= 0; O_rgb <= 0;
     end else begin
       O_vsync <= I_vsync;
@@ -611,8 +638,23 @@ module industrial_osd_overlay #(
         O_rgb <= I_rgb;
 
       vsync_d <= I_vsync;
-      if (I_vsync && !vsync_d)
+      if (I_vsync && !vsync_d) begin
         frame_counter <= frame_counter + 32'd1;
+        frame_digits <= {decimal_digit(frame_counter + 32'd1, 9),
+                         decimal_digit(frame_counter + 32'd1, 8),
+                         decimal_digit(frame_counter + 32'd1, 7),
+                         decimal_digit(frame_counter + 32'd1, 6),
+                         decimal_digit(frame_counter + 32'd1, 5),
+                         decimal_digit(frame_counter + 32'd1, 4),
+                         decimal_digit(frame_counter + 32'd1, 3),
+                         decimal_digit(frame_counter + 32'd1, 2),
+                         decimal_digit(frame_counter + 32'd1, 1),
+                         decimal_digit(frame_counter + 32'd1, 0)};
+        width_digits <= {decimal_digit(I_width, 3), decimal_digit(I_width, 2),
+                         decimal_digit(I_width, 1), decimal_digit(I_width, 0)};
+        height_digits <= {decimal_digit(I_height, 3), decimal_digit(I_height, 2),
+                          decimal_digit(I_height, 1), decimal_digit(I_height, 0)};
+      end
 
       if (I_vsync) begin
         x <= 0; y <= 0;

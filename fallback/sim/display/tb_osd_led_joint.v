@@ -112,6 +112,21 @@ module tb_osd_led_joint;
     end
     de = 0;
     publish_pass();
+
+    // Decimal frame/size contract: the second raster exposes frame digit '2',
+    // and the standard 120x80 target exposes the decimal '1' at W hundreds.
+    vs = 1; de = 0; tick; vs = 0; de = 1;
+    for (y = 0; y < H; y = y + 1) begin
+      for (x = 0; x < W; x = x + 1) begin
+        rgb = 24'h000000;
+        tick;
+        if (y == 32 && x == 302 && osd_rgb !== 24'h10b981)
+          $fatal(1, "decimal frame digit missing (got %h)", osd_rgb);
+        if (y == 82 && x == 238 && osd_rgb !== 24'h10b981)
+          $fatal(1, "decimal width hundreds digit missing (got %h)", osd_rgb);
+      end
+    end
+    de = 0;
     publish_ng();
     publish_invalid();
 
