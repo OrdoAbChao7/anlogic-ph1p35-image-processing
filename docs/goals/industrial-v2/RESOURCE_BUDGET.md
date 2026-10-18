@@ -1,0 +1,15 @@
+# Industrial Vision V2 Resource Budget
+
+## Frozen V1 baseline (`project`)
+
+| Metric | Baseline | V2 control |
+|---|---:|---:|
+| Slice | 17,642 / 21,216 (83.15%) | Target <=85%; pause formal merge >90%; no normal release >=95% |
+| RAM | 43 | Measure every candidate; no assumption of unused capacity |
+| DSP | 24 / 40 | Measure every candidate; shared arithmetic preferred |
+| Setup WNS | +103 ps | >=0; internal warning below +50 ps |
+| Hold WNS | +20 ps | >=0 |
+| Setup/Hold TNS | 0 / 0 | Must remain 0 / 0 |
+| Hardware frame rate/latency | Not fully measured | Do not claim until measured |
+
+Each feature gets an independent trial report before full integration. The final candidate is judged by the actual complete TD report, not the sum of trials.

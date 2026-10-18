@@ -1,0 +1,57 @@
+{
+  "goal": "industrial-v2-advanced",
+  "status": "ACTIVE",
+  "worktree": "E:/Projects/FPGA-v2",
+  "branch": "goal/industrial-v2-advanced",
+  "baseline": {
+    "commit": "256d99c1d0dc4dbae2ace8d0ff3a97f504d514c9",
+    "bitstream": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",
+    "sha256": "b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef",
+    "slice": "17642/21216",
+    "ram": 43,
+    "dsp": 24,
+    "setup_wns_ps": 103,
+    "hold_wns_ps": 20,
+    "setup_tns_ps": 0,
+    "hold_tns_ps": 0,
+    "evidence_type": "project"
+  },
+  "visual_approval": {
+    "policy": "default_pass_per_user_instruction",
+    "status": "AUTHORIZED",
+    "scope": "Stage C visual review only"
+  },
+  "phases": {
+    "V2-G0": {
+      "status": "ACTIVE",
+      "objective": "Protect V1 and establish reproducible V2 baseline",
+      "prerequisites": [],
+      "completion": 0,
+      "commands": [],
+      "evidence": [],
+      "unresolved": ["Tool versions and fresh regression not yet recorded", "Hardware enumeration not yet repeated"],
+      "resource_baseline": "V1 freeze values above",
+      "best_candidate": "BASELINE_V1",
+      "next_action": "Run tool and regression checks"
+    },
+    "V2-G1": {
+      "status": "NOT_STARTED",
+      "objective": "Single-click mode, decimal OSD and explicit ROI contract",
+      "prerequisites": ["V2-G0"],
+      "completion": 0,
+      "commands": [],
+      "evidence": [],
+      "unresolved": [],
+      "resource_baseline": "Not measured",
+      "best_candidate": "EXPERIMENTAL",
+      "next_action": "Wait for G0 baseline"
+    },
+    "V2-G2": {"status":"NOT_STARTED","objective":"Single-target tracking and trajectory overlay","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":[],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after G1"},
+    "V2-G3": {"status":"NOT_STARTED","objective":"Internal processing and video latency monitoring","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":[],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after G1"},
+    "V2-G4": {"status":"NOT_STARTED","objective":"Fixed ROI frame-difference motion detection","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":[],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create resource trial after G1"},
+    "V2-G5": {"status":"NOT_STARTED","objective":"Safe internal sort events and external-control boundary","prerequisites":["V2-G2","V2-G4"],"completion":0,"commands":[],"evidence":[],"unresolved":["External actuator and pins unknown"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after tracker and motion contracts"},
+    "V2-G6": {"status":"NOT_STARTED","objective":"Frame-statistics lighting adaptation and AWB optimization","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":["SC520CS sensor-write contract requires official evidence"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Audit existing AWB first"},
+    "V2-G7": {"status":"NOT_STARTED","objective":"Calibrated dimensions and explainable shape validation","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":["Physical calibration samples and workcell geometry missing"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after calibration inputs exist"},
+    "V2-G8": {"status":"NOT_STARTED","objective":"Single-Bitstream integration and release","prerequisites":["V2-G1","V2-G2","V2-G3","V2-G4","V2-G5","V2-G6","V2-G7"],"completion":0,"commands":[],"evidence":[],"unresolved":["Hardware, long-stability and release package not complete"],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Blocked until all phase gates pass"}
+  }
+}
