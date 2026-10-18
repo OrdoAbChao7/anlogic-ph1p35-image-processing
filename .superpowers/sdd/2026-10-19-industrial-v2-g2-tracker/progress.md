@@ -9,3 +9,5 @@ Task 1: software tracker model complete (RED missing-module collection failure; 
 Task 2: RTL temporal tracker complete (RED unknown-module compile failure; GREEN TB_TEMPORAL_TRACKER_PASS; TD/top-level/hardware gates remain open).
 
 Task 3: RTL trajectory history complete (RED unknown-module compile failure; GREEN TB_TRAJECTORY_HISTORY_PASS; TD/top-level/hardware gates remain open).
+
+Task 4: RTL tracking overlay complete (RED unknown-module compile failure; GREEN TB_TRACKING_OVERLAY_PASS; top-level/TD/hardware gates remain open).
