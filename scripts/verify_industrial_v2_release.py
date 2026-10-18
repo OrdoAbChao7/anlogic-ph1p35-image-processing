@@ -102,6 +102,7 @@ def build_audit() -> dict:
         "docs/evidence/industrial-v2-td-build.md",
         "release/industrial-v2/td-reports",
     )
+    v2_release_complete = not missing_paths(v2_release_paths)
 
     gates = [
         Gate(
@@ -112,10 +113,10 @@ def build_audit() -> dict:
         ),
         Gate(
             "same_bitstream_integration",
-            PASS if (ROOT / "release/industrial-v2").is_dir() else BLOCKED,
+            PASS if v2_release_complete else BLOCKED,
             existing_paths(v2_release_paths),
             ("no V2 release directory/Bitstream is present",)
-            if not (ROOT / "release/industrial-v2").is_dir()
+            if not v2_release_complete
             else (),
         ),
         Gate(
@@ -164,7 +165,7 @@ def build_audit() -> dict:
         ),
         Gate(
             "reproducible_build_package",
-            PASS if not missing_paths(v2_release_paths) else BLOCKED,
+            PASS if v2_release_complete else BLOCKED,
             existing_paths(v2_release_paths),
             tuple(f"missing release artifact: {path}" for path in missing_paths(v2_release_paths)),
         ),
