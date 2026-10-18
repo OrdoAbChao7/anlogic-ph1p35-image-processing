@@ -5,6 +5,6 @@ Setup: continue in `E:/Projects/FPGA-v2` on `goal/industrial-v2-advanced`; G1-G6
 Ruling: no real workcell calibration sample or physical geometry is inferred. The implementation is a fixed-point candidate and must retain `NOT_CALIBRATED` until evidence exists.
 
 Task 1: software calibration and shape model complete (RED missing-module collection failure; GREEN 7 passed).
-Task 2: pending.
+Task 2: RTL dimension/shape checker complete (RED unknown-module compile failure; GREEN TB_DIMENSION_CALIBRATOR_PASS).
 Task 3: pending.
 Task 4: pending.
