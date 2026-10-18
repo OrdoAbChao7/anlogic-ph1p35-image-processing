@@ -1,0 +1,179 @@
+{
+  "release_status": "BLOCKED",
+  "gate_count": 12,
+  "blocked_gates": [
+    "software_rtl_td_for_7_features",
+    "same_bitstream_integration",
+    "v1_regression",
+    "td_full_build",
+    "resource_timing_budget",
+    "warnings_cdc_constraints_audit",
+    "hardware_function_matrix",
+    "performance_traceability",
+    "cold_reset_long_run",
+    "reproducible_build_package",
+    "external_actuator_acceptance"
+  ],
+  "gates": [
+    {
+      "name": "software_rtl_td_for_7_features",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/experiments/2026-10-19-industrial-v2-g1-mode-controller.md",
+        "docs/experiments/2026-10-19-industrial-v2-g1-osd.md",
+        "docs/experiments/2026-10-19-industrial-v2-g1-roi.md",
+        "docs/experiments/2026-10-19-industrial-v2-g1-summary.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-tracker-model.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-temporal-tracker.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-trajectory-history.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-tracking-overlay.md",
+        "docs/experiments/2026-10-19-industrial-v2-g2-summary.md",
+        "docs/superpowers/specs/2026-10-19-industrial-v2-g3-latency-design.md",
+        "docs/superpowers/plans/2026-10-19-industrial-v2-g3-latency.md",
+        "docs/experiments/2026-10-19-industrial-v2-g3-latency-model.md",
+        "docs/experiments/2026-10-19-industrial-v2-g3-frame-tags.md",
+        "docs/experiments/2026-10-19-industrial-v2-g3-latency-monitor.md",
+        "docs/experiments/2026-10-19-industrial-v2-g3-summary.md",
+        "docs/superpowers/specs/2026-10-19-industrial-v2-g4-motion-design.md",
+        "docs/superpowers/plans/2026-10-19-industrial-v2-g4-motion.md",
+        "docs/experiments/2026-10-19-industrial-v2-g4-motion-model.md",
+        "docs/experiments/2026-10-19-industrial-v2-g4-motion-rtl.md",
+        "docs/experiments/2026-10-19-industrial-v2-g4-summary.md",
+        "docs/superpowers/specs/2026-10-19-industrial-v2-g5-sort-design.md",
+        "docs/superpowers/plans/2026-10-19-industrial-v2-g5-sort.md",
+        "docs/experiments/2026-10-19-industrial-v2-g5-sort-model.md",
+        "docs/experiments/2026-10-19-industrial-v2-g5-sort-rtl.md",
+        "docs/experiments/2026-10-19-industrial-v2-g5-summary.md",
+        "docs/superpowers/specs/2026-10-19-industrial-v2-g6-awb-design.md",
+        "docs/superpowers/plans/2026-10-19-industrial-v2-g6-awb.md",
+        "docs/experiments/2026-10-19-industrial-v2-g6-awb-model.md",
+        "docs/experiments/2026-10-19-industrial-v2-g6-awb-rtl.md",
+        "docs/experiments/2026-10-19-industrial-v2-g6-summary.md",
+        "docs/superpowers/specs/2026-10-19-industrial-v2-g7-calibration-design.md",
+        "docs/superpowers/plans/2026-10-19-industrial-v2-g7-calibration.md",
+        "docs/experiments/2026-10-19-industrial-v2-g7-calibration-model.md",
+        "docs/experiments/2026-10-19-industrial-v2-g7-calibration-rtl.md",
+        "docs/experiments/2026-10-19-industrial-v2-g7-summary.md"
+      ],
+      "blockers": [
+        "V2-G1 status is BLOCKED",
+        "V2-G2 status is BLOCKED",
+        "V2-G3 status is BLOCKED",
+        "V2-G4 status is BLOCKED",
+        "V2-G5 status is BLOCKED",
+        "V2-G6 status is BLOCKED",
+        "V2-G7 status is BLOCKED"
+      ]
+    },
+    {
+      "name": "same_bitstream_integration",
+      "status": "BLOCKED",
+      "evidence": [],
+      "blockers": [
+        "no V2 release directory/Bitstream is present"
+      ]
+    },
+    {
+      "name": "v1_regression",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/experiments/2026-10-19-industrial-v2-g0-baseline.md"
+      ],
+      "blockers": [
+        "full work/tests baseline retains 8 frozen-vs-later contract failures"
+      ]
+    },
+    {
+      "name": "td_full_build",
+      "status": "BLOCKED",
+      "evidence": [],
+      "blockers": [
+        "no complete V2 TD synthesis/place/route/hold-fix/STA/bitgen evidence"
+      ]
+    },
+    {
+      "name": "resource_timing_budget",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/goals/industrial-v2/RESOURCE_BUDGET.md"
+      ],
+      "blockers": [
+        "V2 Slice/RAM/DSP/WNS/TNS are not measured"
+      ]
+    },
+    {
+      "name": "warnings_cdc_constraints_audit",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/goals/industrial-v2/STATUS.json"
+      ],
+      "blockers": [
+        "V2 clock/PHY/CDC/undriven/exception audit is not complete"
+      ]
+    },
+    {
+      "name": "hardware_function_matrix",
+      "status": "BLOCKED",
+      "evidence": [],
+      "blockers": [
+        "no bound V2 board, camera, display, or Bitstream evidence"
+      ]
+    },
+    {
+      "name": "performance_traceability",
+      "status": "BLOCKED",
+      "evidence": [],
+      "blockers": [
+        "no physical frame-rate, end-to-end latency, or detection experiment"
+      ]
+    },
+    {
+      "name": "cold_reset_long_run",
+      "status": "BLOCKED",
+      "evidence": [],
+      "blockers": [
+        "cold start, hot reset, repeated download, and long-stability run are not executed"
+      ]
+    },
+    {
+      "name": "reproducible_build_package",
+      "status": "BLOCKED",
+      "evidence": [],
+      "blockers": [
+        "missing release artifact: release/industrial-v2/README.md",
+        "missing release artifact: release/industrial-v2/manifest.json",
+        "missing release artifact: release/industrial-v2/industrial-v2.bit"
+      ]
+    },
+    {
+      "name": "external_actuator_acceptance",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/experiments/2026-10-19-industrial-v2-g5-summary.md"
+      ],
+      "blockers": [
+        "GPIO, electrical, actuator, and mechanical closed-loop evidence is unknown"
+      ]
+    },
+    {
+      "name": "visual_approval",
+      "status": "PASS",
+      "evidence": [
+        "docs/goals/industrial-v2/STATUS.json:visual_approval"
+      ],
+      "blockers": []
+    }
+  ],
+  "audit": "industrial-v2-g8-release",
+  "audit_version": 1,
+  "commit": "f7abfc89ded21e5a63df23665da307cb065ebbb8",
+  "worktree": "E:/Projects/FPGA-v2",
+  "baseline": {
+    "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",
+    "expected_sha256": "b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef",
+    "actual_sha256": "b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef",
+    "status": "PASS",
+    "evidence_type": "project"
+  },
+  "note": "RELEASED is permitted only when every gate is explicit PASS; visual approval authorization does not substitute for hardware or build evidence."
+}
