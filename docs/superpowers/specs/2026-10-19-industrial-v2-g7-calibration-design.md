@@ -18,7 +18,7 @@ G7 为当前 BBox/Area 结果增加可追溯的 X/Y 像素到物理单位定点�
 ## 形状合同
 
 - `bbox_area=width_px*height_px`。
-- `occupancy_q8=min(255, area_px*256/bbox_area)`，用面积/BBox 面积占比排除明显稀疏红色干扰。
+- `occupancy_q8=min(256, area_px*256/bbox_area)`，用面积/BBox 面积占比排除明显稀疏红色干扰；256 表示 100%。
 - `aspect_q8=min(65535, width_px*256/height_px)`，用固定上下界限制适用姿态。
 - `dimension_valid` 要求 X/Y 物理尺寸均落在独立 nominal±tolerance 内；`shape_valid` 同时要求 occupancy/aspect 通过。
 - 这是单目标、轴对齐 BBox 合法性检查；不宣称连通域分离、多目标可靠分割或旋转不变尺寸。
