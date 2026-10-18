@@ -8,6 +8,9 @@ sys.path.insert(0, str(MODEL_DIR))
 from calibration_reference import CalibrationConfig, DimensionModel  # noqa: E402
 
 
+RTL = Path(__file__).resolve().parents[2] / "fallback" / "rtl" / "inspection" / "dimension_calibrator.v"
+
+
 def calibrated_model():
     config = CalibrationConfig.from_reference(
         reference_width_px=120,
@@ -83,3 +86,14 @@ def test_occupancy_is_saturated_and_single_pixel_edges_are_defined():
 
     assert full.width_px == 1 and full.height_px == 1
     assert saturated.occupancy_q8 == 256
+
+
+def test_rtl_dimension_arithmetic_uses_bounded_fixed_width_operands():
+    source = RTL.read_text(encoding="utf-8")
+
+    assert "localparam integer PIXEL_WIDTH" in source
+    assert "localparam integer BBOX_AREA_WIDTH" in source
+    assert "wire [63:0] bbox_area" not in source
+    assert "wire [63:0] width_product" not in source
+    assert "wire [63:0] height_product" not in source
+    assert "[63:32]" not in source
