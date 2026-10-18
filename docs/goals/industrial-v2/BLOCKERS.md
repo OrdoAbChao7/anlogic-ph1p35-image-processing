@@ -7,3 +7,4 @@
 | External sort actuator | OPEN | HX1P35A-specific schematic/pin contract, driver electrical review and physical actuator |
 | Physical dimension calibration | OPEN | Fixed workcell geometry, reference object and repeated measurements |
 | Clean-environment TD rebuild | OPEN | Self-contained package and repeated build from recorded inputs |
+| Frozen baseline consistency | OPEN | Resolve or formally scope the 8 historical pytest contract failures and Stage D registry/plugin SHA mismatch |

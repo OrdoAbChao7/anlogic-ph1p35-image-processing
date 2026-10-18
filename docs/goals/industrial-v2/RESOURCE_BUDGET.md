@@ -13,3 +13,7 @@
 | Hardware frame rate/latency | Not fully measured | Do not claim until measured |
 
 Each feature gets an independent trial report before full integration. The final candidate is judged by the actual complete TD report, not the sum of trials.
+
+## G1 measurement status
+
+The mode, OSD and ROI changes have only software/RTL evidence. No TD synthesis or implementation report was produced, so Slice/RAM/DSP/WNS/TNS remain `NOT_MEASURED` for V2. The frozen V1 values above remain the only resource baseline and are not V2 results.

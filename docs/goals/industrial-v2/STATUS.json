@@ -42,16 +42,35 @@
       "next_action": "Record baseline drift and proceed only with isolated software/RTL work; repair or formally scope the frozen baseline before TD merge"
     },
     "V2-G1": {
-      "status": "NOT_STARTED",
+      "status": "BLOCKED",
       "objective": "Single-click mode, decimal OSD and explicit ROI contract",
       "prerequisites": ["V2-G0"],
-      "completion": 0,
-      "commands": [],
-      "evidence": [],
-      "unresolved": [],
-      "resource_baseline": "Not measured",
+      "completion": 75,
+      "commands": [
+        "iverilog/vvp tb_mode_controller (simulation and root entry points)",
+        "iverilog/vvp tb_osd_led_joint",
+        "iverilog/vvp -DMORPH_SIMULATION tb_industrial_contract",
+        "python -B -m pytest -q work/tests/test_v2_roi_contract.py",
+        "python -B -m pytest -q work/tests/test_industrial_build_contract.py -k roi_parameters",
+        "python -B -m pytest -q work/tests",
+        "pwsh -File .\\scripts\\verify-industrial-subsystem.ps1"
+      ],
+      "evidence": [
+        "docs/experiments/2026-10-19-industrial-v2-g1-mode-controller.md",
+        "docs/experiments/2026-10-19-industrial-v2-g1-osd.md",
+        "docs/experiments/2026-10-19-industrial-v2-g1-roi.md",
+        "docs/experiments/2026-10-19-industrial-v2-g1-summary.md"
+      ],
+      "unresolved": [
+        "Full pytest remains 52 passed / 8 failed because frozen-vs-later release and path contracts differ",
+        "Stage D registry/plugin model SHA mismatch stops industrial regression at stage 2/13",
+        "TD synthesis/implementation/Bitgen not run for V2",
+        "No V2 resource/timing report",
+        "No confirmed hardware downloader, board, camera or HDMI acceptance"
+      ],
+      "resource_baseline": "V1 historical values only; no V2 QoR measured",
       "best_candidate": "EXPERIMENTAL",
-      "next_action": "Wait for G0 baseline"
+      "next_action": "Repair or formally scope frozen baseline consistency, then run isolated TD build before any hardware claim"
     },
     "V2-G2": {"status":"NOT_STARTED","objective":"Single-target tracking and trajectory overlay","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":[],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after G1"},
     "V2-G3": {"status":"NOT_STARTED","objective":"Internal processing and video latency monitoring","prerequisites":["V2-G1"],"completion":0,"commands":[],"evidence":[],"unresolved":[],"resource_baseline":"Not measured","best_candidate":"EXPERIMENTAL","next_action":"Create sub-plan after G1"},

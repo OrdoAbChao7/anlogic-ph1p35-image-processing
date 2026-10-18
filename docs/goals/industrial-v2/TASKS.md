@@ -2,10 +2,10 @@
 
 - [ ] V2-G0-T1: Create state, evidence, budget, risk and rollback records.
 - [ ] V2-G0-T2: Repeat tool, Python, RTL and V1 artifact checks.
-- [ ] V2-G1-T1: Change mode interaction to debounced single-click cycling.
-- [ ] V2-G1-T2: Add decimal OSD and frame-stable result display.
-- [ ] V2-G1-T3: Freeze explicit ROI contract and boundary behavior.
-- [ ] V2-G1-T4: Run G1 software/RTL/TD gates and record hardware block.
+- [x] V2-G1-T1: Change mode interaction to debounced single-click cycling.
+- [x] V2-G1-T2: Add decimal OSD and frame-stable result display.
+- [x] V2-G1-T3: Freeze explicit ROI contract and boundary behavior.
+- [x] V2-G1-T4: Run G1 software/RTL/TD gates and record hardware block; TD and hardware remain blocked by recorded prerequisites.
 - [ ] V2-G2: Implement and verify single-target tracker.
 - [ ] V2-G3: Implement and verify latency monitors.
 - [ ] V2-G4: Resource-trial and implement ROI frame difference.

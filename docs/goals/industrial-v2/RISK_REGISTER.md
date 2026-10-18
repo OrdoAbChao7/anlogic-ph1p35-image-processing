@@ -10,3 +10,4 @@
 | R-006 | Frame-difference storage may exceed remaining RAM/timing | No V2 measurement yet | 8-bit ROI trial, then quantified lower-cost alternative only if equivalent | G4 |
 | R-007 | External actuator pins/electrics are unknown | Project known gap | Internal virtual actuator first; no new IO until official/physical evidence | G5 |
 | R-008 | Millimeter calibration inputs are absent | Project known gap | Output px only until repeatable fixed-workcell calibration | G7 |
+| R-009 | Frozen V1 checkout contains later-worktree regression drift | G0 full pytest 52 passed / 8 failed; Stage D plugin SHA mismatch | Repair or formally scope the baseline before TD merge; keep V1 freeze immutable | G1/G8 |
