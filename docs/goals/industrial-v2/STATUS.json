@@ -36,7 +36,7 @@
         "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-industrial-subsystem.ps1"
       ],
       "evidence": ["docs/experiments/2026-10-19-industrial-v2-g0-baseline.md", "frozen Bitstream SHA-256 recheck"],
-      "unresolved": ["46 passed / 8 failed baseline pytest due frozen-vs-later repository contract drift", "Stage D registry/plugin SHA mismatch", "No confirmed hardware downloader", "scripts/fpga-loop.ps1 absent in frozen commit", "TD is an external dependency outside V2 Worktree"],
+      "unresolved": ["46 passed / 8 failed baseline pytest due frozen-vs-later repository contract drift", "No confirmed hardware downloader", "scripts/fpga-loop.ps1 absent in frozen commit", "TD is an external dependency outside V2 Worktree"],
       "resource_baseline": "V1 freeze values above",
       "best_candidate": "BASELINE_V1",
       "next_action": "Record baseline drift and proceed only with isolated software/RTL work; repair or formally scope the frozen baseline before TD merge"
@@ -63,7 +63,7 @@
       ],
       "unresolved": [
         "Full pytest remains 52 passed / 8 failed because frozen-vs-later release and path contracts differ",
-        "Stage D registry/plugin model SHA mismatch stops industrial regression at stage 2/13",
+        "Stage D software verification now passes after normalizing the tracked plugin to LF line endings",
         "Combined formal seven-feature TD synthesis/implementation/Bitgen passed; hardware behavior remains unvalidated",
         "Combined candidate QoR is measured; feature-isolated attribution and warning closure remain open",
         "No confirmed hardware downloader, board, camera or HDMI acceptance"
@@ -93,7 +93,7 @@
         "docs/experiments/2026-10-19-industrial-v2-g2-summary.md"
       ],
       "unresolved":[
-        "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
+        "Formal G1 prerequisite remains blocked by frozen baseline consistency",
         "Tracker/history/overlay are integrated through the formal feature spine and included in the combined TD candidate; separate G2 hardware evidence is absent",
         "Combined V2 TD synthesis/implementation/Bitgen passed; no isolated G2-only QoR trial was run",
         "Combined V2 QoR is available; feature-isolated G2 resource attribution is not measured",
@@ -125,7 +125,7 @@
         "docs/experiments/2026-10-19-industrial-v2-g3-summary.md"
       ],
       "unresolved":[
-        "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
+        "Formal G1 prerequisite remains blocked by frozen baseline consistency",
         "Latency monitors are integrated through the formal feature spine and included in the combined TD candidate",
         "Combined V2 TD synthesis/implementation/Bitgen passed; physical HDMI/display E2E evidence is absent",
         "Combined V2 QoR is available; physical latency and isolated G3 resource attribution are not measured",
@@ -155,7 +155,7 @@
         "docs/experiments/2026-10-19-industrial-v2-g4-summary.md"
       ],
       "unresolved":[
-        "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
+        "Formal G1 prerequisite remains blocked by frozen baseline consistency",
         "Motion grid adapter and motion feature spine are integrated in the formal top-level; the 160x120 history still needs a feature-isolated QoR attribution",
         "Combined V2 TD synthesis/implementation/Bitgen passed",
         "Combined V2 resource/timing is measured; the 153600-bit history and moving-target hardware behavior remain unvalidated",
@@ -215,7 +215,7 @@
         "docs/experiments/2026-10-19-industrial-v2-g6-summary.md"
       ],
       "unresolved":[
-        "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
+        "Formal G1 prerequisite remains blocked by frozen baseline consistency",
         "AWB/frame-statistics logic is instantiated in the formal feature path; sensor and lighting behavior remain unvalidated",
         "SC520CS AE/I2C/register contract is unknown; sensor configuration was not changed",
         "Combined V2 TD synthesis/implementation/Bitgen and QoR passed; SC520CS lighting data remain unvalidated",
@@ -245,7 +245,7 @@
         "docs/experiments/2026-10-19-industrial-v2-g7-summary.md"
       ],
       "unresolved":[
-        "Formal G1 prerequisite remains blocked by frozen baseline consistency and Stage D registry/plugin SHA mismatch",
+        "Formal G1 prerequisite remains blocked by frozen baseline consistency",
         "No real calibration reference, workcell geometry, lighting or repeatability data",
         "Combined V2 TD synthesis/implementation/Bitgen and QoR passed; physical calibration remains unvalidated",
         "No formal OSD/main verdict integration or hardware measurement",
@@ -296,16 +296,18 @@
         "docs/evidence/industrial-v2-g8-clock-warning-audit.md",
         "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt",
         "docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md",
+        "docs/experiments/2026-10-16-industrial-inspection-stage-d.md",
+        "work/algorithm_lab/exports/stage_d/stage_d_report.json",
         "scripts/verify_industrial_v2_release.py"
       ],
       "unresolved": [
-        "G1-G7 individual phase gates remain blocked by hardware/physical evidence and the Stage D registry/plugin SHA mismatch; the combined formal top now has a TD/STA/Bitgen candidate",
+        "G1-G7 individual phase gates remain blocked by hardware/physical evidence and frozen baseline consistency; the combined formal top now has a TD/STA/Bitgen candidate",
         "The post-AWB CSI/ISP stream is connected to the motion-grid and frame-statistics adapters in the formal top-level",
         "The feature spine, all seven feature dependencies, and staged result CDC are in the formal TD source list",
         "Combined candidate QoR passes at Setup WNS +100ps/TNS 0 and Hold WNS +20ps/TNS 0; Slice 18261/21216 = 86.07%, RAM 43, DSP 24",
         "TD reported PHY-5079 clock-local-routing and PHY-5088 clock-analyzer warnings; warning/CDC/constraint audit remains open",
         "Two complete TD builds with --place-seed 1 both passed final QoR but produced different Bitstream SHA-256 values and Slice counts; exact Bitstream reproducibility remains open",
-        "Full work/tests retains 8 frozen-vs-later contract failures and Stage D registry/plugin SHA mismatch remains",
+        "Full work/tests retains 8 frozen-vs-later contract failures; Stage D software verification is PASS",
         "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",
         "The candidate README/manifest/Bitstream are present, but the final release package remains intentionally absent until hardware and warning gates close"
       ],

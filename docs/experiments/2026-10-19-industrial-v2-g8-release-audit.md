@@ -19,7 +19,7 @@
 | 类别 | 状态 | 证据/阻塞 |
 |---|---|---|
 | V1 冻结基线 SHA | `PASS` | 期望与实际均为 `b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef` |
-| 七项软件/RTL/TD | `BLOCKED` | 七功能正式顶层与 TD 候选已通过；G1-G7 的硬件/物理证据和 Stage D 前置一致性仍未闭合 |
+| 七项软件/RTL/TD | `BLOCKED` | 七功能正式顶层与 TD 候选已通过；G1-G7 的硬件/物理证据和冻结基线一致性仍未闭合 |
 | 同一 V2 Bitstream | `BLOCKED` | `release/industrial-v2/` 不存在 |
 | V1 回归 | `BLOCKED` | `work/tests` 保留 8 个冻结基线与后续目录契约漂移失败 |
 | V2 TD/QoR/告警 | `BLOCKED` | formal feature-spine 候选 TD/STA/Bitgen PASS；PHY-5079/PHY-5088 告警审计仍开放，且尚未绑定最终发布目录 |
