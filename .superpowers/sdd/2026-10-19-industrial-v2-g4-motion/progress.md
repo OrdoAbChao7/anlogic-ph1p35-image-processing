@@ -4,7 +4,7 @@ Setup: continue in `E:/Projects/FPGA-v2` on `goal/industrial-v2-advanced`; G1-G3
 
 Ruling: no `/bin/bash`/WSL relay is available for `sdd-workspace`; this plan-scoped ledger is manual under the same contract as earlier phases.
 
-Task 1: pending.
+Task 1: software motion model complete (RED missing-module collection failure; GREEN 8 passed).
 Task 2: pending.
 Task 3: pending.
 Task 4: pending.
