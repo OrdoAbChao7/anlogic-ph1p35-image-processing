@@ -27,3 +27,7 @@ G3 latency/frame-tag monitors are independent software/RTL units only. Their res
 ## G4 measurement status
 
 The independent G4 motion trial estimates one `160*120*8 = 153600-bit` history store. This is a logical capacity estimate, not a PH1P35 ERAM/Slice report. Slice/RAM/DSP/WNS/TNS remain `NOT_MEASURED` until a TD resource trial is authorized by the formal top-level and baseline gates.
+
+## G5 measurement status
+
+G5 adds internal event, safety and fixed-pulse control logic only. External GPIO and actuator resource/electrical impact are `NOT_MEASURED`; no pin or drive strength is inferred from this RTL.

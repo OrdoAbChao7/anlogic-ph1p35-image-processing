@@ -18,3 +18,5 @@
 | V2 G3 summary | `docs/experiments/2026-10-19-industrial-v2-g3-summary.md` | BLOCKED; internal latency only |
 | V2 G4 motion model/RTL | `docs/experiments/2026-10-19-industrial-v2-g4-*.md` | SOFTWARE_PASS/RTL_PASS; top/TD/hardware pending |
 | V2 G4 summary | `docs/experiments/2026-10-19-industrial-v2-g4-summary.md` | BLOCKED; 160x120 history QoR not measured |
+| V2 G5 sort model/RTL | `docs/experiments/2026-10-19-industrial-v2-g5-*.md` | SOFTWARE_PASS/RTL_PASS/virtual actuator; GPIO pending |
+| V2 G5 summary | `docs/experiments/2026-10-19-industrial-v2-g5-summary.md` | BLOCKED; no real mechanical closure |
