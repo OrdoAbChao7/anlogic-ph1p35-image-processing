@@ -156,11 +156,14 @@
     {
       "name": "reproducible_build_package",
       "status": "BLOCKED",
-      "evidence": [],
+      "evidence": [
+        "docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md"
+      ],
       "blockers": [
         "missing release artifact: release/industrial-v2/README.md",
         "missing release artifact: release/industrial-v2/manifest.json",
-        "missing release artifact: release/industrial-v2/industrial-v2.bit"
+        "missing release artifact: release/industrial-v2/industrial-v2.bit",
+        "fixed placement seed did not produce byte-identical Bitstreams; exact reproducibility remains open"
       ]
     },
     {
@@ -184,7 +187,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "0056b0805db1f21b98ca752255383c96f2929fef",
+  "commit": "7abf32c36e281b6c031072905b5b228dd73da974",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",
