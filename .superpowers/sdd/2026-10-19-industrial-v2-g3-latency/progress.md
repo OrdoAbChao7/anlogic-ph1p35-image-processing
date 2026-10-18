@@ -5,3 +5,5 @@ Setup: continue in `E:/Projects/FPGA-v2` on `goal/industrial-v2-advanced`; G1/G2
 Ruling: no `/bin/bash`/WSL relay is available for `sdd-workspace`; this plan-scoped ledger is manual under the same contract as earlier phases.
 
 Task 1: software latency model complete (RED missing-module collection failure; GREEN 6 passed).
+
+Task 2: RTL frame tag monitor complete (RED unknown-module compile failure; GREEN TB_FRAME_TAG_MONITOR_PASS; formal top/TD/hardware gates remain open).
