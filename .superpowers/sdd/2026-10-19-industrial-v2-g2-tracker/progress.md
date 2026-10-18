@@ -11,3 +11,5 @@ Task 2: RTL temporal tracker complete (RED unknown-module compile failure; GREEN
 Task 3: RTL trajectory history complete (RED unknown-module compile failure; GREEN TB_TRAJECTORY_HISTORY_PASS; TD/top-level/hardware gates remain open).
 
 Task 4: RTL tracking overlay complete (RED unknown-module compile failure; GREEN TB_TRACKING_OVERLAY_PASS; top-level/TD/hardware gates remain open).
+
+Task 5: G2 gate complete (12 model tests, three G2 RTL tests and G1 regressions pass; full pytest 58/8 and Stage D SHA mismatch remain baseline blockers; status recorded as BLOCKED with SOFTWARE_PASS/RTL_PASS).
