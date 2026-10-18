@@ -58,6 +58,16 @@ class IndustrialInspectionContractTests(unittest.TestCase):
         self.assertFalse(ref_metrics["detected"])
         self.assertFalse(hw_metrics["detected"])
 
+    def test_non_integer_roi_is_invalid_in_both_models(self):
+        params = dict(self.params, roi_x=1.5, roi_y=20, roi_width=100, roi_height=80)
+        _, ref_metrics = self.plugin.process_visual_reference(self.image, params)
+        _, hw_metrics = self.plugin.process_hardware_equivalent(self.image, params)
+
+        for metrics in (ref_metrics, hw_metrics):
+            self.assertEqual(metrics["verdict"], "INVALID")
+            self.assertEqual(metrics["invalid_reason"], "roi_x must be an integer")
+            self.assertFalse(metrics["detected"])
+
     def test_full_frame_zero_roi_preserves_current_behavior(self):
         _, metrics = self.plugin.process_visual_reference(
             self.image, dict(self.params, roi_x=0, roi_y=0, roi_width=0, roi_height=0)

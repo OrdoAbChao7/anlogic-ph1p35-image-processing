@@ -31,6 +31,16 @@ module isp_top (
     output wire         O_ind_result_toggle
 );
 
+// Frozen v1 inspection ROI.  Until the camera/fixture is available for
+// calibration, the approved contract uses the complete 1280x720 raster as a
+// fixed ROI.  The detector treats the all-zero geometry as full-frame; keeping
+// the values here (instead of relying on detector defaults) makes the release
+// configuration explicit and auditable.
+localparam integer INDUSTRIAL_ROI_X      = 0;
+localparam integer INDUSTRIAL_ROI_Y      = 0;
+localparam integer INDUSTRIAL_ROI_WIDTH  = 0;
+localparam integer INDUSTRIAL_ROI_HEIGHT = 0;
+
 wire         m_aixs_tvalid;  //synthesis keep
   wire [127:0] m_aixs_tdata;  //synthesis keep
   wire         m_aixs_tuser;  //synthesis keep
@@ -140,7 +150,11 @@ awb #(
         .CB_MAX     (125),
         .CR_MIN     (135),
         .CR_MAX     (200),
-        .MIN_AREA   (100)
+        .MIN_AREA   (100),
+        .ROI_X      (INDUSTRIAL_ROI_X),
+        .ROI_Y      (INDUSTRIAL_ROI_Y),
+        .ROI_WIDTH  (INDUSTRIAL_ROI_WIDTH),
+        .ROI_HEIGHT (INDUSTRIAL_ROI_HEIGHT)
     ) u_color_detect_96_v2 (
         .I_clk        (axi4s_video_aclk),
         .I_rst_n      (I_rst_n),
@@ -206,6 +220,7 @@ awb #(
     assign O_ind_invalid  = ind_classifier_invalid;
     assign O_led_pass     = ind_led_pass;
     assign O_led_ng       = ind_led_ng;
+    assign O_led_det      = ind_led_det;
     assign O_ind_result_toggle = ind_result_toggle;
 
 endmodule

@@ -2,12 +2,12 @@
 """Automated build runner for Tang Dynasty (TD) 6.2 on PH1P35 Industrial Inspection Project.
 
 Steps:
-1. Verify work/td_industrial exists and top wrapper is patched with industrial inspection subsystem.
+1. Create or refresh the temporary work/td_industrial tree and verify the top wrapper is patched with industrial inspection subsystem.
 2. Prepare camera_to_dsi_display_Runs/syn_1 and phy_1 with settings.cfg and camera_to_dsi_display.prj.
 3. Run synthesis via td_commands_prompt.exe.
 4. Run physical design (opt_place -> opt_route -> bitgen) via td_commands_prompt.exe.
 5. Check timing QoR (Setup/Hold WNS, TNS).
-6. Copy generated bitstream to work/output/industrial-release/ and compute SHA-256.
+6. Copy generated bitstream to release/industrial-v1/ and compute SHA-256.
 """
 
 import argparse
@@ -22,27 +22,74 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_TD_EXE = Path(os.environ.get("FPGA_TD_EXE", "E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe"))
-DEFAULT_FLOW_TCL = Path(os.environ.get("FPGA_FLOW_TCL", "E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl"))
-DEFAULT_ORIG_RUNS = Path(os.environ.get("FPGA_BASELINE_RUNS", "E:/Projects/FPGA/HX1P35A2026/lab_ex1_mipi_hdmi_SC520_original/lab_ex1_mipi_hdmi_SC520/lab_ex1_mipi_hdmi/td_project/camera_to_dsi_display_Runs"))
+
+
+def _env_or_repo_path(name: str, *relative_parts: str) -> Path:
+    """Resolve an external input from the environment or this checkout.
+
+    The repository must not encode the author's machine-specific worktree.  A
+    missing external tool is reported by ``validate_inputs`` with the path the
+    caller can override through the documented environment variable/CLI flag.
+    """
+    value = os.environ.get(name)
+    if value:
+        return Path(value).expanduser()
+    return ROOT.joinpath(*relative_parts)
+
+
+DEFAULT_TD_EXE = _env_or_repo_path(
+    "FPGA_TD_EXE", ".tools", "td", "app", "bin", "td_commands_prompt.exe"
+)
+DEFAULT_FLOW_TCL = _env_or_repo_path(
+    "FPGA_FLOW_TCL", ".tools", "td", "app", "doc", "scripts", "DefaultFlow.tcl"
+)
+DEFAULT_ORIG_RUNS = _env_or_repo_path(
+    "FPGA_BASELINE_RUNS",
+    "fallback", "td_package", "td_project", "camera_to_dsi_display_Runs"
+)
+DEFAULT_INPUT_PACKAGE = _env_or_repo_path(
+    "FPGA_TD_INPUT_PACKAGE", "fallback", "td_package"
+)
 DEFAULT_WORK_PROJECT = ROOT / "work" / "td_industrial"
 WORK_PROJECT = DEFAULT_WORK_PROJECT
 WORK_RUNS = WORK_PROJECT / "td_project" / "camera_to_dsi_display_Runs"
 # Keep the one-file download artifact in the tracked release directory so a
 # clean build and the README point to the same output.
 DEFAULT_RELEASE_DIR = ROOT / "release" / "industrial-v1"
+FINAL_BITSTREAM_NAME = "camera_to_dsi_display_compress.bit"
 TD_EXE = DEFAULT_TD_EXE
 FLOW_TCL = DEFAULT_FLOW_TCL
 ORIG_RUNS = DEFAULT_ORIG_RUNS
+INPUT_PACKAGE = DEFAULT_INPUT_PACKAGE
 RELEASE_DIR = DEFAULT_RELEASE_DIR
 TRACKED_RTL = ROOT / "fallback" / "rtl"
-# The approved cartoon contract is s3_luma.  The TD project still receives the
-# source under the module's historical filename, because the top-level wrapper
-# instantiates the module as ``video_cartoon``.
-DEFAULT_TRACKED_VIDEO = ROOT / "work" / "rtl" / "video_cartoon_luma.v"
+# The formal release follows the approved v1 Cartoon contract: per-channel
+# quantization, four-neighbour region fill, and Sobel contour fusion. The TD
+# project receives the source under the historical filename because the
+# top-level wrapper instantiates the module as ``video_cartoon``.
+DEFAULT_TRACKED_VIDEO = TRACKED_RTL / "video" / "video_cartoon_region_fill.v"
 TRACKED_VIDEO = DEFAULT_TRACKED_VIDEO
 TRACKED_TOP = ROOT / "fallback" / "td_source" / "design_top_wrapper.v"
 TRACKED_ISP = ROOT / "fallback" / "td_source" / "isp" / "isp_top.v"
+TRACKED_VTC = ROOT / "fallback" / "td_source" / "uivtc_guarded.v"
+TRACKED_MIXER = ROOT / "fallback" / "td_source" / "hdmi_mixer_guarded.v"
+TRACKED_DDR_INTERFACE = ROOT / "fallback" / "td_package" / "user_source" / "hdl_source" / "mc_to_user_interface.v"
+TRACKED_RTL_FILES = {
+    "morph_open_96.v": TRACKED_RTL / "inspection" / "morph_open_96.v",
+    "color_detect_96_v2.v": TRACKED_RTL / "inspection" / "color_detect_96_v2.v",
+    "defect_classifier.v": TRACKED_RTL / "inspection" / "defect_classifier.v",
+    "bbox_draw_overlay.v": TRACKED_RTL / "inspection" / "bbox_draw_overlay.v",
+    "inspection_result_cdc.v": TRACKED_RTL / "inspection" / "inspection_result_cdc.v",
+    "anlogic_logo_rom.v": TRACKED_RTL / "display" / "anlogic_logo_rom.v",
+    "industrial_osd_overlay.v": TRACKED_RTL / "display" / "industrial_osd_overlay.v",
+    "mode_controller.v": TRACKED_RTL / "control" / "mode_controller.v",
+}
+# These files intentionally override vendor snapshots only in the isolated TD
+# work tree. The original package remains available as an untouched baseline.
+TRACKED_SOURCE_OVERRIDES = {
+    "vtc/uivtc.v": TRACKED_VTC,
+    "hdmi_mixer.v": TRACKED_MIXER,
+}
 
 
 def sha256(path: Path) -> str:
@@ -53,10 +100,18 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def describe_input(path: Path) -> dict:
+def portable_path(path: Path, external_name: str) -> str:
+    """Return a repository-relative path or a stable external-input token."""
+    try:
+        return path.resolve().relative_to(ROOT.resolve()).as_posix()
+    except ValueError:
+        return f"<{external_name}>"
+
+
+def describe_input(path: Path, external_name: str) -> dict:
     """Record enough metadata to detect drift in an external build input."""
     record = {
-        "path": str(path.resolve()),
+        "path": portable_path(path, external_name),
         "exists": path.exists(),
     }
     if path.is_file():
@@ -66,17 +121,20 @@ def describe_input(path: Path) -> dict:
 
 
 def build_input_provenance() -> dict:
+    input_runs = selected_baseline_runs()
     baseline_files = {
-        "syn_1/settings.cfg": ORIG_RUNS / "syn_1" / "settings.cfg",
-        "syn_1/camera_to_dsi_display.prj": ORIG_RUNS / "syn_1" / "camera_to_dsi_display.prj",
-        "phy_1/settings.cfg": ORIG_RUNS / "phy_1" / "settings.cfg",
-        "phy_1/camera_to_dsi_display.prj": ORIG_RUNS / "phy_1" / "camera_to_dsi_display.prj",
+        "syn_1/settings.cfg": input_runs / "syn_1" / "settings.cfg",
+        "syn_1/camera_to_dsi_display.prj": input_runs / "syn_1" / "camera_to_dsi_display.prj",
+        "phy_1/settings.cfg": input_runs / "phy_1" / "settings.cfg",
+        "phy_1/camera_to_dsi_display.prj": input_runs / "phy_1" / "camera_to_dsi_display.prj",
     }
     return {
-        "td_exe": describe_input(TD_EXE),
-        "flow_tcl": describe_input(FLOW_TCL),
+        "td_exe": describe_input(TD_EXE, "FPGA_TD_EXE"),
+        "flow_tcl": describe_input(FLOW_TCL, "FPGA_FLOW_TCL"),
+        "input_package": describe_input(INPUT_PACKAGE, "FPGA_TD_INPUT_PACKAGE"),
         "baseline_files": {
-            relative: describe_input(path) for relative, path in baseline_files.items()
+            relative: describe_input(path, "FPGA_BASELINE_RUNS")
+            for relative, path in baseline_files.items()
         },
     }
 
@@ -139,6 +197,17 @@ def assert_qor_pass(metrics: dict) -> None:
         raise RuntimeError("QoR gate failed: " + "; ".join(failures))
 
 
+def select_final_bitstream(bit_files):
+    """Return the single compressed bitstream intended for field download."""
+    candidates = sorted(path for path in bit_files if path.name == FINAL_BITSTREAM_NAME)
+    if len(candidates) != 1:
+        names = ", ".join(path.name for path in sorted(bit_files)) or "<none>"
+        raise RuntimeError(
+            f"Release gate requires exactly one {FINAL_BITSTREAM_NAME}; generated files: {names}"
+        )
+    return candidates[0]
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
         description="Build the PH1P35 fixed-red industrial-inspection TD project."
@@ -156,7 +225,12 @@ def parse_args(argv=None):
     parser.add_argument(
         "--baseline-runs",
         default=str(DEFAULT_ORIG_RUNS),
-        help="Official SC520 baseline camera_to_dsi_display_Runs directory (or FPGA_BASELINE_RUNS).",
+        help="Legacy external camera_to_dsi_display_Runs directory (used if --input-package is incomplete).",
+    )
+    parser.add_argument(
+        "--input-package",
+        default=str(DEFAULT_INPUT_PACKAGE),
+        help="Tracked TD source/configuration package; defaults to fallback/td_package (or FPGA_TD_INPUT_PACKAGE).",
     )
     parser.add_argument(
         "--release-dir",
@@ -166,7 +240,7 @@ def parse_args(argv=None):
     parser.add_argument(
         "--video-rtl",
         default=str(TRACKED_VIDEO),
-        help="Tracked video RTL source; defaults to the approved s3_luma implementation.",
+        help="Tracked video RTL source; defaults to the approved s4-region-fill implementation.",
     )
     parser.add_argument(
         "--work-project",
@@ -182,10 +256,11 @@ def parse_args(argv=None):
 
 
 def configure(args):
-    global TD_EXE, FLOW_TCL, ORIG_RUNS, RELEASE_DIR, TRACKED_VIDEO, WORK_PROJECT, WORK_RUNS
+    global TD_EXE, FLOW_TCL, ORIG_RUNS, INPUT_PACKAGE, RELEASE_DIR, TRACKED_VIDEO, WORK_PROJECT, WORK_RUNS
     TD_EXE = Path(args.td_exe).expanduser().resolve()
     FLOW_TCL = Path(args.flow_tcl).expanduser().resolve()
     ORIG_RUNS = Path(args.baseline_runs).expanduser().resolve()
+    INPUT_PACKAGE = Path(args.input_package).expanduser().resolve()
     RELEASE_DIR = Path(args.release_dir).expanduser().resolve()
     TRACKED_VIDEO = Path(args.video_rtl).expanduser().resolve()
     WORK_PROJECT = Path(args.work_project).expanduser().resolve()
@@ -218,6 +293,24 @@ def assert_no_user_owned_artifacts(root: Path):
         raise RuntimeError(f"User-owned artifact entered build tree: {joined}")
 
 
+def package_is_complete() -> bool:
+    required = [
+        INPUT_PACKAGE / "user_source",
+        INPUT_PACKAGE / "td_project" / "camera_to_dsi_display.sdc",
+        INPUT_PACKAGE / "td_project" / "camera_to_dsi_display_Runs" / "syn_1" / "settings.cfg",
+        INPUT_PACKAGE / "td_project" / "camera_to_dsi_display_Runs" / "syn_1" / "camera_to_dsi_display.prj",
+        INPUT_PACKAGE / "td_project" / "camera_to_dsi_display_Runs" / "phy_1" / "settings.cfg",
+        INPUT_PACKAGE / "td_project" / "camera_to_dsi_display_Runs" / "phy_1" / "camera_to_dsi_display.prj",
+    ]
+    return all(path.exists() for path in required)
+
+
+def selected_baseline_runs() -> Path:
+    if package_is_complete():
+        return INPUT_PACKAGE / "td_project" / "camera_to_dsi_display_Runs"
+    return ORIG_RUNS
+
+
 def git_output(*args):
     try:
         return subprocess.check_output(
@@ -232,15 +325,9 @@ def source_manifest():
         TRACKED_VIDEO,
         TRACKED_TOP,
         TRACKED_ISP,
-        *(TRACKED_RTL / name for name in [
-            "morph_open_96.v",
-            "color_detect_96_v2.v",
-            "defect_classifier.v",
-            "bbox_draw_overlay.v",
-            "anlogic_logo_rom.v",
-            "industrial_osd_overlay.v",
-            "mode_controller.v",
-        ]),
+        *TRACKED_SOURCE_OVERRIDES.values(),
+        TRACKED_DDR_INTERFACE,
+        *TRACKED_RTL_FILES.values(),
     ]
     result = []
     for path in source_paths:
@@ -277,9 +364,10 @@ def write_release_manifest(bit_files):
         "git_commit": git_output("rev-parse", "HEAD"),
         "git_status": git_output("status", "--short"),
         "build_inputs": {
-            "td_exe": str(TD_EXE.resolve()),
-            "flow_tcl": str(FLOW_TCL.resolve()),
-            "baseline_runs": str(ORIG_RUNS.resolve()),
+            "td_exe": portable_path(TD_EXE, "FPGA_TD_EXE"),
+            "flow_tcl": portable_path(FLOW_TCL, "FPGA_FLOW_TCL"),
+            "input_package": portable_path(INPUT_PACKAGE, "FPGA_TD_INPUT_PACKAGE"),
+            "baseline_runs": portable_path(selected_baseline_runs(), "FPGA_BASELINE_RUNS"),
         },
         "build_input_hashes": build_input_provenance(),
         "sources": source_manifest(),
@@ -296,17 +384,20 @@ def validate_inputs():
     required = {
         "Tang Dynasty executable": TD_EXE,
         "DefaultFlow.tcl": FLOW_TCL,
-        "official baseline Runs": ORIG_RUNS,
     }
     for label, path in required.items():
         if not path.exists():
             raise FileNotFoundError(
                 f"{label} not found: {path}. Supply the location with the corresponding CLI option or environment variable."
             )
-    for name in ["syn_1/settings.cfg", "phy_1/settings.cfg", "syn_1/camera_to_dsi_display.prj", "phy_1/camera_to_dsi_display.prj"]:
-        path = ORIG_RUNS / name
-        if not path.exists():
-            raise FileNotFoundError(f"Official baseline file missing: {path}")
+    if not package_is_complete():
+        required = ["syn_1/settings.cfg", "phy_1/settings.cfg", "syn_1/camera_to_dsi_display.prj", "phy_1/camera_to_dsi_display.prj"]
+        for name in required:
+            path = ORIG_RUNS / name
+            if not path.exists():
+                raise FileNotFoundError(
+                    f"TD input package is incomplete and legacy baseline file is missing: {path}"
+                )
 
 
 def setup_runs():
@@ -316,13 +407,11 @@ def setup_runs():
     # TD project skeleton, but never copy an old synthesis/P&R run into the
     # candidate workspace. The default workspace is left untouched.
     if not WORK_PROJECT.exists():
-        baseline_project = ROOT / "work" / "td_industrial"
-        if not baseline_project.exists():
-            raise FileNotFoundError(
-                f"TD project skeleton missing: {baseline_project}"
-            )
+        seed_root = INPUT_PACKAGE if package_is_complete() else ROOT / "work" / "td_industrial"
+        if not seed_root.exists():
+            raise FileNotFoundError(f"TD project input package missing: {seed_root}")
         shutil.copytree(
-            baseline_project,
+            seed_root,
             WORK_PROJECT,
             ignore=shutil.ignore_patterns(
                 "camera_to_dsi_display_Runs",
@@ -331,14 +420,30 @@ def setup_runs():
                 "*.out.log",
             ),
         )
-        print(f"      seeded isolated TD workspace from {baseline_project}")
+        print(f"      seeded isolated TD workspace from {seed_root}")
+    elif package_is_complete():
+        shutil.copytree(
+            INPUT_PACKAGE / "user_source",
+            WORK_PROJECT / "user_source",
+            dirs_exist_ok=True,
+        )
+        shutil.copy2(
+            INPUT_PACKAGE / "td_project" / "camera_to_dsi_display.sdc",
+            WORK_PROJECT / "td_project" / "camera_to_dsi_display.sdc",
+        )
+        print(f"      refreshed vendor source/configuration from {INPUT_PACKAGE}")
 
     # Refresh vendor-project application sources from the tracked RTL.
-    for rtl_name in ["morph_open_96.v", "color_detect_96_v2.v", "defect_classifier.v", "bbox_draw_overlay.v", "anlogic_logo_rom.v", "industrial_osd_overlay.v", "mode_controller.v"]:
-        src = TRACKED_RTL / rtl_name
+    for rtl_name, src in TRACKED_RTL_FILES.items():
         dst = WORK_PROJECT / "user_source" / "hdl_source" / rtl_name
         if not src.exists():
             raise FileNotFoundError(f"Tracked RTL missing: {src}")
+        shutil.copy2(src, dst)
+    for relative_name, src in TRACKED_SOURCE_OVERRIDES.items():
+        dst = WORK_PROJECT / "user_source" / "hdl_source" / relative_name
+        if not src.exists():
+            raise FileNotFoundError(f"Tracked source override missing: {src}")
+        dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
     if not TRACKED_VIDEO.exists():
         raise FileNotFoundError(f"Tracked video RTL missing: {TRACKED_VIDEO}")
@@ -351,7 +456,7 @@ def setup_runs():
     assert_no_user_owned_artifacts(WORK_PROJECT / "user_source")
     top_src = WORK_PROJECT / "user_source" / "hdl_source" / "design_top_wrapper.v"
     isp_src = WORK_PROJECT / "user_source" / "hdl_source" / "isp" / "isp_top.v"
-    required_top = ["O_ind_result_toggle", "mode_controller", "industrial_osd_overlay", "ind_toggle_meta", "S_osd_out_data"]
+    required_top = ["O_ind_result_toggle", "mode_controller", "industrial_osd_overlay", "inspection_result_cdc", "S_osd_out_data"]
     required_isp = ["O_ind_invalid", "O_ind_result_toggle", "O_led_det"]
     for marker in required_top:
         if marker not in top_src.read_text(encoding="utf-8", errors="replace"):
@@ -376,8 +481,9 @@ def setup_runs():
             except Exception: pass
 
     # 1. Copy settings.cfg
-    shutil.copy2(ORIG_RUNS / "syn_1" / "settings.cfg", syn_dir / "settings.cfg")
-    shutil.copy2(ORIG_RUNS / "phy_1" / "settings.cfg", phy_dir / "settings.cfg")
+    input_runs = selected_baseline_runs()
+    shutil.copy2(input_runs / "syn_1" / "settings.cfg", syn_dir / "settings.cfg")
+    shutil.copy2(input_runs / "phy_1" / "settings.cfg", phy_dir / "settings.cfg")
 
     # 2. Patch prj files with custom modules
     extra_entries = """            <File Path="../../../user_source/hdl_source/anlogic_logo_rom.v">
@@ -444,16 +550,28 @@ def setup_runs():
                     <Attr Name="CompileOrder" Val="62"/>
                 </FileInfo>
             </File>
+            <File Path="../../../user_source/hdl_source/inspection_result_cdc.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="63"/>
+                </FileInfo>
+            </File>
         """
 
-    orig_syn_prj = (ORIG_RUNS / "syn_1" / "camera_to_dsi_display.prj").read_text(encoding="utf-8")
+    orig_syn_prj = (input_runs / "syn_1" / "camera_to_dsi_display.prj").read_text(encoding="utf-8")
     if "bbox_draw_overlay.v" not in orig_syn_prj:
         orig_syn_prj = orig_syn_prj.replace("        </Verilog>", extra_entries + "        </Verilog>")
+    elif "inspection_result_cdc.v" not in orig_syn_prj:
+        orig_syn_prj = orig_syn_prj.replace("        </Verilog>", extra_entries[extra_entries.index('            <File Path="../../../user_source/hdl_source/inspection_result_cdc.v">'): ] + "        </Verilog>")
     (syn_dir / "camera_to_dsi_display.prj").write_text(orig_syn_prj, encoding="utf-8")
 
-    orig_phy_prj = (ORIG_RUNS / "phy_1" / "camera_to_dsi_display.prj").read_text(encoding="utf-8")
+    orig_phy_prj = (input_runs / "phy_1" / "camera_to_dsi_display.prj").read_text(encoding="utf-8")
     if "bbox_draw_overlay.v" not in orig_phy_prj:
         orig_phy_prj = orig_phy_prj.replace("        </Verilog>", extra_entries + "        </Verilog>")
+    elif "inspection_result_cdc.v" not in orig_phy_prj:
+        orig_phy_prj = orig_phy_prj.replace("        </Verilog>", extra_entries[extra_entries.index('            <File Path="../../../user_source/hdl_source/inspection_result_cdc.v">'): ] + "        </Verilog>")
     (phy_dir / "camera_to_dsi_display.prj").write_text(orig_phy_prj, encoding="utf-8")
 
     print(f"      syn_1 configured: {syn_dir}")
@@ -521,18 +639,20 @@ def collect_release():
     assert_no_user_owned_artifacts(RELEASE_DIR)
     phy_dir = WORK_RUNS / "phy_1"
 
-    bit_files = list(phy_dir.glob("*.bit"))
-    if not bit_files:
-        raise FileNotFoundError(f"No .bit files generated in {phy_dir}")
+    final_bitstream = select_final_bitstream(list(phy_dir.glob("*.bit")))
 
-    for bf in bit_files:
-        dest = RELEASE_DIR / bf.name
-        shutil.copy2(bf, dest)
-        h = sha256(dest)
-        size = dest.stat().st_size
-        print(f"  Artifact: {dest.name}")
-        print(f"    Size:    {size:,} bytes")
-        print(f"    SHA-256: {h}")
+    # Remove stale alternate bitstreams so the formal release is unambiguous.
+    for stale in RELEASE_DIR.glob("*.bit"):
+        if stale.name != FINAL_BITSTREAM_NAME:
+            stale.unlink()
+
+    dest = RELEASE_DIR / FINAL_BITSTREAM_NAME
+    shutil.copy2(final_bitstream, dest)
+    h = sha256(dest)
+    size = dest.stat().st_size
+    print(f"  Artifact: {dest.name}")
+    print(f"    Size:    {size:,} bytes")
+    print(f"    SHA-256: {h}")
 
     for rpt in ["route.qor", "final_timing.rpt"]:
         src = phy_dir / rpt
@@ -540,17 +660,15 @@ def collect_release():
             shutil.copy2(src, RELEASE_DIR / rpt)
             print(f"  Copied report: {rpt}")
 
-    write_release_manifest(list(RELEASE_DIR.glob("*.bit")))
+    write_release_manifest([dest])
 
 
 def write_existing_release_manifest():
     print(f"\n[manifest] Collecting provenance for existing artifacts in {RELEASE_DIR}...")
     RELEASE_DIR.mkdir(parents=True, exist_ok=True)
     assert_no_user_owned_artifacts(RELEASE_DIR)
-    bit_files = list(RELEASE_DIR.glob("*.bit"))
-    if not bit_files:
-        raise FileNotFoundError(f"No .bit files found in {RELEASE_DIR}")
-    write_release_manifest(bit_files)
+    final_bitstream = select_final_bitstream(list(RELEASE_DIR.glob("*.bit")))
+    write_release_manifest([final_bitstream])
 
 
 def main(argv=None):

@@ -7,6 +7,7 @@ Reference architectures:
 - 03_geometry_recognition: Streaming area and perimeter counters
 """
 
+from numbers import Integral
 from typing import Dict, Any, Tuple
 import cv2
 import numpy as np
@@ -151,9 +152,17 @@ class IndustrialInspectionAlgorithm(BaseAlgorithm):
         keys = ("roi_x", "roi_y", "roi_width", "roi_height")
         values = {}
         for key in keys:
-            try:
-                values[key] = int(params.get(key, 0))
-            except (TypeError, ValueError):
+            raw_value = params.get(key, 0)
+            if isinstance(raw_value, bool):
+                return None, None, f"{key} must be an integer"
+            if isinstance(raw_value, Integral):
+                values[key] = int(raw_value)
+            elif isinstance(raw_value, str) and raw_value.strip().lstrip("+-").isdigit():
+                values[key] = int(raw_value.strip(), 10)
+            else:
+                # Do not let int(1.5) silently turn an invalid geometry into
+                # a different valid ROI.  Hardware parameters are integer
+                # elaboration constants, so the software contract is strict.
                 return None, None, f"{key} must be an integer"
 
         requested = {

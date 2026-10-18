@@ -10,7 +10,7 @@
 | PH1P35 对应 MIPI D-PHY/CSI-2 IP 版本 | Goal 1 工程配置 | 安路 IP 页面和本机 IP 库 | 待补 |
 | PH1P35 对应 HDMI/DDR 例程路径与 SC520 工程配置 | Goal 1 视频输出 | 本地 SC520 Lab1 工程及报告 | 路径已定位；接口待审计 |
 | 当前 TD 安装版本 | Goal 1/2 编译复现 | 本机 TD About/版本信息 | 已确认 TD 6.2.1 build 168116；见 `../setup/tangdynasty.md` |
-| 开发板完整管脚约束 | Goal 1 下载和时序 | 开发板原理图、约束文件 | 待补 |
+| 开发板完整管脚约束 | Goal 1 下载和时序 | 开发板原理图、约束文件 | 已取得用户提供的 HX1P35A 手册；仍待 TD 重建和上板复核 |
 | SC520CS Lab1 工程目录 | Goal 1 基线工程 | 本地 SC520 资料包 | 已定位；见 `camera/sc520cs.md` |
 | CSI-2 接收输出格式和同步信号 | Goal 1/3 接口适配 | PH1P35 MIPI IP 手册和示例工程 | 待补 |
 | DDR 像素格式、仲裁和帧缓存深度 | Goal 1/4 帧缓存 | PH1P35 DDR IP 手册和官方例程 | 待补 |
@@ -21,7 +21,7 @@
 | ISP 拜耳解码和白平衡输出格式 | Goal 2/3 算法插入点 | 当前工程、IP 配置和测试图 | 待确认 |
 | YOLO-tiny 模型版本、输入尺寸、INT8 量化参数和裁剪层 | Goal 5 检测实现 | 模型文件、量化脚本和权重校验 | 待补 |
 | 卷积/池化/NMS 的 BRAM 布局、吞吐和定点位宽 | Goal 5 资源与时序 | RTL、综合报告和模型比对 | 待补 |
-| 板载按键、LED、WM8978 管脚、时钟和 Codec 配置 | Goal 6 外设联动 | 开发板原理图、Codec 手册和工程约束 | 待补 |
+| 板载按键、LED、WM8978 管脚、时钟和 Codec 配置 | Goal 6 外设联动 | 开发板原理图、Codec 手册和工程约束 | 按键/LED 管脚已由用户提供手册确认；WM8978 仍待补 |
 | HDMI 720p@30fps 实际输出与端到端延迟 | Goal 1/7 性能 | HDMI 配置、帧率测量和延迟测试记录 | 待测 |
 
 ## 缺口处理规则
@@ -111,7 +111,7 @@
 
 - **已补充（project）**：Algorithm Lab 工业视觉插件现支持统一 ROI 参数、非法 ROI 的 `INVALID` 结果、参数预设保存/加载；新增契约测试 `4/4 PASS`，既有工业样本回归 `5/5 PASS`。证据见 [`../experiments/2026-10-16-industrial-inspection-algorithm-lab.md`](../experiments/2026-10-16-industrial-inspection-algorithm-lab.md)。
 - **仍开放（unknown / project risk）**：ROI 只使用像素坐标，未完成镜头、物距和标定块对应的毫米换算；不得据此报告物理尺寸精度。
-- **仍开放（project）**：`fallback/rtl/color_detect_96_v2.v` 的面积输出为 19 bit，最大值不足以表示 1280×720 全帧；RTL `CR_MAX=240` 与软件硬件等价模型使用的 `cr<200` 仍未统一。该缺口阻止 F1 行为契约关闭。
+- **仍开放（project）**：`fallback/rtl/inspection/color_detect_96_v2.v` 的面积输出为 19 bit，最大值不足以表示 1280×720 全帧；RTL `CR_MAX=240` 与软件硬件等价模型使用的 `cr<200` 仍未统一。该缺口阻止 F1 行为契约关闭。
 - **仍开放（project）**：Fallback TD 最终时序有正裕量，但 `PHY-5079`、`PHY-5088` 时钟告警未逐条分类，构建脚本依赖外部绝对路径，干净环境可重建性未关闭。
 - **阶段门保持**：本次没有调用 `/api/approve`，工业视觉仍为 `VISUAL_REVIEW_PENDING`；在用户明确 `VISUAL_APPROVED` 前禁止新的正式 RTL/整机视频集成。
 
@@ -119,13 +119,13 @@
 
 - **已关闭（project）**：用户明确确认工业视觉预览为 `VISUAL_APPROVED`，冻结版本 `v1.0-approved`。参数、源码和五个合成样本的哈希已绑定到 `work/algorithm_lab/registry.json`，并保存批准参数快照。
 - **已关闭（project）**：Stage D 硬件等价软件模型回归通过。五个冻结样本的 raw mask 与形态学后 mask 逐像素一致，`different_pixels=0`、`MAE=0`、`PSNR=inf`；判定、BBox、面积、尺寸和 ROI 坐标一致。Q10 阈值边界、`Y=60/59`、ROI 四边和 `BORDER_REPLICATE` 已有自动化证据，详见 [`../experiments/2026-10-16-industrial-inspection-stage-d.md`](../experiments/2026-10-16-industrial-inspection-stage-d.md)。
-- **仍开放（project，Stage E 阻塞）**：`fallback/rtl/color_detect_96_v2.v` 的 19-bit 面积输出不足以表示 1280×720 全帧，且 RTL `CR_MAX=240` 与当前软件硬件等价模型严格 `cr<200` 不一致；在 RTL 契约修复和仿真回归前不得进入正式视频集成。
+- **仍开放（project，Stage E 阻塞）**：`fallback/rtl/inspection/color_detect_96_v2.v` 的 19-bit 面积输出不足以表示 1280×720 全帧，且 RTL `CR_MAX=240` 与当前软件硬件等价模型严格 `cr<200` 不一致；在 RTL 契约修复和仿真回归前不得进入正式视频集成。
 - **仍开放（project，Stage F/G）**：TD 构建中的 `PHY-5079`、`PHY-5088` 告警分类、构建脚本外部绝对路径、干净环境复现、板级下载/HDMI/LED/长稳和毫米标定仍未关闭。Stage D 通过不改变这些状态。
 
 ## 2026-10-17 固定红色 v1 缺口校正
 
 - **已关闭（project）**：`color_detect_96_v2.v` 已使用 20-bit 面积计数，红色分割已统一为 Q10 偏置 `131072`、`85<Cb<125`、`135<Cr<200`；当前边界、全帧和工业样本回归通过。此前关于 19-bit 面积和 `CR_MAX=240` 的记录保留为历史缺口，不再描述当前 RTL。
-- **已关闭（project）**：批准的卡通化版本为 `s3_luma`，TD 构建入口已切换到 `work/rtl/video_cartoon_luma.v`，冻结 Sobel 阈值为 `240`；三模式逐周期 1102 周期比对通过。
+- **已关闭（project）**：批准的卡通化版本为 `s3_luma`，TD 构建入口已切换到 `fallback/rtl/video/video_cartoon_luma.v`，冻结 Sobel 阈值为 `240`；三模式逐周期 1102 周期比对通过。
 - **已关闭（project）**：OSD/LED 联调已覆盖 `NO_OBJECT` 文本尾部、PASS 状态和检测 LED；`NO_OBJECT` 文本映射缺陷已修复。
 - **仍开放（unknown / measured）**：没有 PH1P35、SC520CS、HDMI 的下载和显示实测，因此 Stage G、冷启动、热复位、模式视觉效果、LED 管脚和长稳仍未验证。
 - **仍开放（project risk）**：当前显式 ERAM 版本 Slice 占用 `84.64%`，仍高于项目目标 `80%`，但当前日志未出现旧版 `PHY-7022` 资源告警；TD 仍有厂商 DDR 初始化宏和时钟/接口 warnings 未逐条关闭，构建脚本依赖本机 TD 工具和官方基线工程，干净环境重建未关闭。
@@ -138,8 +138,37 @@
 
 ## 2026-10-17 卡通化区域填充候选校正
 
-- **已关闭（project）**：用户批准 `s4-region-fill-v1`；固定 8 级逐通道量化、四邻居局部填充、量化图 Sobel 阈值 `240` 和 `BORDER_REPLICATE` 已绑定配置与预览报告。软件参考、硬件等价模型、RTL 小尺寸/1280×720 全帧逐周期回归通过。
-- **已关闭（project）**：候选 TD 独立工程已完成综合、布局布线和位流生成；修复后三 bank 行缓存和完整亮度加权公式后，最终 `route.qor` 为 Setup WNS `+119 ps`、TNS `0`、Hold WNS `+20 ps`、TNS `0`，违例端点为 0。原始报告和位流哈希见 [`../experiments/2026-10-17-cartoon-region-fill-stage-e.md`](../experiments/2026-10-17-cartoon-region-fill-stage-e.md)。
+- **待确认（project）**：`s4-region-fill-v1` 的固定 8 级逐通道量化、四邻居局部填充、量化图 Sobel 阈值 `240` 和 `BORDER_REPLICATE` 已绑定配置与预览报告；软件参考、硬件等价模型、RTL 小尺寸/1280×720 全帧逐周期回归通过，但 Stage C 仍为 `VISUAL_REVIEW_PENDING`，尚未得到新的 `VISUAL_APPROVED`。
+- **历史候选（project）**：s4 候选 TD 独立工程曾完成综合、布局布线和位流生成；修复后三 bank 行缓存和完整亮度加权公式后，最终 `route.qor` 为 Setup WNS `+119 ps`、TNS `0`、Hold WNS `+20 ps`、TNS `0`，违例端点为 0。该结果状态为 `BUILD_PASS / HARDWARE_NOT_RUN / VISUAL_REVIEW_PENDING`，原始报告和位流哈希见 [`../experiments/2026-10-17-cartoon-region-fill-stage-e.md`](../experiments/2026-10-17-cartoon-region-fill-stage-e.md)，未替换正式 fixed-red v1。
 - **仍开放（project risk）**：修复后的候选 Slice 占用为 17,397/21,216，即 82.00%，超过项目期望的 80% 资源目标；需要进一步优化或在发布决策中明确接受余量。
 - **仍开放（project）**：候选工程依赖本机 TD 工具和官方基线 Runs；本轮是独立目录构建，不等于从干净机器无外部依赖重建，正式发布目录也未替换。
 - **仍开放（measured）**：没有 PH1P35、SC520CS、HDMI 实机下载、模式视觉、帧率/延迟、LED 或长稳证据，不能关闭 Stage G 或声明上板效果。
+
+## 2026-10-17 HX1P35A 管脚资料复核
+
+- **仍开放（official/unknown）**：工作区可找到的 `E:\Projects\FPGA\HX1P35A2026\HX1P35A开发板引脚分配汇总.pdf` 的标题和正文均为 **HX1P35B**，虽然列出 `LED1=D10`、`LED2=E10`、`LED3=C6`，但不能直接作为题目指定 HX1P35A 的管脚证据。
+- **当前工程动作**：没有把 B 版 LED 管脚写入 `work/td_industrial/user_source/constraints_source/pin.adc`，也没有因该 PDF 修改 HDMI、按键或其他板级约束。需要 HX1P35A 专用原理图/约束包或实物修订确认后，才能绑定 LED 并重新构建。
+
+## 2026-10-17 区域填充候选复建校正
+
+- **已关闭（project）**：用户批准的 s4 区域填充候选已完成当前仓库输入包下的隔离 RTL/TD 复建；全帧 `1280×720` 逐周期比对通过，候选 TD 最终 Setup/Hold WNS 为 `+106/+20 ps`，TNS 和违例端点为 `0`。
+- **仍开放（project decision）**：候选 Slice `17,607/82.99%` 虽低于当前正式 s3 的 `18,050/85.08%`，仍未达到项目期望的 80% 目标；正式发布入口继续保持 s3，是否晋级需要单独发布决策。
+- **仍开放（measured）**：候选没有 PH1P35、SC520CS、HDMI、按键或 LED 实测，不能关闭 Stage G。
+
+## 2026-10-17 本地板级资料再核对
+
+- 当前正式输入包的 `fallback/td_package/user_source/constraints_source/pin.adc` 只确认了 `I_button[0]=N2`、`I_button[1]=J14`；文件明确注明 `I_button2/I_button3` 和 `O_led_*` 的 HX1P35A 专用位置未取得。
+- 已取得的 `HX1P35A2026/**/pin.adc` 样例中未找到可直接绑定到 `O_led_*` 的 HX1P35A 约束。工作区可见的引脚汇总 PDF 仍标为 HX1P35B，因此其中的 LED 坐标不能转用于 A 版。
+- 结论不变：当前 RTL 内部保留并仿真验证 `O_led_pass/O_led_ng/O_led_det`，但正式 `.bit` 不绑定未经证实的 LED 管脚；待 HX1P35A 专用原理图/约束或实物修订确认后再接出并重构。
+
+## 2026-10-18 公开板级资料复核
+
+- **仍开放（official/unknown）**：检索到的[安路 PH1P35 官方介绍](https://www.anlogic.com/news/company-news/192.html)只说明 PH1P35 的芯片能力和工业视觉应用，正文没有 HX1P35A 开发板的 LED/按键管脚映射；公开检索也未取得可核验的 HX1P35A 专用 `pin.adc`、原理图或约束包。
+- **当前结论**：不能把 HX1P35B PDF 中的 `D10/E10/C6` 推断为 HX1P35A LED 管脚。正式工程继续保留内部 LED 逻辑和仿真联动，但不绑定未经确认的物理管脚；待 HX1P35A 专用资料或实物确认后再接出并重构。
+
+## 2026-10-18 用户提供 HX1P35A 手册后的管脚修正
+
+- **输入证据（user-provided manual）**：`E:\QQ下载\HX1P35A开发板手册-HDL版2604.pdf` 给出 KEY1=`D5`、KEY2=`A9`，LED1=`D10`、LED2=`E10`、LED3=`C6`；同时给出 MIPI CSI 专用引脚组，当前工程继续使用 `DPHY0 + 2-lane`。
+- **已完成（project）**：正式 TD 输入包约束已改为 D5/A9 和 D10/E10/C6；顶层移除与以太网冲突的 `I_rst_n=R10`、`O_screen_pwm=R11`，复位改为 PLL lock 内部释放；LED1/2/3 分别映射 PASS/NG/检测状态。
+- **已关闭（project）**：TD 工具实际位于主工作区 `E:\Projects\FPGA\.tools\td\app\bin\td_commands_prompt.exe`，通过显式工具路径完成隔离构建；新位流和报告见 `work/release_board_mapping_v3/`。
+- **仍开放（measured）**：本轮没有下载到 PH1P35A，因此物理 LED、按键和 MIPI 绑定仍需板级证据关闭；结构性时钟告警仍需单独审计。

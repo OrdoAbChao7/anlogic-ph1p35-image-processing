@@ -5,6 +5,13 @@
 // Status encoding:
 //   2'b00 NO_OBJECT, 2'b01 PASS, 2'b10 NG, 2'b11 INVALID.
 // A status is changed only at the detector frame publication event.
+// The three active-high LED outputs use a distinct status code:
+//   PASS      = 3'b101 (pass + detected)
+//   NG        = 3'b011 (ng + detected)
+//   NO_OBJECT = 3'b000
+//   INVALID   = 3'b110 (pass + ng, no detected)
+// The INVALID code deliberately lights both result indicators so that it
+// cannot be confused with a quiet NO_OBJECT state when mapped to board LEDs.
 // ============================================================================
 
 module defect_classifier #(
@@ -61,8 +68,8 @@ module defect_classifier #(
       O_no_obj   <= 1'b0;
       O_invalid  <= 1'b1;
       O_status   <= STATUS_INVALID;
-      O_led_pass <= 1'b0;
-      O_led_ng   <= 1'b0;
+      O_led_pass <= 1'b1;
+      O_led_ng   <= 1'b1;
       O_led_det  <= 1'b0;
       O_result_toggle <= 1'b0;
     end else if (I_frame_sync) begin
@@ -81,6 +88,9 @@ module defect_classifier #(
       if ((I_invalid === 1'b1) || (object_valid && !bbox_order_valid)) begin
         O_invalid <= 1'b1;
         O_status  <= STATUS_INVALID;
+        O_led_pass <= 1'b1;
+        O_led_ng   <= 1'b1;
+        O_led_det  <= 1'b0;
       end else if (!object_valid) begin
         O_no_obj  <= 1'b1;
         O_status  <= STATUS_NO_OBJECT;

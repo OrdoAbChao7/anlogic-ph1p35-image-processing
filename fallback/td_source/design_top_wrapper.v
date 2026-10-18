@@ -2,23 +2,18 @@
 
 module design_top_wrapper (
     input wire        I_sys_clk,
-    input wire        I_rst_n,
 
     output wire       O_cam_scl,
     inout  wire       IO_cam_sda,
     output wire       O_cam_24m,
     output wire       O_cam_rst,
 
-    // Board Industrial Inspection LEDs
-    output wire       O_led_pass,
-    output wire       O_led_ng,
-    output wire       O_led_det,
+    output wire       O_led1,
+    output wire       O_led2,
+    output wire       O_led3,
 
-    inout wire [1:0]  I_button,
-    inout wire        I_button2,   // SW: edge mode select (active low)
-    inout wire        I_button3,   // SW: cartoon mode select (active low)
+    input wire [1:0]  I_button,
 
-    output wire       O_screen_pwm,
     output wire       O_tmds_ch0_p,
     output wire       O_tmds_ch1_p,
     output wire       O_tmds_ch2_p,
@@ -44,6 +39,15 @@ module design_top_wrapper (
     inout wire[1:0]   ddr_dqs_p,
     inout wire[1:0]   ddr_dqs_n
 );
+
+
+    // HX1P35A HDL manual: KEY1=D5 and KEY2=A9, both active-low.
+    // These inputs are pulled up by the board-level pin constraints.
+    wire I_mode_edge_n = I_button[0];
+    wire I_mode_cartoon_n = I_button[1];
+    (* keep = "true" *) wire O_led_pass;
+    (* keep = "true" *) wire O_led_ng;
+    (* keep = "true" *) wire O_led_det;
 
 
     wire        	S_100m_clk;
@@ -227,7 +231,6 @@ module design_top_wrapper (
     reg [3:0]   S_mipi_diag_status_sync2;
 
 
-    assign O_screen_pwm = 1'b1;
     assign S_video_out_vsync = ~S_hdmi_vsync;
 
 
@@ -539,7 +542,10 @@ module design_top_wrapper (
 
     PLL u_PLL(
         .refclk      ( I_sys_clk         ),
-        .reset    	 ( ~I_rst_n          ),
+        // The HX1P35A manual does not expose a dedicated user-reset pin.
+        // Hold the PLL reset inactive and use its lock signal as the
+        // internally generated reset release for every clock domain.
+        .reset    	 ( 1'b0              ),
 
         .clk0_out    ( S_100m_clk        ),
         .clk1_out    ( S_24m_clk         ),
@@ -599,7 +605,8 @@ module design_top_wrapper (
         .I_data_lane2_in_delay ( 6'd0             ),
         .I_data_lane3_in_delay ( 6'd0             ),
 
-        .I_lane_invert         ( 4'b0000          ),
+        // LANE_NUM=2: keep the inversion vector width equal to the PHY port.
+        .I_lane_invert         ( 2'b00            ),
 
         .O_hs_rx_clk           ( S_csi_rx_clk     ),
         .O_hs_rx_valid         ( S_hs_rx_valid    ),
@@ -745,10 +752,18 @@ assign S_raw_tuser  = S_axis_tuser;
         .O_ind_result_toggle ( ind_result_toggle )
         );
 
-    // Direct LED assignments (Active High)
-    assign O_led_pass = ind_led_pass;
-    assign O_led_ng   = ind_led_ng;
-    assign O_led_det  = ind_led_det;
+    // LEDs consume the same HDMI-domain atomic result as the OSD and BBox.
+    // INVALID deliberately lights both result indicators, while the detected
+    // indicator remains low because the measurement is not trustworthy.
+    assign O_led_pass = (sync_hdmi_pass || sync_hdmi_invalid);
+    assign O_led_ng   = (sync_hdmi_ng   || sync_hdmi_invalid);
+    assign O_led_det  = sync_hdmi_detected;
+    // HX1P35A independent LEDs are high-active: LED1=D10, LED2=E10,
+    // LED3=C6.  Keep the logical status encoding unchanged and expose it
+    // through the physical board outputs.
+    assign O_led1 = O_led_pass;
+    assign O_led2 = O_led_ng;
+    assign O_led3 = O_led_det;
 
 
     video_in u_video_in(
@@ -940,8 +955,8 @@ assign S_raw_tuser  = S_axis_tuser;
     ) u_mode_controller (
         .I_clk          ( S_hdmi_pixel_clk ),
         .I_rst_n        ( S_hdmi_rst_n     ),
-        .I_key_edge_n   ( I_button2        ),
-        .I_key_cartoon_n( I_button3        ),
+        .I_key_edge_n   ( I_mode_edge_n    ),
+        .I_key_cartoon_n( I_mode_cartoon_n ),
         .I_frame_start  ( S_hdmi_out_vsync ),
         .O_mode         ( S_display_mode   ),
         .O_edge_req     ( S_edge_req       ),
@@ -971,47 +986,43 @@ assign S_raw_tuser  = S_axis_tuser;
         .o_mode         ( S_cartoon_mode       )
     );
 
-    // CDC for the frame-published inspection result.  The source bus is held
-    // stable by defect_classifier; the toggle is the event synchronizer.
-    reg        ind_toggle_meta, ind_toggle_sync, ind_toggle_seen;
-    reg [10:0] sync_hdmi_xmin, sync_hdmi_xmax, sync_hdmi_ymin, sync_hdmi_ymax;
-    reg [10:0] sync_hdmi_width, sync_hdmi_height;
-    reg        sync_hdmi_detected, sync_hdmi_pass, sync_hdmi_ng;
-    reg        sync_hdmi_invalid;
+    wire [10:0] sync_hdmi_xmin, sync_hdmi_xmax, sync_hdmi_ymin, sync_hdmi_ymax;
+    wire [10:0] sync_hdmi_width, sync_hdmi_height;
+    wire        sync_hdmi_detected, sync_hdmi_pass, sync_hdmi_ng;
+    wire        sync_hdmi_invalid;
 
-    always @(posedge S_hdmi_pixel_clk or negedge S_hdmi_rst_n) begin
-        if (!S_hdmi_rst_n) begin
-            ind_toggle_meta     <= 1'b0;
-            ind_toggle_sync     <= 1'b0;
-            ind_toggle_seen     <= 1'b0;
-            sync_hdmi_xmin      <= 11'd0;
-            sync_hdmi_xmax      <= 11'd0;
-            sync_hdmi_ymin      <= 11'd0;
-            sync_hdmi_ymax      <= 11'd0;
-            sync_hdmi_width     <= 11'd0;
-            sync_hdmi_height    <= 11'd0;
-            sync_hdmi_detected  <= 1'b0;
-            sync_hdmi_pass      <= 1'b0;
-            sync_hdmi_ng        <= 1'b0;
-            sync_hdmi_invalid   <= 1'b1;
-        end else begin
-            ind_toggle_meta <= ind_result_toggle;
-            ind_toggle_sync <= ind_toggle_meta;
-            if (ind_toggle_sync != ind_toggle_seen) begin
-                ind_toggle_seen    <= ind_toggle_sync;
-                sync_hdmi_xmin     <= ind_xmin;
-                sync_hdmi_xmax     <= ind_xmax;
-                sync_hdmi_ymin     <= ind_ymin;
-                sync_hdmi_ymax     <= ind_ymax;
-                sync_hdmi_width    <= ind_meas_w;
-                sync_hdmi_height   <= ind_meas_h;
-                sync_hdmi_detected <= ind_detected;
-                sync_hdmi_pass     <= ind_pass;
-                sync_hdmi_ng       <= ind_ng;
-                sync_hdmi_invalid  <= ind_invalid;
-            end
-        end
-    end
+    // The result CDC holds a newly published source-domain result pending
+    // until the HDMI frame boundary.  BBox, OSD and status therefore consume
+    // one atomic result for the entire displayed frame.
+    inspection_result_cdc u_inspection_result_cdc (
+        .I_src_clk      ( S_csi_rx_clk       ),
+        .I_dst_clk      ( S_hdmi_pixel_clk   ),
+        .I_rst_n        ( S_hdmi_rst_n       ),
+        .I_frame_start  ( S_hdmi_out_vsync   ),
+        .I_src_toggle   ( ind_result_toggle  ),
+        .I_src_xmin     ( ind_xmin            ),
+        .I_src_xmax     ( ind_xmax            ),
+        .I_src_ymin     ( ind_ymin            ),
+        .I_src_ymax     ( ind_ymax            ),
+        .I_src_width    ( ind_meas_w          ),
+        .I_src_height   ( ind_meas_h          ),
+        .I_src_detected ( ind_detected        ),
+        .I_src_pass     ( ind_pass             ),
+        .I_src_ng       ( ind_ng               ),
+        .I_src_no_obj   ( ind_no_obj           ),
+        .I_src_invalid  ( ind_invalid          ),
+        .O_xmin         ( sync_hdmi_xmin       ),
+        .O_xmax         ( sync_hdmi_xmax       ),
+        .O_ymin         ( sync_hdmi_ymin       ),
+        .O_ymax         ( sync_hdmi_ymax       ),
+        .O_width        ( sync_hdmi_width      ),
+        .O_height       ( sync_hdmi_height     ),
+        .O_detected     ( sync_hdmi_detected   ),
+        .O_pass         ( sync_hdmi_pass       ),
+        .O_ng           ( sync_hdmi_ng         ),
+        .O_no_obj       (                       ),
+        .O_invalid      ( sync_hdmi_invalid    )
+    );
 
     // --- Industrial Inspection Bounding Box Overlay ---
     wire        S_bbox_out_vsync;
