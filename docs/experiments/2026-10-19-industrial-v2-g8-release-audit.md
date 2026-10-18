@@ -2,7 +2,7 @@
 
 ## 结论
 
-`G8=BLOCKED`。发布审计入口已建立并可重复运行；V1 冻结位流 SHA-256 复核通过。当前已经有正式七功能顶层的 TD/STA/Bitgen 候选和 QoR，但尚未完成最终发布包、告警闭环、板卡功能矩阵、长稳记录或外部执行机构证据。
+`G8=BLOCKED`。发布审计入口已建立并可重复运行；V1 冻结位流 SHA-256 复核通过。当前已经有正式七功能顶层的 TD/STA/Bitgen 候选和 QoR，并已封装一个 `CANDIDATE_ONLY` V2 包；告警闭环、字节级复现、板卡功能矩阵、长稳记录和外部执行机构证据仍未完成。
 
 用户已明确将需要视觉审批的情况默认通过。本记录仅将 `visual_approval` 记为 `PASS`，不把视觉授权扩展为硬件、时序、构建或机械验收。
 
@@ -20,9 +20,9 @@
 |---|---|---|
 | V1 冻结基线 SHA | `PASS` | 期望与实际均为 `b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef` |
 | 七项软件/RTL/TD | `BLOCKED` | 七功能正式顶层与 TD 候选已通过；G1-G7 的硬件/物理证据和冻结基线一致性仍未闭合 |
-| 同一 V2 Bitstream | `BLOCKED` | `release/industrial-v2/` 不存在 |
+| 同一 V2 Bitstream | `PASS` | `release/industrial-v2/industrial-v2.bit` 与 README、manifest、TD 报告同包；仅表示包内单一 Bitstream，不表示已上板 |
 | V1 回归 | `BLOCKED` | `work/tests` 保留 8 个冻结基线与后续目录契约漂移失败 |
-| V2 TD/QoR/告警 | `BLOCKED` | formal feature-spine 候选 TD/STA/Bitgen PASS；PHY-5079/PHY-5088 告警审计仍开放，且尚未绑定最终发布目录 |
+| V2 TD/QoR/告警 | `BLOCKED` | current-source 候选 TD/STA/Bitgen PASS；`PHY-5016/5060/5079/5088` 告警审计仍开放，固定种子未实现字节级一致 |
 | 上板/性能/长稳 | `BLOCKED` | 无绑定板卡、摄像头、显示器、Bitstream 和原始记录 |
 | 外部执行机构 | `BLOCKED` | GPIO、电气、机械闭环仍未知 |
 | 视觉审批 | `PASS` | 用户授权：默认通过，仅限 Stage C 视觉审查 |
@@ -33,4 +33,4 @@
 
 ## 下一入口
 
-下一次执行 G8 应从告警/CDC/约束审计和候选包复现开始，随后产出与 commit、源码哈希、Bitstream SHA-256、TD 版本、板卡/摄像头配置和原始上板记录绑定的证据包；在硬件证据闭合前状态保持 `BLOCKED`，不得标记 `RELEASED`。
+下一次执行 G8 应从告警/CDC/约束审计、固定种子复现和候选包复核开始，随后产出与 commit、源码哈希、Bitstream SHA-256、TD 版本、板卡/摄像头配置和原始上板记录绑定的证据包；在硬件证据闭合前状态保持 `BLOCKED`，不得标记 `RELEASED`。

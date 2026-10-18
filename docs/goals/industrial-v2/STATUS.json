@@ -296,6 +296,12 @@
         "docs/evidence/industrial-v2-g8-clock-warning-audit.md",
         "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt",
         "docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md",
+        "release/industrial-v2/README.md",
+        "release/industrial-v2/manifest.json",
+        "release/industrial-v2/industrial-v2.bit",
+        "release/industrial-v2/route.qor",
+        "release/industrial-v2/final_timing.rpt",
+        "release/industrial-v2/industrial_v2_clock_detail.tcl",
         "docs/experiments/2026-10-16-industrial-inspection-stage-d.md",
         "work/algorithm_lab/exports/stage_d/stage_d_report.json",
         "scripts/verify_industrial_v2_release.py"
@@ -309,11 +315,11 @@
         "Two complete TD builds with --place-seed 1 both passed final QoR but produced different Bitstream SHA-256 values and Slice counts; exact Bitstream reproducibility remains open",
         "Full work/tests retains 8 frozen-vs-later contract failures; Stage D software verification is PASS",
         "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",
-        "The candidate README/manifest/Bitstream are present, but the final release package remains intentionally absent until hardware and warning gates close"
+        "A CANDIDATE_ONLY V2 package now contains one seven-feature Bitstream and TD provenance; it is not a final release because warning, reproducibility, hardware and long-run gates remain open"
       ],
-      "resource_baseline": "Combined formal candidate: Slice 18261/21216 (86.07%), RAM 43, DSP 24, Setup WNS +100ps, Hold WNS +20ps, TNS 0; warning and hardware gates remain open",
-      "best_candidate": "TD_PASS_CANDIDATE",
-      "next_action": "Audit and reduce clock warnings, then execute SC520CS/HDMI, calibration, reset/long-run, performance and actuator acceptance before final package freeze"
+      "resource_baseline": "Current-source default-Flow candidate: Slice 18484/21216 (87.12%), RAM 43, DSP 24, Setup WNS +127ps, Hold WNS +20ps, TNS 0; initial <=85% Slice target is exceeded and warning/hardware/reproducibility gates remain open",
+      "best_candidate": "CANDIDATE_ONLY_V2_PACKAGE",
+      "next_action": "Close PHY warnings and fixed-seed reproducibility, then execute SC520CS/HDMI, calibration, reset/long-run, performance and actuator acceptance before final package freeze"
     }
   }
 }

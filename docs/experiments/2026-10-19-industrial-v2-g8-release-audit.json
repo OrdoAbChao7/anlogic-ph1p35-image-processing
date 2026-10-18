@@ -2,7 +2,6 @@
   "release_status": "BLOCKED",
   "gate_count": 12,
   "blocked_gates": [
-    "same_bitstream_integration",
     "v1_regression",
     "resource_timing_budget",
     "warnings_cdc_constraints_audit",
@@ -64,11 +63,13 @@
     },
     {
       "name": "same_bitstream_integration",
-      "status": "BLOCKED",
-      "evidence": [],
-      "blockers": [
-        "no V2 release directory/Bitstream is present"
-      ]
+      "status": "PASS",
+      "evidence": [
+        "release/industrial-v2/README.md",
+        "release/industrial-v2/manifest.json",
+        "release/industrial-v2/industrial-v2.bit"
+      ],
+      "blockers": []
     },
     {
       "name": "v1_regression",
@@ -84,6 +85,7 @@
       "name": "td_full_build",
       "status": "PASS",
       "evidence": [
+        "release/industrial-v2/td-reports",
         "docs/experiments/2026-10-19-industrial-v2-g8-osd-bcd-td.md",
         "release/candidates/industrial-v2-osd-bcd/route.qor",
         "release/candidates/industrial-v2-osd-bcd/final_timing.rpt",
@@ -111,10 +113,12 @@
         "release/candidates/industrial-v2-formal-feature-spine/route.qor",
         "release/candidates/industrial-v2-formal-feature-spine/final_timing.rpt",
         "release/candidates/industrial-v2-formal-feature-spine/camera_to_dsi_display_compress.bit",
-        "release/candidates/industrial-v2-formal-feature-spine/industrial-v1-manifest.json"
+        "release/candidates/industrial-v2-formal-feature-spine/industrial-v1-manifest.json",
+        "release/industrial-v2/route.qor",
+        "release/industrial-v2/final_timing.rpt"
       ],
       "blockers": [
-        "formal TD_PASS candidate measures Slice 86.07% with Setup WNS +100ps and Hold WNS +20ps, but it exceeds the initial <=85% target and still lacks warning closure, hardware and long-run evidence"
+        "current V2 package candidate measures Slice 87.12% with Setup WNS +127ps and Hold WNS +20ps, exceeding the initial <=85% target; warning closure, hardware and long-run evidence remain open"
       ]
     },
     {
@@ -123,10 +127,12 @@
       "evidence": [
         "docs/goals/industrial-v2/STATUS.json",
         "docs/evidence/industrial-v2-g8-clock-warning-audit.md",
-        "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt"
+        "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt",
+        "docs/evidence/industrial-v2-g8-clock-warning-detail-log.txt",
+        "docs/experiments/2026-10-19-industrial-v2-g8-clock-detail.md"
       ],
       "blockers": [
-        "PHY-5016/PHY-5060/PHY-5079/PHY-5088 remain open; detailed clock analysis and hardware closure are pending"
+        "PHY-5016/PHY-5060/PHY-5079/PHY-5088 remain open; detailed source/sink analysis is recorded, but official pin/IP and hardware closure are pending"
       ]
     },
     {
@@ -157,12 +163,12 @@
       "name": "reproducible_build_package",
       "status": "BLOCKED",
       "evidence": [
+        "release/industrial-v2/README.md",
+        "release/industrial-v2/manifest.json",
+        "release/industrial-v2/industrial-v2.bit",
         "docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md"
       ],
       "blockers": [
-        "missing release artifact: release/industrial-v2/README.md",
-        "missing release artifact: release/industrial-v2/manifest.json",
-        "missing release artifact: release/industrial-v2/industrial-v2.bit",
         "fixed placement seed did not produce byte-identical Bitstreams; exact reproducibility remains open"
       ]
     },
@@ -187,7 +193,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "7abf32c36e281b6c031072905b5b228dd73da974",
+  "commit": "9bc9c8659757ace46033f30c5fe30e13b68a21f6",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",

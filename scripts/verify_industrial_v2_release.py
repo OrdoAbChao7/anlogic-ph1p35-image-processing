@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -66,6 +67,51 @@ def missing_paths(relative_paths: tuple[str, ...]) -> tuple[str, ...]:
     return tuple(path for path in relative_paths if not (ROOT / path).exists())
 
 
+def fixed_seed_is_byte_identical(evidence_paths: tuple[str, ...]) -> bool | None:
+    """Read the explicit fixed-seed result without treating evidence presence as success."""
+    if not evidence_paths:
+        return None
+    text = "\n".join(
+        (ROOT / path).read_text(encoding="utf-8", errors="replace")
+        for path in evidence_paths
+        if (ROOT / path).is_file()
+    ).lower()
+    if re.search(r"bit_equal\s*=\s*true", text):
+        return True
+    if re.search(r"bit_equal\s*=\s*false", text):
+        return False
+    return None
+
+
+def build_reproducible_build_package_gate(
+    *,
+    v2_release_complete: bool,
+    fixed_seed_evidence: tuple[str, ...],
+    fixed_seed_byte_identical: bool | None,
+) -> Gate:
+    """Keep package completeness separate from byte-identical rebuild evidence."""
+    required = (
+        "release/industrial-v2/README.md",
+        "release/industrial-v2/manifest.json",
+        "release/industrial-v2/industrial-v2.bit",
+    )
+    blockers = tuple(
+        f"missing release artifact: {path}" for path in missing_paths(required)
+    )
+    if not fixed_seed_evidence:
+        blockers += ("fixed-seed reproducibility evidence is missing",)
+    elif fixed_seed_byte_identical is not True:
+        blockers += (
+            "fixed placement seed did not produce byte-identical Bitstreams; exact reproducibility remains open",
+        )
+    return Gate(
+        "reproducible_build_package",
+        PASS if not blockers and v2_release_complete else BLOCKED,
+        existing_paths(required) + fixed_seed_evidence,
+        blockers,
+    )
+
+
 def load_status() -> dict:
     path = ROOT / "docs" / "goals" / "industrial-v2" / "STATUS.json"
     return json.loads(path.read_text(encoding="utf-8"))
@@ -97,7 +143,7 @@ def build_audit() -> dict:
         "docs/evidence/industrial-v2-g8-fixed-seed-reproducibility.md",
     )
     fixed_seed_evidence = existing_paths(fixed_seed_paths)
-    fixed_seed_complete = not missing_paths(fixed_seed_paths)
+    fixed_seed_byte_identical = fixed_seed_is_byte_identical(fixed_seed_evidence)
     phase_blockers = tuple(
         f"{name} status is {phases.get(name, {}).get('status', 'MISSING')}"
         for name in PHASE_NAMES
@@ -133,6 +179,12 @@ def build_audit() -> dict:
     )
     candidate_qor_evidence = existing_paths(candidate_qor_paths)
     candidate_qor_complete = not missing_paths(candidate_qor_paths)
+    current_release_qor_paths = (
+        "release/industrial-v2/route.qor",
+        "release/industrial-v2/final_timing.rpt",
+    )
+    current_release_qor_evidence = existing_paths(current_release_qor_paths)
+    current_release_qor_complete = not missing_paths(current_release_qor_paths)
     v2_release_complete = not missing_paths(v2_release_paths)
 
     gates = [
@@ -169,8 +221,14 @@ def build_audit() -> dict:
             BLOCKED,
             ("docs/goals/industrial-v2/RESOURCE_BUDGET.md",)
             + candidate_qor_evidence
-            + formal_candidate_evidence,
+            + formal_candidate_evidence
+            + current_release_qor_evidence,
             (
+                "current V2 package candidate measures Slice 87.12% with Setup WNS +127ps and Hold WNS +20ps, "
+                "exceeding the initial <=85% target; warning closure, hardware and long-run evidence remain open",
+            )
+            if current_release_qor_complete
+            else (
                 "formal TD_PASS candidate measures Slice 86.07% with Setup WNS +100ps and Hold WNS +20ps, "
                 "but it exceeds the initial <=85% target and still lacks warning closure, hardware and long-run evidence",
             )
@@ -209,13 +267,10 @@ def build_audit() -> dict:
             (),
             ("cold start, hot reset, repeated download, and long-stability run are not executed",),
         ),
-        Gate(
-            "reproducible_build_package",
-            PASS if v2_release_complete else BLOCKED,
-            existing_paths(v2_release_paths) + fixed_seed_evidence,
-            tuple(f"missing release artifact: {path}" for path in missing_paths(v2_release_paths))
-            + (("fixed placement seed did not produce byte-identical Bitstreams; exact reproducibility remains open",)
-               if fixed_seed_complete else ("fixed-seed reproducibility evidence is missing",)),
+        build_reproducible_build_package_gate(
+            v2_release_complete=v2_release_complete,
+            fixed_seed_evidence=fixed_seed_evidence,
+            fixed_seed_byte_identical=fixed_seed_byte_identical,
         ),
         Gate(
             "external_actuator_acceptance",
