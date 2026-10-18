@@ -5,7 +5,7 @@
 | V2-G0 | V1 保护、工具/回归/资源基线、回退制度 | none | ACTIVE |
 | V2-G1 | 单击模式、十进制 OSD、ROI 合同和基础质量 | G0 | BLOCKED: SOFTWARE_PASS/RTL_PASS; TD/HARDWARE pending |
 | V2-G2 | 单目标跟踪和轨迹显示 | G1, V1 result snapshot | BLOCKED: SOFTWARE_PASS/RTL_PASS; top/TD/HARDWARE pending |
-| V2-G3 | 输入/处理/显示/结果延迟监视 | G1, frame events | NOT_STARTED |
+| V2-G3 | 输入/处理/显示/结果延迟监视 | G1, frame events | BLOCKED: SOFTWARE_PASS/RTL_PASS; top/TD/HARDWARE pending |
 | V2-G4 | 固定 ROI 8-bit 帧差运动检测 | G1, resource trial | NOT_STARTED |
 | V2-G5 | 内部分拣事件、一次性脉冲和安全互锁 | G2, G4, classifier | NOT_STARTED |
 | V2-G6 | 帧统计自适应增益和 AWB 优化 | G1, ISP audit | NOT_STARTED |

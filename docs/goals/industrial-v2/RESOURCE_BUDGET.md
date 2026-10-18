@@ -19,3 +19,7 @@ Each feature gets an independent trial report before full integration. The final
 The mode, OSD and ROI changes have only software/RTL evidence. No TD synthesis or implementation report was produced, so Slice/RAM/DSP/WNS/TNS remain `NOT_MEASURED` for V2. The frozen V1 values above remain the only resource baseline and are not V2 results.
 
 G2 tracker/history/overlay are also independent software/RTL units only. Their resource impact is `NOT_MEASURED` until an isolated TD trial is allowed by the baseline and top-level gates.
+
+## G3 measurement status
+
+G3 latency/frame-tag monitors are independent software/RTL units only. Their resource impact and timing are `NOT_MEASURED` until an isolated TD trial is allowed by the baseline and top-level gates. Physical HDMI/display E2E remains `N/A` without a controlled measurement setup.

@@ -14,3 +14,5 @@
 | V2 G2 trajectory history | `docs/experiments/2026-10-19-industrial-v2-g2-trajectory-history.md` | RTL_PASS |
 | V2 G2 tracking overlay | `docs/experiments/2026-10-19-industrial-v2-g2-tracking-overlay.md` | RTL_PASS |
 | V2 G2 summary | `docs/experiments/2026-10-19-industrial-v2-g2-summary.md` | BLOCKED; top/TD/hardware pending |
+| V2 G3 latency model/frame tags/monitor | `docs/experiments/2026-10-19-industrial-v2-g3-*.md` | SOFTWARE_PASS/RTL_PASS; top/TD/hardware pending |
+| V2 G3 summary | `docs/experiments/2026-10-19-industrial-v2-g3-summary.md` | BLOCKED; internal latency only |
