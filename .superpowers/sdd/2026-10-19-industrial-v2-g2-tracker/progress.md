@@ -7,3 +7,5 @@ Ruling: no `/bin/bash`/WSL relay is available for `sdd-workspace`; this plan-sco
 Task 1: software tracker model complete (RED missing-module collection failure; GREEN 6 passed).
 
 Task 2: RTL temporal tracker complete (RED unknown-module compile failure; GREEN TB_TEMPORAL_TRACKER_PASS; TD/top-level/hardware gates remain open).
+
+Task 3: RTL trajectory history complete (RED unknown-module compile failure; GREEN TB_TRAJECTORY_HISTORY_PASS; TD/top-level/hardware gates remain open).
