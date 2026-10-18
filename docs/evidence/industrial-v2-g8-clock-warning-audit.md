@@ -44,7 +44,7 @@
 
 ## 工程判断与边界
 
-- `O_cam_24m` 是摄像头外部时钟输出，不能仅因其名字或正时序就把混合 fanout 标为无害。
+- `O_cam_24m` 在 `pin.adc:5` 约束到 `L3`，并在 `design_top_wrapper.v:538` 由 `S_24m_clk` 驱动，属于摄像头外部时钟输出；但不能仅因其名字、已有 pin assignment 或正时序就把混合 fanout 标为无害。
 - `u_uicfgcs520`、PLL、MIPI、DDR 和板级约束包含厂商/板级边界；本次没有盲改生成 IP、PLL 配置、管脚或时序例外。
 - 早期审计构建没有执行 `analyze_clock -detail`；本节记录的重跑已经执行该命令，但仍没有板卡、SC520CS、HDMI、冷启动或长稳证据，因此告警门保持 `BLOCKED`。
 

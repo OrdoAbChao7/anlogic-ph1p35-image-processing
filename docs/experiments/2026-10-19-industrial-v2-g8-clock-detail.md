@@ -33,6 +33,15 @@
 - `PHY-5079`：详细输出显示 `pll_clk_24m` 和 `O_cam_24m_dup_1...sclk_outnet` 使用 local routing，当前保持 `OPEN`。
 - `PHY-5088`：`scl_clk` 被标记为 clkin 非时钟 sink，`O_cam_24m_syn_3` 被标记为 clkout 非时钟 sink；另有 `O_cam_24m_dup_1...sclk_outnet → scl_clk_reg_syn_9 → scl_clk` 的时钟网级联，当前保持 `OPEN`。
 
+## 当前工程中的时钟事实
+
+- `fallback/td_package/user_source/constraints_source/pin.adc:5` 已把 `O_cam_24m` 约束到 `L3`；
+- `fallback/td_package/user_source/hdl_source/design_top_wrapper.v:538` 将 `O_cam_24m` 直接连接到 `S_24m_clk`；
+- `fallback/td_package/user_source/ip_source/PLL/PLL.v:15-18,131-139` 显示 `clk1_out` 为 `23.809524 MHz` 的 C1 输出，并连接到 `S_24m_clk`；
+- `fallback/td_package/td_project/camera_to_dsi_display.sdc:7,16` 将对应 PLL C1 重命名为 `pll_clk_24m`，并纳入系统时钟异步组。
+
+这些工程事实支持“摄像头外部时钟是有意输出”的判断，但不能证明 L3 是该器件允许的 clock-capable IO，也不能证明 I2C 的 fabric `scl_clk` 作为时钟使用满足板级稳定性要求。因此不能仅凭约束存在关闭 `PHY-5016/5060/5079/5088`。
+
 ## 证据与下一步
 
 - 详细摘录：`docs/evidence/industrial-v2-g8-clock-warning-detail-log.txt`
