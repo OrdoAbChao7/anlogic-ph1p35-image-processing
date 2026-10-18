@@ -88,6 +88,8 @@ def build_audit() -> dict:
     warning_audit_paths = (
         "docs/evidence/industrial-v2-g8-clock-warning-audit.md",
         "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt",
+        "docs/evidence/industrial-v2-g8-clock-warning-detail-log.txt",
+        "docs/experiments/2026-10-19-industrial-v2-g8-clock-detail.md",
     )
     warning_audit_evidence = existing_paths(warning_audit_paths)
     warning_audit_complete = not missing_paths(warning_audit_paths)
@@ -184,7 +186,7 @@ def build_audit() -> dict:
             BLOCKED,
             ("docs/goals/industrial-v2/STATUS.json",) + warning_audit_evidence,
             (
-                "PHY-5016/PHY-5060/PHY-5079/PHY-5088 remain open; detailed clock analysis and hardware closure are pending",
+                "PHY-5016/PHY-5060/PHY-5079/PHY-5088 remain open; detailed source/sink analysis is recorded, but official pin/IP and hardware closure are pending",
             )
             if warning_audit_complete
             else ("V2 clock/PHY/CDC/undriven/exception audit is not complete",),
