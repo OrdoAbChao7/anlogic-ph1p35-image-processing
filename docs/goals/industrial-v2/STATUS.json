@@ -26,13 +26,20 @@
       "status": "ACTIVE",
       "objective": "Protect V1 and establish reproducible V2 baseline",
       "prerequisites": [],
-      "completion": 0,
-      "commands": [],
-      "evidence": [],
-      "unresolved": ["Tool versions and fresh regression not yet recorded", "Hardware enumeration not yet repeated"],
+      "completion": 40,
+      "commands": [
+        "python --version",
+        "python scripts/build_industrial_td.py --help",
+        "E:/Projects/FPGA/.tools/iverilog/bin/iverilog.exe -V",
+        "E:/Projects/FPGA/.tools/iverilog/bin/vvp.exe -V",
+        "python -B -m pytest -q work/tests",
+        "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-industrial-subsystem.ps1"
+      ],
+      "evidence": ["docs/experiments/2026-10-19-industrial-v2-g0-baseline.md", "frozen Bitstream SHA-256 recheck"],
+      "unresolved": ["46 passed / 8 failed baseline pytest due frozen-vs-later repository contract drift", "Stage D registry/plugin SHA mismatch", "No confirmed hardware downloader", "scripts/fpga-loop.ps1 absent in frozen commit", "TD is an external dependency outside V2 Worktree"],
       "resource_baseline": "V1 freeze values above",
       "best_candidate": "BASELINE_V1",
-      "next_action": "Run tool and regression checks"
+      "next_action": "Record baseline drift and proceed only with isolated software/RTL work; repair or formally scope the frozen baseline before TD merge"
     },
     "V2-G1": {
       "status": "NOT_STARTED",
