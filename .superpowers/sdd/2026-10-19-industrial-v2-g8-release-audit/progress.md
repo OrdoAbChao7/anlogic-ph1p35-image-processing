@@ -7,4 +7,5 @@ Ruling: the user's default visual approval is recorded as `PASS` only for Stage 
 Task 1: release-gate model tests complete.
 Task 2: repository release audit script complete.
 Task 3: complete. `python -B scripts/verify_industrial_v2_release.py --strict` returned exit 1 with `release_status=BLOCKED`; V1 baseline SHA matched and visual approval was the only explicit PASS.
-Task 4: pending; rerun only after formal top/TD/hardware evidence exists.
+Task 4: complete as a candidate-only step. `industrial_v2_feature_spine` compiles and passes `TB_INDUSTRIAL_V2_FEATURE_SPINE_PASS`; it exposes the required frame-result, motion, statistics, calibration and safety boundaries.
+Task 5: pending; add explicit CSI/ISP-to-grid/statistics adapters and result-to-HDMI CDC before formal top-level integration. Do not rerun TD or claim release until those contracts are reviewed.
