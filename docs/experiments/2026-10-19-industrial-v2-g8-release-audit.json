@@ -180,7 +180,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "98801ed381934ba665573fd6c15026c18c33a289",
+  "commit": "0c960f93e078bb1c8a220ddf3d1e483122512917",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",
