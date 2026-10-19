@@ -2,6 +2,7 @@ import hashlib
 import json
 from pathlib import Path
 import importlib.util
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -90,12 +91,14 @@ def test_industrial_build_argument_overrides_are_parsed():
         "--flow-tcl", "flow.tcl",
         "--baseline-runs", "baseline",
         "--release-dir", "release",
+        "--top-rtl", "candidate_top.v",
         "--manifest-only",
     ])
     assert args.td_exe == "td.exe"
     assert args.flow_tcl == "flow.tcl"
     assert args.baseline_runs == "baseline"
     assert args.release_dir == "release"
+    assert args.top_rtl == "candidate_top.v"
     assert args.manifest_only is True
 
 
@@ -103,6 +106,17 @@ def test_industrial_build_defaults_to_tracked_td_input_package():
     module = load_build_module()
     args = module.parse_args([])
     assert Path(args.input_package).resolve() == (ROOT / "fallback" / "td_package").resolve()
+
+
+def test_candidate_top_requires_isolated_outputs():
+    module = load_build_module()
+    args = module.parse_args([
+        "--top-rtl", "candidate_top.v",
+        "--work-project", str(module.DEFAULT_WORK_PROJECT),
+        "--release-dir", str(module.DEFAULT_RELEASE_DIR),
+    ])
+    with pytest.raises(ValueError, match="Candidate top RTL requires an isolated"):
+        module.configure(args)
 
 
 def test_hx1p35a_manual_led_and_mode_pins_are_bound():

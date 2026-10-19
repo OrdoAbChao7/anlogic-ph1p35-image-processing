@@ -71,7 +71,8 @@ TRACKED_RTL = ROOT / "fallback" / "rtl"
 # top-level wrapper instantiates the module as ``video_cartoon``.
 DEFAULT_TRACKED_VIDEO = TRACKED_RTL / "video" / "video_cartoon_region_fill.v"
 TRACKED_VIDEO = DEFAULT_TRACKED_VIDEO
-TRACKED_TOP = ROOT / "fallback" / "td_source" / "design_top_wrapper.v"
+DEFAULT_TRACKED_TOP = ROOT / "fallback" / "td_source" / "design_top_wrapper.v"
+TRACKED_TOP = DEFAULT_TRACKED_TOP
 TRACKED_ISP = ROOT / "fallback" / "td_source" / "isp" / "isp_top.v"
 TRACKED_VTC = ROOT / "fallback" / "td_source" / "uivtc_guarded.v"
 TRACKED_MIXER = ROOT / "fallback" / "td_source" / "hdmi_mixer_guarded.v"
@@ -269,6 +270,11 @@ def parse_args(argv=None):
         help="Tracked video RTL source; defaults to the approved s4-region-fill implementation.",
     )
     parser.add_argument(
+        "--top-rtl",
+        default=str(TRACKED_TOP),
+        help="Optional isolated design_top_wrapper.v override; defaults to the tracked V2 top.",
+    )
+    parser.add_argument(
         "--work-project",
         default=str(DEFAULT_WORK_PROJECT),
         help="Isolated TD project workspace; defaults to work/td_industrial.",
@@ -282,7 +288,7 @@ def parse_args(argv=None):
 
 
 def configure(args):
-    global TD_EXE, FLOW_TCL, RUN_FLOW_TCL, PLACE_SEED, ORIG_RUNS, INPUT_PACKAGE, RELEASE_DIR, TRACKED_VIDEO, WORK_PROJECT, WORK_RUNS
+    global TD_EXE, FLOW_TCL, RUN_FLOW_TCL, PLACE_SEED, ORIG_RUNS, INPUT_PACKAGE, RELEASE_DIR, TRACKED_VIDEO, TRACKED_TOP, WORK_PROJECT, WORK_RUNS
     TD_EXE = Path(args.td_exe).expanduser().resolve()
     FLOW_TCL = Path(args.flow_tcl).expanduser().resolve()
     RUN_FLOW_TCL = FLOW_TCL
@@ -293,13 +299,14 @@ def configure(args):
     INPUT_PACKAGE = Path(args.input_package).expanduser().resolve()
     RELEASE_DIR = Path(args.release_dir).expanduser().resolve()
     TRACKED_VIDEO = Path(args.video_rtl).expanduser().resolve()
+    TRACKED_TOP = Path(args.top_rtl).expanduser().resolve()
     WORK_PROJECT = Path(args.work_project).expanduser().resolve()
     WORK_RUNS = WORK_PROJECT / "td_project" / "camera_to_dsi_display_Runs"
     validate_build_isolation()
 
 
 def validate_build_isolation():
-    """Prevent a non-default video candidate from writing baseline outputs."""
+    """Prevent non-default video/top candidates from writing baseline outputs."""
     if TRACKED_VIDEO != DEFAULT_TRACKED_VIDEO:
         if WORK_PROJECT == DEFAULT_WORK_PROJECT:
             raise ValueError(
@@ -309,6 +316,17 @@ def validate_build_isolation():
         if RELEASE_DIR == DEFAULT_RELEASE_DIR:
             raise ValueError(
                 "Candidate video RTL requires an isolated --release-dir; "
+                f"refusing to use {DEFAULT_RELEASE_DIR}"
+            )
+    if TRACKED_TOP != DEFAULT_TRACKED_TOP:
+        if WORK_PROJECT == DEFAULT_WORK_PROJECT:
+            raise ValueError(
+                "Candidate top RTL requires an isolated --work-project; "
+                f"refusing to use {DEFAULT_WORK_PROJECT}"
+            )
+        if RELEASE_DIR == DEFAULT_RELEASE_DIR:
+            raise ValueError(
+                "Candidate top RTL requires an isolated --release-dir; "
                 f"refusing to use {DEFAULT_RELEASE_DIR}"
             )
 
@@ -364,7 +382,7 @@ def source_manifest():
         if not path.exists():
             raise FileNotFoundError(f"Tracked source missing while writing manifest: {path}")
         result.append({
-            "path": path.relative_to(ROOT).as_posix(),
+            "path": portable_path(path, "FPGA_TOP_RTL"),
             "sha256": sha256(path),
         })
     return result
@@ -414,6 +432,7 @@ def validate_inputs():
     required = {
         "Tang Dynasty executable": TD_EXE,
         "DefaultFlow.tcl": FLOW_TCL,
+        "design_top_wrapper.v": TRACKED_TOP,
     }
     for label, path in required.items():
         if not path.exists():
