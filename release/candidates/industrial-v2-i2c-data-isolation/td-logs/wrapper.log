@@ -1,0 +1,328 @@
+======================================================================
+Tang Dynasty Automated Build: PH1P35 Industrial Inspection Subsystem
+======================================================================
+[1/5] Setting up synthesis and physical design runs for Industrial Inspection...
+      seeded isolated TD workspace from E:\Projects\FPGA-v2\work\i2c_data_isolation_package
+      synchronized tracked industrial RTL into TD source tree
+      verified industrial top wrapper and ISP integration markers
+      syn_1 configured: E:\Projects\FPGA-v2\work\td_i2c_data_isolation\td_project\camera_to_dsi_display_Runs\syn_1
+      phy_1 configured: E:\Projects\FPGA-v2\work\td_i2c_data_isolation\td_project\camera_to_dsi_display_Runs\phy_1
+      placement seed 1 injected into E:\Projects\FPGA-v2\work\td_i2c_data_isolation\industrial_v2_fixed_seed.tcl
+
+[RUN] Starting Synthesis (syn_1) in E:\Projects\FPGA-v2\work\td_i2c_data_isolation\td_project\camera_to_dsi_display_Runs\syn_1...
+  [Synthesis (syn_1)] RUN-1002 : start command "import_device ph1_35p.db -package PH1P35MDG324 -speed 3"
+  [Synthesis (syn_1)] RUN-1003 : finish command "import_device ph1_35p.db -package PH1P35MDG324 -speed 3" in  1.654380s wall, 1.000000s user + 0.187500s system = 1.187500s CPU (71.8%)
+  [Synthesis (syn_1)] RUN-1002 : start command "open_project camera_to_dsi_display.prj"
+  [Synthesis (syn_1)] RUN-1002 : start command "commit_param -step design"
+  [Synthesis (syn_1)] RUN-1001 :    qor_monitor    |      on      |        on        |
+  [Synthesis (syn_1)] RUN-1002 : start command "commit_param -step design"
+  [Synthesis (syn_1)] RUN-1001 :    qor_monitor    |      on      |        on        |
+  [Synthesis (syn_1)] RUN-1002 : start command "elaborate -top design_top_wrapper"
+  [Synthesis (syn_1)] RUN-1003 : finish command "elaborate -top design_top_wrapper" in  3.221145s wall, 2.828125s user + 0.359375s system = 3.187500s CPU (99.0%)
+  [Synthesis (syn_1)] RUN-1002 : start command "read_adc ../../../user_source/constraints_source/pin.adc"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  I_sys_clk   LOCATION = C4; IOSTANDARD  = LVCMOS33; PULLTYPE = PULLUP; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_cam_scl   LOCATION = K3; IOSTANDARD  = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  IO_cam_sda   LOCATION = J3; IOSTANDARD  = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_cam_24m   LOCATION = L3; IOSTANDARD  = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_cam_rst   LOCATION = L2; IOSTANDARD  = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  I_button[0]   LOCATION = D5;  IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  I_button[1]   LOCATION = A9;  IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_led1   LOCATION = D10; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLDOWN; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_led2   LOCATION = E10; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLDOWN; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_led3   LOCATION = C6;  IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLDOWN; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_tmds_ch0_p   LOCATION = G16; IOSTANDARD = TMDS33; PULLTYPE = NONE; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_tmds_ch1_p   LOCATION = F17; IOSTANDARD = TMDS33; PULLTYPE = NONE; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_tmds_ch2_p   LOCATION = H14; IOSTANDARD = TMDS33; PULLTYPE = NONE; "
+  [Synthesis (syn_1)] RUN-1002 : start command "set_pin_assignment  O_tmds_clk_p   LOCATION = C17; IOSTANDARD = TMDS33; PULLTYPE = NONE; "
+  [Synthesis (syn_1)] RUN-1002 : start command "read_ip_adc -ip ddr2 -file ../../../user_source/hdl_source/ph1p35_ddr/ddr2/src/adc/ddr2.adc"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_ck_p      LOCATION = X0Y44Z2; IOSTANDARD = DIFF_SSTL15; #pl44c"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_ck_n      LOCATION = X0Y44Z3; IOSTANDARD = DIFF_SSTL15; #pl44d"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_cke[0]    LOCATION = X0Y44Z1; IOSTANDARD = SSTL15; #pl44b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_cs_n[0]   LOCATION = X0Y53Z0; IOSTANDARD = SSTL15; #pl53a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_odt[0]    LOCATION = X0Y47Z0; IOSTANDARD = SSTL15; #pl47a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_we_n      LOCATION = X0Y47Z1; IOSTANDARD = SSTL15; #pl47b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_cas_n     LOCATION = X0Y56Z0; IOSTANDARD = SSTL15; #pl56a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_ras_n     LOCATION = X0Y44Z0; IOSTANDARD = SSTL15; #pl44a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_ba[0]     LOCATION = X0Y50Z0; IOSTANDARD = SSTL15; #pl50a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_ba[1]     LOCATION = X0Y61Z0; IOSTANDARD = SSTL15; #pl61a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[0]   LOCATION = X0Y64Z0; IOSTANDARD = SSTL15; #pl64a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[1]   LOCATION = X0Y73Z0; IOSTANDARD = SSTL15; #pl73a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[2]   LOCATION = X0Y67Z0; IOSTANDARD = SSTL15; #pl67a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[3]   LOCATION = X0Y50Z1; IOSTANDARD = SSTL15; #pl50b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[4]   LOCATION = X0Y76Z0; IOSTANDARD = SSTL15; #pl76a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[5]   LOCATION = X0Y53Z1; IOSTANDARD = SSTL15; #pl53b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[6]   LOCATION = X0Y76Z1; IOSTANDARD = SSTL15; #pl76b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[7]   LOCATION = X0Y56Z1; IOSTANDARD = SSTL15; #pl56b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[8]   LOCATION = X0Y76Z2; IOSTANDARD = SSTL15; #pl76c"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[9]   LOCATION = X0Y61Z1; IOSTANDARD = SSTL15; #pl61b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[10]  LOCATION = X0Y67Z1; IOSTANDARD = SSTL15; #pl67b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[11]  LOCATION = X0Y76Z3; IOSTANDARD = SSTL15; #pl76d"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_addr[12]  LOCATION = X0Y64Z1; IOSTANDARD = SSTL15; #pl64b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dqs_p[0]    LOCATION = X0Y33Z2; IOSTANDARD = DIFF_SSTL15; #pl33c"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dqs_n[0]    LOCATION = X0Y33Z3; IOSTANDARD = DIFF_SSTL15; #pl33d"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dm[0]       LOCATION = X0Y30Z2; IOSTANDARD = SSTL15; #pl30c"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[0]       LOCATION = X0Y33Z0; IOSTANDARD = SSTL15; #pl33a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[1]       LOCATION = X0Y30Z3; IOSTANDARD = SSTL15; #pl30d"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[2]       LOCATION = X0Y36Z0; IOSTANDARD = SSTL15; #pl36a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[3]       LOCATION = X0Y36Z1; IOSTANDARD = SSTL15; #pl36b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[4]       LOCATION = X0Y36Z3; IOSTANDARD = SSTL15; #pl36d"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[5]       LOCATION = X0Y36Z2; IOSTANDARD = SSTL15; #pl36c"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[6]       LOCATION = X0Y30Z0; IOSTANDARD = SSTL15; #pl30a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[7]       LOCATION = X0Y33Z1; IOSTANDARD = SSTL15; #pl33b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dqs_p[1]    LOCATION = X0Y13Z2; IOSTANDARD = DIFF_SSTL15; #pl13c"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dqs_n[1]    LOCATION = X0Y13Z3; IOSTANDARD = DIFF_SSTL15; #pl13d"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dm[1]       LOCATION = X0Y16Z0; IOSTANDARD = SSTL15; #pl16a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[8]       LOCATION = X0Y16Z1; IOSTANDARD = SSTL15; #pl16b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[9]       LOCATION = X0Y16Z3; IOSTANDARD = SSTL15; #pl16d"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[10]      LOCATION = X0Y10Z0; IOSTANDARD = SSTL15; #pl10a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[11]      LOCATION = X0Y10Z2; IOSTANDARD = SSTL15; #pl10c"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[12]      LOCATION = X0Y10Z3; IOSTANDARD = SSTL15; #pl10d"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[13]      LOCATION = X0Y10Z1; IOSTANDARD = SSTL15; #pl10b"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[14]      LOCATION = X0Y16Z2; IOSTANDARD = SSTL15; #pl16c"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ippin_assignment ddr2  ddr_dq[15]      LOCATION = X0Y13Z0; IOSTANDARD = SSTL15; #pl13a"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy_clk/u_mlclk_1  LOCATION = X0Y59Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy_clk/u_mlclk_2  LOCATION = X0Y59Z1"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy_clk/u_pll0/u_pll_inst  LOCATION = X0Y40Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy_clk/u_pll1/u_pll_inst  LOCATION = X0Y79Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy_clk/ioclk[0]$u_ioclk_0  LOCATION = X0Y59Z0;"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy_clk/ioclk[0]$u_ioclk_1  LOCATION = X0Y59Z1;"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy_clk/ioclk[1]$u_ioclk_0  LOCATION = X0Y19Z0;"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy_clk/ioclk[1]$u_ioclk_1  LOCATION = X0Y19Z1;"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy/ac_byte[0]$ac_byte_used$u_ddrphy_ac_byte_wrapper/u_ddrphy_byte LOCATION = X0Y70Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy/ac_byte[1]$ac_byte_used$u_ddrphy_ac_byte_wrapper/u_ddrphy_byte LOCATION = X0Y60Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy/ac_byte[2]$ac_byte_used$u_ddrphy_ac_byte_wrapper/u_ddrphy_byte LOCATION = X0Y50Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy/ac_byte[3]$ac_byte_used$u_ddrphy_ac_byte_wrapper/u_ddrphy_byte LOCATION = X0Y40Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy/dx_byte[0]$dx_byte_used$u_ddrphy_dx_byte_wrapper/u_ddrphy_byte LOCATION = X0Y30Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy/dx_byte[1]$dx_byte_used$u_ddrphy_dx_byte_wrapper/u_ddrphy_byte LOCATION = X0Y10Z0"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy/bkref[0]$u_ddrphy_bankref  LOCATION = X0Y19Z0;"
+  [Synthesis (syn_1)] RUN-1002 : start command "set_ipinst_assignment ddr2 ph1p_ddrmc_wrapper/ph1p_ddrmc_top/u_ddr_phy/u_ddrphy_top/u_ddrphy/bkref[1]$u_ddrphy_bankref  LOCATION = X0Y59Z0;"
+  [Synthesis (syn_1)] RUN-1003 : finish command "read_ip_adc -ip ddr2 -file ../../../user_source/hdl_source/ph1p35_ddr/ddr2/src/adc/ddr2.adc" in  3.790058s wall, 3.437500s user + 0.343750s system = 3.781250s CPU (99.8%)
+  [Synthesis (syn_1)] RUN-1002 : start command "read_sdc ../../camera_to_dsi_display.sdc"
+  [Synthesis (syn_1)] RUN-1002 : start command "read_sdc -ip ddr2 ../../../user_source/hdl_source/ph1p35_ddr/ddr2/src/sdc/ddr2.sdc"
+  [Synthesis (syn_1)] RUN-1002 : start command "read_sdc -ip w128_d512_fifo ../../../user_source/ip_source/w128_d512_fifo/w128_d512_fifo.tcl"
+  [Synthesis (syn_1)] RUN-1002 : start command "export_db camera_to_dsi_display_elaborate.db"
+  [Synthesis (syn_1)] RUN-1002 : start command "commit_param -step rtl"
+  [Synthesis (syn_1)] RUN-1001 :    qor_monitor    |      on      |        on        |
+  [Synthesis (syn_1)] RUN-1002 : start command "insert_debugger ../../chip_debugger"
+  [Synthesis (syn_1)] RUN-1002 : start command "optimize_rtl"
+  [Synthesis (syn_1)] RUN-1003 : finish command "optimize_rtl" in  72.848839s wall, 71.593750s user + 0.843750s system = 72.437500s CPU (99.4%)
+  [Synthesis (syn_1)] RUN-1002 : start command "report_area -file camera_to_dsi_display_rtl.area"
+  [Synthesis (syn_1)] RUN-1002 : start command "export_db camera_to_dsi_display_rtl.db"
+  [Synthesis (syn_1)] RUN-1002 : start command "commit_param -step gate"
+  [Synthesis (syn_1)] RUN-1001 :    qor_monitor    |      on      |        on        |
+  [Synthesis (syn_1)] RUN-1002 : start command "optimize_gate -packarea camera_to_dsi_display_gate.area"
+  [Synthesis (syn_1)] RUN-1002 : start command "update_pll_param -module design_top_wrapper"
+  [Synthesis (syn_1)] RUN-1002 : start command "start_timer"
+  [Synthesis (syn_1)] RUN-1003 : finish command "start_timer" in  2.164460s wall, 1.875000s user + 0.265625s system = 2.140625s CPU (98.9%)
+  [Synthesis (syn_1)] RUN-1002 : start command "end_timer"
+  [Synthesis (syn_1)] RUN-1002 : start command "report_qor -step gate -file gate.qor"
+  [Synthesis (syn_1)] RUN-1002 : start command "start_timer"
+  [Synthesis (syn_1)] RUN-1003 : finish command "start_timer" in  2.372551s wall, 2.171875s user + 0.171875s system = 2.343750s CPU (98.8%)
+  [Synthesis (syn_1)] | QoR metrics               |         value               |
+  [Synthesis (syn_1)] |     Setup WNS             |        -1100                |
+  [Synthesis (syn_1)] |     Setup TNS             |       -12992                |
+  [Synthesis (syn_1)] |     Hold WNS              |          114                |
+  [Synthesis (syn_1)] |     Hold TNS              |            0                |
+  [Synthesis (syn_1)] Report gate stage QoR done.
+  [Synthesis (syn_1)] RUN-1003 : finish command "report_qor -step gate -file gate.qor" in  6.734580s wall, 6.000000s user + 0.687500s system = 6.687500s CPU (99.3%)
+  [Synthesis (syn_1)] RUN-1002 : start command "report_area -file camera_to_dsi_display_gate.area"
+  [Synthesis (syn_1)] RUN-1003 : finish command "optimize_gate -packarea camera_to_dsi_display_gate.area" in  126.490591s wall, 117.390625s user + 8.250000s system = 125.640625s CPU (99.3%)
+  [Synthesis (syn_1)] RUN-1002 : start command "legalize_phy_inst"
+  [Synthesis (syn_1)] RUN-1002 : start command "update_timing"
+  [Synthesis (syn_1)] RUN-1002 : start command "start_timer"
+  [Synthesis (syn_1)] RUN-1003 : finish command "start_timer" in  2.218680s wall, 2.046875s user + 0.156250s system = 2.203125s CPU (99.3%)
+  [Synthesis (syn_1)] RUN-1003 : finish command "update_timing" in  3.586165s wall, 3.296875s user + 0.281250s system = 3.578125s CPU (99.8%)
+  [Synthesis (syn_1)] RUN-1002 : start command "report_timing_status -file camera_to_dsi_display_gate.ts"
+  [Synthesis (syn_1)] RUN-1002 : start command "report_timing_summary -file camera_to_dsi_display_gate.timing"
+  [Synthesis (syn_1)] RUN-1002 : start command "flow_status -file flow.status"
+  [Synthesis (syn_1)] Setup            : WNS -1100ps  TNS   -12992ps  NUM_FEPS    28
+  [Synthesis (syn_1)] Hold             : WNS   114ps  TNS        0ps  NUM_FEPS     0
+  [Synthesis (syn_1)] RUN-1002 : start command "export_db camera_to_dsi_display_gate.db"
+  [Synthesis (syn_1)] RUN-1002 : start command "export_flow_status -s read_design -e opt_gate"
+  [Synthesis (syn_1)] RUN-1002 : start command "flow_status"
+  [Synthesis (syn_1)] Setup            : WNS -1100ps  TNS   -12992ps  NUM_FEPS    28
+  [Synthesis (syn_1)] Hold             : WNS   114ps  TNS        0ps  NUM_FEPS     0
+[Synthesis (syn_1)] Finished in 217.1s, exit code: 0
+
+[RUN] Starting Physical Design (phy_1) in E:\Projects\FPGA-v2\work\td_i2c_data_isolation\td_project\camera_to_dsi_display_Runs\phy_1...
+  [Physical Design (phy_1)] RUN-1002 : start command "import_device ph1_35p.db -package PH1P35MDG324 -speed 3"
+  [Physical Design (phy_1)] RUN-1003 : finish command "import_device ph1_35p.db -package PH1P35MDG324 -speed 3" in  1.353517s wall, 1.078125s user + 0.109375s system = 1.187500s CPU (87.7%)
+  [Physical Design (phy_1)] RUN-1002 : start command "open_project camera_to_dsi_display.prj -noanalyze"
+  [Physical Design (phy_1)] RUN-1002 : start command "import_db ../syn_1/camera_to_dsi_display_gate.db"
+  [Physical Design (phy_1)] RUN-1003 : finish command "import_db ../syn_1/camera_to_dsi_display_gate.db" in  1.704937s wall, 0.640625s user + 0.015625s system = 0.656250s CPU (38.5%)
+  [Physical Design (phy_1)] RUN-1002 : start command "commit_param -step place"
+  [Physical Design (phy_1)] RUN-1001 :    qor_monitor    |      on      |        on        |
+  [Physical Design (phy_1)] RUN-1002 : start command "insert_debugger ../../chip_debugger"
+  [Physical Design (phy_1)] RUN-1002 : start command "set_param place seed 1"
+  [Physical Design (phy_1)] RUN-1002 : start command "place"
+  [Physical Design (phy_1)] RUN-1002 : start command "legalize_phy_inst"
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  1.948272s wall, 1.859375s user + 0.093750s system = 1.953125s CPU (100.2%)
+  [Physical Design (phy_1)] PHY-5060 CRITICAL-WARNING: Clock net candidate u_uicfgcs520/u_i2c/scl_clk has mixed fanouts of 1 clock pins; 1 data/ctrl pins. Please check connection of the net in design.
+  [Physical Design (phy_1)] PHY-5060 CRITICAL-WARNING: Clock net candidate O_cam_24m_syn_3 has mixed fanouts of 161 clock pins; 1 data/ctrl pins. Please check connection of the net in design.
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  1.650645s wall, 1.531250s user + 0.062500s system = 1.593750s CPU (96.6%)
+  [Physical Design (phy_1)] PHY-1001 : SWNS: -1110, STNS: -13012, FEP: 28
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  1.851070s wall, 1.828125s user + 0.031250s system = 1.859375s CPU (100.4%)
+  [Physical Design (phy_1)] PHY-0007 : Initial: WL Cost = 219857, TD Cost = 3.02184e+06, SWNS = 490, STNS = 0, Nums per T = 670, Range Limit = 2x32
+  [Physical Design (phy_1)] PHY-0007 : Finally: WL Cost = 216384, TD Cost = 2.99218e+06, WL Ratio = 0.984202, TD Ratio = 0.990186, SWNS = 629, STNS = 0
+  [Physical Design (phy_1)] PHY-1001 : SWNS: 629, STNS: 0, FEP: 0
+  [Physical Design (phy_1)] PHY-0007 : Initial: WL Cost = 181731, TD Cost = 2.72577e+06, SWNS = 1037, STNS = 0, Nums per T = 670, Range Limit = 2x32
+  [Physical Design (phy_1)] PHY-0007 : Finally: WL Cost = 181582, TD Cost = 2.72247e+06, WL Ratio = 0.999179, TD Ratio = 0.998791, SWNS = 1126, STNS = 0
+  [Physical Design (phy_1)] OPT-1001 : Start: SWNS 1126 STNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] PHY-1001 : SWNS: 1072, STNS: 0, FEP: 0
+  [Physical Design (phy_1)] OPT-0007 : Start: SWNS 909 STNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] OPT-0007 : Iter 1: improved SWNS 909 STNS 0 NUM_FEPS 0 with 38 cells processed and 2825 slack improved
+  [Physical Design (phy_1)] OPT-0007 : Iter 2: improved SWNS 909 STNS 0 NUM_FEPS 0 with 21 cells processed and 1087 slack improved
+  [Physical Design (phy_1)] OPT-0007 : Iter 3: improved SWNS 909 STNS 0 NUM_FEPS 0 with 18 cells processed and 1444 slack improved
+  [Physical Design (phy_1)] OPT-0007 : Iter 4: improved SWNS 909 STNS 0 NUM_FEPS 0 with 16 cells processed and 348 slack improved
+  [Physical Design (phy_1)] OPT-0007 : End flow prepack: SWNS 909 STNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.970835s wall, 2.937500s user + 0.031250s system = 2.968750s CPU (99.9%)
+  [Physical Design (phy_1)] PHY-1001 : SWNS: 928, STNS: 0, FEP: 0
+  [Physical Design (phy_1)] PHY-1001 : SWNS: 220, STNS: 0, FEP: 0
+  [Physical Design (phy_1)] PHY-0007 : Initial: WL Cost = 193964, TD Cost = 2.74876e+06, SWNS = 392, STNS = 0, Nums per T = 116470, Range Limit = 4x8
+  [Physical Design (phy_1)] PHY-0007 : Finally: WL Cost = 171703, TD Cost = 2.1899e+06, WL Ratio = 0.885229, TD Ratio = 0.796687, SWNS = 738, STNS = 0
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.874787s wall, 2.812500s user + 0.046875s system = 2.859375s CPU (99.5%)
+  [Physical Design (phy_1)] OPT-1001 : Start: SWNS 738 STNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] OPT-0007 : Start: SWNS 738 STNS 0 NUM_FEPS 0 with mode 2
+  [Physical Design (phy_1)] OPT-0007 : Iter 1: improved SWNS 979 STNS 0 NUM_FEPS 0 with 56(4882) cells and 2441(2441) paths processed with 10259 slack improved, crit_thod: 1689 ratio: 0.87(69/79) rt: 1.4s
+  [Physical Design (phy_1)] OPT-0007 : Iter 2: improved SWNS 979 STNS 0 NUM_FEPS 0 with 32(4358) cells and 2179(2179) paths processed with 4907 slack improved, crit_thod: 1828 ratio: 0.69(40/58) rt: 2.4s
+  [Physical Design (phy_1)] OPT-0007 : Iter 3: improved SWNS 979 STNS 0 NUM_FEPS 0 with 15(4808) cells and 2404(2404) paths processed with 3688 slack improved, crit_thod: 1920 ratio: 0.59(20/34) rt: 1.8s
+  [Physical Design (phy_1)] OPT-0007 : Iter 4: improved SWNS 979 STNS 0 NUM_FEPS 0 with 7(5640) cells and 2820(2820) paths processed with 2518 slack improved, crit_thod: 1959 ratio: 0.42(10/24) rt: 1.6s
+  [Physical Design (phy_1)] OPT-0007 : Iter 5: improved SWNS 979 STNS 0 NUM_FEPS 0 with 8(7340) cells and 3670(3670) paths processed with 2577 slack improved, crit_thod: 2031 ratio: 0.38(9/24) rt: 1.5s
+  [Physical Design (phy_1)] OPT-0007 : Iter 6: improved SWNS 979 STNS 0 NUM_FEPS 0 with 6(7758) cells and 3879(3879) paths processed with 2150 slack improved, crit_thod: 2056 ratio: 0.30(7/23) rt: 1.4s
+  [Physical Design (phy_1)] OPT-1001 : Start: WNS 979 TNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.842935s wall, 2.828125s user + 0.000000s system = 2.828125s CPU (99.5%)
+  [Physical Design (phy_1)] OPT-1001 : Start: SWNS 979 STNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] OPT-1001 : Start: SWNS 1294 STNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] OPT-0007 : End flow postpack: SWNS 1294 STNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] RUN-1001 : QoR Analysis:
+  [Physical Design (phy_1)] OPT-0007 :   SWNS 1294 STNS 0 NUM_FEPS 0
+  [Physical Design (phy_1)] RUN-1002 : start command "report_qor -step place -file place.qor"
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.490461s wall, 2.484375s user + 0.015625s system = 2.500000s CPU (100.4%)
+  [Physical Design (phy_1)] | QoR metrics               |         value               |
+  [Physical Design (phy_1)] |     Setup WNS             |         1294                |
+  [Physical Design (phy_1)] |     Setup TNS             |            0                |
+  [Physical Design (phy_1)] |     SWNS path clock period |       9660ps                |
+  [Physical Design (phy_1)] |     Hold WNS              |         -270                |
+  [Physical Design (phy_1)] |     Hold TNS              |       -70562                |
+  [Physical Design (phy_1)] Report place stage QoR done.
+  [Physical Design (phy_1)] RUN-1003 : finish command "report_qor -step place -file place.qor" in  5.218918s wall, 5.312500s user + 0.093750s system = 5.406250s CPU (103.6%)
+  [Physical Design (phy_1)] OPT-1001 : QoR tracer report on placement steps:
+  [Physical Design (phy_1)] SWNS [   incr ]    STNS [   incr ]    FEPS [   incr ]    CRIT [   incr ]      CELL [     incr ]        WL [     incr ]    CONG [   incr ]    PDES [   incr ]   RT(s) [   incr ]   MEM(mb) [     incr ]
+  [Physical Design (phy_1)] RUN-1003 : finish command "place" in  137.147996s wall, 175.046875s user + 4.843750s system = 179.890625s CPU (131.2%)
+  [Physical Design (phy_1)] RUN-1002 : start command "update_timing -mode manhattan"
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.316970s wall, 2.328125s user + 0.000000s system = 2.328125s CPU (100.5%)
+  [Physical Design (phy_1)] RUN-1003 : finish command "update_timing -mode manhattan" in  3.765642s wall, 3.765625s user + 0.000000s system = 3.765625s CPU (100.0%)
+  [Physical Design (phy_1)] RUN-1002 : start command "report_timing_summary -file camera_to_dsi_display_place.timing"
+  [Physical Design (phy_1)] RUN-1002 : start command "report_area -io_info -file camera_to_dsi_display_phy.area"
+  [Physical Design (phy_1)] RUN-1002 : start command "flow_status -file place_flow.status"
+  [Physical Design (phy_1)] Setup            : WNS  1294ps  TNS        0ps  NUM_FEPS     0
+  [Physical Design (phy_1)] Hold             : WNS  -270ps  TNS   -70562ps  NUM_FEPS   471
+  [Physical Design (phy_1)] RUN-1002 : start command "report_clock_utilization -file place_clock_utilization.txt"
+  [Physical Design (phy_1)] RUN-1002 : start command "export_db camera_to_dsi_display_place.db"
+  [Physical Design (phy_1)] RUN-1002 : start command "commit_param -step route"
+  [Physical Design (phy_1)] RUN-1001 :    qor_monitor    |      on      |        on        |
+  [Physical Design (phy_1)] RUN-1002 : start command "route"
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  3.133951s wall, 3.140625s user + 0.000000s system = 3.140625s CPU (100.2%)
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.633441s wall, 2.593750s user + 0.000000s system = 2.593750s CPU (98.5%)
+  [Physical Design (phy_1)] PHY-1001 : Setup: WNS(ns) = -0.748, TNS(ns) = -1.331, FEP = 2 | Hold: WNS(ns) = -0.242, TNS(ns) = -13.585, FEP = 276.
+  [Physical Design (phy_1)] PHY-1001 : Setup: WNS(ns) = -0.748, TNS(ns) = -1.331, FEP = 2 | Hold: WNS(ns) = -0.242, TNS(ns) = -13.585, FEP = 276.
+  [Physical Design (phy_1)] PHY-1001 : Iter 0; Processed 376 pins with HWNS -0.242ns HTNS -9.490ns FEP 164 took 0.418478 seconds.
+  [Physical Design (phy_1)] PHY-1001 : Iter 1; Processed 561 pins with HWNS 0.005ns HTNS 0.000ns FEP 0 took 1.63238 seconds.
+  [Physical Design (phy_1)] PHY-1001 : Process 1 nets and 6 pins with SWNS -0.003ns STNS -0.003ns FEP 1.
+  [Physical Design (phy_1)] PHY-1001 : Iter 1; Processed 2 pins with SWNS 0.110ns STNS 0.000ns FEP 0 took 0.246701 seconds.
+  [Physical Design (phy_1)] PHY-1001 : Setup: WNS(ns) = -4.318, TNS(ns) = -272.013, FEP = 128 | Hold: WNS(ns) = -0.117, TNS(ns) = -1.580, FEP = 47.
+  [Physical Design (phy_1)] PHY-1001 : Iter 0; Processed 74 pins with HWNS -0.117ns HTNS -0.999ns FEP 28 took 0.625233 seconds.
+  [Physical Design (phy_1)] PHY-1001 : Iter 1; Processed 112 pins with HWNS 0.005ns HTNS 0.000ns FEP 0 took 0.325309 seconds.
+  [Physical Design (phy_1)] PHY-1001 : Process 30 nets and 161 pins with SWNS -1.315ns STNS -16.591ns FEP 26.
+  [Physical Design (phy_1)] PHY-1001 : Iter 1; Processed 104 pins with SWNS 0.103ns STNS 0.000ns FEP 0 took 12.0461 seconds.
+  [Physical Design (phy_1)] PHY-1001 : Setup: WNS(ns) = 0.103, TNS(ns) = 0.000, FEP = 0 | Hold: WNS(ns) = -0.094, TNS(ns) = -0.402, FEP = 9.
+  [Physical Design (phy_1)] RUN-1002 : start command "export_db camera_to_dsi_display_pr.db"
+  [Physical Design (phy_1)] RUN-1003 : finish command "export_db camera_to_dsi_display_pr.db" in  1.327401s wall, 1.750000s user + 0.078125s system = 1.828125s CPU (137.7%)
+  [Physical Design (phy_1)] RUN-1002 : start command "fix_hold"
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.464925s wall, 2.437500s user + 0.015625s system = 2.453125s CPU (99.5%)
+  [Physical Design (phy_1)] PHY-1001 : Timing info: SWNS 0.103ns | STNS 0.000ns | HWNS -0.094ns | HTNS -0.402ns.
+  [Physical Design (phy_1)] PHY-1001 : Timing info: SWNS 0.103ns | STNS 0.000ns | HWNS -0.058ns | HTNS -0.139ns.
+  [Physical Design (phy_1)] PHY-1001 : Timing info: SWNS 0.103ns | STNS 0.000ns | HWNS -0.058ns | HTNS -0.082ns.
+  [Physical Design (phy_1)] PHY-1001 : Timing info: SWNS 0.103ns | STNS 0.000ns | HWNS 0.020ns | HTNS 0.000ns.
+  [Physical Design (phy_1)] RUN-1003 : finish command "fix_hold" in  8.005021s wall, 8.578125s user + 0.015625s system = 8.593750s CPU (107.4%)
+  [Physical Design (phy_1)] RUN-1002 : start command "report_qor -step route -file route.qor"
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.452581s wall, 2.437500s user + 0.000000s system = 2.437500s CPU (99.4%)
+  [Physical Design (phy_1)] | QoR metrics               |         value               |
+  [Physical Design (phy_1)] |     Setup WNS             |          103                |
+  [Physical Design (phy_1)] |     Setup TNS             |            0                |
+  [Physical Design (phy_1)] |     Hold WNS              |           20                |
+  [Physical Design (phy_1)] |     Hold TNS              |            0                |
+  [Physical Design (phy_1)] Report route stage QoR done.
+  [Physical Design (phy_1)] RUN-1003 : finish command "report_qor -step route -file route.qor" in  6.327072s wall, 6.265625s user + 0.046875s system = 6.312500s CPU (99.8%)
+  [Physical Design (phy_1)] RUN-1002 : start command "update_timing -mode final"
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.472311s wall, 2.437500s user + 0.031250s system = 2.468750s CPU (99.9%)
+  [Physical Design (phy_1)] RUN-1003 : finish command "update_timing -mode final" in  6.257281s wall, 6.171875s user + 0.031250s system = 6.203125s CPU (99.1%)
+  [Physical Design (phy_1)] RUN-1002 : start command "report_timing_summary -file final_timing.rpt"
+  [Physical Design (phy_1)] OPT-1001 : QoR tracer report on route step:
+  [Physical Design (phy_1)] SWNS [   incr ]     STNS [    incr ]  S-FEPS [   incr ]    HWNS [   incr ]      HTNS [     incr ]    H-FEPS [     incr ]    CELL [   incr ]       WL [    incr ]   RT(s) [   incr ]   MEM(mb) [     incr ]
+  [Physical Design (phy_1)] PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets.
+  [Physical Design (phy_1)] RUN-1003 : finish command "route" in  123.847775s wall, 203.921875s user + 3.781250s system = 207.703125s CPU (167.7%)
+  [Physical Design (phy_1)] RUN-1002 : start command "report_area -io_info -file camera_to_dsi_display_phy.area"
+  [Physical Design (phy_1)] RUN-1002 : start command "update_timing -mode final"
+  [Physical Design (phy_1)] RUN-1002 : start command "start_timer"
+  [Physical Design (phy_1)] RUN-1003 : finish command "start_timer" in  2.888693s wall, 2.875000s user + 0.000000s system = 2.875000s CPU (99.5%)
+  [Physical Design (phy_1)] RUN-1003 : finish command "update_timing -mode final" in  6.691376s wall, 6.640625s user + 0.015625s system = 6.656250s CPU (99.5%)
+  [Physical Design (phy_1)] RUN-1002 : start command "report_timing_status -file camera_to_dsi_display_phy.ts"
+  [Physical Design (phy_1)] RUN-1002 : start command "report_timing_summary -file camera_to_dsi_display_pr.timing"
+  [Physical Design (phy_1)] RUN-1002 : start command "report_timing_exception -file camera_to_dsi_display_exception.timing"
+  [Physical Design (phy_1)] RUN-1002 : start command "flow_status -file route_flow.status"
+  [Physical Design (phy_1)] Setup            : WNS   103ps  TNS        0ps  NUM_FEPS     0
+  [Physical Design (phy_1)] Hold             : WNS    20ps  TNS        0ps  NUM_FEPS     0
+  [Physical Design (phy_1)] RUN-1002 : start command "report_clock_utilization -file route_clock_utilization.txt"
+  [Physical Design (phy_1)] RUN-1002 : start command "export_db camera_to_dsi_display_pr.db"
+  [Physical Design (phy_1)] RUN-1003 : finish command "export_db camera_to_dsi_display_pr.db" in  1.396488s wall, 1.859375s user + 0.062500s system = 1.921875s CPU (137.6%)
+  [Physical Design (phy_1)] RUN-1002 : start command "commit_param -step bitgen"
+  [Physical Design (phy_1)] RUN-1001 :    qor_monitor    |      on      |        on        |
+  [Physical Design (phy_1)] RUN-1002 : start command "set_param bitgen compress on"
+  [Physical Design (phy_1)] RUN-1002 : start command "bitgen -bit camera_to_dsi_display.bit"
+  [Physical Design (phy_1)] RUN-1002 : start command "export_bid camera_to_dsi_display_inst.bid"
+  [Physical Design (phy_1)] RUN-1003 : finish command "bitgen -bit camera_to_dsi_display.bit" in  5.280947s wall, 37.593750s user + 1.578125s system = 39.171875s CPU (741.8%)
+  [Physical Design (phy_1)] RUN-1002 : start command "setup_debugger ../../chip_debugger"
+  [Physical Design (phy_1)] RUN-1002 : start command "export_bitgen_param -file .bitgen_param.f"
+  [Physical Design (phy_1)] RUN-1002 : start command "export_flow_status -s opt_place -e bitgen"
+  [Physical Design (phy_1)] RUN-1002 : start command "flow_status"
+  [Physical Design (phy_1)] Setup            : WNS   103ps  TNS        0ps  NUM_FEPS     0
+  [Physical Design (phy_1)] Hold             : WNS    20ps  TNS        0ps  NUM_FEPS     0
+[Physical Design (phy_1)] Finished in 284.8s, exit code: 0
+
+[4/5] Checking Timing and Resource QoR...
+
+--- route.qor Summary ---
+  |     Setup WNS             |          103                |
+  |     Setup TNS             |            0                |
+  |     Hold WNS              |           20                |
+  |     Hold TNS              |            0                |
+  |     #RAMs                 |           43                |
+  |     #DSPs                 |           24                |
+  |     #DRAMHARDCON          |          229                |
+  QoR gate: PASS (timing WNS/TNS and violated endpoints are clean)
+
+[5/5] Collecting release artifacts into E:\Projects\FPGA-v2\release\candidates\industrial-v2-i2c-data-isolation...
+  Artifact: camera_to_dsi_display_compress.bit
+    Size:    1,366,833 bytes
+    SHA-256: 0b54ad07d4413b4d7627d3af67fd4c9fd75af56cd8eff9d4f611800ee5125535
+  Copied report: route.qor
+  Copied report: final_timing.rpt
+  Wrote provenance manifest: E:\Projects\FPGA-v2\release\candidates\industrial-v2-i2c-data-isolation\industrial-v1-manifest.json
+
+======================================================================
+BUILD COMPLETE! Bitstream ready for on-board testing.
+======================================================================
