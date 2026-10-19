@@ -48,6 +48,12 @@
 - `u_uicfgcs520`、PLL、MIPI、DDR 和板级约束包含厂商/板级边界；本次没有盲改生成 IP、PLL 配置、管脚或时序例外。
 - 早期审计构建没有执行 `analyze_clock -detail`；本节记录的重跑已经执行该命令，但仍没有板卡、SC520CS、HDMI、冷启动或长稳证据，因此告警门保持 `BLOCKED`。
 
+## SC520 Lab1 基线对照
+
+本地保存的 SC520 Lab1 构建日志也记录了同一组 `PHY-5016/5060/5079/5088`，且其 `pin.adc` 与当前 V2 对 `O_cam_24m=L3`、I2C 和复位的管脚合同一致。逐条日志行、路径和判定见 [`industrial-v2-g8-clock-warning-sc520-baseline.md`](industrial-v2-g8-clock-warning-sc520-baseline.md)。
+
+这只能证明告警至少部分继承自当前工程族的 SC520/TD 边界，不能证明 V2 当前 Bitstream 上电后无害；warning/CDC/constraints gate 继续保持 `OPEN/BLOCKED`。
+
 ## 关闭条件
 
 对每个告警保存详细时钟分析输出，解释 source/sink/约束和协议保证；如果需要修改 RTL/IP/约束，完成最小修改后重跑完整 TD，并重新进行冷启动、热复位和长稳测试。未满足前不得把 `PHY-5016/5060/5079/5088` 标为关闭。
