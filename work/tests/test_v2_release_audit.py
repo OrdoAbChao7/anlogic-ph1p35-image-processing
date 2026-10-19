@@ -105,6 +105,39 @@ def test_release_package_contents_gate_blocks_missing_final_materials(tmp_path):
     assert any("source" in blocker for blocker in gate.blockers)
 
 
+def test_release_package_contents_gate_rejects_empty_source_and_test_directories(tmp_path):
+    package_root = tmp_path / "release" / "industrial-v2"
+    package_root.mkdir(parents=True)
+    for relative in (
+        "README.md",
+        "manifest.json",
+        "industrial-v2.bit",
+        "route.qor",
+        "final_timing.rpt",
+        "evidence/INDEX.md",
+        "handbook/DEMO_RUNBOOK.md",
+        "handbook/REBUILD.md",
+        "fallback/README.md",
+        "hardware/HARDWARE_TEST_PLAN.md",
+        "performance/RESULTS.md",
+        "RISK_REGISTER.md",
+    ):
+        path = package_root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("candidate", encoding="utf-8")
+    (package_root / "td-reports").mkdir()
+    (package_root / "source").mkdir()
+    (package_root / "tests").mkdir()
+
+    gate = VERIFY_MODULE.build_release_package_contents_gate(
+        package_root=package_root,
+    )
+
+    assert gate.status == "BLOCKED"
+    assert any("source/source-manifest.json" in blocker for blocker in gate.blockers)
+    assert any("tests/test_v2_release_audit.py" in blocker for blocker in gate.blockers)
+
+
 def test_resource_gate_passes_for_clean_qor_under_slice_target():
     route_qor = """
 |     Setup WNS             |          104                |

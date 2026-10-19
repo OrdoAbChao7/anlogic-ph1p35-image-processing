@@ -243,5 +243,27 @@
     "physical performance traceability",
     "cold reset and long-run stability",
     "external actuator acceptance"
-  ]
+  ],
+  "package_materials": {
+    "source_manifest": {
+      "path": "release/industrial-v2/source/source-manifest.json",
+      "entries": 249,
+      "sha256": "766b816172184aabccaedc3698e23220fce3fdefca36e9ea8e62733da3b9a9d1"
+    },
+    "tests_snapshot": {
+      "path": "release/industrial-v2/tests",
+      "files": 73,
+      "contract_test_sha256": "4feb11a7dda5e0016a2325628777a1c7572f55ffae54e5e7a478235578a70552"
+    },
+    "documents": [
+      "release/industrial-v2/evidence/INDEX.md",
+      "release/industrial-v2/handbook/REBUILD.md",
+      "release/industrial-v2/handbook/DEMO_RUNBOOK.md",
+      "release/industrial-v2/fallback/README.md",
+      "release/industrial-v2/hardware/HARDWARE_TEST_PLAN.md",
+      "release/industrial-v2/performance/RESULTS.md",
+      "release/industrial-v2/RISK_REGISTER.md"
+    ],
+    "status": "CANDIDATE_ONLY"
+  }
 }

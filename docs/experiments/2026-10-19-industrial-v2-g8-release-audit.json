@@ -7,7 +7,6 @@
     "performance_traceability",
     "cold_reset_long_run",
     "reproducible_build_package",
-    "release_package_contents",
     "external_actuator_acceptance"
   ],
   "gates": [
@@ -164,25 +163,28 @@
     },
     {
       "name": "release_package_contents",
-      "status": "BLOCKED",
+      "status": "PASS",
       "evidence": [
         "release/industrial-v2/README.md",
         "release/industrial-v2/manifest.json",
         "release/industrial-v2/industrial-v2.bit",
         "release/industrial-v2/route.qor",
         "release/industrial-v2/final_timing.rpt",
-        "release/industrial-v2/td-reports"
+        "release/industrial-v2/td-reports",
+        "release/industrial-v2/source/fallback/rtl",
+        "release/industrial-v2/source/fallback/td_source",
+        "release/industrial-v2/source/fallback/td_package",
+        "release/industrial-v2/source/source-manifest.json",
+        "release/industrial-v2/tests/test_v2_release_audit.py",
+        "release/industrial-v2/evidence/INDEX.md",
+        "release/industrial-v2/handbook/DEMO_RUNBOOK.md",
+        "release/industrial-v2/handbook/REBUILD.md",
+        "release/industrial-v2/fallback/README.md",
+        "release/industrial-v2/hardware/HARDWARE_TEST_PLAN.md",
+        "release/industrial-v2/performance/RESULTS.md",
+        "release/industrial-v2/RISK_REGISTER.md"
       ],
-      "blockers": [
-        "missing release package material: source",
-        "missing release package material: tests",
-        "missing release package material: evidence/INDEX.md",
-        "missing release package material: handbook/DEMO_RUNBOOK.md",
-        "missing release package material: fallback/README.md",
-        "missing release package material: hardware/HARDWARE_TEST_PLAN.md",
-        "missing release package material: performance/RESULTS.md",
-        "missing release package material: RISK_REGISTER.md"
-      ]
+      "blockers": []
     },
     {
       "name": "external_actuator_acceptance",
@@ -205,7 +207,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "e94cec8ccb23ff9925519e32e769784711d39919",
+  "commit": "22bb6980c5bbe025239de05ad50223b5f8bc1200",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",

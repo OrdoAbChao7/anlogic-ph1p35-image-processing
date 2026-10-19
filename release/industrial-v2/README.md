@@ -30,7 +30,7 @@
 | 自适应白平衡 | `SOFTWARE_PASS` | `RTL_PASS` | `TD_PASS` | `HARDWARE_NOT_RUN` |
 | 标定与形状验证 | `SOFTWARE_PASS` | `RTL_PASS` | `TD_PASS` | `HARDWARE_NOT_RUN` |
 
-`python -B -m pytest -q work/tests` 当前为 `133 passed`；Stage D 软件等价模型为 `PASS`。这些结果不等价于板级摄像头、HDMI、LED、冷启动、长稳或机械执行器验收。
+`python -B -m pytest -q work/tests` 当前为 `134 passed`；Stage D 软件等价模型为 `PASS`。这些结果不等价于板级摄像头、HDMI、LED、冷启动、长稳或机械执行器验收。
 
 ## 当前未关闭门禁
 

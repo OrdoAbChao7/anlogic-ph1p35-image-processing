@@ -5,7 +5,7 @@
 
 ## 结论
 
-当前 `release/industrial-v2/` 已包含正式七功能候选 Bitstream、SHA-256、manifest、TD 报告和构建 Flow，但还不是可独立交付的最终包。源码、完整输入包、测试/证据索引、现场手册、回退说明、上板验收矩阵和物理性能结果仍需补齐或绑定；硬件验收缺失不能用文档占位替代。
+当前 `release/industrial-v2/` 已包含正式七功能候选 Bitstream、SHA-256、manifest、TD 报告、核心源码/约束快照、测试快照和候选版手册；它仍不是最终硬件发布包。物理性能结果、硬件验收和完整可复现性仍需真实证据，不能用文档占位替代。
 
 ## 要求逐项审计
 
@@ -15,14 +15,14 @@
 | SHA-256 | `PRESENT` | `manifest.json` 与 `README.md` |
 | Manifest | `PRESENT_CANDIDATE` | `manifest.json`；包含 TD、源码和候选位流 provenance |
 | TD 完整报告 | `PRESENT_CANDIDATE` | `route.qor`、`final_timing.rpt`、`td-reports/` |
-| 工程复现说明 | `PARTIAL` | `fallback/td_package/README.md`、`scripts/build_industrial_td.py`；TD 安装和完整干净重建仍是外部依赖 |
-| 核心源码与必要约束 | `OUTSIDE_PACKAGE` | 当前位于 `fallback/rtl/`、`fallback/td_source/`、`fallback/td_package/`；尚未复制或封装到本目录 |
-| 测试与证据索引 | `OUTSIDE_PACKAGE` | `work/tests/`、`docs/goals/industrial-v2/EVIDENCE_INDEX.md`；未封装到本目录 |
-| 现场演示手册 | `MISSING` | 尚未形成与候选 Bitstream SHA 绑定的现场操作手册 |
-| 回退版本说明 | `OUTSIDE_PACKAGE` | V1 位流与回退资料在 `release/industrial-v1/` 及 Goal 文档；未封装到本目录 |
-| 上板验收矩阵 | `OUTSIDE_PACKAGE` | `docs/goals/industrial-v2/HARDWARE_TEST_PLAN.md`；硬件尚未执行 |
-| 性能测试结果 | `MISSING_PHYSICAL` | 当前只有软件/RTL/TD 层证据；物理帧率、端到端延迟和检测更新率未测 |
-| 已关闭和未关闭风险列表 | `OUTSIDE_PACKAGE` | `docs/goals/industrial-v2/RISK_REGISTER.md`、`BLOCKERS.md`；未封装到本目录 |
+| 工程复现说明 | `PRESENT_CANDIDATE` | `handbook/REBUILD.md`、`source/README.md`、`source/source-manifest.json`；TD 安装和完整干净重建仍是外部依赖 |
+| 核心源码与必要约束 | `PRESENT_CANDIDATE` | `source/fallback/rtl/`、`source/fallback/td_source/`、`source/fallback/td_package/`，共 249 个文件 |
+| 测试与证据索引 | `PRESENT_CANDIDATE` | `tests/` 共 73 个文件、`evidence/INDEX.md`；包内测试是快照 |
+| 现场演示手册 | `PRESENT_CANDIDATE` | `handbook/DEMO_RUNBOOK.md`，绑定候选 Bitstream SHA |
+| 回退版本说明 | `PRESENT_CANDIDATE` | `fallback/README.md`；V1 位流仍保存在仓库冻结候选目录 |
+| 上板验收矩阵 | `PRESENT_CANDIDATE` | `hardware/HARDWARE_TEST_PLAN.md`；所有硬件项目仍为 `NOT_RUN` |
+| 性能测试结果 | `PRESENT_WITH_PHYSICAL_GAP` | `performance/RESULTS.md`；只有软件/RTL/TD 层证据，物理帧率、端到端延迟和检测更新率未测 |
+| 已关闭和未关闭风险列表 | `PRESENT_CANDIDATE` | `RISK_REGISTER.md`；告警、硬件、复现和执行器风险仍开放 |
 
 ## 七项功能状态
 
