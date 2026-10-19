@@ -348,7 +348,7 @@
         "A third MCLK ODDR-only placement seed completed TD/STA/Bitgen with Setup WNS +103ps and Hold WNS +20ps, Slice 17358/21216 = 81.82%; it meets the initial resource target and retains O_cam_24m/PHY-5079 improvement, but I2C/PHY warnings and hardware evidence remain open",
         "An I2C clock/data isolation probe completed RTL/STA/Bitgen at Slice 17247/21216 = 81.29% with Setup WNS +103ps and Hold WNS +20ps, but TD merged scl_data_clk back into scl_clk; PHY-5016/5060/5079/5088 remain open and the candidate is not promoted",
         "The single-thread fixed-seed determinism probe completed two independent TD/STA/Bitgen runs with thread parameters confirmed in logs, but produced different Bitstream SHA-256 values, sizes and Slice counts; exact Bitstream reproducibility remains open",
-        "Full work/tests retains 8 frozen-vs-later contract failures; Stage D software verification is PASS",
+        "Current V2 work/tests regression is 135 passed; frozen-vs-later contract drift is repaired in this worktree, and Stage D software verification is PASS",
         "No V2 board, SC520CS, HDMI, cold-reset, long-stability, performance or actuator evidence",
         "A CANDIDATE_ONLY V2 package now contains one seven-feature Bitstream and TD provenance; it is not a final release because warning, reproducibility, hardware and long-run gates remain open"
       ],

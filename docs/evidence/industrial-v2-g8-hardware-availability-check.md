@@ -13,6 +13,16 @@
 2. 检查运行进程中的 `program`、`programmer`、`td`、`anlogic`、`jtag`。没有匹配的 Programmer/TD/JTAG 进程。
 3. 使用 `Get-PnpDevice -PresentOnly` 检索 `JTAG`、`Anlogic`、`安路`、`USB Blaster`、`FTDI`、`Digilent`、`Xilinx`、`Altera`、`FPGA` 和 `Debug`。没有匹配的下载设备；仅返回系统的 Microsoft Kernel Debug Network Adapter。
 
+## 当前工作树复核
+
+本轮再次执行只读核查：
+
+- `python -B -m work.fpga_loop doctor` 退出码 `1`，原因是 `No module named work.fpga_loop`。
+- `scripts/fpga-loop.ps1` 和 `work/fpga_loop` 在 V2 工作树中均不存在。
+- `Get-PnpDevice -PresentOnly` 的 JTAG/Anlogic/FPGA/USB-Blaster/FTDI/Xilinx/Altera 过滤结果为 `0`，串口设备查询结果为 `0`。
+
+本复核没有下载、烧录、修改管脚或改变正式候选。
+
 ## 判定
 
 - 当前环境：`HARDWARE_RUNNER_NOT_AVAILABLE`
