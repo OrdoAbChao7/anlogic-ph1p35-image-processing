@@ -1,0 +1,15 @@
+Industrial V2 G8 full work/tests regression
+Date: 2026-10-19
+Worktree: E:/Projects/FPGA-v2
+Command: python -B -m pytest -q work/tests
+
+Result:
+- exit code: 0
+- 132 passed in 0.81s
+
+Scope:
+- V1 build/release contracts
+- V2 feature and release-audit contracts
+- RTL/software contract tests in work/tests
+
+The strict G8 verifier now executes this full command on every audit instead of retaining a frozen historical failure count. This evidence does not imply hardware, PHY-warning, performance, reset/long-run, reproducibility, or actuator acceptance.

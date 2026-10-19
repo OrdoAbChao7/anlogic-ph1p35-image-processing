@@ -15,11 +15,11 @@ spec.loader.exec_module(build_td)
 
 
 class CartoonRegionFillBuildContractTests(unittest.TestCase):
-    def test_default_build_stays_on_s3_luma(self):
+    def test_default_build_stays_on_current_region_fill(self):
         args = build_td.parse_args([])
         self.assertEqual(
             Path(args.video_rtl).resolve(),
-            (ROOT / "work" / "rtl" / "video_cartoon_luma.v").resolve(),
+            (ROOT / "fallback" / "rtl" / "video" / "video_cartoon_region_fill.v").resolve(),
         )
         self.assertEqual(
             Path(args.work_project).resolve(),
@@ -92,7 +92,7 @@ class CartoonRegionFillBuildContractTests(unittest.TestCase):
 
     def test_source_manifest_never_includes_user_owned_vvp(self):
         source_paths = [entry["path"] for entry in build_td.source_manifest()]
-        self.assertTrue(any(path.endswith("video_cartoon_luma.v") for path in source_paths))
+        self.assertTrue(any(path.endswith("video_cartoon_region_fill.v") for path in source_paths))
         self.assertFalse(any(path.endswith("fallback/tb_color.vvp") for path in source_paths))
 
 

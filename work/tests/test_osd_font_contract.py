@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-OSD = ROOT / "fallback" / "rtl" / "industrial_osd_overlay.v"
+OSD = ROOT / "fallback" / "rtl" / "display" / "industrial_osd_overlay.v"
 
 
 def test_osd_font_lookup_is_row_wise_for_resource_control():

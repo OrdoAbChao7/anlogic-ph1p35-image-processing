@@ -26,6 +26,7 @@
 | V2 G7 summary | `docs/experiments/2026-10-19-industrial-v2-g7-summary.md` | BLOCKED; NOT_CALIBRATED |
 | V2 G8 release audit design/plan | `docs/superpowers/specs/2026-10-19-industrial-v2-g8-release-audit-design.md`, `docs/superpowers/plans/2026-10-19-industrial-v2-g8-release-audit.md` | CREATED |
 | V2 G8 strict release audit | `docs/experiments/2026-10-19-industrial-v2-g8-release-audit.json` | BLOCKED; same-bitstream package and visual approval PASS, hardware/reproducibility/warning gates open |
+| V2 G8 full work/tests regression | `docs/evidence/industrial-v2-g8-full-tests-log.txt` | `python -B -m pytest -q work/tests` PASS: 130 passed; strict verifier now reruns the command |
 | V2 G8 audit summary | `docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md` | BLOCKED; candidate package exists, final hardware/reproducibility gates pending |
 | V2 G8 feature spine | `docs/experiments/2026-10-19-industrial-v2-g8-feature-spine.md`, `fallback/rtl/integration/industrial_v2_feature_spine.v` | SIM_PASS; formal top/TD pending |
 | V2 G8 ISP stream adapters | `docs/experiments/2026-10-19-industrial-v2-g8-stream-adapters.md`, `fallback/rtl/integration/motion_grid_adapter_96.v`, `fallback/rtl/integration/frame_stats_96.v` | SIM_PASS; formal CSI/ISP wiring pending |

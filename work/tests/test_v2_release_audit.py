@@ -129,3 +129,23 @@ def test_resource_gate_blocks_qor_over_slice_target():
 
     assert gate.status == "BLOCKED"
     assert any("Slice 87.12% exceeds the <=85% target" in blocker for blocker in gate.blockers)
+
+
+def test_v1_regression_gate_passes_only_for_current_full_work_tests():
+    gate = VERIFY_MODULE.build_v1_regression_gate(
+        returncode=0,
+        output="................................................................ [100%]\n130 passed in 0.80s",
+    )
+
+    assert gate.status == "PASS"
+    assert gate.blockers == ()
+
+
+def test_v1_regression_gate_preserves_full_test_failure_as_blocked():
+    gate = VERIFY_MODULE.build_v1_regression_gate(
+        returncode=1,
+        output="3 failed, 127 passed in 0.80s",
+    )
+
+    assert gate.status == "BLOCKED"
+    assert "full work/tests regression failed" in gate.blockers[0]

@@ -36,7 +36,7 @@
         "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-industrial-subsystem.ps1"
       ],
       "evidence": ["docs/experiments/2026-10-19-industrial-v2-g0-baseline.md", "frozen Bitstream SHA-256 recheck"],
-      "unresolved": ["46 passed / 8 failed baseline pytest due frozen-vs-later repository contract drift", "No confirmed hardware downloader", "scripts/fpga-loop.ps1 absent in frozen commit", "TD is an external dependency outside V2 Worktree"],
+      "unresolved": ["The current full work/tests regression is 132 passed; historical frozen-vs-later contract drift was repaired in the V2 worktree", "No confirmed hardware downloader", "scripts/fpga-loop.ps1 absent in frozen commit", "TD is an external dependency outside V2 Worktree"],
       "resource_baseline": "V1 freeze values above",
       "best_candidate": "BASELINE_V1",
       "next_action": "Record baseline drift and proceed only with isolated software/RTL work; repair or formally scope the frozen baseline before TD merge"
@@ -62,7 +62,7 @@
         "docs/experiments/2026-10-19-industrial-v2-g1-summary.md"
       ],
       "unresolved": [
-        "Full pytest remains 52 passed / 8 failed because frozen-vs-later release and path contracts differ",
+        "Current full work/tests regression is 132 passed; the strict verifier now executes it dynamically",
         "Stage D software verification now passes after normalizing the tracked plugin to LF line endings",
         "Combined formal seven-feature TD synthesis/implementation/Bitgen passed; hardware behavior remains unvalidated",
         "Combined candidate QoR is measured; feature-isolated attribution and warning closure remain open",
@@ -271,6 +271,7 @@
         "docs/superpowers/plans/2026-10-19-industrial-v2-g8-release-audit.md",
         "docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md",
         "docs/experiments/2026-10-19-industrial-v2-g8-release-audit.json",
+        "docs/evidence/industrial-v2-g8-full-tests-log.txt",
         "docs/experiments/2026-10-19-industrial-v2-g8-feature-spine.md",
         "fallback/rtl/integration/industrial_v2_feature_spine.v",
         "fallback/sim/integration/tb_industrial_v2_feature_spine.v",

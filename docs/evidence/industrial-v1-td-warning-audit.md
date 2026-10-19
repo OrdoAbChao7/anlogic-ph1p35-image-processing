@@ -39,3 +39,5 @@
 ## 关闭条件
 
 每项告警必须给出来源、sink/约束解释、必要的最小修改或官方 IP 依据，并重跑完整 TD；涉及摄像头、DDR、PLL、HDMI 或时钟网络的项目，还需要真实板卡冷启动、热复位和长稳证据。告警关闭前保持 **OPEN**，不得用 bitgen 成功或单张显示截图替代证据。
+
+当前发布绑定（工程构建证据，告警仍保持 OPEN）：`release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3`；对应 Slice `16,852/79.43%`、Setup WNS `+103 ps`、Hold WNS `+20 ps`。

@@ -48,3 +48,5 @@ LED 预期编码（高电平有效）：`PASS=LED1+LED3`、`NG=LED2+LED3`、`NO_
 - LED 管脚与极性：本版本按用户提供的 HX1P35A 手册绑定 LED1=`D10`、LED2=`E10`、LED3=`C6`，手册标明 LED 高电平有效；仍需下载本版本后实测确认。
 
 只有本记录填写完成，并附原始日志、照片/视频和位流哈希后，才能把对应项从“待上板”改为 `VERIFIED_ON_BOARD`。
+
+当前发布绑定（工程构建证据，非上板证据）：`release/industrial-v1/camera_to_dsi_display_compress.bit`，SHA-256 `e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3`。

@@ -119,3 +119,7 @@ YOLO/Micro-CNN、WM8978、多类别多目标和毫米级标定不属于本版验
 当前发布文件为 `release/industrial-v1/camera_to_dsi_display_compress.bit`，大小 `1,368,753 bytes`，SHA-256 `199cc9c65484c24d97e57affd5a6b12ff49a6de39bdf780f652c006e553c5b7a`。Route QoR 为 Setup WNS `+106 ps`、Hold WNS `+20 ps`、TNS/违规端点均为 `0`、Slices `17,403/82.03%`、RAM `43`、DSP `24`、DRAMHARDCON `229`；manifest 已绑定 11 个当前源文件。
 
 本轮仅证明项目连接层位宽修复后的软件、RTL、TD 和 Bitgen 结果；没有真实板卡、SC520CS、HDMI 或 LED 测量，Stage G 验收继续为 `NOT_RUN`。
+
+## 当前目录发布绑定（2026-10-17 第二次 ERAM 构建）
+
+当前 `release/industrial-v1/` 的唯一正式下载文件为 `camera_to_dsi_display_compress.bit`，SHA-256 为 `e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3`。对应 `route.qor` 为 Slice `16,852/79.43%`、Setup WNS `+103 ps`、Hold WNS `+20 ps`、TNS 和违例端点均为 `0`。这些仍是软件/RTL/TD/Bitgen 证据，硬件状态保持 `NOT_RUN`。

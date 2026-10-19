@@ -258,9 +258,9 @@ def test_release_docs_bind_the_current_bitstream_manifest():
 
 def test_release_readme_binds_current_qor_snapshot():
     readme = (ROOT / "release" / "industrial-v1" / "README.md").read_text(encoding="utf-8")
-    assert "Setup WNS：`104 ps`" in readme
+    assert "Setup WNS：`103 ps`" in readme
     assert "Hold WNS：`20 ps`" in readme
-    assert "Slices：`17,679 / 83.33%`" in readme
+    assert "Slices：`16,852 / 79.43%`" in readme
     assert "RAM：`43`" in readme
     assert "DSP：`24`" in readme
 
@@ -286,16 +286,16 @@ def test_manifest_uses_portable_external_input_tokens():
 def test_current_requirement_and_warning_audits_bind_the_current_build():
     requirement_audit = (ROOT / "docs" / "evidence" / "industrial-v1-requirement-audit.md").read_text(encoding="utf-8")
     warning_audit = (ROOT / "docs" / "evidence" / "industrial-v1-td-warning-audit.md").read_text(encoding="utf-8")
-    assert "17,679" in requirement_audit
-    assert "83.33%" in requirement_audit
-    assert "Setup WNS `+104 ps`" in requirement_audit
+    assert "16,852" in requirement_audit
+    assert "79.43%" in requirement_audit
+    assert "Setup WNS `+103 ps`" in requirement_audit
     assert "Hold WNS `+20 ps`" in requirement_audit
-    assert "17,679" in warning_audit
-    assert "83.33%" in warning_audit
-    assert "Setup WNS `+104 ps`" in warning_audit
+    assert "16,852" in warning_audit
+    assert "79.43%" in warning_audit
+    assert "Setup WNS `+103 ps`" in warning_audit
     assert "Hold WNS `+20 ps`" in warning_audit
-    assert "ba451dddce56234c0e7e5801af28fa11f209d4522978ac92e668ad7554f3c53e" in requirement_audit
-    assert "ba451dddce56234c0e7e5801af28fa11f209d4522978ac92e668ad7554f3c53e" in warning_audit
+    assert "e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3" in requirement_audit
+    assert "e9815a4a42f085d26cb8744c0d5a485020d3ece3e1a1bb7aff20d92264de68d3" in warning_audit
     assert "PHY-7022" not in warning_audit
     for code in ("SYN-5011", "SYN-5025", "SYN-5041", "PHY-5079", "PHY-5088"):
         assert code in warning_audit

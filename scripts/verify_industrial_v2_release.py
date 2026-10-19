@@ -67,6 +67,34 @@ def missing_paths(relative_paths: tuple[str, ...]) -> tuple[str, ...]:
     return tuple(path for path in relative_paths if not (ROOT / path).exists())
 
 
+def build_v1_regression_gate(*, returncode: int, output: str) -> Gate:
+    """Evaluate the current full work/tests result instead of a frozen count."""
+    evidence = ("work/tests",)
+    if returncode == 0:
+        return Gate("v1_regression", PASS, evidence, ())
+    summary = next(
+        (line.strip() for line in reversed(output.splitlines()) if line.strip()),
+        "no pytest output",
+    )
+    return Gate(
+        "v1_regression",
+        BLOCKED,
+        evidence,
+        (f"full work/tests regression failed: {summary}",),
+    )
+
+
+def run_full_work_tests() -> tuple[int, str]:
+    """Run the complete repository regression used by the V2 release gate."""
+    result = subprocess.run(
+        [sys.executable, "-B", "-m", "pytest", "-q", "work/tests"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    return result.returncode, (result.stdout or "") + (result.stderr or "")
+
+
 def build_resource_timing_gate(route_qor_text: str, evidence: tuple[str, ...]) -> Gate:
     """Evaluate the current candidate's measured resource and timing QoR."""
     labels = {
@@ -172,6 +200,7 @@ def load_status() -> dict:
 
 def build_audit() -> dict:
     status_doc = load_status()
+    full_tests_returncode, full_tests_output = run_full_work_tests()
     phases = status_doc.get("phases", {})
     formal_candidate_paths = (
         "docs/experiments/2026-10-19-industrial-v2-g8-formal-feature-td.md",
@@ -282,11 +311,9 @@ def build_audit() -> dict:
             if not v2_release_complete
             else (),
         ),
-        Gate(
-            "v1_regression",
-            BLOCKED,
-            ("docs/experiments/2026-10-19-industrial-v2-g0-baseline.md",),
-            ("full work/tests baseline retains 8 frozen-vs-later contract failures",),
+        build_v1_regression_gate(
+            returncode=full_tests_returncode,
+            output=full_tests_output,
         ),
         Gate(
             "td_full_build",
