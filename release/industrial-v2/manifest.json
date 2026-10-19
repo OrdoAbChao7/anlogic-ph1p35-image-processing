@@ -239,9 +239,9 @@
   "open_gates": [
     "fixed-seed builds are not byte-identical across repeated runs",
     "PHY-5016/PHY-5060/PHY-5079/PHY-5088 warning closure",
-    "V1 full regression contract drift",
     "hardware download and function matrix",
+    "physical performance traceability",
     "cold reset and long-run stability",
-    "physical performance and actuator acceptance"
+    "external actuator acceptance"
   ]
 }
