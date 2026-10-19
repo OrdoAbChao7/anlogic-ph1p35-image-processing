@@ -272,6 +272,7 @@
         "docs/experiments/2026-10-19-industrial-v2-g8-release-audit.md",
         "docs/experiments/2026-10-19-industrial-v2-g8-release-audit.json",
         "docs/evidence/industrial-v2-g8-full-tests-log.txt",
+        "docs/evidence/industrial-v2-g8-hardware-availability-check.md",
         "docs/experiments/2026-10-19-industrial-v2-g8-feature-spine.md",
         "fallback/rtl/integration/industrial_v2_feature_spine.v",
         "fallback/sim/integration/tb_industrial_v2_feature_spine.v",

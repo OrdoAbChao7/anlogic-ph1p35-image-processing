@@ -340,7 +340,7 @@ def build_audit() -> dict:
         Gate(
             "hardware_function_matrix",
             BLOCKED,
-            (),
+            existing_paths(("docs/evidence/industrial-v2-g8-hardware-availability-check.md",)),
             ("no bound V2 board, camera, display, or Bitstream evidence",),
         ),
         Gate(
