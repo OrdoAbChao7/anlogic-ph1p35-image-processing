@@ -2,6 +2,8 @@
 
 状态：`CANDIDATE_ONLY`。本目录包含一个七功能 V2 Bitstream、TD 报告、构建 Flow 和 provenance manifest；它不是最终硬件发布包。
 
+发布物逐项完整性审计见 [`RELEASE_PACKAGE_AUDIT.md`](RELEASE_PACKAGE_AUDIT.md)。
+
 ## 构建绑定
 
 - 目标：`HX1P35A / PH1P35MDG324`
