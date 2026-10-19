@@ -125,7 +125,9 @@
     {
       "name": "hardware_function_matrix",
       "status": "BLOCKED",
-      "evidence": [],
+      "evidence": [
+        "docs/evidence/industrial-v2-g8-hardware-availability-check.md"
+      ],
       "blockers": [
         "no bound V2 board, camera, display, or Bitstream evidence"
       ]
@@ -180,7 +182,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "bd9d5dbad8b9579defedc9484e4fc43a8c998754",
+  "commit": "0dc80522194ee73d73cb226a06d4f5494e2aa152",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",
