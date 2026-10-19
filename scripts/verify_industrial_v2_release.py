@@ -218,6 +218,9 @@ def build_audit() -> dict:
         "docs/evidence/industrial-v2-g8-clock-warning-audit-log.txt",
         "docs/evidence/industrial-v2-g8-clock-warning-detail-log.txt",
         "docs/experiments/2026-10-19-industrial-v2-g8-clock-detail.md",
+        "docs/experiments/2026-10-19-industrial-v2-g8-mclk-oddr-seed3.md",
+        "docs/evidence/industrial-v2-g8-mclk-oddr-seed3-log.txt",
+        "release/candidates/industrial-v2-mclk-oddr-seed3/route.qor",
     )
     warning_audit_evidence = existing_paths(warning_audit_paths)
     warning_audit_complete = not missing_paths(warning_audit_paths)
