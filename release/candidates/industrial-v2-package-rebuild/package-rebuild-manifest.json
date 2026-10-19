@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "project": "PH1P35 Industrial Vision V2 candidate package rebuild",
+  "status": "REJECTED_CANDIDATE",
+  "source_package": "release/industrial-v2/source",
+  "input_package": "release/industrial-v2/source/fallback/td_package",
+  "flow": "release/industrial-v2/DefaultFlow.tcl",
+  "placement_seed": 1,
+  "td_version": "6.2.168116",
+  "observed_wrapper_result": "observation_timeout_after_300s; TD process later exited after bitgen markers were present",
+  "td_stage_evidence": {
+    "opt_place_end": true,
+    "opt_route_end": true,
+    "bitgen_end": true
+  },
+  "qor": {
+    "route_qor": "route.qor",
+    "final_timing": "final_timing.rpt"
+  },
+  "artifacts": {
+    "bitstream": {
+      "path": "camera_to_dsi_display_compress.bit",
+      "size_bytes": 1367985,
+      "sha256": "11a99053b800e27cc2cdae4b0295548c715e73d5e61ed64607d2f5a65468558a"
+    },
+    "route_qor_sha256": "77eea237c4d47bf2b860bd717b491326b99e8dacfdba8307dbd8798064fc39c7",
+    "final_timing_sha256": "583dde23861ff67b2103b5e8b103f09320ae92f0ef2549344eb826a30a7abf2e"
+  },
+  "rejection": [
+    "Slice 86.28% exceeds the <=85% release target",
+    "outer build wrapper did not return an exit code before observation timeout",
+    "PHY-5016/5060/5079/5088 remain open"
+  ]
+}

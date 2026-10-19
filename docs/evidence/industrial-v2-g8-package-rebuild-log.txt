@@ -1,0 +1,35 @@
+Industrial V2 G8 package-source rebuild candidate
+Date: 2026-10-19
+Worktree: E:/Projects/FPGA-v2
+Target: PH1P35MDG324
+TD version: 6.2.168116
+Flow: release/industrial-v2/DefaultFlow.tcl
+Input package: release/industrial-v2/source/fallback/td_package
+Top: release/industrial-v2/source/fallback/td_source/design_top_wrapper.v
+Video RTL: release/industrial-v2/source/fallback/rtl/video/video_cartoon_region_fill.v
+Placement seed: 1
+Isolated work: work/td_industrial_v2_package_rebuild
+
+Observation:
+- outer Python wrapper observation window: 300 seconds; no exit code returned before timeout
+- TD process later exited after .opt_place.end.f, .opt_route.end.f, and .bitgen.end.f were present
+- this is direct TD artifact evidence, not a wrapper PASS
+
+QoR:
+- Setup WNS +127 ps, TNS 0, violated endpoints 0
+- Hold WNS +20 ps, TNS 0, violated endpoints 0
+- Slice 18305/21216 (86.28%)
+- RAM 43, DSP 24, DRAMHARDCON 229
+- compressed bitstream size 1367985 bytes
+- bitstream SHA-256 11a99053b800e27cc2cdae4b0295548c715e73d5e61ed64607d2f5a65468558a
+- route.qor SHA-256 77eea237c4d47bf2b860bd717b491326b99e8dacfdba8307dbd8798064fc39c7
+- final_timing.rpt SHA-256 583dde23861ff67b2103b5e8b103f09320ae92f0ef2549344eb826a30a7abf2e
+
+Warnings observed in TD logs:
+- PHY-5016
+- PHY-5060
+- PHY-5079
+- PHY-5088
+
+Decision: reject promotion. Slice exceeds the <=85% release target; wrapper timeout leaves reproducibility evidence incomplete; warning families remain open. Formal release/industrial-v2 candidate remains unchanged.
+
