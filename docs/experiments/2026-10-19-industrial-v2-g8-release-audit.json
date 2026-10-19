@@ -1,12 +1,13 @@
 {
   "release_status": "BLOCKED",
-  "gate_count": 12,
+  "gate_count": 13,
   "blocked_gates": [
     "warnings_cdc_constraints_audit",
     "hardware_function_matrix",
     "performance_traceability",
     "cold_reset_long_run",
     "reproducible_build_package",
+    "release_package_contents",
     "external_actuator_acceptance"
   ],
   "gates": [
@@ -162,6 +163,28 @@
       ]
     },
     {
+      "name": "release_package_contents",
+      "status": "BLOCKED",
+      "evidence": [
+        "release/industrial-v2/README.md",
+        "release/industrial-v2/manifest.json",
+        "release/industrial-v2/industrial-v2.bit",
+        "release/industrial-v2/route.qor",
+        "release/industrial-v2/final_timing.rpt",
+        "release/industrial-v2/td-reports"
+      ],
+      "blockers": [
+        "missing release package material: source",
+        "missing release package material: tests",
+        "missing release package material: evidence/INDEX.md",
+        "missing release package material: handbook/DEMO_RUNBOOK.md",
+        "missing release package material: fallback/README.md",
+        "missing release package material: hardware/HARDWARE_TEST_PLAN.md",
+        "missing release package material: performance/RESULTS.md",
+        "missing release package material: RISK_REGISTER.md"
+      ]
+    },
+    {
       "name": "external_actuator_acceptance",
       "status": "BLOCKED",
       "evidence": [
@@ -182,7 +205,7 @@
   ],
   "audit": "industrial-v2-g8-release",
   "audit_version": 1,
-  "commit": "0dc80522194ee73d73cb226a06d4f5494e2aa152",
+  "commit": "e94cec8ccb23ff9925519e32e769784711d39919",
   "worktree": "E:/Projects/FPGA-v2",
   "baseline": {
     "path": "release/candidates/industrial-v1-hx1p35a-pin-correction/camera_to_dsi_display_compress.bit",

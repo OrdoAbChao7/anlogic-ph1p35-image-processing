@@ -32,6 +32,7 @@ REQUIRED_GATE_NAMES = (
     "performance_traceability",
     "cold_reset_long_run",
     "reproducible_build_package",
+    "release_package_contents",
     "external_actuator_acceptance",
     "visual_approval",
 )
@@ -45,7 +46,7 @@ def test_all_g8_exit_gates_are_required_for_release():
     result = evaluate_release(passing_gates())
 
     assert result["release_status"] == RELEASED
-    assert result["gate_count"] == 12
+    assert result["gate_count"] == 13
     assert tuple(g["name"] for g in result["gates"]) == REQUIRED_GATE_NAMES
 
 
@@ -87,6 +88,21 @@ def test_reproducible_package_stays_blocked_when_seed_evidence_is_not_byte_ident
         "fixed placement seed did not produce byte-identical Bitstreams" in blocker
         for blocker in gate.blockers
     )
+
+
+def test_release_package_contents_gate_blocks_missing_final_materials(tmp_path):
+    package_root = tmp_path / "release" / "industrial-v2"
+    package_root.mkdir(parents=True)
+    (package_root / "industrial-v2.bit").write_bytes(b"candidate")
+    (package_root / "manifest.json").write_text("{}", encoding="utf-8")
+
+    gate = VERIFY_MODULE.build_release_package_contents_gate(
+        package_root=package_root,
+    )
+
+    assert gate.name == "release_package_contents"
+    assert gate.status == "BLOCKED"
+    assert any("source" in blocker for blocker in gate.blockers)
 
 
 def test_resource_gate_passes_for_clean_qor_under_slice_target():

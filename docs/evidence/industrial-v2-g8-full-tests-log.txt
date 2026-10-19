@@ -5,7 +5,7 @@ Command: python -B -m pytest -q work/tests
 
 Result:
 - exit code: 0
-- 132 passed in 0.81s
+- 133 passed in 0.86s
 
 Scope:
 - V1 build/release contracts

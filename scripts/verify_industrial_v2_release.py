@@ -31,8 +31,27 @@ GATE_NAMES = (
     "performance_traceability",
     "cold_reset_long_run",
     "reproducible_build_package",
+    "release_package_contents",
     "external_actuator_acceptance",
     "visual_approval",
+)
+
+
+RELEASE_PACKAGE_REQUIRED_PATHS = (
+    "README.md",
+    "manifest.json",
+    "industrial-v2.bit",
+    "route.qor",
+    "final_timing.rpt",
+    "td-reports",
+    "source",
+    "tests",
+    "evidence/INDEX.md",
+    "handbook/DEMO_RUNBOOK.md",
+    "fallback/README.md",
+    "hardware/HARDWARE_TEST_PLAN.md",
+    "performance/RESULTS.md",
+    "RISK_REGISTER.md",
 )
 
 
@@ -189,6 +208,29 @@ def build_reproducible_build_package_gate(
         "reproducible_build_package",
         PASS if not blockers and v2_release_complete else BLOCKED,
         existing_paths(required) + fixed_seed_evidence,
+        blockers,
+    )
+
+
+def build_release_package_contents_gate(*, package_root: Path) -> Gate:
+    """Check that the final-release material contract is physically in the package."""
+    missing = tuple(
+        relative
+        for relative in RELEASE_PACKAGE_REQUIRED_PATHS
+        if not (package_root / relative).exists()
+    )
+    evidence = tuple(
+        f"release/industrial-v2/{relative}"
+        for relative in RELEASE_PACKAGE_REQUIRED_PATHS
+        if (package_root / relative).exists()
+    )
+    blockers = tuple(
+        f"missing release package material: {relative}" for relative in missing
+    )
+    return Gate(
+        "release_package_contents",
+        PASS if not blockers else BLOCKED,
+        evidence,
         blockers,
     )
 
@@ -359,6 +401,9 @@ def build_audit() -> dict:
             v2_release_complete=v2_release_complete,
             fixed_seed_evidence=fixed_seed_evidence,
             fixed_seed_byte_identical=fixed_seed_byte_identical,
+        ),
+        build_release_package_contents_gate(
+            package_root=ROOT / "release" / "industrial-v2",
         ),
         Gate(
             "external_actuator_acceptance",
