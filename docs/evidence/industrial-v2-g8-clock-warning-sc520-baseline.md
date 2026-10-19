@@ -15,6 +15,8 @@
 | V2 约束 | `fallback/td_package/user_source/constraints_source/pin.adc` |
 | V2 顶层 | `fallback/td_package/user_source/hdl_source/design_top_wrapper.v` |
 
+外部基线文件校验值：`pin.adc` SHA-256 `99c31a6c3d949e35848184c7cef3c11487e98fa5e803123e84541fbe96d98dbe`；TD 日志（175538 bytes）SHA-256 `6677637fdb6f4c7f093060f599b6058d4b8bc8b1ac29a53628ea37e4fe404ff6`。
+
 ## 观察结果
 
 SC520 Lab1 与 V2 的 `pin.adc` 对摄像头时钟、I2C 和复位使用相同管脚合同：
