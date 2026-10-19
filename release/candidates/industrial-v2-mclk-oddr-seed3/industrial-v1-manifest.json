@@ -1,0 +1,196 @@
+{
+  "project": "PH1P35 fixed-red industrial inspection v1",
+  "target_device": "PH1P35MDG324",
+  "git_commit": "38496f84d21a7f49bedcad5d44e54ff6d8510b00",
+  "git_status": "?? release/candidates/industrial-v2-mclk-oddr-seed3/\n?? work/td_industrial_v2_mclk_oddr_seed3/",
+  "build_inputs": {
+    "td_exe": ".tools/td/app/bin/td_commands_prompt.exe",
+    "flow_tcl": ".tools/td/app/doc/scripts/DefaultFlow.tcl",
+    "input_package": "fallback/td_package",
+    "baseline_runs": "fallback/td_package/td_project/camera_to_dsi_display_Runs"
+  },
+  "build_input_hashes": {
+    "td_exe": {
+      "path": ".tools/td/app/bin/td_commands_prompt.exe",
+      "exists": false
+    },
+    "flow_tcl": {
+      "path": ".tools/td/app/doc/scripts/DefaultFlow.tcl",
+      "exists": false
+    },
+    "run_flow_tcl": {
+      "path": ".tools/td/app/doc/scripts/DefaultFlow.tcl",
+      "exists": false
+    },
+    "place_seed": null,
+    "input_package": {
+      "path": "fallback/td_package",
+      "exists": true
+    },
+    "baseline_files": {
+      "syn_1/settings.cfg": {
+        "path": "fallback/td_package/td_project/camera_to_dsi_display_Runs/syn_1/settings.cfg",
+        "exists": true,
+        "size_bytes": 698,
+        "sha256": "0edb3a700629ede8b9f436782036851e07146991899bd2533622ee221e70c149"
+      },
+      "syn_1/camera_to_dsi_display.prj": {
+        "path": "fallback/td_package/td_project/camera_to_dsi_display_Runs/syn_1/camera_to_dsi_display.prj",
+        "exists": true,
+        "size_bytes": 29816,
+        "sha256": "3c49931700e21cf01e1fcb92fd38b11dfc5bac0c56c936e468695ad078d43add"
+      },
+      "phy_1/settings.cfg": {
+        "path": "fallback/td_package/td_project/camera_to_dsi_display_Runs/phy_1/settings.cfg",
+        "exists": true,
+        "size_bytes": 755,
+        "sha256": "082f4f12f328456316e9d4452a85aa12034bd92651c839929ab9afe0214edce8"
+      },
+      "phy_1/camera_to_dsi_display.prj": {
+        "path": "fallback/td_package/td_project/camera_to_dsi_display_Runs/phy_1/camera_to_dsi_display.prj",
+        "exists": true,
+        "size_bytes": 29936,
+        "sha256": "ab86457335328f6bf86de0b91e75ce27a0c877a0b38b60b0eab7ca3bdb1e70b7"
+      }
+    }
+  },
+  "sources": [
+    {
+      "path": "fallback/rtl/video/video_cartoon_region_fill.v",
+      "sha256": "9778bb06e7dddf0238fdc2e70260125c8508ae46dbb9bb92554a811a8fff4dc0"
+    },
+    {
+      "path": "release/candidates/industrial-v2-mclk-oddr-seed3/design_top_wrapper_mclk_oddr.v",
+      "sha256": "fd65440dc4dfaea1305f0dd31e42fcb79413628301106a87272cb3647ab2c3e0"
+    },
+    {
+      "path": "fallback/td_source/isp/isp_top.v",
+      "sha256": "e1bf575458d2fba86572f077f9e104104619aaea015896fc9ad88aadd8e29f9a"
+    },
+    {
+      "path": "fallback/td_source/uivtc_guarded.v",
+      "sha256": "32a3332d2d583465c83ba5363fae78d7e5b2ce119d5fdbe9a74a51ffe0de80b4"
+    },
+    {
+      "path": "fallback/td_source/hdmi_mixer_guarded.v",
+      "sha256": "2690be7c73d37cec4bd24298fb533dedefa42b9628371f787f8213f71c85bf3d"
+    },
+    {
+      "path": "fallback/td_package/user_source/hdl_source/mc_to_user_interface.v",
+      "sha256": "5d0d3f9822e8d7602134b0e89a823112cb0f9fd5f9f8018ac8b4b86d35eef1ab"
+    },
+    {
+      "path": "fallback/rtl/inspection/morph_open_96.v",
+      "sha256": "761681aa3c74d674610d29b5b05c311900aa12f4f6d2bfbefd769b2e6c6b7af9"
+    },
+    {
+      "path": "fallback/rtl/inspection/color_detect_96_v2.v",
+      "sha256": "a1767e473bd48727f329ef2dc959b936285fed39711f576caa8c39cd34b5a0f6"
+    },
+    {
+      "path": "fallback/rtl/inspection/defect_classifier.v",
+      "sha256": "7a746fe76bcd3b3eefcc6a687b835926ff0671ab6779ce6cd014df760fa21e9d"
+    },
+    {
+      "path": "fallback/rtl/inspection/bbox_draw_overlay.v",
+      "sha256": "1a22ea573b82a361deb27db61828a3b365539a321bf1e71ab536f4812d222544"
+    },
+    {
+      "path": "fallback/rtl/inspection/inspection_result_cdc.v",
+      "sha256": "2205944ac60d99b9ade219783ef3d0c4b1e7aa54f0cfa82ba58ef90e6da1216d"
+    },
+    {
+      "path": "fallback/rtl/display/anlogic_logo_rom.v",
+      "sha256": "a105c935dafef80b1d3ed2abd505bfd1f970f44c3a5663d1574f3e452b481e98"
+    },
+    {
+      "path": "fallback/rtl/display/industrial_osd_overlay.v",
+      "sha256": "cd4201a77bbf18b9ddc3f3b0d840f39a1907fb59cea8c273d6e8c5f5983aec73"
+    },
+    {
+      "path": "fallback/rtl/control/mode_controller.v",
+      "sha256": "2d4dfc76c35c14294572ef1e9e53fda236e952c99fa2f55c89f8d8c3d6378cf1"
+    },
+    {
+      "path": "fallback/rtl/integration/industrial_v2_result_cdc.v",
+      "sha256": "acd09e7979d9b4773f1c36935ae5b4c89d0b98568bf0c3cd0d947930dbbfd9fd"
+    },
+    {
+      "path": "fallback/rtl/integration/industrial_v2_display_tracking.v",
+      "sha256": "8913608249f2761f9a793cbc8ec7da26bc5196bf880f78049a99d57d8c31291e"
+    },
+    {
+      "path": "fallback/rtl/integration/industrial_v2_feature_spine.v",
+      "sha256": "d12bb372581ea0037ec8c7ce2082540dc5ce7157ee8e15c7b178ad91e8cd7079"
+    },
+    {
+      "path": "fallback/rtl/integration/motion_grid_adapter_96.v",
+      "sha256": "9a145bab85b99921e98ff0c9205c457eba9de0431dbdd2810b3270912c498d6f"
+    },
+    {
+      "path": "fallback/rtl/integration/frame_stats_96.v",
+      "sha256": "03f7eb9c9c975e84dfaebec48936401541aa5f757359ef77401e052f06b86d43"
+    },
+    {
+      "path": "fallback/rtl/inspection/temporal_tracker.v",
+      "sha256": "4077ed055e26a2162946fa327451ffcb713a4306ad93b7b1172012215e59c54e"
+    },
+    {
+      "path": "fallback/rtl/inspection/trajectory_history.v",
+      "sha256": "1f6507122fd19dbffa5d6ceefbe90db3bb33d090a882c92536360b777524412a"
+    },
+    {
+      "path": "fallback/rtl/inspection/frame_tag_monitor.v",
+      "sha256": "ea76b52d773920a4ab6fcef6e33f98d3a8c10639a772759cbe801c871d4c5310"
+    },
+    {
+      "path": "fallback/rtl/inspection/latency_monitor.v",
+      "sha256": "2c1ba20f4dad851bf9cb1143a90201a273546131f02778a835a20f7dfb37ce47"
+    },
+    {
+      "path": "fallback/rtl/inspection/motion_diff_160.v",
+      "sha256": "38944cccb0be89dfbeaf5ab0cad21ef9f53752a32a455631c160b2ab5a1015e2"
+    },
+    {
+      "path": "fallback/rtl/inspection/dimension_calibrator.v",
+      "sha256": "ea368a3549f6589f4c2f389059f6c914553123d7d4af557c309b0756d71a4978"
+    },
+    {
+      "path": "fallback/rtl/display/tracking_overlay.v",
+      "sha256": "de2b9b0528fad32cce0ca7373305590813c2421d5ee5f61ae13ea880eec925d3"
+    },
+    {
+      "path": "fallback/rtl/isp/awb_frame_gain_controller.v",
+      "sha256": "f4e5420a7492b3af9616a92485b92abbaf4b0bb6650c901a716f5a3563204dd6"
+    },
+    {
+      "path": "fallback/rtl/control/sort_event_controller.v",
+      "sha256": "60975f57d7c07d8d51334ba48097d6e09ad04e529582b9d8f49a6d18913adede"
+    },
+    {
+      "path": "fallback/rtl/control/sort_safety_interlock.v",
+      "sha256": "16730f70eb271a514be29c29dd26a05ecb1e394e823ed68cf96c73a525cc6b11"
+    },
+    {
+      "path": "fallback/rtl/control/sort_pulse_generator.v",
+      "sha256": "0e83d13a0dcae486a53a53ab6e63a56910fc6794919c035a1923c94cd743b14b"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "release/candidates/industrial-v2-mclk-oddr-seed3/camera_to_dsi_display_compress.bit",
+      "size_bytes": 1370801,
+      "sha256": "08da31a0f5fe2f9aadb7177e0794b4eb5438c74b97a32071b5ac592f856d2c25"
+    },
+    {
+      "path": "release/candidates/industrial-v2-mclk-oddr-seed3/route.qor",
+      "size_bytes": 1313,
+      "sha256": "94d715a4fa579ab6b10d0df5d6afcffd07bb9ddf8b54418653ac5d75da086365"
+    },
+    {
+      "path": "release/candidates/industrial-v2-mclk-oddr-seed3/final_timing.rpt",
+      "size_bytes": 4748803,
+      "sha256": "821d53bb27e5f1be761997df35e44d5b64fcfa9e99ff92aea449f97cc59cd06d"
+    }
+  ]
+}
