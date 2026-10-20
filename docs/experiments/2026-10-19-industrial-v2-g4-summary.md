@@ -28,7 +28,7 @@ G4 commits：`a3fcef3`, `9f6371e`, `a14d9f3`
 
 ## 阶段判定
 
-`V2-G4 = BLOCKED`，分层为：
+本段 `BLOCKED` 记录的是原始 G4 RTL 里程碑，当时分层为：
 
 - 软件模型：`SOFTWARE_PASS`；
 - 独立 RTL：`RTL_PASS`；
@@ -36,3 +36,7 @@ G4 commits：`a3fcef3`, `9f6371e`, `a14d9f3`
 - HDMI/真实运动硬件：`NOT_RUN/BLOCKED`。
 
 G4 已证明真实跨帧数据比较的独立模块语义，但不能据此宣称完整实时视频接入、资源通过或上板运动显示。G1-G3 的共同正式顶层和 TD 阻塞继续保留。
+
+## 2026-10-19 资源跟进
+
+批准的计数器窄化及最大计数回归、正式顶层单变量 TD A/B 结果见 [`2026-10-19-industrial-v2-g4-motion-count-width-ab.md`](2026-10-19-industrial-v2-g4-motion-count-width-ab.md)。在 160×120 最大密集运动场景中，19,200 计数与 24 位外部接口通过；本次 A/B 候选比 24 位基线少 226 slices，Setup/Hold WNS 均为正且 TNS 为 0。该改善只来自一组同 seed 对照，保留为候选观察值；正式发布、重复运行稳定性及真实硬件运动行为仍未验收。

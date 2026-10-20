@@ -30,7 +30,7 @@
 | 自适应白平衡 | `SOFTWARE_PASS` | `RTL_PASS` | `TD_PASS` | `HARDWARE_NOT_RUN` |
 | 标定与形状验证 | `SOFTWARE_PASS` | `RTL_PASS` | `TD_PASS` | `HARDWARE_NOT_RUN` |
 
-包内 `tests/` 是候选冻结时的 73 文件快照；当前根工作树执行 `python -B -m pytest -q work/tests` 为 `135 passed`（包含后续 I2C 告警探针契约测试）。Stage D 软件等价模型为 `PASS`。这些结果不等价于板级摄像头、HDMI、LED、冷启动、长稳或机械执行器验收。
+包内 `tests/` 是候选冻结时的 73 文件快照；当前根工作树执行 `python -B -m pytest -q work/tests` 为 `143 passed`（包含后续 I2C 告警探针契约测试）。Stage D 软件等价模型为 `PASS`。这些结果不等价于板级摄像头、HDMI、LED、冷启动、长稳或机械执行器验收。
 
 ## 当前未关闭门禁
 

@@ -26,6 +26,11 @@ module tb_stream_adapters_96;
   wire [31:0] pixel_count;
   wire [7:0] mean_luma;
   wire stats_invalid;
+  wire fixed_stats_valid;
+  wire [15:0] fixed_stats_frame_id;
+  wire [31:0] fixed_sum_r, fixed_sum_g, fixed_sum_b, fixed_pixel_count;
+  wire [7:0] fixed_mean_luma;
+  wire fixed_stats_invalid;
   wire motion_summary_valid;
   wire motion_baseline_ready;
   wire motion_valid;
@@ -55,6 +60,17 @@ module tb_stream_adapters_96;
     .O_invalid(stats_invalid)
   );
 
+  frame_stats_96 #(
+    .INPUT_WIDTH(16), .INPUT_HEIGHT(12), .USE_FIXED_FRAME_SIZE(1)
+  ) u_stats_fixed (
+    .I_clk(clk), .I_rst_n(rst_n), .I_tuser(tuser), .I_tlast(tlast),
+    .I_tvalid(tvalid), .I_frame_id(frame_id), .I_tdata(tdata),
+    .O_stats_valid(fixed_stats_valid), .O_frame_id(fixed_stats_frame_id),
+    .O_sum_r(fixed_sum_r), .O_sum_g(fixed_sum_g), .O_sum_b(fixed_sum_b),
+    .O_pixel_count(fixed_pixel_count), .O_mean_luma(fixed_mean_luma),
+    .O_invalid(fixed_stats_invalid)
+  );
+
   motion_diff_160 #(
     .IMG_WIDTH(2), .IMG_HEIGHT(2), .THRESHOLD(5)
   ) u_motion (
@@ -69,13 +85,39 @@ module tb_stream_adapters_96;
 
   reg stats_seen;
   reg motion_seen;
+  reg fixed_stats_pending;
+  reg [15:0] expected_fixed_frame_id;
+  reg [31:0] expected_fixed_sum_r, expected_fixed_sum_g, expected_fixed_sum_b;
+  reg [31:0] expected_fixed_pixel_count;
+  reg [7:0] expected_fixed_mean_luma;
+  reg expected_fixed_invalid;
   always @(posedge clk) begin
     if (stats_valid) begin
       stats_seen <= 1'b1;
+      if (fixed_stats_valid)
+        $fatal(1, "fixed-frame result must be deferred relative to runtime statistics");
+      fixed_stats_pending = 1'b1;
+      expected_fixed_frame_id = stats_frame_id;
+      expected_fixed_sum_r = sum_r;
+      expected_fixed_sum_g = sum_g;
+      expected_fixed_sum_b = sum_b;
+      expected_fixed_pixel_count = pixel_count;
+      expected_fixed_mean_luma = mean_luma;
+      expected_fixed_invalid = stats_invalid;
       if (sum_g != 32'd9600 || sum_b != 32'd4800 || pixel_count != 32'd192 ||
           ((stats_frame_id == 16'd1) && (sum_r != 32'd19200 || mean_luma != 8'd58)) ||
           ((stats_frame_id == 16'd2) && (sum_r != 32'd19600 || mean_luma != 8'd59)))
         $fatal(1, "frame statistics mismatch r=%0d g=%0d b=%0d n=%0d y=%0d", sum_r, sum_g, sum_b, pixel_count, mean_luma);
+    end
+    if (fixed_stats_valid) begin
+      if (!fixed_stats_pending || fixed_stats_frame_id != expected_fixed_frame_id ||
+          fixed_sum_r != expected_fixed_sum_r || fixed_sum_g != expected_fixed_sum_g ||
+          fixed_sum_b != expected_fixed_sum_b ||
+          fixed_pixel_count != expected_fixed_pixel_count ||
+          fixed_mean_luma != expected_fixed_mean_luma ||
+          fixed_stats_invalid != expected_fixed_invalid)
+        $fatal(1, "deferred fixed-frame statistics differ from runtime result");
+      fixed_stats_pending = 1'b0;
     end
     if (motion_valid) begin
       motion_seen <= 1'b1;
@@ -114,13 +156,15 @@ module tb_stream_adapters_96;
   initial begin
     stats_seen = 1'b0;
     motion_seen = 1'b0;
+    fixed_stats_pending = 1'b0;
     repeat (3) @(negedge clk);
     rst_n = 1'b1;
     send_frame(16'd1, 1'b0);
     send_frame(16'd2, 1'b1);
     repeat (8) @(posedge clk);
-    if (!stats_seen || !motion_seen)
-      $fatal(1, "adapter outputs missing stats_seen=%b motion_seen=%b", stats_seen, motion_seen);
+    if (!stats_seen || !motion_seen || fixed_stats_pending)
+      $fatal(1, "adapter outputs missing stats_seen=%b motion_seen=%b fixed_pending=%b",
+             stats_seen, motion_seen, fixed_stats_pending);
     if (motion_adapter_invalid || stats_invalid)
       $fatal(1, "adapter reported invalid raster contract");
     $display("TB_STREAM_ADAPTERS_96_PASS");

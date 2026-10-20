@@ -7,7 +7,8 @@
 module frame_stats_96 #(
   parameter integer INPUT_WIDTH  = 1280,
   parameter integer INPUT_HEIGHT = 720,
-  parameter integer FRAME_ID_WIDTH = 16
+  parameter integer FRAME_ID_WIDTH = 16,
+  parameter integer USE_FIXED_FRAME_SIZE = 0
 )(
   input  wire                         I_clk,
   input  wire                         I_rst_n,
@@ -28,6 +29,7 @@ module frame_stats_96 #(
 
   localparam integer GROUPS_PER_LINE = INPUT_WIDTH / 4;
   localparam integer ROW_WIDTH = (INPUT_HEIGHT <= 1) ? 1 : $clog2(INPUT_HEIGHT);
+  localparam [31:0] FRAME_PIXEL_COUNT = INPUT_WIDTH * INPUT_HEIGHT;
 
   reg [ROW_WIDTH-1:0] row_index;
   reg [31:0] sum_r_acc;
@@ -35,6 +37,22 @@ module frame_stats_96 #(
   reg [31:0] sum_b_acc;
   reg [31:0] pixel_count_acc;
   reg frame_seen;
+  reg frame_protocol_invalid;
+  reg fixed_sum_pending;
+  reg fixed_mean_pending;
+  reg fixed_pending_invalid;
+  reg [FRAME_ID_WIDTH-1:0] fixed_pending_frame_id;
+  reg [31:0] fixed_pending_sum_r;
+  reg [31:0] fixed_pending_sum_g;
+  reg [31:0] fixed_pending_sum_b;
+  reg [31:0] fixed_pending_pixel_count;
+  reg fixed_mean_invalid;
+  reg [FRAME_ID_WIDTH-1:0] fixed_mean_frame_id;
+  reg [31:0] fixed_mean_sum_r;
+  reg [31:0] fixed_mean_sum_g;
+  reg [31:0] fixed_mean_sum_b;
+  reg [31:0] fixed_mean_pixel_count;
+  reg [31:0] fixed_mean_luma_total;
 
   wire [7:0] r0 = I_tdata[95:88];
   wire [7:0] g0 = I_tdata[87:80];
@@ -64,8 +82,27 @@ module frame_stats_96 #(
   wire frame_end = I_tvalid && I_tlast && (base_row == INPUT_HEIGHT-1);
   wire [63:0] luma_numerator = final_r + final_g + final_b;
   wire [63:0] luma_denominator = final_count * 64'd3;
-  wire [63:0] mean_luma_calc = (luma_denominator != 0) ?
-                                (luma_numerator / luma_denominator) : 0;
+  wire [31:0] fixed_sum_stage_result = fixed_pending_sum_r +
+                                        fixed_pending_sum_g +
+                                        fixed_pending_sum_b;
+  wire [63:0] mean_luma_calc;
+
+  generate
+    if (USE_FIXED_FRAME_SIZE != 0) begin : g_fixed_frame_luma
+      localparam [63:0] FRAME_LUMA_DENOMINATOR = FRAME_PIXEL_COUNT * 64'd3;
+      if (FRAME_PIXEL_COUNT == 32'd921600) begin : g_720p_reciprocal
+        wire [45:0] reciprocal_product =
+            {22'd0, fixed_mean_luma_total[31:8]} * {24'd0, 22'd3181458};
+        assign mean_luma_calc = reciprocal_product >> 35;
+      end else begin : g_other_fixed_size
+        assign mean_luma_calc = (FRAME_LUMA_DENOMINATOR != 0) ?
+                                ({32'd0, fixed_mean_luma_total} / FRAME_LUMA_DENOMINATOR) : 0;
+      end
+    end else begin : g_runtime_frame_luma
+      assign mean_luma_calc = (luma_denominator != 0) ?
+                              (luma_numerator / luma_denominator) : 0;
+    end
+  endgenerate
 
   always @(posedge I_clk or negedge I_rst_n) begin
     if (!I_rst_n) begin
@@ -75,6 +112,22 @@ module frame_stats_96 #(
       sum_b_acc       <= 32'd0;
       pixel_count_acc <= 32'd0;
       frame_seen      <= 1'b0;
+      frame_protocol_invalid <= 1'b0;
+      fixed_sum_pending <= 1'b0;
+      fixed_mean_pending <= 1'b0;
+      fixed_pending_invalid <= 1'b0;
+      fixed_pending_frame_id <= {FRAME_ID_WIDTH{1'b0}};
+      fixed_pending_sum_r <= 32'd0;
+      fixed_pending_sum_g <= 32'd0;
+      fixed_pending_sum_b <= 32'd0;
+      fixed_pending_pixel_count <= 32'd0;
+      fixed_mean_invalid <= 1'b0;
+      fixed_mean_frame_id <= {FRAME_ID_WIDTH{1'b0}};
+      fixed_mean_sum_r <= 32'd0;
+      fixed_mean_sum_g <= 32'd0;
+      fixed_mean_sum_b <= 32'd0;
+      fixed_mean_pixel_count <= 32'd0;
+      fixed_mean_luma_total <= 32'd0;
       O_stats_valid   <= 1'b0;
       O_frame_id      <= {FRAME_ID_WIDTH{1'b0}};
       O_sum_r         <= 32'd0;
@@ -86,23 +139,63 @@ module frame_stats_96 #(
     end else begin
       O_stats_valid <= 1'b0;
       O_invalid     <= 1'b0;
+      if (USE_FIXED_FRAME_SIZE != 0) begin
+        fixed_mean_pending <= fixed_sum_pending;
+        fixed_sum_pending <= frame_end;
+        if (fixed_sum_pending) begin
+          fixed_mean_luma_total <= fixed_sum_stage_result;
+          fixed_mean_frame_id <= fixed_pending_frame_id;
+          fixed_mean_sum_r <= fixed_pending_sum_r;
+          fixed_mean_sum_g <= fixed_pending_sum_g;
+          fixed_mean_sum_b <= fixed_pending_sum_b;
+          fixed_mean_pixel_count <= fixed_pending_pixel_count;
+          fixed_mean_invalid <= fixed_pending_invalid;
+        end
+        if (fixed_mean_pending) begin
+          O_stats_valid <= 1'b1;
+          O_frame_id      <= fixed_mean_frame_id;
+          O_sum_r         <= fixed_mean_sum_r;
+          O_sum_g         <= fixed_mean_sum_g;
+          O_sum_b         <= fixed_mean_sum_b;
+          O_pixel_count   <= fixed_mean_pixel_count;
+          O_mean_luma     <= (mean_luma_calc > 255) ? 8'd255 : mean_luma_calc[7:0];
+          O_invalid       <= fixed_mean_invalid;
+        end
+      end
       if (I_tvalid) begin
         if (!I_tuser && !frame_seen)
           O_invalid <= 1'b1;
+        if (I_tuser)
+          frame_protocol_invalid <= 1'b0;
+        else if (!frame_seen)
+          frame_protocol_invalid <= 1'b1;
         if (frame_end) begin
-          O_stats_valid <= 1'b1;
-          O_frame_id    <= I_frame_id;
-          O_sum_r       <= final_r;
-          O_sum_g       <= final_g;
-          O_sum_b       <= final_b;
-          O_pixel_count <= final_count;
-          O_mean_luma   <= (mean_luma_calc > 255) ? 8'd255 : mean_luma_calc[7:0];
+          if (USE_FIXED_FRAME_SIZE != 0) begin
+            fixed_pending_invalid <= (final_count != FRAME_PIXEL_COUNT) ||
+                                     ((!I_tuser) && (!frame_seen || frame_protocol_invalid));
+            fixed_pending_frame_id <= I_frame_id;
+            fixed_pending_sum_r <= final_r;
+            fixed_pending_sum_g <= final_g;
+            fixed_pending_sum_b <= final_b;
+            fixed_pending_pixel_count <= final_count;
+          end else begin
+            O_stats_valid <= 1'b1;
+            O_frame_id    <= I_frame_id;
+            O_sum_r       <= final_r;
+            O_sum_g       <= final_g;
+            O_sum_b       <= final_b;
+            O_pixel_count <= final_count;
+            O_mean_luma   <= (mean_luma_calc > 255) ? 8'd255 : mean_luma_calc[7:0];
+            O_invalid     <= (final_count != FRAME_PIXEL_COUNT) ||
+                             ((!I_tuser) && (!frame_seen || frame_protocol_invalid));
+          end
           row_index       <= {ROW_WIDTH{1'b0}};
           sum_r_acc       <= 32'd0;
           sum_g_acc       <= 32'd0;
           sum_b_acc       <= 32'd0;
           pixel_count_acc <= 32'd0;
           frame_seen      <= 1'b0;
+          frame_protocol_invalid <= 1'b0;
         end else begin
           row_index       <= I_tlast ? base_row + 1'b1 : base_row;
           sum_r_acc       <= final_r;

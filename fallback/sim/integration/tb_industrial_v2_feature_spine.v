@@ -9,6 +9,8 @@ module tb_industrial_v2_feature_spine;
   reg frame_valid = 1'b0;
   reg [15:0] frame_id = 16'd0;
   reg result_valid = 1'b0;
+  reg [15:0] result_frame_id = 16'd0;
+  reg [15:0] video_frame_id = 16'd0;
   reg detected = 1'b0;
   reg invalid = 1'b0;
   reg [10:0] xmin = 11'd10;
@@ -114,6 +116,8 @@ module tb_industrial_v2_feature_spine;
     .I_clk(clk), .I_rst_n(rst_n),
     .I_frame_start(frame_start), .I_frame_valid(frame_valid),
     .I_frame_id(frame_id), .I_result_valid(result_valid),
+    .I_result_tag_valid(1'b1), .I_result_frame_id(result_frame_id),
+    .I_video_frame_id(video_frame_id),
     .I_detected(detected), .I_invalid(invalid),
     .I_xmin(xmin), .I_xmax(xmax), .I_ymin(ymin), .I_ymax(ymax),
     .I_cx(cx), .I_cy(cy), .I_area(area),
@@ -186,6 +190,7 @@ module tb_industrial_v2_feature_spine;
     begin
       @(negedge clk);
       frame_id = id;
+      result_frame_id = id;
       cx = center_x;
       frame_valid = 1'b1;
       result_valid = 1'b1;
@@ -257,6 +262,7 @@ module tb_industrial_v2_feature_spine;
     @(negedge clk);
     video_valid = 1'b1;
     video_de = 1'b1;
+    video_frame_id = 16'd2;
     video_x = 11'd50;
     video_y = 11'd50;
     @(negedge clk);

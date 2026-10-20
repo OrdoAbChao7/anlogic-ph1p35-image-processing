@@ -57,6 +57,8 @@ module design_top_wrapper (
 
 	wire        	S_pll_lock;
     wire        	S_rst_n;
+	wire        	S_v2_src_rst_n;
+	wire        	S_v2_dst_rst_n;
 	reg  [17:0] 	S_cam_power_cnt;
 	reg         	S_cam_pwdnb;
 	reg         	S_cam_i2c_ready;
@@ -236,6 +238,18 @@ module design_top_wrapper (
 
     assign S_rst_n 		= S_pll_lock;
     assign S_hdmi_rst_n = S_pll_lock;
+
+    reset_release_sync u_v2_src_reset_release (
+        .I_clk          ( S_csi_rx_clk       ),
+        .I_async_rst_n  ( S_pll_lock         ),
+        .O_rst_n        ( S_v2_src_rst_n     )
+    );
+
+    reset_release_sync u_v2_dst_reset_release (
+        .I_clk          ( S_hdmi_pixel_clk   ),
+        .I_async_rst_n  ( S_pll_lock         ),
+        .O_rst_n        ( S_v2_dst_rst_n     )
+    );
 
     always @(posedge S_csi_rx_clk or negedge S_rst_n) begin
         if(!S_rst_n)
@@ -722,8 +736,13 @@ assign S_raw_tuser  = S_axis_tuser;
     wire        ind_result_toggle;
     wire [95:0] ind_awb_tdata;
     wire        ind_awb_tlast, ind_awb_tuser, ind_awb_tvalid;
+    wire [15:0] v2_gain_r, v2_gain_g, v2_gain_b;
     reg  [15:0] ind_v2_frame_id;
     reg         ind_v2_toggle_d;
+    wire [15:0] ind_result_frame_id;
+    wire        ind_result_tag_valid;
+    reg  [15:0] v2_src_result_frame_id_hold;
+    reg         v2_src_result_tag_valid_hold;
     wire [15:0] ind_source_frame_id = ind_v2_frame_id +
                                       (S_ISP_O_tuser ? 16'd1 : 16'd0);
     wire        ind_result_event = ind_result_toggle ^ ind_v2_toggle_d;
@@ -734,8 +753,22 @@ assign S_raw_tuser  = S_axis_tuser;
 
     // Source-domain frame ID for the result toggle. This counter is only a
     // protocol tag; it is not a measured camera frame-rate or latency value.
-    always @(posedge S_csi_rx_clk or negedge S_rst_n) begin
-        if (!S_rst_n) begin
+    frame_result_tag_queue #(
+        .FRAME_ID_WIDTH ( 16 ),
+        .DEPTH          ( 4  )
+    ) u_v2_frame_result_tag_queue (
+        .I_clk              ( S_csi_rx_clk       ),
+        .I_rst_n            ( S_v2_src_rst_n     ),
+        .I_push             ( S_ISP_O_tuser && S_ISP_O_tvalid ),
+        .I_push_frame_id    ( ind_source_frame_id ),
+        .I_pop              ( ind_result_event    ),
+        .O_result_frame_id  ( ind_result_frame_id ),
+        .O_result_tag_valid ( ind_result_tag_valid ),
+        .O_tag_fault        (                     )
+    );
+
+    always @(posedge S_csi_rx_clk or negedge S_v2_src_rst_n) begin
+        if (!S_v2_src_rst_n) begin
             ind_v2_frame_id <= 16'd0;
             ind_v2_toggle_d <= 1'b0;
         end else begin
@@ -755,6 +788,9 @@ assign S_raw_tuser  = S_axis_tuser;
         .I_tvalid         ( S_raw_tvalid         ),
         .I_tdest          (                      ),
         .O_tready         ( S_ISP_O_tready       ),
+        .I_awb_gain_r_q8_8 ( v2_gain_r             ),
+        .I_awb_gain_g_q8_8 ( v2_gain_g             ),
+        .I_awb_gain_b_q8_8 ( v2_gain_b             ),
         .O_tdata          ( S_ISP_O_tdata        ),
         .O_tlast          ( S_ISP_O_tlast        ),
         .O_tuser          ( S_ISP_O_tuser        ),
@@ -1017,7 +1053,6 @@ assign S_raw_tuser  = S_axis_tuser;
     );
 
     wire [10:0] sync_hdmi_xmin, sync_hdmi_xmax, sync_hdmi_ymin, sync_hdmi_ymax;
-    wire [10:0] sync_hdmi_width, sync_hdmi_height;
     wire        sync_hdmi_detected, sync_hdmi_pass, sync_hdmi_ng;
     wire        sync_hdmi_invalid;
     wire        v2_hdmi_result_valid;
@@ -1025,11 +1060,19 @@ assign S_raw_tuser  = S_axis_tuser;
     wire [10:0] v2_hdmi_xmin, v2_hdmi_xmax, v2_hdmi_ymin, v2_hdmi_ymax;
     wire [10:0] v2_hdmi_cx, v2_hdmi_cy;
     wire        v2_hdmi_detected, v2_hdmi_pass, v2_hdmi_ng, v2_hdmi_invalid;
-    wire        v2_hdmi_shape_valid;
+    wire        v2_hdmi_dimension_valid, v2_hdmi_shape_valid;
+    wire [31:0] v2_hdmi_width_mm_q16_16, v2_hdmi_height_mm_q16_16;
+    wire        v2_hdmi_motion_valid;
     wire        v2_hdmi_motion;
     wire [23:0] v2_hdmi_motion_count;
     wire [15:0] v2_hdmi_pass_count, v2_hdmi_ng_count;
     wire        v2_hdmi_sort_pulse, v2_hdmi_safe_enable;
+    wire        v2_hdmi_proc_valid;
+    wire [31:0] v2_hdmi_proc_cycles;
+    wire [10:0] v2_hdmi_pixel_width = v2_hdmi_detected && (v2_hdmi_xmax >= v2_hdmi_xmin) ?
+                                        (v2_hdmi_xmax - v2_hdmi_xmin + 11'd1) : 11'd0;
+    wire [10:0] v2_hdmi_pixel_height = v2_hdmi_detected && (v2_hdmi_ymax >= v2_hdmi_ymin) ?
+                                         (v2_hdmi_ymax - v2_hdmi_ymin + 11'd1) : 11'd0;
 
     // ------------------------------------------------------------------
     // V2 source-domain feature integration.
@@ -1060,7 +1103,7 @@ assign S_raw_tuser  = S_axis_tuser;
         .FRAME_ID_WIDTH ( 16   )
     ) u_v2_motion_grid_adapter (
         .I_clk          ( S_csi_rx_clk       ),
-        .I_rst_n        ( S_rst_n             ),
+        .I_rst_n        ( S_v2_src_rst_n      ),
         .I_tuser        ( ind_awb_tuser       ),
         .I_tlast        ( ind_awb_tlast       ),
         .I_tvalid       ( ind_awb_tvalid      ),
@@ -1086,10 +1129,11 @@ assign S_raw_tuser  = S_axis_tuser;
     frame_stats_96 #(
         .INPUT_WIDTH    ( 1280 ),
         .INPUT_HEIGHT   ( 720  ),
-        .FRAME_ID_WIDTH ( 16   )
+        .FRAME_ID_WIDTH ( 16   ),
+        .USE_FIXED_FRAME_SIZE ( 1 )
     ) u_v2_frame_stats (
         .I_clk          ( S_csi_rx_clk       ),
-        .I_rst_n        ( S_rst_n             ),
+        .I_rst_n        ( S_v2_src_rst_n      ),
         .I_tuser        ( ind_awb_tuser       ),
         .I_tlast        ( ind_awb_tlast       ),
         .I_tvalid       ( ind_awb_tvalid      ),
@@ -1105,7 +1149,6 @@ assign S_raw_tuser  = S_axis_tuser;
         .O_invalid      ( v2_stats_invalid     )
     );
 
-    wire [15:0] v2_gain_r, v2_gain_g, v2_gain_b;
     wire        v2_gain_update_valid;
     wire        v2_scene_protected;
     wire        v2_src_dimension_valid, v2_src_shape_valid;
@@ -1139,13 +1182,29 @@ assign S_raw_tuser  = S_axis_tuser;
     localparam [31:0] V2_TOL_WIDTH_Q16_16     = 32'd131072;
     localparam [31:0] V2_TOL_HEIGHT_Q16_16    = 32'd131072;
 
-    industrial_v2_feature_spine u_industrial_v2_feature_spine (
+    industrial_v2_feature_spine #(
+        .USE_STATIC_CAL_CONFIG              ( 1 ),
+        .STATIC_SCALE_X_Q16_16               ( V2_SCALE_X_Q16_16 ),
+        .STATIC_SCALE_Y_Q16_16               ( V2_SCALE_Y_Q16_16 ),
+        .STATIC_NOMINAL_WIDTH_Q16_16         ( V2_NOMINAL_WIDTH_Q16_16 ),
+        .STATIC_NOMINAL_HEIGHT_Q16_16        ( V2_NOMINAL_HEIGHT_Q16_16 ),
+        .STATIC_TOLERANCE_WIDTH_Q16_16       ( V2_TOL_WIDTH_Q16_16 ),
+        .STATIC_TOLERANCE_HEIGHT_Q16_16      ( V2_TOL_HEIGHT_Q16_16 ),
+        .STATIC_OCCUPANCY_MIN_Q8             ( 9'd200 ),
+        .STATIC_ASPECT_MIN_Q8                ( 16'd320 ),
+        .STATIC_ASPECT_MAX_Q8                ( 16'd448 ),
+        .USE_FIXED_AWB_PIXEL_COUNT           ( 1 ),
+        .FIXED_AWB_PIXEL_COUNT               ( 32'd921600 )
+    ) u_industrial_v2_feature_spine (
         .I_clk                    ( S_csi_rx_clk       ),
-        .I_rst_n                  ( S_rst_n             ),
+        .I_rst_n                  ( S_v2_src_rst_n      ),
         .I_frame_start            ( S_ISP_O_tuser       ),
         .I_frame_valid            ( S_ISP_O_tuser       ),
         .I_frame_id               ( ind_source_frame_id ),
         .I_result_valid           ( ind_result_event    ),
+        .I_result_tag_valid       ( ind_result_tag_valid ),
+        .I_result_frame_id        ( ind_result_frame_id ),
+        .I_video_frame_id         ( 16'd0                ),
         .I_detected               ( ind_detected        ),
         .I_invalid                ( ind_invalid || v2_motion_adapter_invalid || v2_stats_invalid ),
         .I_xmin                   ( ind_xmin            ),
@@ -1176,7 +1235,7 @@ assign S_raw_tuser  = S_axis_tuser;
         .O_video_hsync            (                     ),
         .O_video_vsync            (                     ),
         .O_video_rgb              (                     ),
-        .I_frame_stats_valid      ( v2_stats_valid      ),
+        .I_frame_stats_valid      ( v2_stats_valid && !v2_stats_invalid ),
         .I_sum_r                  ( v2_stats_sum_r       ),
         .I_sum_g                  ( v2_stats_sum_g       ),
         .I_sum_b                  ( v2_stats_sum_b       ),
@@ -1235,19 +1294,26 @@ assign S_raw_tuser  = S_axis_tuser;
         .O_tag_mismatch           ( v2_src_tag_mismatch )
     );
 
-    always @(posedge S_csi_rx_clk or negedge S_rst_n) begin
-        if (!S_rst_n)
+    always @(posedge S_csi_rx_clk or negedge S_v2_src_rst_n) begin
+        if (!S_v2_src_rst_n) begin
             v2_src_toggle <= 1'b0;
-        else if (ind_result_event)
+            v2_src_result_frame_id_hold <= 16'd0;
+            v2_src_result_tag_valid_hold <= 1'b0;
+        end else if (ind_result_event) begin
             v2_src_toggle <= ~v2_src_toggle;
+            v2_src_result_frame_id_hold <= ind_result_tag_valid ?
+                                           ind_result_frame_id : 16'd0;
+            v2_src_result_tag_valid_hold <= ind_result_tag_valid;
+        end
     end
 
     industrial_v2_result_cdc u_industrial_v2_result_cdc (
         .I_src_clk             ( S_csi_rx_clk       ),
         .I_dst_clk             ( S_hdmi_pixel_clk   ),
-        .I_rst_n               ( S_hdmi_rst_n       ),
+        .I_src_rst_n           ( S_v2_src_rst_n     ),
+        .I_dst_rst_n           ( S_v2_dst_rst_n     ),
         .I_src_toggle          ( v2_src_toggle       ),
-        .I_src_frame_id        ( ind_source_frame_id ),
+        .I_src_frame_id        ( v2_src_result_frame_id_hold ),
         .I_src_xmin            ( ind_xmin            ),
         .I_src_xmax            ( ind_xmax            ),
         .I_src_ymin            ( ind_ymin            ),
@@ -1262,12 +1328,16 @@ assign S_raw_tuser  = S_axis_tuser;
         .I_src_invalid         ( ind_invalid          ),
         .I_src_dimension_valid ( v2_src_dimension_valid ),
         .I_src_shape_valid     ( v2_src_shape_valid     ),
+        .I_src_motion_valid    ( v2_src_motion_valid    ),
         .I_src_motion          ( v2_src_motion           ),
         .I_src_motion_count    ( v2_src_motion_count     ),
         .I_src_pass_count      ( v2_src_pass_count       ),
         .I_src_ng_count        ( v2_src_ng_count         ),
         .I_src_sort_pulse      ( v2_src_sort_pulse       ),
         .I_src_safe_enable     ( v2_src_safe_enable      ),
+        .I_src_proc_valid      ( v2_src_latency_proc_valid &&
+                                 v2_src_result_tag_valid_hold ),
+        .I_src_proc_cycles     ( v2_src_latency_proc_cycles ),
         .O_dst_valid           ( v2_hdmi_result_valid),
         .O_dst_frame_id        ( v2_hdmi_frame_id    ),
         .O_dst_xmin            ( v2_hdmi_xmin        ),
@@ -1276,20 +1346,23 @@ assign S_raw_tuser  = S_axis_tuser;
         .O_dst_ymax            ( v2_hdmi_ymax        ),
         .O_dst_cx              ( v2_hdmi_cx          ),
         .O_dst_cy              ( v2_hdmi_cy          ),
-        .O_dst_width_mm_q16_16(                      ),
-        .O_dst_height_mm_q16_16(                     ),
+        .O_dst_width_mm_q16_16( v2_hdmi_width_mm_q16_16 ),
+        .O_dst_height_mm_q16_16( v2_hdmi_height_mm_q16_16 ),
         .O_dst_detected        ( v2_hdmi_detected    ),
         .O_dst_pass            ( v2_hdmi_pass        ),
         .O_dst_ng              ( v2_hdmi_ng          ),
         .O_dst_invalid         ( v2_hdmi_invalid     ),
-        .O_dst_dimension_valid (                     ),
+        .O_dst_dimension_valid ( v2_hdmi_dimension_valid ),
         .O_dst_shape_valid     ( v2_hdmi_shape_valid ),
+        .O_dst_motion_valid    ( v2_hdmi_motion_valid ),
         .O_dst_motion          ( v2_hdmi_motion      ),
         .O_dst_motion_count    ( v2_hdmi_motion_count),
         .O_dst_pass_count      ( v2_hdmi_pass_count  ),
         .O_dst_ng_count        ( v2_hdmi_ng_count    ),
         .O_dst_sort_pulse      ( v2_hdmi_sort_pulse  ),
         .O_dst_safe_enable     ( v2_hdmi_safe_enable ),
+        .O_dst_proc_valid      ( v2_hdmi_proc_valid ),
+        .O_dst_proc_cycles     ( v2_hdmi_proc_cycles ),
         .O_dst_overflow        (                     )
     );
 
@@ -1317,8 +1390,8 @@ assign S_raw_tuser  = S_axis_tuser;
         .O_xmax         ( sync_hdmi_xmax       ),
         .O_ymin         ( sync_hdmi_ymin       ),
         .O_ymax         ( sync_hdmi_ymax       ),
-        .O_width        ( sync_hdmi_width      ),
-        .O_height       ( sync_hdmi_height     ),
+        .O_width        (                       ),
+        .O_height       (                       ),
         .O_detected     ( sync_hdmi_detected   ),
         .O_pass         ( sync_hdmi_pass       ),
         .O_ng           ( sync_hdmi_ng         ),
@@ -1410,12 +1483,26 @@ assign S_raw_tuser  = S_axis_tuser;
         .I_de        ( S_bbox_out_de      ),
         .I_rgb       ( S_bbox_out_data    ),
         .I_mode      ( S_display_mode     ),
-        .I_detected  ( sync_hdmi_detected ),
-        .I_pass      ( sync_hdmi_pass     ),
-        .I_ng        ( sync_hdmi_ng       ),
-        .I_invalid   ( sync_hdmi_invalid  ),
-        .I_width     ( sync_hdmi_width    ),
-        .I_height    ( sync_hdmi_height   ),
+        .I_detected  ( v2_hdmi_detected ),
+        .I_pass      ( v2_hdmi_pass     ),
+        .I_ng        ( v2_hdmi_ng       ),
+        .I_invalid   ( v2_hdmi_invalid  ),
+        .I_width     ( v2_hdmi_pixel_width ),
+        .I_height    ( v2_hdmi_pixel_height ),
+        .I_proc_valid ( v2_hdmi_proc_valid ),
+        .I_proc_cycles( v2_hdmi_proc_cycles ),
+        .I_motion_valid( v2_hdmi_motion_valid ),
+        .I_motion     ( v2_hdmi_motion ),
+        .I_motion_count( v2_hdmi_motion_count ),
+        .I_pass_count ( v2_hdmi_pass_count ),
+        .I_ng_count   ( v2_hdmi_ng_count ),
+        .I_sort_pulse ( v2_hdmi_sort_pulse ),
+        .I_safe_enable( v2_hdmi_safe_enable ),
+        .I_dimension_valid ( v2_hdmi_dimension_valid ),
+        .I_shape_valid ( v2_hdmi_shape_valid ),
+        .I_scale_provisional ( 1'b1 ),
+        .I_width_mm_q16_16 ( v2_hdmi_width_mm_q16_16 ),
+        .I_height_mm_q16_16 ( v2_hdmi_height_mm_q16_16 ),
         .O_vsync     ( S_osd_out_vsync    ),
         .O_hsync     ( S_osd_out_hsync    ),
         .O_de        ( S_osd_out_de        ),

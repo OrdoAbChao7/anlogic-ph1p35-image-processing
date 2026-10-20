@@ -209,6 +209,45 @@ if ($subsystemRunExit -ne 0) {
 }
 Write-Host "[OK] Subsystem Integrated Simulation PASSED." -ForegroundColor Green
 
+# Compare the unchanged inferred-memory implementation with the selectable
+# PH1P ERAM behavioral branch, including writes from a rejected partial frame.
+Write-Host "`n[6a] Running motion-history ERAM equivalence simulation..." -ForegroundColor Yellow
+$MotionEramVvp = Join-Path $VerificationOutput "tb_motion_diff_160_eram_equivalence.vvp"
+$motionEramCompileExit = Invoke-CapturedTool -FilePath $iverilog -Name "motion_eram_equivalence_compile" -Arguments @(
+    "-g2012", "-DMOTION_ERAM_SIMULATION", "-Wall", "-s", "tb_motion_diff_160_eram_equivalence",
+    "-o", $MotionEramVvp, "fallback/sim/inspection/tb_motion_diff_160_eram_equivalence.v",
+    "fallback/rtl/inspection/motion_diff_160.v"
+)
+if ($motionEramCompileExit -ne 0) {
+    Write-Host "[FAIL] Compilation of motion ERAM equivalence test failed!" -ForegroundColor Red
+    exit 1
+}
+$motionEramRunExit = Invoke-CapturedTool -FilePath $vvp -Name "motion_eram_equivalence_run" -Arguments @($MotionEramVvp)
+if ($motionEramRunExit -ne 0) {
+    Write-Host "[FAIL] Motion-history ERAM equivalence simulation failed!" -ForegroundColor Red
+    exit 1
+}
+
+# Exercise the candidate storage branch at the full 160x120 count boundary.
+Write-Host "`n[6b] Running full-scale motion ERAM counter simulation..." -ForegroundColor Yellow
+$MotionFullScaleVvp = Join-Path $VerificationOutput "tb_motion_diff_160_eram_full_scale.vvp"
+$motionFullScaleCompileExit = Invoke-CapturedTool -FilePath $iverilog -Name "motion_eram_full_scale_compile" -Arguments @(
+    "-g2012", "-DMOTION_ERAM_SIMULATION", "-Wall", "-s", "tb_motion_diff_160_full_scale",
+    "-Ptb_motion_diff_160_full_scale.USE_PH1P_HISTORY_ERAM=1", "-o", $MotionFullScaleVvp,
+    "fallback/sim/inspection/tb_motion_diff_160_full_scale.v",
+    "fallback/rtl/inspection/motion_diff_160.v"
+)
+if ($motionFullScaleCompileExit -ne 0) {
+    Write-Host "[FAIL] Compilation of full-scale motion ERAM test failed!" -ForegroundColor Red
+    exit 1
+}
+$motionFullScaleRunExit = Invoke-CapturedTool -FilePath $vvp -Name "motion_eram_full_scale_run" -Arguments @($MotionFullScaleVvp)
+if ($motionFullScaleRunExit -ne 0) {
+    Write-Host "[FAIL] Full-scale motion ERAM counter simulation failed!" -ForegroundColor Red
+    exit 1
+}
+Write-Host "[OK] Motion-history ERAM semantics and full-scale counter simulations PASSED." -ForegroundColor Green
+
 # Step 7: Run the small-geometry industrial detector/classifier contract matrix
 Write-Host "`n[7/13] Running Industrial Detector/Classifier Contract Matrix..." -ForegroundColor Yellow
 $IndustrialContractVvp = Join-Path $VerificationOutput "tb_industrial_contract.vvp"

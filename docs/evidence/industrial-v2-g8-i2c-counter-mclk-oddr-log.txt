@@ -1,0 +1,94 @@
+Industrial V2 G8 combined probe evidence
+Date: 2026-10-19
+
+Input transform:
+  script: scripts/prepare_i2c_counter_mclk_oddr.py
+  input: work/td_i2c_counter_mclk_oddr_input
+  transformed uii2c.v SHA-256: 114c6f265e16ddca1a3336fa209300e2646e6e93d452daa86673369356f78af8
+  transformed top SHA-256: fd65440dc4dfaea1305f0dd31e42fcb79413628301106a87272cb3647ab2c3e0
+
+Seed 3:
+  build status: PASS
+  route setup WNS: +126 ps
+  route hold WNS: +20 ps
+  route TNS / violated endpoints: 0 / 0
+  Slice: 18528 / 21216 = 87.33%
+  RAM / DSP / DRAMHARDCON: 43 / 24 / 229
+  raw phy_1/flow_exec.log: PHY-5016=4 lines, PHY-5088=4 lines; no PHY-5060/PHY-5079/CRITICAL-WARNING text
+  bit size: 1369457 bytes
+  bit SHA-256: 1807fa5fe10230cc806f17d9cb095075d5e3c85333564315fa96ababe2ee181a
+  release: release/candidates/industrial-v2-i2c-counter-mclk-oddr-seed3/
+
+Seed 1:
+  build status: PASS
+  route setup WNS: +113 ps
+  route hold WNS: +20 ps
+  route TNS / violated endpoints: 0 / 0
+  Slice: 17050 / 21216 = 80.36%
+  RAM / DSP / DRAMHARDCON: 43 / 24 / 229
+  raw phy_1/flow_exec.log: PHY-5016=4 lines, PHY-5088=4 lines; no PHY-5060/PHY-5079/CRITICAL-WARNING text
+  bit size: 1370865 bytes
+  bit SHA-256: c59d3cf136268abe32dcdbd76a9e9a5dca697ef17e7d99a28c355d64599eba62
+  release: release/candidates/industrial-v2-i2c-counter-mclk-oddr-seed1/
+
+Seed 1 independent repeat:
+  build status: PASS
+  route setup WNS: +109 ps
+  route hold WNS: +20 ps
+  route TNS / violated endpoints: 0 / 0
+  Slice: 18251 / 21216 = 86.02%
+  RAM / DSP / DRAMHARDCON: 43 / 24 / 229
+  raw phy_1/flow_exec.log: PHY-5016=4 lines (two messages, each repeated twice), PHY-5088=2 lines (clock nets drive other clock nets); no PHY-5060/PHY-5079/CRITICAL-WARNING text
+  bit size: 1365937 bytes
+  bit SHA-256: fa42a3b5906964bda149fb5ceeda06b8540fd919adc906f51257dfd62b84ea3b
+  release: release/candidates/industrial-v2-i2c-counter-mclk-oddr-seed1-repeat/
+  manifest comparison: 30/30 source path+hash entries identical; TD tool SHA-256 identical; flow Tcl SHA-256 identical; placement seed identical (1)
+
+Interpretation:
+  All three raw nested phy_1/flow_exec.log files contain PHY-5016 and PHY-5088. Seed=3 and seed=1 first run contain four lines of each; seed=1 repeat contains four PHY-5016 and two PHY-5088 lines.
+  The earlier "no warnings" result came from scanning only outer wrapper logs, which omit nested TangDynasty warnings. Candidate bitstream, route.qor, and final_timing.rpt hashes match the corresponding raw work outputs and manifests, binding these logs to the measured candidates.
+  The combined RTL probe therefore did not remove PHY-5016/PHY-5088; warning closure remains open.
+  Same-seed=1 resource changed from 80.36% to 86.02%; seed=3 was 87.33%.
+  Same-seed builds had identical recorded sources/tool/flow/placement seed but different Slice utilization and Bitstream SHA-256 values; resource and byte-level reproducibility fail, with the remaining nondeterministic build input not isolated.
+  No hardware acceptance was performed; the combined candidate is not promoted.
+
+Synthesis-stage comparison (seed=1 first run vs independent repeat):
+  Both syn/phy settings.cfg and project files matched; 30/30 registered source hashes matched.
+  Full user_source trees: 219 files in each, with zero path/hash mismatches.
+  td_project files outside generated Runs: 11 in each, with zero path/hash mismatches.
+  TD executable and official flow hashes matched; placement seed matched (1).
+  anlogic_logo_rom.v SHA-256 matched: a105c935dafef80b1d3ed2abd505bfd1f970f44c3a5663d1574f3e452b481e98
+  rtl.area: exactly 6 differing lines; aggregate/top/OSD rows and u_logo_rom differed, all other leaf-instance rows matched.
+  rtl.area top Basic gates: 46356 vs 46511
+  rtl.area u_industrial_osd/u_logo_rom Basic gates: 38498 vs 38653; other leaf-instance rows matched.
+  gate.area: 58 differing lines across multiple hierarchy rows; LUT: 20468 vs 20608; Slice: 16644 vs 16651.
+  Both synthesis logs report thread=auto and enable_seed=off.
+  Existing fixed-thread=1 repeatability probe also produced different Bitstream hashes; auto threading alone is not a sufficient explanation.
+  Runtime metadata difference: first .read_design.begin.f Host field is empty; repeat Host is LAPTOP-NF3759TG. It is not proven causal, so the run environment is not considered fully frozen.
+  Serialized database hashes also differ: elaborate.db is 16,660,118 vs 16,660,116 bytes (SHA-256 3d439998bba563d32be7cb1f70240c83ae39788467ad9cb382a16ef93d7a9b3a vs ade5b5104e8e39439b83ce0759d2fd126ee154d3526ec8beed1299e8b8434084); rtl.db is 12,333,524 vs 12,339,158 bytes (SHA-256 470a6876fa96ef15fddc801a023fa0a87b45764ce8215d89a38eecfcb5d02c7e vs fa8ea7c694305b80281d7f99b93bf65463ab949b921c29ad18de87bef5d78945). These byte differences are not a logical-netlist equivalence check.
+  Conclusion: divergence is visible by RTL optimization; its first leaf-level area difference is the Logo ROM, while gate-area differences extend across multiple modules. Root cause remains unknown, and no netlist-equivalence claim is made.
+
+Repeat-build warning evidence:
+  work/td_i2c_counter_mclk_oddr_seed1_repeat_build/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log
+  work/td_i2c_counter_mclk_oddr_seed1_repeat_build/td_project/camera_to_dsi_display_Runs/phy_1/td_20261019_124604.log
+  Also inspect the corresponding seed=3 and seed=1-first raw logs listed in the experiment record.
+  All three runs report PLL clkc without location and not driving a clock-capable IO (PHY-5016).
+  Seed=3 and seed=1-first additionally report two regional-buffer messages and two clock-net-cascade messages (PHY-5088); the repeat reports two clock-net-cascade messages.
+  No PHY-5060 or PHY-5079 text was found in these three archived combined-probe raw logs.
+  This is a build-log fact only; it does not prove whether L3 is clock-capable or whether the hardware is stable.
+
+Detailed cascade diagnostic (same combined input snapshot, placement seed=1):
+  custom flow: work/td_i2c_counter_mclk_oddr_detail_flow/DefaultFlow-analyze-clock.tcl
+  raw log: work/td_i2c_counter_mclk_oddr_detail_seed1_build/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log
+  candidate: release/candidates/industrial-v2-i2c-counter-mclk-oddr-detail-seed1/
+  build status: TD/STA/Bitgen PASS
+  route setup WNS / hold WNS: +101 ps / +20 ps; setup/hold TNS: 0 / 0
+  Slice: 18488 / 21216 = 87.14% (exceeds the project's <=85% resource gate)
+  RAM / DSP / DRAMHARDCON: 43 / 24 / 229
+  bit size: 1359729 bytes
+  bit SHA-256: 0fb1c1268b154e1a9bb8142952f750b86014b40dd70205a0a277a6a37ab89f5a
+  route.qor SHA-256: effa21d8fb7e004ae06f5a457dc68d64eb1412c150e5ccd76c3892a17c4a7409
+  final_timing.rpt SHA-256: d17004eef27131f598966000d2ea76de335105acd9faa0c78912f86e2ccd3237
+  analyze_clock -detail reports an AL_PHY_SCLK -> AL_PHY_PLL -> clkc[0] -> AL_PHY_GCLK cascade in the DDR PHY; the clock-state table also records u_uicfgcs520/u_i2c/scl_clk as AL_PHY_LSLICE-generated.
+  Source audit: the transformed I2C module still contains posedge/negedge scl_clk event controls. The counter-phase transform removes the scl_clk feedback register but does not migrate the I2C state machine to I_clk clock enables; it is not a derived-clock fix. A previous run's missing I2C PHY warning lines do not prove the event clock was removed.
+  PHY-5016 and PHY-5088 remain. The diagnostic does not establish package-pin clock capability or physical harmlessness; it is not promoted and no hardware test was performed.

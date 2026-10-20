@@ -119,6 +119,31 @@ def test_candidate_top_requires_isolated_outputs():
         module.configure(args)
 
 
+def test_motion_eram_trial_requires_isolated_outputs():
+    module = load_build_module()
+    args = module.parse_args([
+        "--motion-eram",
+        "--work-project", str(module.DEFAULT_WORK_PROJECT),
+        "--release-dir", str(module.DEFAULT_RELEASE_DIR),
+    ])
+    with pytest.raises(ValueError, match="ERAM motion trial requires an isolated"):
+        module.configure(args)
+
+
+def test_motion_eram_trial_accepts_isolated_outputs_and_records_mode():
+    module = load_build_module()
+    args = module.parse_args([
+        "--motion-eram",
+        "--work-project", "work/td_motion_eram_trial",
+        "--release-dir", "work/output/motion-eram-trial",
+    ])
+    module.configure(args)
+    assert module.USE_PH1P_MOTION_ERAM is True
+    assert module.build_input_provenance()["motion_history_storage"] == (
+        "ph1p-single-port-eram-read-before-write"
+    )
+
+
 def test_hx1p35a_manual_led_and_mode_pins_are_bound():
     pin_file = (ROOT / "fallback" / "td_package" / "user_source" / "constraints_source" / "pin.adc")
     pin_text = pin_file.read_text(encoding="utf-8")

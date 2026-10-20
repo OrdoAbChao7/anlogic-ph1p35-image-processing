@@ -1,0 +1,36 @@
+Industrial V2 G8 I2C registered-phase probe
+Date: 2026-10-19
+Target: PH1P35MDG324
+TD: 6.2.168116
+Flow: official DefaultFlow.tcl
+Placement seed: 1
+
+Directed simulation:
+- Command: python -B -m pytest -q work/tests/test_v2_i2c_registered_phase.py
+- Result: 2 passed
+- Vendor and candidate: rd_data=00, scl_transitions=59, bus_error=0
+
+Full regression after the counter-phase probe was added:
+- Command: python -B -m pytest -q work/tests
+- Result: 141 passed in 2.20s
+
+Transformed source SHA-256:
+7ea64d3ef7e8978e2b9011e4fe2d3ed72c5480a9bda06c3b6746d918321a8b6a
+
+TD candidate: release/candidates/industrial-v2-i2c-registered-phase/
+- Bitstream SHA-256: 1c2a959f6c45090e8ff89c6b6248bc17f3ca70fa83271fecb406609c70f9d53f
+- route.qor SHA-256: 9c69f4b4aa6049d301cf8269d451e3be0e0519202e932ff3ef05b55214a7c168
+- final_timing.rpt SHA-256: b8ed6a8ae9b3fa9ba6a8590df7d365779f54eb137d4dab6b40e81c039fcb471e
+
+QoR:
+- Final route: Setup WNS +146 ps, TNS 0, 0 violated endpoints; Hold WNS +20 ps, TNS 0, 0 violated endpoints.
+- Slice 18411/21216 = 86.78%; RAM 43; DSP 24; DRAMHARDCON 229.
+
+Final PHY warning families:
+- I2C scl_clk mixed fanout remains.
+- O_cam_24m_syn_3 mixed fanout remains.
+- PHY-5016 PLL clkc-to-IO warning remains.
+- PHY-5079 local clock routing warning remains.
+- PHY-5088 clock analyzer sink/cascade warning remains.
+
+Decision: REJECTED_RESOURCE_AND_WARNING_CLOSURE. Formal release and industrial-v2.bit were not modified. No hardware download was performed.

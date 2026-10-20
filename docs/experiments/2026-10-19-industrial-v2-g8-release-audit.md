@@ -2,7 +2,7 @@
 
 ## 结论
 
-`G8=BLOCKED`。发布审计入口已建立并可重复运行；V1 冻结位流 SHA-256 复核通过。当前已经有正式七功能顶层的 TD/STA/Bitgen 候选和 QoR，并已封装一个 `CANDIDATE_ONLY` V2 包；告警闭环、字节级复现、板卡功能矩阵、长稳记录和外部执行机构证据仍未完成。
+`G8=BLOCKED`。发布审计入口已建立并可重复运行；V1 冻结位流 SHA-256 复核通过。当前正式七功能顶层的 TD/STA/Bitgen 候选和 QoR 已封装为 `CANDIDATE_ONLY` V2 包。最新严格审计为 13 项中 7 项 PASS、6 项 BLOCKED；PHY 告警闭环、字节级复现、板卡功能矩阵、性能、长稳和外部执行机构证据仍未完成。
 
 用户已明确将需要视觉审批的情况默认通过。本记录仅将 `visual_approval` 记为 `PASS`，不把视觉授权扩展为硬件、时序、构建或机械验收。
 
@@ -19,11 +19,11 @@
 | 类别 | 状态 | 证据/阻塞 |
 |---|---|---|
 | V1 冻结基线 SHA | `PASS` | 期望与实际均为 `b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef` |
-| 七项软件/RTL/TD | `BLOCKED` | 七功能正式顶层与 TD 候选已通过；G1-G7 的硬件/物理证据和冻结基线一致性仍未闭合 |
+| 七项软件/RTL/TD | `PASS` | 严格审计的 `software_rtl_td_for_7_features` 为 PASS；各 Goal 的上板和物理阶段仍未通过 |
 | V2 资源/时序预算 | `PASS` | 固定 seed 当前候选 Slice `17125/21216 (80.72%)`，Setup WNS `+104 ps`，Hold WNS `+20 ps`，TNS/违例端点为 `0/0` |
 | 同一 V2 Bitstream | `PASS` | `release/industrial-v2/industrial-v2.bit` 与 README、manifest、TD 报告同包；仅表示包内单一 Bitstream，不表示已上板 |
-| V1 回归 | `PASS` | `python -B -m pytest -q work/tests`：134 passed；当前 V1 发布合同、V2 路径合同、审计门和发布包材料测试均通过 |
-| 发布包材料 | `BLOCKED` | `release_package_contents` 已加入严格审计；源码、测试、证据索引、现场手册、回退说明、硬件矩阵、性能结果和风险清单尚未全部进入候选目录 |
+| V1 回归 | `PASS` | 最新完整 `work/tests` 回归：162 passed；当前 V1 发布合同、V2 路径合同、审计门和发布包材料测试均通过 |
+| 发布包材料 | `PASS` | 最新严格审计的 `release_package_contents` 为 PASS；候选包包含源码、测试、证据索引、现场手册、回退说明、硬件计划、性能占位结果和风险清单，实际性能与硬件证据仍缺失 |
 | V2 TD/QoR/告警 | `BLOCKED` | current-source 候选 TD/STA/Bitgen PASS；`PHY-5016/5060/5079/5088` 告警审计仍开放，固定种子未实现字节级一致 |
 | 上板/性能/长稳 | `BLOCKED` | 无绑定板卡、摄像头、显示器、Bitstream 和原始记录 |
 | 外部执行机构 | `BLOCKED` | GPIO、电气、机械闭环仍未知 |
@@ -31,8 +31,8 @@
 
 ## 可复现结果
 
-脚本以非零退出码结束，符合 `--strict` 在阻塞时拒绝发布的合同。模块级 G1-G7 回归结果继续引用各阶段 summary；本记录不把它们升级为整机证据。
+脚本以非零退出码结束，符合 `--strict` 在阻塞时拒绝发布的合同；13 项中 7 PASS、6 BLOCKED。此前报告见 `docs/experiments/2026-10-19-industrial-v2-g8-live-telemetry-release-audit.json`；fix8 后新报告单独保存为 `docs/experiments/2026-10-20-industrial-v2-g8-live-telemetry-fix8-release-audit.json`。fix5–fix8 telemetry/AWB 试验因 PHY-9053 资源超限均未生成候选，详情见 `docs/experiments/2026-10-19-industrial-v2-g8-live-telemetry.md`。模块级 G1-G7 回归结果继续引用各阶段 summary；本记录不把软件/RTL/TD 通过升级为整机硬件证据。
 
 ## 下一入口
 
-下一次执行 G8 应从告警/CDC/约束审计、固定种子复现和候选包复核开始，随后产出与 commit、源码哈希、Bitstream SHA-256、TD 版本、板卡/摄像头配置和原始上板记录绑定的证据包；在硬件证据闭合前状态保持 `BLOCKED`，不得标记 `RELEASED`。
+下一步应继续评估正式候选的告警/CDC/约束与构建复现问题；随后在实验室将同一 commit、源码哈希、Bitstream SHA-256、TD 版本和板卡/摄像头配置绑定到原始上板记录。硬件证据闭合前状态保持 `BLOCKED`，不得标记 `RELEASED`。

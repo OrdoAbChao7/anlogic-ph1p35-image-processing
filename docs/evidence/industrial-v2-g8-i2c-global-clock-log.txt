@@ -1,0 +1,37 @@
+Industrial V2 G8 I2C official BUFG probe
+Date: 2026-10-19
+Target: PH1P35MDG324
+TD: 6.2.168116
+Flow: official DefaultFlow.tcl
+Placement seed: 1
+
+Static contract:
+- RED before scripts/prepare_i2c_global_clock.py existed: pytest collection failed with FileNotFoundError.
+- GREEN after implementation: 1 passed.
+
+Full regression:
+- Command: python -B -m pytest -q work/tests
+- Result: 136 passed in 0.88s
+
+Transformed source SHA-256:
+3ba46b1b8d73e4c69a49ee9eedad70d8030c86dcbadce4dc670e3bdb3a84691c
+
+TD candidate: release/candidates/industrial-v2-i2c-global-clock/
+- Bitstream SHA-256: 64751a3000ccae4ca917b4f18d7ad0c62bb174bae797121fa92323e460a159a6
+- route.qor SHA-256: 1b5603bcfce34a05368336b84f4c8cd73dc85887a1a315fc3851b1f3122f6d23
+- final_timing.rpt SHA-256: cf40883b58dc0e3af9084121332bcf0b8b5296ef0f4dd2ffa2f274a43e7601a3
+
+QoR:
+- Synthesis: Setup WNS -1147 ps, TNS -9424 ps, 17 violated endpoints; Hold WNS +114 ps, TNS 0.
+- Final route: Setup WNS +104 ps, TNS 0, 0 violated endpoints; Hold WNS +20 ps, TNS 0, 0 violated endpoints.
+- Slice 18321/21216 = 86.35%; RAM 43; DSP 24; DRAMHARDCON 229.
+- Synthesis recognized 4 BUFG to GCLK.
+
+Final PHY warning lines:
+- PHY-5060: u_uicfgcs520/u_i2c/scl_clk has mixed fanouts of 2 clock pins; 2 data/ctrl pins.
+- PHY-5060: O_cam_24m_syn_3 has mixed fanouts of 160 clock pins; 1 data/ctrl pin.
+- PHY-5016: PLL clkc is driving an IO without location; PLL clkc is not driving a clock-capable IO.
+- PHY-5079: 1 clock net utilizes local routing resources.
+- PHY-5088: clock analyzer reports non-clock sinks and clock-net cascades.
+
+Decision: REJECTED_RESOURCE_AND_WARNING_CLOSURE. Formal release and industrial-v2.bit were not modified. No hardware download was performed.

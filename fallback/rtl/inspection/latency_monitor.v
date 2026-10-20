@@ -8,7 +8,8 @@
 // explicitly N/A until a downstream timing contract exists.
 module latency_monitor #(
   parameter integer COUNTER_WIDTH = 32,
-  parameter integer TIMEOUT_CYCLES = 1024
+  // Default covers two active 1280x720 rasters; smaller unit tests can override.
+  parameter integer TIMEOUT_CYCLES = (2 * 1280 * 720)
 )(
   input  wire                         I_clk,
   input  wire                         I_rst_n,

@@ -13,6 +13,11 @@ module motion_diff_160 #(
   parameter integer THRESHOLD       = 8,
   parameter integer COUNT_WIDTH     = 24,
   parameter integer FRAME_ID_WIDTH  = 16,
+`ifdef MOTION_DIFF_USE_PH1P_HISTORY_ERAM
+  parameter integer USE_PH1P_HISTORY_ERAM = 1,
+`else
+  parameter integer USE_PH1P_HISTORY_ERAM = 0,
+`endif
   parameter integer X_WIDTH         = (IMG_WIDTH <= 1) ? 1 : $clog2(IMG_WIDTH),
   parameter integer Y_WIDTH         = (IMG_HEIGHT <= 1) ? 1 : $clog2(IMG_HEIGHT)
 )(
@@ -41,11 +46,8 @@ module motion_diff_160 #(
   localparam integer DEPTH = IMG_WIDTH * IMG_HEIGHT;
   localparam integer ADDR_WIDTH = (DEPTH <= 1) ? 1 : $clog2(DEPTH);
   localparam integer SAMPLE_COUNT_WIDTH = (DEPTH <= 1) ? 1 : $clog2(DEPTH + 1);
-
-  // The vendor-independent branch is suitable for simulation and synthesis
-  // inference. A later TD-specific resource trial may replace this storage
-  // with the PH1P native ERAM wrapper without changing the stream contract.
-  (* ram_style = "block" *) reg [7:0] history_mem [0:DEPTH-1];
+  localparam integer MOTION_ACCUM_WIDTH =
+      (COUNT_WIDTH < SAMPLE_COUNT_WIDTH) ? COUNT_WIDTH : SAMPLE_COUNT_WIDTH;
 
   reg                         have_history;
   reg [FRAME_ID_WIDTH-1:0]    last_frame_id;
@@ -56,7 +58,7 @@ module motion_diff_160 #(
   reg                         frame_invalid;
   reg                         frame_sample_seen;
   reg [SAMPLE_COUNT_WIDTH-1:0] sample_count;
-  reg [COUNT_WIDTH-1:0]       motion_count_accum;
+  reg [MOTION_ACCUM_WIDTH-1:0] motion_count_accum;
   reg                         motion_seen;
   reg [X_WIDTH-1:0]           xmin_accum;
   reg [X_WIDTH-1:0]           xmax_accum;
@@ -66,7 +68,86 @@ module motion_diff_160 #(
   wire sample_coord_valid = (I_sample_x < IMG_WIDTH) &&
                             (I_sample_y < IMG_HEIGHT);
   wire [ADDR_WIDTH-1:0] sample_addr = I_sample_y * IMG_WIDTH + I_sample_x;
-  wire [7:0] history_value = sample_coord_valid ? history_mem[sample_addr] : 8'd0;
+  wire [ADDR_WIDTH-1:0] history_addr = sample_coord_valid ? sample_addr : {ADDR_WIDTH{1'b0}};
+  wire history_write_en = I_sample_valid && frame_active && sample_coord_valid;
+  wire [7:0] history_value;
+
+  // The default remains the original inferred-memory implementation. The
+  // PH1P branch is selectable for isolated resource trials and keeps the same
+  // write-on-every-valid-sample behavior, including samples in a frame later
+  // rejected as incomplete.
+  generate
+    if (USE_PH1P_HISTORY_ERAM != 0) begin : g_ph1p_history_eram
+`ifdef MOTION_ERAM_SIMULATION
+      (* ram_style = "block" *) reg [7:0] history_mem [0:DEPTH-1];
+      assign history_value = sample_coord_valid ? history_mem[history_addr] : 8'd0;
+      always @(posedge I_clk) begin
+        if (history_write_en)
+          history_mem[history_addr] <= I_y_value;
+      end
+`else
+      wire [7:0] ram_read_data;
+      PH1P_LOGIC_ERAM #(
+        .DATA_WIDTH_A(8),
+        .DATA_WIDTH_B(8),
+        .ADDR_WIDTH_A(ADDR_WIDTH),
+        .ADDR_WIDTH_B(ADDR_WIDTH),
+        .DATA_DEPTH_A(DEPTH),
+        .DATA_DEPTH_B(DEPTH),
+        .MODE("SP"),
+        .REGMODE_A("NOREG"),
+        .REGMODE_B("NOREG"),
+        .WRITEMODE_A("READBEFOREWRITE"),
+        .WRITEMODE_B("NORMAL"),
+        .IMPLEMENT("20K(FAST)"),
+        .ECC_ENCODE("DISABLE"),
+        .ECC_DECODE("DISABLE"),
+        .CLKMODE("ASYNC"),
+        .SSROVERCE("DISABLE"),
+        .OREGSET_A("RESET"),
+        .OREGSET_B("RESET"),
+        .RESETMODE_A("ASYNC"),
+        .RESETMODE_B("ASYNC"),
+        .ASYNC_RESET_RELEASE_A("ASYNC"),
+        .ASYNC_RESET_RELEASE_B("ASYNC"),
+        .INIT_FILE("NONE"),
+        .FILL_ALL("NONE")
+      ) history_ram (
+        .dia(I_y_value),
+        .dib(8'd0),
+        .addra(history_addr),
+        .addrb({ADDR_WIDTH{1'b0}}),
+        .cea(1'b1),
+        .ceb(1'b0),
+        .ocea(1'b0),
+        .oceb(1'b0),
+        .clka(I_clk),
+        .clkb(I_clk),
+        .wea(history_write_en),
+        .web(1'b0),
+        .bea(1'b0),
+        .beb(1'b0),
+        .rsta(1'b0),
+        .rstb(1'b0),
+        .doa(ram_read_data),
+        .ecc_sbiterr(),
+        .ecc_dbiterr(),
+        .ecc_sbiterrinj('d0),
+        .ecc_dbiterrinj('d0),
+        .dob()
+      );
+      assign history_value = sample_coord_valid ? ram_read_data : 8'd0;
+`endif
+    end else begin : g_inferred_history_ram
+      (* ram_style = "block" *) reg [7:0] history_mem [0:DEPTH-1];
+      assign history_value = sample_coord_valid ? history_mem[history_addr] : 8'd0;
+      always @(posedge I_clk) begin
+        if (history_write_en)
+          history_mem[history_addr] <= I_y_value;
+      end
+    end
+  endgenerate
+
   wire [8:0] abs_diff = (I_y_value >= history_value) ?
                         ({1'b0, I_y_value} - {1'b0, history_value}) :
                         ({1'b0, history_value} - {1'b0, I_y_value});
@@ -84,10 +165,10 @@ module motion_diff_160 #(
   wire final_sample_seen = frame_sample_seen || current_sample_valid;
   wire final_invalid = frame_invalid || !current_sample_valid ||
                        (final_sample_count != DEPTH);
-  wire [COUNT_WIDTH-1:0] final_motion_count =
+  wire [MOTION_ACCUM_WIDTH-1:0] final_motion_count =
       motion_count_accum + (motion_now ?
-        {{(COUNT_WIDTH-1){1'b0}}, 1'b1} :
-        {COUNT_WIDTH{1'b0}});
+        {{(MOTION_ACCUM_WIDTH-1){1'b0}}, 1'b1} :
+        {MOTION_ACCUM_WIDTH{1'b0}});
   wire final_motion_seen = motion_seen || motion_now;
   wire [X_WIDTH-1:0] next_xmin = motion_now ?
       (motion_seen ? ((I_sample_x < xmin_accum) ? I_sample_x : xmin_accum) : I_sample_x) :
@@ -113,7 +194,7 @@ module motion_diff_160 #(
       frame_invalid       <= 1'b0;
       frame_sample_seen   <= 1'b0;
       sample_count        <= {SAMPLE_COUNT_WIDTH{1'b0}};
-      motion_count_accum  <= {COUNT_WIDTH{1'b0}};
+      motion_count_accum  <= {MOTION_ACCUM_WIDTH{1'b0}};
       motion_seen         <= 1'b0;
       xmin_accum          <= {X_WIDTH{1'b0}};
       xmax_accum          <= {X_WIDTH{1'b0}};
@@ -153,7 +234,7 @@ module motion_diff_160 #(
         frame_invalid       <= 1'b0;
         frame_sample_seen   <= 1'b0;
         sample_count        <= {SAMPLE_COUNT_WIDTH{1'b0}};
-        motion_count_accum  <= {COUNT_WIDTH{1'b0}};
+        motion_count_accum  <= {MOTION_ACCUM_WIDTH{1'b0}};
         motion_seen         <= 1'b0;
         xmin_accum          <= {X_WIDTH{1'b0}};
         xmax_accum          <= {X_WIDTH{1'b0}};
@@ -167,7 +248,6 @@ module motion_diff_160 #(
         end else if (!sample_coord_valid) begin
           frame_invalid <= 1'b1;
         end else begin
-          history_mem[sample_addr] <= I_y_value;
           frame_sample_seen        <= 1'b1;
           sample_count             <= sample_count +
                                       {{(SAMPLE_COUNT_WIDTH-1){1'b0}}, 1'b1};

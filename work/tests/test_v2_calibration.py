@@ -1,4 +1,5 @@
 from pathlib import Path
+import random
 import sys
 
 
@@ -97,3 +98,35 @@ def test_rtl_dimension_arithmetic_uses_bounded_fixed_width_operands():
     assert "wire [63:0] width_product" not in source
     assert "wire [63:0] height_product" not in source
     assert "[63:32]" not in source
+
+
+def test_cross_product_shape_predicates_match_saturated_integer_division():
+    rng = random.Random(0xD1A6)
+    directed = [
+        (9600, 9600, 200, 120, 80, 320, 448),
+        (7499, 9600, 200, 120, 80, 320, 448),
+        (7500, 9600, 200, 120, 80, 320, 448),
+        (2**20 - 1, 1, 256, 2048, 1, 0, 65535),
+    ]
+    for _ in range(20_000):
+        width = rng.randint(1, 2048)
+        height = rng.randint(1, 2048)
+        area = rng.randint(0, 2**20 - 1)
+        occupancy_min = rng.randint(0, 511)
+        aspect_min = rng.randint(0, 65535)
+        aspect_max = rng.randint(aspect_min, 65535)
+        directed.append((area, width * height, occupancy_min, width, height, aspect_min, aspect_max))
+
+    for area, bbox_area, occupancy_min, width, height, aspect_min, aspect_max in directed:
+        occupancy_q8 = min(256, area * 256 // bbox_area)
+        occupancy_by_product = (
+            occupancy_min <= 256 and area * 256 >= bbox_area * occupancy_min
+        )
+        assert (occupancy_q8 >= occupancy_min) == occupancy_by_product
+
+        aspect_q8 = min(65535, width * 256 // height)
+        aspect_by_product = (
+            width * 256 >= height * aspect_min
+            and (aspect_max == 65535 or width * 256 < height * (aspect_max + 1))
+        )
+        assert (aspect_min <= aspect_q8 <= aspect_max) == aspect_by_product

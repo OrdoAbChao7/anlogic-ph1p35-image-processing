@@ -311,5 +311,48 @@
     "hardware_model_path": null,
     "rtl_source_path": null,
     "notes": "Official COCO 80-class model, output filtered to 3 classes. Public diagnostics improved, not application acceptance or FPGA feasibility."
+  },
+  {
+    "algorithm_id": "v2_telemetry_osd",
+    "display_name": "Industrial V2 Live Telemetry OSD",
+    "category": "Inspection",
+    "status": "VISUAL_APPROVED",
+    "user_approved_version": "v2-live-telemetry-default-approved",
+    "software_model_path": "work/models/v2/telemetry_osd_reference.py",
+    "hardware_model_path": "work/models/v2/telemetry_osd_reference.py",
+    "rtl_source_path": "fallback/rtl/display/industrial_osd_overlay.v",
+    "testbench_path": "fallback/sim/display/tb_industrial_osd_telemetry.v",
+    "source_reference": "Industrial Vision V2 G3/G4/G5/G7 live telemetry contract",
+    "license": "Project code",
+    "recommended_params": {
+      "mode": "original",
+      "frame_count": 1,
+      "detected": true,
+      "pass": true,
+      "ng": false,
+      "invalid": false,
+      "width_px": 1280,
+      "height_px": 720,
+      "proc_valid": true,
+      "proc_cycles": 4096,
+      "motion_valid": true,
+      "motion": true,
+      "motion_count": 19200,
+      "pass_count": 3,
+      "ng_count": 1,
+      "sort_pulse": false,
+      "safe_enable": false,
+      "dimension_valid": true,
+      "shape_valid": true,
+      "scale_provisional": true,
+      "width_mm_q16_16": 3932160,
+      "height_mm_q16_16": 1310720
+    },
+    "history": [
+      {
+        "timestamp": "2026-10-19",
+        "action": "Visual preview approved under the user's explicit default-pass instruction; no separate pixel-by-pixel review is implied"
+      }
+    ]
   }
 ]

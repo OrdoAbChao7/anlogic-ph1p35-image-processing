@@ -3,6 +3,7 @@ import sys
 
 
 MODEL_DIR = Path(__file__).resolve().parents[1] / "models" / "v2"
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(MODEL_DIR))
 
 from latency_reference import (  # noqa: E402
@@ -84,4 +85,14 @@ def test_reset_discards_pending_tags_and_restores_first_frame_semantics():
 
     assert late.tag_mismatch and not late.proc_valid
     assert first.frame_gap is False
+
+
+def test_rtl_latency_ledgers_allow_a_full_720p_frame_before_timeout():
+    inspection = ROOT / "fallback" / "rtl" / "inspection"
+    for module in ("latency_monitor.v", "frame_tag_monitor.v"):
+        source = (inspection / module).read_text(encoding="utf-8")
+        assert "TIMEOUT_CYCLES = (2 * 1280 * 720)" in source
+
+    bench = ROOT / "fallback" / "sim" / "inspection" / "tb_latency_monitor_full_frame.v"
+    assert bench.is_file()
 

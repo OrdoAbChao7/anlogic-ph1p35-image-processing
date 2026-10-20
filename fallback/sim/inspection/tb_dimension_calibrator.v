@@ -16,6 +16,10 @@ module tb_dimension_calibrator;
   wire [31:0] width_mm, height_mm;
   wire [8:0] occupancy;
   wire [15:0] aspect;
+  wire static_valid, static_invalid, static_dimension_valid, static_shape_valid;
+  wire [31:0] static_width_mm, static_height_mm;
+  wire [8:0] static_occupancy;
+  wire [15:0] static_aspect;
 
   always #5 clk = ~clk;
 
@@ -33,6 +37,31 @@ module tb_dimension_calibrator;
     .O_occupancy_q8(occupancy), .O_aspect_q8(aspect)
   );
 
+  dimension_calibrator #(
+    .USE_STATIC_CONFIG(1),
+    .STATIC_SCALE_X_Q16_16(32'd32768),
+    .STATIC_SCALE_Y_Q16_16(32'd16384),
+    .STATIC_NOMINAL_WIDTH_Q16_16(32'd3932160),
+    .STATIC_NOMINAL_HEIGHT_Q16_16(32'd1310720),
+    .STATIC_TOLERANCE_WIDTH_Q16_16(32'd131072),
+    .STATIC_TOLERANCE_HEIGHT_Q16_16(32'd131072),
+    .STATIC_OCCUPANCY_MIN_Q8(9'd200),
+    .STATIC_ASPECT_MIN_Q8(16'd320),
+    .STATIC_ASPECT_MAX_Q8(16'd448)
+  ) static_dut (
+    .I_clk(clk), .I_rst_n(rst_n), .I_result_valid(result_valid),
+    .I_calibration_valid(calibration_valid), .I_xmin(xmin), .I_xmax(xmax),
+    .I_ymin(ymin), .I_ymax(ymax), .I_area(area),
+    .I_scale_x_q16_16(scale_x), .I_scale_y_q16_16(scale_y),
+    .I_nominal_width_q16_16(nominal_w), .I_nominal_height_q16_16(nominal_h),
+    .I_tolerance_width_q16_16(tolerance_w), .I_tolerance_height_q16_16(tolerance_h),
+    .I_occupancy_min_q8(occupancy_min), .I_aspect_min_q8(aspect_min),
+    .I_aspect_max_q8(aspect_max), .O_valid(static_valid), .O_invalid(static_invalid),
+    .O_dimension_valid(static_dimension_valid), .O_shape_valid(static_shape_valid),
+    .O_width_mm_q16_16(static_width_mm), .O_height_mm_q16_16(static_height_mm),
+    .O_occupancy_q8(static_occupancy), .O_aspect_q8(static_aspect)
+  );
+
   task clear_inputs;
     begin result_valid=1'b0; end
   endtask
@@ -43,6 +72,11 @@ module tb_dimension_calibrator;
       @(negedge clk); clear_inputs;
       xmin=ax; xmax=bx; ymin=ay; ymax=by; area=ap; result_valid=1'b1;
       @(posedge clk); #1; clear_inputs;
+      if ({static_valid, static_invalid, static_dimension_valid, static_shape_valid,
+           static_width_mm, static_height_mm, static_occupancy, static_aspect} !==
+          {valid, invalid, dimension_valid, shape_valid,
+           width_mm, height_mm, occupancy, aspect})
+        $fatal(1, "static specialization differs from runtime configuration");
     end
   endtask
 
@@ -56,6 +90,32 @@ module tb_dimension_calibrator;
         occupancy!==9'd256 || aspect!==16'd384)
       $fatal(1, "normal calibration failed w=%0d h=%0d occ=%0d asp=%0d",
         width_mm, height_mm, occupancy, aspect);
+
+    send_bbox(0,115,20,99,9280);
+    if (!dimension_valid || !shape_valid || width_mm!==32'd3801088)
+      $fatal(1, "inclusive lower width tolerance was rejected");
+    send_bbox(0,114,20,99,9200);
+    if (dimension_valid || shape_valid)
+      $fatal(1, "width below tolerance was accepted");
+    send_bbox(0,123,20,99,9920);
+    if (!dimension_valid || !shape_valid || width_mm!==32'd4063232)
+      $fatal(1, "inclusive upper width tolerance was rejected");
+    send_bbox(0,124,20,99,10000);
+    if (dimension_valid || shape_valid)
+      $fatal(1, "width above tolerance was accepted");
+
+    send_bbox(10,129,20,91,8640);
+    if (!dimension_valid || !shape_valid || height_mm!==32'd1179648)
+      $fatal(1, "inclusive lower height tolerance was rejected");
+    send_bbox(10,129,20,90,8520);
+    if (dimension_valid || shape_valid)
+      $fatal(1, "height below tolerance was accepted");
+    send_bbox(10,129,20,107,10560);
+    if (!dimension_valid || !shape_valid || height_mm!==32'd1441792)
+      $fatal(1, "inclusive upper height tolerance was rejected");
+    send_bbox(10,129,20,108,10680);
+    if (dimension_valid || shape_valid)
+      $fatal(1, "height above tolerance was accepted");
 
     send_bbox(10,129,20,99,7000);
     if (!valid || !dimension_valid || shape_valid || occupancy>=9'd200)

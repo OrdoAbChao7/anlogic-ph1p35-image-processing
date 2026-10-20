@@ -1,0 +1,35 @@
+Industrial V2 G8 I2C counter-derived event-phase probe
+Date: 2026-10-19
+Target: PH1P35MDG324
+TD: 6.2.168116
+Flow: official DefaultFlow.tcl
+Placement seed: 1
+
+Directed simulation:
+- Command: python -B -m pytest -q work/tests/test_v2_i2c_counter_phase.py
+- Result: 2 passed
+- Vendor and candidate: rd_data=00, scl_transitions=59, bus_error=0
+
+Full regression:
+- Command: python -B -m pytest -q work/tests
+- Result: 141 passed in 2.20s
+
+Transformed source SHA-256:
+114c6f265e16ddca1a3336fa209300e2646e6e93d452daa86673369356f78af8
+
+TD candidate: release/candidates/industrial-v2-i2c-counter-phase/
+- Bitstream SHA-256: e32361cfc89d6264678e6e0da5f1bda9bf252cafc12c270b05fc48a78eac4f92
+- route.qor SHA-256: 27836312f36a5119fe13d52f48d36f461e17f32f0b30e19854e9f4ed7c45e7bc
+- final_timing.rpt SHA-256: c4d8d4a29d58437d95812a7152bd55a0cffd381f4fa84fc34d91f7cb15d638b0
+
+QoR:
+- Final route: Setup WNS +113 ps, TNS 0, 0 violated endpoints; Hold WNS +20 ps, TNS 0, 0 violated endpoints.
+- Slice 18148/21216 = 85.54%; RAM 43; DSP 24; DRAMHARDCON 229.
+- Synthesis finished with Setup WNS -1100 ps/TNS -11444 ps and 27 violated endpoints; final route timing passed after placement/routing optimization.
+
+Final PHY warning lines:
+- PHY-5060: O_cam_24m_syn_3 has mixed fanouts of 161 clock pins and 1 data/ctrl pin.
+- PHY-5079: 1 clock net utilizes local routing resources.
+- I2C PHY-5016 and PHY-5088 lines were absent in this isolated run.
+
+Decision: REJECTED_RESOURCE_GATE. Formal release and industrial-v2.bit were not modified. No hardware download was performed.

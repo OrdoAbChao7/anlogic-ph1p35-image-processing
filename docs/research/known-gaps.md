@@ -22,7 +22,8 @@
 | YOLO-tiny 模型版本、输入尺寸、INT8 量化参数和裁剪层 | Goal 5 检测实现 | 模型文件、量化脚本和权重校验 | 待补 |
 | 卷积/池化/NMS 的 BRAM 布局、吞吐和定点位宽 | Goal 5 资源与时序 | RTL、综合报告和模型比对 | 待补 |
 | 板载按键、LED、WM8978 管脚、时钟和 Codec 配置 | Goal 6 外设联动 | 开发板原理图、Codec 手册和工程约束 | 按键/LED 管脚已由用户提供手册确认；WM8978 仍待补 |
-| HDMI 720p@30fps 实际输出与端到端延迟 | Goal 1/7 性能 | HDMI 配置、帧率测量和延迟测试记录 | 待测 |
+| HDMI 输出帧 ID 与输入帧的 DDR 缓冲关联 | V2-G3/G8 video latency | DDR writer/reader 槽位元数据、完整帧提交事件和 HDMI 输出帧 tag 仿真 | 源码审计确认当前 4 槽 DDR 路径无帧 ID sideband；未闭合 |
+| HDMI 720p@30fps 实际输出与端到端延迟 | Goal 1/7 性能 | HDMI 配置、帧率测量和延迟测试记录 | 待测；不得仅凭 VSYNC 推断输入/输出帧关联 |
 
 ## 缺口处理规则
 
@@ -138,8 +139,8 @@
 
 ## 2026-10-17 卡通化区域填充候选校正
 
-- **待确认（project）**：`s4-region-fill-v1` 的固定 8 级逐通道量化、四邻居局部填充、量化图 Sobel 阈值 `240` 和 `BORDER_REPLICATE` 已绑定配置与预览报告；软件参考、硬件等价模型、RTL 小尺寸/1280×720 全帧逐周期回归通过，但 Stage C 仍为 `VISUAL_REVIEW_PENDING`，尚未得到新的 `VISUAL_APPROVED`。
-- **历史候选（project）**：s4 候选 TD 独立工程曾完成综合、布局布线和位流生成；修复后三 bank 行缓存和完整亮度加权公式后，最终 `route.qor` 为 Setup WNS `+119 ps`、TNS `0`、Hold WNS `+20 ps`、TNS `0`，违例端点为 0。该结果状态为 `BUILD_PASS / HARDWARE_NOT_RUN / VISUAL_REVIEW_PENDING`，原始报告和位流哈希见 [`../experiments/2026-10-17-cartoon-region-fill-stage-e.md`](../experiments/2026-10-17-cartoon-region-fill-stage-e.md)，未替换正式 fixed-red v1。
+- **已关闭（project，Stage C）**：`s4-region-fill-v1` 的固定 8 级逐通道量化、四邻居局部填充、量化图 Sobel 阈值 `240` 和 `BORDER_REPLICATE` 已绑定配置与预览报告；软件参考、硬件等价模型、RTL 小尺寸/1280×720 全帧逐周期回归通过。`work/algorithm_lab/registry.json` 将 `cartoon` 登记为 `VISUAL_APPROVED`，Stage C 批准记录见 [`../experiments/2026-10-17-cartoon-region-fill-stage-c.md`](../experiments/2026-10-17-cartoon-region-fill-stage-c.md)。该批准只代表视觉候选审批，不是板级画面或硬件效果实测。
+- **历史候选（project）**：s4 候选 TD 独立工程曾完成综合、布局布线和位流生成；修复后三 bank 行缓存和完整亮度加权公式后，最终 `route.qor` 为 Setup WNS `+119 ps`、TNS `0`、Hold WNS `+20 ps`、TNS `0`，违例端点为 0。该结果状态为 `BUILD_PASS / HARDWARE_NOT_RUN / VISUAL_APPROVED`，原始报告和位流哈希见 [`../experiments/2026-10-17-cartoon-region-fill-stage-e.md`](../experiments/2026-10-17-cartoon-region-fill-stage-e.md)，未替换正式 fixed-red v1。
 - **仍开放（project risk）**：修复后的候选 Slice 占用为 17,397/21,216，即 82.00%，超过项目期望的 80% 资源目标；需要进一步优化或在发布决策中明确接受余量。
 - **仍开放（project）**：候选工程依赖本机 TD 工具和官方基线 Runs；本轮是独立目录构建，不等于从干净机器无外部依赖重建，正式发布目录也未替换。
 - **仍开放（measured）**：没有 PH1P35、SC520CS、HDMI 实机下载、模式视觉、帧率/延迟、LED 或长稳证据，不能关闭 Stage G 或声明上板效果。
@@ -172,3 +173,10 @@
 - **已完成（project）**：正式 TD 输入包约束已改为 D5/A9 和 D10/E10/C6；顶层移除与以太网冲突的 `I_rst_n=R10`、`O_screen_pwm=R11`，复位改为 PLL lock 内部释放；LED1/2/3 分别映射 PASS/NG/检测状态。
 - **已关闭（project）**：TD 工具实际位于主工作区 `E:\Projects\FPGA\.tools\td\app\bin\td_commands_prompt.exe`，通过显式工具路径完成隔离构建；新位流和报告见 `work/release_board_mapping_v3/`。
 - **仍开放（measured）**：本轮没有下载到 PH1P35A，因此物理 LED、按键和 MIPI 绑定仍需板级证据关闭；结构性时钟告警仍需单独审计。
+
+## 2026-10-20 V2 DDR 输出帧 tag 源码审计
+
+- **已确认（project）**：V2 formal top 的 `ind_source_frame_id` 只进入 ISP 结果、运动/统计适配器和结果 CDC；当前 feature-spine 的 `I_video_valid`、`I_video_vsync` 绑 0，`I_video_frame_id` 绑 0。
+- **已确认（project）**：`video_in.v` 用 2-bit 写槽指针和四个 DDR 基址写像素流，向 `video_out` 暴露 2-bit 读槽指针；接口没有帧 ID、帧尾或 DDR 写完成 tag。`video_out.v` 在显示 VSYNC 边沿按读槽指针选择基址并输出像素数据，不输出帧 ID。
+- **结论（inferred）**：单独把 HDMI VSYNC 接到 latency monitor，或把当前输入 frame counter 直接作为输出 frame ID，都不能证明 DDR 中正在显示的是哪一输入帧。缺口须由随缓冲槽位传递并在真实帧完成后提交的 tag 关闭；在此之前 VIDEO/E2E latency 保持 `N/A`。
+- 证据与边界见 [`2026-10-20-industrial-v2-g3-ddr-output-frame-tag-audit.md`](../experiments/2026-10-20-industrial-v2-g3-ddr-output-frame-tag-audit.md)。本审计没有修改 RTL、DDR/IP、约束或位流，也没有上板测量。

@@ -32,7 +32,8 @@ def test_result_cdc_has_toggle_and_stable_payload_contract():
 def test_result_cdc_does_not_use_per_bit_reset_or_async_data_sampling():
     source = CDC.read_text(encoding="utf-8")
 
-    assert "always @(posedge I_src_clk or negedge I_rst_n)" in source
-    assert "always @(posedge I_dst_clk or negedge I_rst_n)" in source
+    assert "always @(posedge I_src_clk or negedge I_src_rst_n)" in source
+    assert "always @(posedge I_dst_clk or negedge I_dst_rst_n)" in source
+    assert "module reset_release_sync" in source
     assert "I_src_toggle != src_toggle_hold" in source
     assert "event_pending" in source

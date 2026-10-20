@@ -61,6 +61,7 @@ TD_EXE = DEFAULT_TD_EXE
 FLOW_TCL = DEFAULT_FLOW_TCL
 RUN_FLOW_TCL = DEFAULT_FLOW_TCL
 PLACE_SEED = None
+USE_PH1P_MOTION_ERAM = False
 ORIG_RUNS = DEFAULT_ORIG_RUNS
 INPUT_PACKAGE = DEFAULT_INPUT_PACKAGE
 RELEASE_DIR = DEFAULT_RELEASE_DIR
@@ -152,6 +153,10 @@ def build_input_provenance() -> dict:
         "flow_tcl": describe_input(FLOW_TCL, "FPGA_FLOW_TCL"),
         "run_flow_tcl": describe_input(RUN_FLOW_TCL, "FPGA_FLOW_TCL_RUN"),
         "place_seed": PLACE_SEED,
+        "motion_history_storage": (
+            "ph1p-single-port-eram-read-before-write"
+            if USE_PH1P_MOTION_ERAM else "inferred-memory"
+        ),
         "input_package": describe_input(INPUT_PACKAGE, "FPGA_TD_INPUT_PACKAGE"),
         "baseline_files": {
             relative: describe_input(path, "FPGA_BASELINE_RUNS")
@@ -275,6 +280,11 @@ def parse_args(argv=None):
         help="Optional isolated design_top_wrapper.v override; defaults to the tracked V2 top.",
     )
     parser.add_argument(
+        "--motion-eram",
+        action="store_true",
+        help="Run an isolated candidate with PH1P single-port ERAM motion history (READBEFOREWRITE).",
+    )
+    parser.add_argument(
         "--work-project",
         default=str(DEFAULT_WORK_PROJECT),
         help="Isolated TD project workspace; defaults to work/td_industrial.",
@@ -288,11 +298,12 @@ def parse_args(argv=None):
 
 
 def configure(args):
-    global TD_EXE, FLOW_TCL, RUN_FLOW_TCL, PLACE_SEED, ORIG_RUNS, INPUT_PACKAGE, RELEASE_DIR, TRACKED_VIDEO, TRACKED_TOP, WORK_PROJECT, WORK_RUNS
+    global TD_EXE, FLOW_TCL, RUN_FLOW_TCL, PLACE_SEED, USE_PH1P_MOTION_ERAM, ORIG_RUNS, INPUT_PACKAGE, RELEASE_DIR, TRACKED_VIDEO, TRACKED_TOP, WORK_PROJECT, WORK_RUNS
     TD_EXE = Path(args.td_exe).expanduser().resolve()
     FLOW_TCL = Path(args.flow_tcl).expanduser().resolve()
     RUN_FLOW_TCL = FLOW_TCL
     PLACE_SEED = args.place_seed
+    USE_PH1P_MOTION_ERAM = args.motion_eram
     if PLACE_SEED is not None and PLACE_SEED < 0:
         raise ValueError("--place-seed must be non-negative")
     ORIG_RUNS = Path(args.baseline_runs).expanduser().resolve()
@@ -327,6 +338,17 @@ def validate_build_isolation():
         if RELEASE_DIR == DEFAULT_RELEASE_DIR:
             raise ValueError(
                 "Candidate top RTL requires an isolated --release-dir; "
+                f"refusing to use {DEFAULT_RELEASE_DIR}"
+            )
+    if USE_PH1P_MOTION_ERAM:
+        if WORK_PROJECT == DEFAULT_WORK_PROJECT:
+            raise ValueError(
+                "ERAM motion trial requires an isolated --work-project; "
+                f"refusing to use {DEFAULT_WORK_PROJECT}"
+            )
+        if RELEASE_DIR == DEFAULT_RELEASE_DIR:
+            raise ValueError(
+                "ERAM motion trial requires an isolated --release-dir; "
                 f"refusing to use {DEFAULT_RELEASE_DIR}"
             )
 
@@ -488,6 +510,12 @@ def setup_runs():
         if not src.exists():
             raise FileNotFoundError(f"Tracked RTL missing: {src}")
         shutil.copy2(src, dst)
+    if USE_PH1P_MOTION_ERAM:
+        motion_source = WORK_PROJECT / "user_source" / "hdl_source" / "motion_diff_160.v"
+        motion_text = motion_source.read_text(encoding="utf-8")
+        motion_text = "`define MOTION_DIFF_USE_PH1P_HISTORY_ERAM 1\n" + motion_text
+        motion_source.write_text(motion_text, encoding="utf-8", newline="\n")
+        print("      enabled isolated PH1P ERAM motion-history trial source")
     for relative_name, src in TRACKED_SOURCE_OVERRIDES.items():
         dst = WORK_PROJECT / "user_source" / "hdl_source" / relative_name
         if not src.exists():

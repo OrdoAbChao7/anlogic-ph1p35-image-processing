@@ -3,7 +3,8 @@
 // Bounded frame-tag ledger for internal latency measurements. It accepts one
 // pending input frame at a time and never fabricates a tag for a missing frame.
 module frame_tag_monitor #(
-  parameter integer TIMEOUT_CYCLES = 1024
+  // Default covers two active 1280x720 rasters; smaller unit tests can override.
+  parameter integer TIMEOUT_CYCLES = (2 * 1280 * 720)
 )(
   input  wire        I_clk,
   input  wire        I_rst_n,
@@ -97,6 +98,71 @@ module frame_tag_monitor #(
           age <= age + 32'd1;
         end
       end
+    end
+  end
+endmodule
+
+// Ordered frame-ID ledger for a same-clock pixel/result pipeline. The result
+// side pops one tag per frame event, so a detector result may safely arrive
+// after the next input SOF without borrowing that newer frame's live ID.
+module frame_result_tag_queue #(
+  parameter integer FRAME_ID_WIDTH = 16,
+  parameter integer DEPTH = 4
+)(
+  input  wire                    I_clk,
+  input  wire                    I_rst_n,
+  input  wire                    I_push,
+  input  wire [FRAME_ID_WIDTH-1:0] I_push_frame_id,
+  input  wire                    I_pop,
+  output wire [FRAME_ID_WIDTH-1:0] O_result_frame_id,
+  output wire                    O_result_tag_valid,
+  output reg                     O_tag_fault
+);
+
+  localparam integer PTR_WIDTH = (DEPTH <= 1) ? 1 : $clog2(DEPTH);
+  localparam integer COUNT_WIDTH = (DEPTH <= 1) ? 1 : $clog2(DEPTH + 1);
+
+  reg [FRAME_ID_WIDTH-1:0] tag_mem [0:DEPTH-1];
+  reg [PTR_WIDTH-1:0] read_ptr;
+  reg [PTR_WIDTH-1:0] write_ptr;
+  reg [COUNT_WIDTH-1:0] count;
+
+  wire pop_queued = I_pop && (count != 0);
+  wire push_bypass = I_push && I_pop && (count == 0);
+  wire push_queued = I_push && !push_bypass &&
+                     ((count < DEPTH) || pop_queued);
+  wire [PTR_WIDTH-1:0] read_ptr_next =
+      (read_ptr == DEPTH-1) ? {PTR_WIDTH{1'b0}} : read_ptr + 1'b1;
+  wire [PTR_WIDTH-1:0] write_ptr_next =
+      (write_ptr == DEPTH-1) ? {PTR_WIDTH{1'b0}} : write_ptr + 1'b1;
+
+  assign O_result_frame_id = (count != 0) ? tag_mem[read_ptr] : I_push_frame_id;
+  assign O_result_tag_valid = I_pop && !O_tag_fault &&
+                              ((count != 0) || I_push);
+
+  always @(posedge I_clk or negedge I_rst_n) begin
+    if (!I_rst_n) begin
+      read_ptr <= {PTR_WIDTH{1'b0}};
+      write_ptr <= {PTR_WIDTH{1'b0}};
+      count <= {COUNT_WIDTH{1'b0}};
+      O_tag_fault <= 1'b0;
+    end else begin
+      if (push_queued) begin
+        tag_mem[write_ptr] <= I_push_frame_id;
+        write_ptr <= write_ptr_next;
+      end
+      if (pop_queued)
+        read_ptr <= read_ptr_next;
+
+      case ({push_queued, pop_queued})
+        2'b10: count <= count + 1'b1;
+        2'b01: count <= count - 1'b1;
+        default: count <= count;
+      endcase
+
+      if ((I_push && (count == DEPTH) && !pop_queued) ||
+          (I_pop && (count == 0) && !I_push))
+        O_tag_fault <= 1'b1;
     end
   end
 endmodule

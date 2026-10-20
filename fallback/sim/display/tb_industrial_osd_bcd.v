@@ -19,6 +19,12 @@ module tb_industrial_osd_bcd;
     .I_de(de), .I_rgb(rgb), .I_mode(2'd0), .I_detected(1'b0),
     .I_pass(1'b0), .I_ng(1'b0), .I_invalid(1'b0),
     .I_width(11'd120), .I_height(11'd80),
+    .I_proc_valid(1'b0), .I_proc_cycles(32'd0),
+    .I_motion_valid(1'b0), .I_motion(1'b0), .I_motion_count(24'd0),
+    .I_pass_count(16'd0), .I_ng_count(16'd0),
+    .I_sort_pulse(1'b0), .I_safe_enable(1'b0),
+    .I_dimension_valid(1'b1), .I_shape_valid(1'b1), .I_scale_provisional(1'b1),
+    .I_width_mm_q16_16(32'd3932160), .I_height_mm_q16_16(32'd1310720),
     .O_vsync(ovs), .O_hsync(ohs), .O_de(ode), .O_rgb(out_rgb)
   );
 

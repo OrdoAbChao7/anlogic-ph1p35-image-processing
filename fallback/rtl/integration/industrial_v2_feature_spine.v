@@ -19,7 +19,19 @@ module industrial_v2_feature_spine #(
   parameter integer MOTION_HEIGHT = 120,
   parameter integer MOTION_THRESHOLD = 8,
   parameter integer SORT_TRIGGER_X = 100,
-  parameter integer SORT_PULSE_CYCLES = 3
+  parameter integer SORT_PULSE_CYCLES = 3,
+  parameter integer USE_STATIC_CAL_CONFIG = 0,
+  parameter [31:0] STATIC_SCALE_X_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_SCALE_Y_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_NOMINAL_WIDTH_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_NOMINAL_HEIGHT_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_TOLERANCE_WIDTH_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_TOLERANCE_HEIGHT_Q16_16 = 32'd0,
+  parameter [8:0]  STATIC_OCCUPANCY_MIN_Q8 = 9'd0,
+  parameter [15:0] STATIC_ASPECT_MIN_Q8 = 16'd0,
+  parameter [15:0] STATIC_ASPECT_MAX_Q8 = 16'hffff,
+  parameter integer USE_FIXED_AWB_PIXEL_COUNT = 0,
+  parameter [31:0] FIXED_AWB_PIXEL_COUNT = 32'd921600
 )(
   input  wire        I_clk,
   input  wire        I_rst_n,
@@ -29,6 +41,9 @@ module industrial_v2_feature_spine #(
   input  wire        I_frame_valid,
   input  wire [15:0] I_frame_id,
   input  wire        I_result_valid,
+  input  wire        I_result_tag_valid,
+  input  wire [15:0] I_result_frame_id,
+  input  wire [15:0] I_video_frame_id,
   input  wire        I_detected,
   input  wire        I_invalid,
   input  wire [10:0] I_xmin,
@@ -159,20 +174,23 @@ module industrial_v2_feature_spine #(
   // The tracker emits event pulses only on a result cycle. The state output
   // is the persistent association contract used by idle-gap-safe consumers.
   assign tracker_tracking_level = (tracker_state == 2'd1);
-  assign spine_target_enter = I_result_valid && I_detected && !I_invalid &&
+  assign spine_target_enter = I_result_valid && I_result_tag_valid &&
+                              I_detected && !I_invalid &&
                               !tracker_tracking_level;
-  assign spine_target_exit = I_result_valid && (!I_detected || I_invalid) &&
+  assign spine_target_exit = I_result_valid &&
+                             (!I_result_tag_valid || !I_detected || I_invalid) &&
                              tracker_tracking_level;
   assign spine_tracking_lost = I_result_valid &&
-                               ((tracker_state == 2'd2) || I_invalid);
+                               ((tracker_state == 2'd2) || I_invalid ||
+                                !I_result_tag_valid);
 
   temporal_tracker u_temporal_tracker (
     .I_clk          (I_clk),
     .I_rst_n        (I_rst_n),
     .I_frame_valid  (I_result_valid),
-    .I_frame_id     (I_frame_id),
+    .I_frame_id     (I_result_frame_id),
     .I_detected     (I_detected),
-    .I_invalid      (I_invalid),
+    .I_invalid      (I_invalid || !I_result_tag_valid),
     .I_cx           (I_cx),
     .I_cy           (I_cy),
     .O_result_valid (tracker_result_valid),
@@ -201,7 +219,8 @@ module industrial_v2_feature_spine #(
   ) u_trajectory_history (
     .I_clk        (I_clk),
     .I_rst_n      (I_rst_n),
-    .I_push       (I_result_valid && I_detected && !I_invalid),
+    .I_push       (I_result_valid && I_result_tag_valid &&
+                   I_detected && !I_invalid),
     .I_new_track  (spine_target_enter),
     .I_cx         (I_cx),
     .I_cy         (I_cy),
@@ -238,10 +257,10 @@ module industrial_v2_feature_spine #(
     .I_rst_n           (I_rst_n),
     .I_input_valid     (I_frame_valid),
     .I_input_frame_id  (I_frame_id),
-    .I_result_valid    (I_result_valid),
-    .I_result_frame_id(I_frame_id),
+    .I_result_valid    (I_result_valid && I_result_tag_valid),
+    .I_result_frame_id (I_result_frame_id),
     .I_video_valid     (I_video_valid),
-    .I_video_frame_id  (I_frame_id),
+    .I_video_frame_id  (I_video_frame_id),
     .O_pending         (),
     .O_active_frame_id (),
     .O_frame_gap       (),
@@ -256,10 +275,10 @@ module industrial_v2_feature_spine #(
     .I_rst_n           (I_rst_n),
     .I_input_valid     (I_frame_valid),
     .I_input_frame_id  (I_frame_id),
-    .I_result_valid    (I_result_valid),
-    .I_result_frame_id(I_frame_id),
+    .I_result_valid    (I_result_valid && I_result_tag_valid),
+    .I_result_frame_id (I_result_frame_id),
     .I_video_valid     (I_video_valid),
-    .I_video_frame_id  (I_frame_id),
+    .I_video_frame_id  (I_video_frame_id),
     .O_proc_valid      (O_latency_proc_valid),
     .O_proc_cycles     (O_latency_proc_cycles),
     .O_video_valid     (O_latency_video_valid),
@@ -298,7 +317,10 @@ module industrial_v2_feature_spine #(
     .O_invalid      ()
   );
 
-  awb_frame_gain_controller u_awb_frame_gain_controller (
+  awb_frame_gain_controller #(
+    .USE_FIXED_PIXEL_COUNT (USE_FIXED_AWB_PIXEL_COUNT),
+    .FIXED_PIXEL_COUNT     (FIXED_AWB_PIXEL_COUNT)
+  ) u_awb_frame_gain_controller (
     .I_clk                  (I_clk),
     .I_rst_n                (I_rst_n),
     .I_frame_stats_valid    (I_frame_stats_valid),
@@ -317,7 +339,18 @@ module industrial_v2_feature_spine #(
   wire calibration_valid;
   wire calibration_invalid;
 
-  dimension_calibrator u_dimension_calibrator (
+  dimension_calibrator #(
+    .USE_STATIC_CONFIG              (USE_STATIC_CAL_CONFIG),
+    .STATIC_SCALE_X_Q16_16           (STATIC_SCALE_X_Q16_16),
+    .STATIC_SCALE_Y_Q16_16           (STATIC_SCALE_Y_Q16_16),
+    .STATIC_NOMINAL_WIDTH_Q16_16     (STATIC_NOMINAL_WIDTH_Q16_16),
+    .STATIC_NOMINAL_HEIGHT_Q16_16    (STATIC_NOMINAL_HEIGHT_Q16_16),
+    .STATIC_TOLERANCE_WIDTH_Q16_16   (STATIC_TOLERANCE_WIDTH_Q16_16),
+    .STATIC_TOLERANCE_HEIGHT_Q16_16  (STATIC_TOLERANCE_HEIGHT_Q16_16),
+    .STATIC_OCCUPANCY_MIN_Q8         (STATIC_OCCUPANCY_MIN_Q8),
+    .STATIC_ASPECT_MIN_Q8            (STATIC_ASPECT_MIN_Q8),
+    .STATIC_ASPECT_MAX_Q8            (STATIC_ASPECT_MAX_Q8)
+  ) u_dimension_calibrator (
     .I_clk                       (I_clk),
     .I_rst_n                     (I_rst_n),
     .I_result_valid              (I_result_valid),
@@ -414,7 +447,8 @@ module industrial_v2_feature_spine #(
   assign O_track_enter  = spine_target_enter;
   assign O_track_exit   = spine_target_exit;
   assign O_frame_gap    = tracker_frame_gap || latency_frame_gap;
-  assign O_tag_mismatch = tag_mismatch || latency_tag_mismatch || latency_timeout;
+  assign O_tag_mismatch = tag_mismatch || latency_tag_mismatch || latency_timeout ||
+                          (I_result_valid && !I_result_tag_valid);
   assign O_calibration_invalid = calibration_invalid;
 
 endmodule

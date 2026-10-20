@@ -34,6 +34,7 @@ try:
 except ImportError:
     YoloReferenceAlgorithm = None
 from plugins.industrial_inspection import IndustrialInspectionAlgorithm
+from plugins.v2_telemetry_osd import V2TelemetryOSDAlgorithm
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
@@ -57,6 +58,7 @@ app = FastAPI(title="FPGA Algorithm Lab API")
 
 # Register available algorithm plugins
 PLUGIN_INSTANCES: Dict[str, BaseAlgorithm] = {
+    "v2_telemetry_osd": V2TelemetryOSDAlgorithm(),
     "industrial_inspection": IndustrialInspectionAlgorithm(),
     "cartoon": CartoonAlgorithm(),
     "sobel": SobelAlgorithm(),

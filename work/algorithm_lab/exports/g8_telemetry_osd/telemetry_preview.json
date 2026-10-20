@@ -1,0 +1,32 @@
+{
+  "input": "samples\\workpiece_normal_pass.png",
+  "shape": [
+    720,
+    1280,
+    3
+  ],
+  "algorithm": "v2_telemetry_osd",
+  "status": "VISUAL_APPROVED",
+  "metrics": {
+    "telemetry_lines": [
+      "MODE:ORIGINAL",
+      "FRAME:0000000001",
+      "RED_PART",
+      "N:1 W:1280PX H:0720PX",
+      "STATUS:PASS",
+      "PROC:CYC 00001000",
+      "VIDEO:N/A E2E:N/A",
+      "MOTION:1 COUNT:004B00",
+      "PASS:0003 NG:0001",
+      "SORT:0 SAFE:0",
+      "CAL:PROV W:00060MM",
+      "H:00020MM SHAPE:VALID"
+    ],
+    "physical_calibration_claimed": false,
+    "video_latency": null,
+    "end_to_end_latency": null,
+    "text_rows_rendered": 12,
+    "model": "software visual-reference OSD"
+  },
+  "stage": "VISUAL_APPROVED_BY_DEFAULT_PASS_AUTHORIZATION"
+}
