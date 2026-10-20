@@ -2,9 +2,9 @@
 chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
-set "LAB_PYTHON=%~dp0..\y1_yolo\.venv\Scripts\python.exe"
+set "LAB_PYTHON=%~dp0..\..\archive\legacy\yolo\y1_yolo\.venv\Scripts\python.exe"
 if not exist "%LAB_PYTHON%" (
-  echo Missing Python environment: work/y1_yolo/.venv
+  echo Missing Python environment: archive/legacy/yolo/y1_yolo/.venv
   pause
   exit /b 1
 )

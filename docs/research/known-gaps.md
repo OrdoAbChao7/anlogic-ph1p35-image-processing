@@ -1,5 +1,7 @@
 # 资料缺口和待确认事项
 
+> 接手任务先看[当前状态](../project/STATUS.md)，再按主题读取本页。历史条目只描述当时版本，后续带日期的证据可更正旧判断；不按整页最早状态判断当前工程。工具入口见[工具链手册](../development/toolchain.md)。
+
 这些内容目前没有足够可靠的来源，Codex 不得把它们当成已确认事实。
 
 | 缺口 | 影响 | 首选补充来源 | 状态 |
@@ -119,3 +121,37 @@
 | 来源/效果审批 | 当前恢复包253项哈希匹配，属于BUILD_PASS候选；visual_approved=false、hardware_verified=false | 保存恢复点不等于效果通过；P1提供具体预览后由用户明确批准，保留软件先行门禁 |
 
 原始缺口与历史记录保留。PROJECT_GOAL、PHASES、acceptance-matrix和AGENTS本轮不变。
+
+
+## 2026-10-20 执行入口审计：工具自动检查不等于阶段验收
+
+本轮仅整理文档并静态核对脚本，未修复工具代码、未运行RTL/TD/下载。下列限制在toolchain.md提供明确使用边界，不能据文档整理宣称代码问题已修复。
+
+| 项目 | 当前事实（project） | 下一处理与边界 |
+|---|---|---|
+| 通用build项目选择 | work/fpga_loop/cli.py的build未按--project选择工程，默认指向旧卡通Runs | 整机使用明确副本build.ps1；如需修CLI，另行最小修复和回归 |
+| 返回码与内部判定 | run/doctor未统一把FAIL/BLOCKED变为非零进程码 | 阅读summary/实际状态，不以退出0通过；工具修复待做 |
+| 自动阶段门覆盖 | td_adapter只核对有限project名与sim_passed，不读取完整系统/视觉版本门 | Agent依软件先行和验收矩阵核对；不得通过改project参数绕门 |
+| 默认报告路径 | 裸report默认旧卡通；--run-id假定build/phy_1 | 显式--dir并核对报告对象/单位/日期；不把独立模块当整机 |
+| Lab运行时与归档 | run_lab.bat依赖归档YOLO目录内既有venv | 当前可定位，迁移前须单独验证依赖，不能删除归档环境 |
+| 目标文档与归档表述 | 归档事实与旧“取消YOLO”文字混用，未找到对应取消提案 | 本轮文档按用户当前目标统一为长期保留、当前未接入；技术效果与硬件门仍未通过 |
+
+## 2026-10-20 PH1P ERAM 宏仿真缺口
+
+- 安路官方 FAQ 说明 ERAM 仿真模型放在 TD 安装目录的 SIM 中且多数加密；另一条 FAQ 说明可用 ModelSim 编译 SIM 模型库并做 RTL 功能/带延时后仿真。它们未给出本例 PH1P `PH1P_LOGIC_ERAM` 的专属读延迟、同址读写与端口冲突结论。
+- 当前安装中已找到 `.tools/td/app/sim_release/ph1p/ph1p_logic_eram.v`：文件头声明 functional model v0.21（2026-06-21 修订），44,271 bytes，SHA-256 `70d89b70bdd51812ad86b91e88526b4604ebb117516efda5af976fcddb2e69af`。文件有 VCS、Cadence、Mentor Graphics 加密 key block；不要把 key block 当成仿真器可用性证明。
+- Icarus 14.0 dev 对留存模型副本在加密正文入口第 115 行报语法错误，未运行宏语义。当前检查的 PATH/常见 EDA 安装目录中未发现 ModelSim、Questa、VCS 或 Xcelium；这是有限范围的本机环境审计，不是全盘不存在证明。
+- 状态：OPEN。已有行为数组 proxy 的运动边界测试通过，不代表 PH1P primitive 等价。取得/确认厂商支持的 ModelSim 环境后，复用 `work/codex_motion_eram_model_audit_20261020/inputs/tb_motion_diff_160_eram_equivalence.v` 定向验证延迟、同址读写、复位、首帧、短帧、缺 SOF 和历史提交；通过前不将 ERAM 分支提升至完整 Place。证据与官方来源链接见 `work/g8_takeover_audit_20261020.md`。
+
+## 2026-10-20 PH1P inferred DRAM 同址读写语义
+
+- 当前三行 `video_cartoon` 在整机 Gate 映射为 1,536 DRAM LUT；原始 TD 综合日志对 `u_video_cartoon` 的三个 `ramread*_syn_22` 实例报 `SYN-5041`，称 `RAM_STYLE/ROM_STYLE` 无效并回退 `AUTO`。证据见 `work/g8_takeover_audit_20261020.md`，原始 `td_20261020_005854.logw` 第 2006–2008 行及 `camera_to_dsi_display_gate.area` 第 216 行。
+- 本机存在 TD 安装的 `.tools/td/app/sim_release/ph1p/ph1p_logic_dram.v`（13,296 bytes，SHA-256 `e3ccf3c4821d33a3bd3ceac816493d09342b0651862fadd1b3d03fff1f30efcb`）。其可读 `PH1P_LOGIC_DRAM` 模型含独立写时钟、异步读事件和可选 READREG，但静态模型文本不能证明当前 inferred memory 的实际映射，也未给出本设计同一时钟同址读写的明确保证。
+- 安路官方 FAQ 说明 TD 安装目录提供器件行为模型，可在 ModelSim 中用于 RTL/延时仿真；官方 Soft_FIFO 手册确认 PH1 DRAM 按 LUT6 计数。两份资料均未说明本工程这类 inferred DRAM 的 collision mode（来源见 `docs/research/sources.yaml`）。
+- 状态：OPEN。不得把 Icarus 数组的 NBA 旧值语义或可读 primitive 模型静态代码直接等同于本设计 Gate 映射行为。后续先确认综合后的存储端口/寄存器结构，再用受支持器件模型做最小读写碰撞仿真；缺少可用模型时保留未知，不以这条假设作为两行候选通过依据。
+
+## 2026-10-20 V2 运动历史异常帧与 Golden Model
+
+- 旧打包 V2 与最新失败版都在帧进行中直接写运动历史 RAM，只在完整帧结束时提交 history 元数据。短帧可能覆盖上一张完整历史；Golden Model 的无效帧路径不更新历史，且 test_invalid_frame_does_not_destroy_previous_history 明确要求保留原 baseline。
+- 现有 ERAM 分支 A/B 使用行为数组替代两侧存储，只验证分支间一致；它没有与 Golden Model 对照，不能关闭上述差异。该缺口早于 ERAM 优化，也不是最新版本独有。
+- 状态：OPEN。先保持现有 Golden 契约并验证完整帧原子提交方案；如果考虑改成无效帧后清除 baseline，必须先明确批准该功能语义变化并同步参考模型。通过前不运行 ERAM Gate A/B 或完整 TD。详见 [V2 版本根因报告](../experiments/2026-10-20-v2-version-root-cause.md)。

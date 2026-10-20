@@ -20,10 +20,10 @@
 
 - [Goal 1：视频硬件闭环](goal-reading/goal-1.md)
 - [Goal 2：FPGA 工程基础](goal-reading/goal-2.md)
-- [Goal 3：灰度和二值化](goal-reading/goal-3.md)
+- [Goal 3：基础模式与卡通化](goal-reading/goal-3.md)
 - [Goal 4：Sobel 和实时流水线](goal-reading/goal-4.md)
-- [Goal 5：目标统计](goal-reading/goal-5.md)
-- [Goal 6：完整比赛应用](goal-reading/goal-6.md)
+- [Goal 5：裁剪检测网络](goal-reading/goal-5.md)
+- [Goal 6：显示、统计与外设联动](goal-reading/goal-6.md)
 - [Goal 7：优化和创新](goal-reading/goal-7.md)
 - [Goal 8：发布和答辩](goal-reading/goal-8.md)
 
@@ -62,4 +62,4 @@
 
 ## Codex 使用规则
 
-Codex 先读取本文件和 `sources.yaml`，再根据当前 Goal 读取对应清单。回答时要区分来源事实、工程事实和推断；如果资料库没有足够证据，应引用 [known-gaps.md](known-gaps.md)，不能自行补全关键硬件参数。
+先按 [AGENTS](../../AGENTS.md) 的任务路由阅读；只有涉及来源、算法或新方案研究时读取本索引、`sources.yaml` 和相关 Goal 清单。阅读清单用于资料导航，依赖及验收以 PHASES 和 acceptance-matrix 为准。回答时要区分来源事实、工程事实和推断；如果资料库没有足够证据，应引用 [known-gaps.md](known-gaps.md)，不能自行补全关键硬件参数。

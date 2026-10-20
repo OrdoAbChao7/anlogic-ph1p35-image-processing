@@ -28,7 +28,7 @@
 | **卡通化流式滤波** | `work/rtl/video_cartoon_luma.v` | `BUILD_PASS` / `SIM_PASS` | iverilog 5329 周期无缝通过；TD 6.2 路由 Setup WNS 1389ps |
 | **Python 黄金参考模型** | `work/models/cartoon_luma_reference.py` | `SIM_PASS` | 逐像素与 RTL 严格位对齐 |
 | **YOLO 硬件可行性论证** | `docs/yolo-feasibility.md` | `SIM_PASS` | 算力与存储定量推导，确立片上 Micro-CNN 路线 |
-| **轻量卷积加速单元 (PE)** | `work/rtl/yolo/` | `PLANNED` | 下一阶段攻坚核心 |
+| **轻量卷积加速单元 (PE)** | `archive/legacy/yolo/rtl/` | `PLANNED` | 下一阶段攻坚核心 |
 | **OSD 智能检测框叠加** | `work/rtl/osd/` | `PLANNED` | 基于坐标与置信度动态划线与安路 Logo 融合 |
 
 ---

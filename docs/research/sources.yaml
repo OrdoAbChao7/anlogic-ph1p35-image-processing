@@ -252,6 +252,28 @@
   accessed_at: 2026-09-26
   notes: 仅证实 TD 工具用途；本机版本、安装和许可状态待核对。
 
+- id: anlogic_soft_fifo_ipug012_dram_20261020
+  title: 安路 PH1 Soft_FIFO IP 用户手册 IPUG012
+  url_or_path: https://tech.anlogic.com/Public/Uploads/ueditor/upload/file/20230809/1691580810479801.pdf
+  type: official
+  platform: PH1P
+  related_goals: [3, 4, 8]
+  priority: high
+  status: reviewed
+  accessed_at: 2026-10-20
+  notes: 说明 PH1 DRAM 按 LUT6 资源计数，并提供 Soft_FIFO 读写时序示例；未定义本工程 inferred DRAM 的同址读写语义。
+
+- id: anlogic_td_faq_sim_models_20261020
+  title: 安路 TangDynasty 仿真模型 FAQ
+  url_or_path: https://tech.anlogic.com/Cn/Index/index/cate/32/tp/1/p/2.html
+  type: official
+  platform: PH1P
+  related_goals: [8]
+  priority: high
+  status: reviewed
+  accessed_at: 2026-10-20
+  notes: FAQ说明 TD 安装目录含器件行为模型、可由 ModelSim 编译用于RTL/延时仿真；未给出 PH1P inferred DRAM 的碰撞模式。
+
 - id: topic2_analysis_ppt_20260905
   title: 赛题解析二（2026.09.05）
   url_or_path: 安路HX1P35A比赛文档2026/赛题解析二 .pptx

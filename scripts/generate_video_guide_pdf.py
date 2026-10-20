@@ -1,0 +1,824 @@
+"""
+Script to generate the HTML for '项目演示视频制作与评委高分指南' and render to PDF.
+"""
+import os
+import subprocess
+
+html_content = """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>项目演示视频拍摄与制作指南 · 评委高分秘籍</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 12mm 14mm;
+    @bottom-center {
+      content: "第 " counter(page) " 页 / 共 " counter(pages) " 页";
+      font-size: 8pt;
+      color: #94A3B8;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    color: #1E293B;
+    background-color: #FFFFFF;
+    line-height: 1.5;
+    font-size: 9pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Page layout */
+  .page {
+    width: 100%;
+    min-height: 270mm;
+    page-break-after: always;
+    position: relative;
+    padding-bottom: 2mm;
+  }
+
+  .page:last-child {
+    page-break-after: avoid;
+  }
+
+  /* Header styles */
+  .doc-header {
+    border-bottom: 2px solid #2563EB;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .header-left h1 {
+    font-size: 17pt;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-left .subtitle {
+    font-size: 9.5pt;
+    color: #475569;
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  .header-badges {
+    display: flex;
+    gap: 6px;
+  }
+
+  .badge {
+    font-size: 7.5pt;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .badge-primary { background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; }
+  .badge-danger { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
+  .badge-success { background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+  .badge-warning { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+
+  /* Section styling */
+  .section-title {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 10px 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-left: 4px solid #2563EB;
+    padding-left: 8px;
+    background: linear-gradient(90deg, #F1F5F9 0%, rgba(241,245,249,0) 100%);
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .section-title.red { border-left-color: #DC2626; }
+  .section-title.green { border-left-color: #059669; }
+  .section-title.amber { border-left-color: #D97706; }
+
+  /* Cards & Grids */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .card {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+
+  .card-highlight {
+    background: #FFFFFF;
+    border: 1.5px solid #2563EB;
+    box-shadow: 0 1px 3px rgba(37,99,235,0.08);
+  }
+
+  .card-danger {
+    background: #FEF2F2;
+    border: 1.5px solid #FCA5A5;
+  }
+
+  .card-success {
+    background: #F0FDF4;
+    border: 1.5px solid #86EFAC;
+  }
+
+  .card-title {
+    font-size: 9pt;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .card-title.danger { color: #991B1B; }
+  .card-title.success { color: #166534; }
+  .card-title.primary { color: #1E40AF; }
+  .card-title.amber { color: #92400E; }
+
+  /* Tables */
+  table.content-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    margin-bottom: 8px;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  table.content-table th {
+    background: #F1F5F9;
+    color: #334155;
+    text-align: left;
+    padding: 5px 8px;
+    font-weight: 700;
+    border-bottom: 1px solid #CBD5E1;
+    font-size: 8pt;
+  }
+
+  table.content-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: top;
+    color: #334155;
+  }
+
+  table.content-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  table.content-table tr:nth-child(even) td {
+    background-color: #FAFAFA;
+  }
+
+  /* Callout box */
+  .callout {
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 8.5pt;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .callout-blue { background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E3A8A; }
+  .callout-amber { background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; }
+  .callout-red { background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B; }
+  .callout-green { background: #F0FDF4; border: 1px solid #BBF7D0; color: #166534; }
+
+  /* Timeline */
+  .timeline-bar {
+    display: flex;
+    width: 100%;
+    height: 36px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 8px 0 10px 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    font-size: 8pt;
+    font-weight: 700;
+  }
+
+  .timeline-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    padding: 0 4px;
+    text-align: center;
+  }
+
+  .step-1 { background: #3B82F6; width: 22%; }
+  .step-2 { background: #059669; width: 61%; }
+  .step-3 { background: #6366F1; width: 17%; }
+
+  .timeline-desc {
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.5pt;
+    color: #64748B;
+    margin-top: -6px;
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+
+  ul.check-list, ul.clean-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  ul.clean-list li {
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 3px;
+    font-size: 8.5pt;
+    color: #334155;
+  }
+
+  ul.clean-list li::before {
+    content: "•";
+    position: absolute;
+    left: 2px;
+    color: #3B82F6;
+    font-weight: bold;
+    font-size: 10pt;
+    line-height: 1;
+  }
+
+  ul.check-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 4px;
+    font-size: 8.5pt;
+  }
+
+  ul.check-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 2px;
+    color: #059669;
+    font-weight: 800;
+  }
+
+  ul.cross-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  ul.cross-list li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 4px;
+    font-size: 8.5pt;
+  }
+
+  ul.cross-list li::before {
+    content: "✕";
+    position: absolute;
+    left: 2px;
+    color: #DC2626;
+    font-weight: 800;
+  }
+
+  .tag-danger {
+    background: #FEE2E2;
+    color: #991B1B;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    font-weight: 700;
+  }
+
+  .tag-success {
+    background: #DCFCE7;
+    color: #166534;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    font-weight: 700;
+  }
+
+  .footer-meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #E2E8F0;
+    padding-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.5pt;
+    color: #94A3B8;
+  }
+
+  .emphasis-box {
+    background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%);
+    color: #FFFFFF;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .emphasis-box .item {
+    text-align: center;
+    flex: 1;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    padding: 0 8px;
+  }
+
+  .emphasis-box .item:last-child {
+    border-right: none;
+  }
+
+  .emphasis-box .label {
+    font-size: 7.5pt;
+    opacity: 0.85;
+    margin-bottom: 2px;
+  }
+
+  .emphasis-box .val {
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 ================= -->
+<div class="page">
+  <div class="doc-header">
+    <div class="header-left">
+      <h1>🏆 竞赛演示视频制作与评委高分指南</h1>
+      <div class="subtitle">评委培训要点总结 · 评审逻辑深度剖析 · 避坑指南与3分钟高分范式</div>
+    </div>
+    <div class="header-badges">
+      <span class="badge badge-primary">实战备赛标准</span>
+      <span class="badge badge-danger">零容忍雷区</span>
+      <span class="badge badge-success">总分总架构</span>
+    </div>
+  </div>
+
+  <!-- 3大核心黄金法则 -->
+  <div class="emphasis-box">
+    <div class="item">
+      <div class="label">第一核心法则</div>
+      <div class="val">👀 对比必须肉眼可见</div>
+    </div>
+    <div class="item">
+      <div class="label">第二黄金时限</div>
+      <div class="val">⏱️ 5秒吸睛 · 40秒立意</div>
+    </div>
+    <div class="item">
+      <div class="label">第三破局关键</div>
+      <div class="val">🛡️ 拒绝报菜名 · 解决恶劣工况</div>
+    </div>
+  </div>
+
+  <!-- 一、评委心智模型与终极评审逻辑 -->
+  <div class="section-title">一、 评委心智模型与终极评审逻辑（知己知彼）</div>
+  <div class="grid-2">
+    <div class="card card-highlight">
+      <div class="card-title primary">🎯 评委的真实心理与工作常态</div>
+      <ul class="clean-list">
+        <li><strong>评委熟悉赛道，不听原理科普：</strong>评委全是资深专家，不需要逐字念算法底层公式或代码定义，只看<strong>“算法是否真实生效、提升幅度有多大”</strong>。</li>
+        <li><strong>超负荷连续看片，视觉极度疲劳：</strong>连续数小时审阅数十个视频，抖动、无意义长片头、逐字乱蹦字幕等小毛病在后期会被无限放大，严重拉低印象分。</li>
+        <li><strong>不比算法数量，比实效与攻坚力：</strong>同赛道算法名称高度雷同（Sobel、白平衡、边缘检测），只堆砌算法名只能拿基础及格分；能解决极端场景才有高分。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title primary">⚖️ 评委心目中的打分优先级金字塔</div>
+      <table class="content-table" style="margin-bottom:0;">
+        <thead>
+          <tr>
+            <th style="width:25%;">层级</th>
+            <th style="width:35%;">评判维度</th>
+            <th style="width:40%;">评委关注点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-danger" style="font-size:7pt;">Priority 1</span></td>
+            <td><strong>功能实测效果</strong><br><span style="color:#64748B;font-size:7pt;">(决定生死 60%)</span></td>
+            <td>前后对比是否一眼可见、算法开关是否有实质差异、数据与画面是否真实。</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-warning" style="font-size:7pt;">Priority 2</span></td>
+            <td><strong>视频结构逻辑</strong><br><span style="color:#64748B;font-size:7pt;">(决定上限 25%)</span></td>
+            <td>总分总框架、基础到拓展分层、递进叠加逻辑、交代实际解决的痛点。</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-primary" style="font-size:7pt;">Priority 3</span></td>
+            <td><strong>镜头画面细节</strong><br><span style="color:#64748B;font-size:7pt;">(决定好感 15%)</span></td>
+            <td>镜头稳定不抖、字幕清晰直观、环境整洁规范、无敏感信息泄露。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 二、致命雷区：最优先规避的两大头号杀手 -->
+  <div class="section-title red">二、 致命雷区与避坑方案（最需要优先规避的扣分大忌）</div>
+  
+  <div class="card card-danger" style="margin-bottom:8px;">
+    <div class="card-title danger" style="font-size:9.5pt;">
+      ⚠️ 头号致命死穴：算法演示“看不到前后画面差异”（毫无说服力）
+    </div>
+    <div style="font-size:8.5pt; color:#7F1D1D; margin-bottom:4px;">
+      <strong>现场惨剧：</strong>队员嘴上滔滔不绝讲解算法有多复杂，画面中点下开/关按键，屏幕上图像<strong>肉眼看不出任何明显变化</strong>。评委无法验证功能是否真的在板卡上跑通，就算自称做了十几种高深算法，也会直接判定为“不可信 / 未真实接入”。
+    </div>
+    <div class="callout callout-green" style="margin-bottom:0; padding:6px 10px;">
+      <div>
+        <strong>✅ 满分破解法：</strong>
+        <ol style="padding-left:14px; margin-top:2px; font-size:8pt; line-height:1.4;">
+          <li><strong>精心策划“放大镜场景”：</strong>必须挑选能够极端放大算法价值的素材（例如：针对降噪选暗光噪点图、针对Sobel选轮廓模糊弱边缘图、针对白平衡选严重偏暖偏蓝图）。</li>
+          <li><strong>铁律演示逻辑：</strong>固定相机机位 → 展示不加算法的劣质原图 → 切换开启算法 → 直观展现局部细节跃升。</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-danger" style="margin-bottom:8px;">
+    <div class="card-title danger" style="font-size:9.5pt;">
+      ⚠️ 二号致命死穴：通篇“报菜名”，脱离实际痛点场景（沦为平庸流水账）
+    </div>
+    <div style="font-size:8.5pt; color:#7F1D1D; margin-bottom:4px;">
+      <strong>现场惨剧：</strong>机械式罗列“我做了边缘检测、我做了伽马变换、我做了颜色量化”，把工程做成了课本实验汇报，没有交代<strong>“到底在什么苛刻环境下解决了什么行业难题”</strong>。
+    </div>
+  </div>
+
+  <!-- 正反面案例深度剖析对照表 -->
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th style="width:15%;">算法功能</th>
+        <th style="width:42%; color:#DC2626;">❌ 扣分反面教材（报菜名 / 空洞）</th>
+        <th style="width:43%; color:#059669;">✅ 高分正面范式（场景驱动 / 直观可信）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>边缘检测<br>&amp; 降噪</strong></td>
+        <td>“我们基于FPGA实现了Sobel边缘检测算子和双边滤波降噪算法，效果良好。”<br><span style="color:#94A3B8; font-size:7.5pt;">(评委：看不出改进在哪里，毫无工程价值)</span></td>
+        <td>“在<strong>极度微弱光照与工业传感器高噪点干扰下</strong>（展示劣质原图），开启自适应流水线滤波与增强后，噪点压制90%，<strong>工件装配边缘由模糊不可见变为锐利清晰</strong>（分屏对比）。”</td>
+      </tr>
+      <tr>
+        <td><strong>白平衡<br>&amp; 颜色校正</strong></td>
+        <td>“系统实现了自动白平衡算法与颜色量化功能，支持多模式按键切换。”<br><span style="color:#94A3B8; font-size:7.5pt;">(评委：大家都有按键切换，平平无奇)</span></td>
+        <td>“在<strong>工业车间钠灯泛黄与强蓝光杂散照射下</strong>，原始画面发生严重色偏；开启白平衡后，<strong>标准色卡还原真实中性灰，大幅提升下游分拣分类准确度</strong>。”</td>
+      </tr>
+      <tr>
+        <td><strong>YOLO 目标定位<br>&amp; 智能分拣</strong></td>
+        <td>“成功将YOLO-tiny裁剪部署在FPGA上，实现了INT8量化推理。”<br><span style="color:#94A3B8; font-size:7.5pt;">(评委：帧率多少？抖不抖？漏检如何？)</span></td>
+        <td>“针对<strong>流水线工件高速运动、局部逆光与轻度遮挡场景</strong>，硬件全流水部署实现实时检测，<strong>0漏检精确定位，驱动机械臂/声光实时联动闭环</strong>。”</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer-meta">
+    <span>全国大学生FPGA创新设计竞赛 · 答辩与视频制作标准指南</span>
+    <span>Page 1 / 3 · 评审思维与核心避坑</span>
+  </div>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="page">
+  <div class="doc-header">
+    <div class="header-left">
+      <h1>🎬 黄金“总-分-总”视频结构与节奏拆解</h1>
+      <div class="subtitle">3分钟极限时长最佳时间分配 · 逐步叠加高分范式 · 实战案例镜鉴</div>
+    </div>
+    <div class="header-badges">
+      <span class="badge badge-primary">3分钟时限</span>
+      <span class="badge badge-success">逐步叠加</span>
+      <span class="badge badge-warning">画中画ROI</span>
+    </div>
+  </div>
+
+  <!-- 时间轴概览 -->
+  <div class="section-title">一、 3分钟标准时间分配甘特条（每一秒都为给分点服务）</div>
+  <div class="timeline-bar">
+    <div class="timeline-step step-1">
+      <div>① 开头引入 (前40秒)</div>
+      <div style="font-size:7pt;opacity:0.9;">5s抓眼球 · 40s交代系统概况</div>
+    </div>
+    <div class="timeline-step step-2">
+      <div>② 中间主体：核心功能深度演示 (110秒)</div>
+      <div style="font-size:7pt;opacity:0.9;">同屏对比 · 逐步叠加 · 极端工况实测 · 软硬联动</div>
+    </div>
+    <div class="timeline-step step-3">
+      <div>③ 结尾总结 (30秒)</div>
+      <div style="font-size:7pt;opacity:0.9;">全功能综合呈现 · 客观价值</div>
+    </div>
+  </div>
+  <div class="timeline-desc">
+    <span>0:00 (起跑即冲刺)</span>
+    <span>0:05 (片头极限)</span>
+    <span>0:40 (完成立项交代)</span>
+    <span>2:30 (核心功能演示收官)</span>
+    <span>3:00 (稳步收尾)</span>
+  </div>
+
+  <!-- 3阶段详细操作拆解 -->
+  <div class="grid-3">
+    <div class="card card-highlight">
+      <div class="card-title primary">1️⃣ 开头引入：极速立意 (0~40s)</div>
+      <ul class="clean-list">
+        <li><strong>片头严禁超过5秒：</strong>动态项目Logo+一句话系统主题，立即切入实物镜头。绝不可放十几秒炫酷但无内容的模板片头！</li>
+        <li><strong>40秒内讲透全貌：</strong>交代硬件平台、核心输入输出（如SC520CS RAW10 → FPGA → HDMI 720p）、系统解决的痛点及技术难度。</li>
+        <li><strong>先声夺人，不纠结细节：</strong>让评委瞬间清楚“你在做什么、指标有多硬核”，底层寄存器和代码放后续。</li>
+      </ul>
+    </div>
+
+    <div class="card card-highlight">
+      <div class="card-title success">2️⃣ 中间主体：核心演示 (40s~2m30s)</div>
+      <ul class="clean-list">
+        <li><strong>直观对比是一切的前提：</strong>关闭算法 vs 开启算法，必须同屏或同一场景前后切换，展示肉眼可见的质变。</li>
+        <li><strong>高分秘籍：逐步叠加演进：</strong>从最恶劣原图开始 → 开ISP → 画面纯净 → 开Sobel → 轮廓显现 → 开检测 → 框准计数。一步步展现FPGA各流水级贡献！</li>
+        <li><strong>肉眼难见则“波形/声光可视化”：</strong>若效果是延迟小或功耗低，用示波器波形、LED联动、音频输出等具象化展示。</li>
+        <li><strong>主次分明，大胆断舍离：</strong>重点突出复杂算法与核心指标；简单点灯按键一带而过，不占用宝贵时长。</li>
+      </ul>
+    </div>
+
+    <div class="card card-highlight">
+      <div class="card-title amber">3️⃣ 结尾总结：全貌收束 (2m30s~3m)</div>
+      <ul class="clean-list">
+        <li><strong>全功能复合运行：</strong>原图预处理 + 算法增强 + OSD叠加 + 目标检测 + 声光告警全链路满载运行，展示系统综合稳定性。</li>
+        <li><strong>量化指标总结：</strong>客观列出吞吐率、帧率（30fps/60fps）、端到端延迟（&lt;2ms）、资源占用率与时序收敛情况。</li>
+        <li><strong>客观求实，不夸大吹嘘：</strong>说明在工农业、工业分拣等真实场景中的落地潜能，不使用违背工程常识的过火词汇。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 案例分析：从分区背光与优秀视频范例学习 -->
+  <div class="section-title green">二、 标杆案例评析：从实战经验中汲取高分技巧</div>
+
+  <div class="grid-2">
+    <!-- 分区背光演示案例 -->
+    <div class="card">
+      <div class="card-title primary" style="justify-content:space-between;">
+        <span>📺 案例一：分区背光演示视频深度复盘</span>
+        <span class="badge badge-primary">典型示范</span>
+      </div>
+      <div style="margin-top:4px;">
+        <div style="font-weight:700; color:#047857; font-size:8pt; margin-bottom:2px;">👍 值得学习的 4 大优点：</div>
+        <ul class="check-list" style="margin-bottom:6px;">
+          <li><strong>直观对比演示：</strong>同屏并排放置“原始画面 vs 分区背光画面”，重点凸显黑场深邃度，差异一目了然。</li>
+          <li><strong>同场景统筹展示：</strong>对照实验置于同一视频帧内，观看者无需脑补即可横向比对细节。</li>
+          <li><strong>适度倍速处理：</strong>加快平淡讲解过程，极大提升有限时长内的信息密度。</li>
+          <li><strong>顶部/底部进度条：</strong>标明视频所处阶段，方便评委快速跳转与定位关注点。</li>
+        </ul>
+        <div style="font-weight:700; color:#B91C1C; font-size:8pt; margin-bottom:2px;">❌ 暴露的缺陷与整改对策：</div>
+        <ul class="cross-list">
+          <li><strong>转场过于花哨：</strong>技术视频应质朴简洁，过度炫技转场极易分散评委对画面算法的注意。</li>
+          <li><strong>进度条配色失误：</strong>黑底配暗蓝字，未播放文字无法辨识。<strong>整改：</strong>提高对比度与鲜艳度，重点文字高亮。</li>
+          <li><strong>倍速失控：</strong>个别段落倍速过快导致听不清。<strong>整改：</strong>语速倍速<strong>绝对不可超过1.5倍</strong>。</li>
+          <li><strong>缺少序号标注：</strong>各阶段边界模糊。<strong>整改：</strong>加上“模块 1 / 模块 2”等明确层级编号。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 优秀视频做法范式2 -->
+    <div class="card card-success">
+      <div class="card-title success" style="justify-content:space-between;">
+        <span>🌟 案例二：特等奖级演示视频的高分套路</span>
+        <span class="badge badge-success">高分范例</span>
+      </div>
+      <div style="margin-top:4px;">
+        <div style="font-weight:700; color:#166534; font-size:8pt; margin-bottom:3px;">🏆 优秀作品的 4 个关键做派：</div>
+        <ul class="clean-list">
+          <li><strong>模块化分层讲解（基础分 + 加分亮点）：</strong><br>
+            明确划分为“基础功能模块（保证题目基础分全拿）”与“特色拓展创新（YOLO智能检测/声光联动，冲刺一等奖）”，让评委按图索骥精准给分。
+          </li>
+          <li><strong>逐步叠加递进（像剥洋葱一样展现技术）：</strong><br>
+            初始故意展示较差/有瑕疵的恶劣工况画面 → 开启白平衡（色彩恢复）→ 开启Sobel（边缘凸显）→ 开启检测（框线紧锁）。评委能亲眼见证每一行RTL代码的价值！
+          </li>
+          <li><strong>手术刀级精炼旁白（字字珠玑，零废话）：</strong><br>
+            每一句台词都在解释屏幕上正在发生的变化，坚决摒弃“众所周知”、“接下来我将为大家介绍”等无意义水词。
+          </li>
+          <li><strong>高亮箭头与动态ROI画中画辅助：</strong><br>
+            在屏幕对比区域使用简洁清晰的高对比度箭头或微光圈，把评委视线直接引向算法生效的核心像素群。
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-meta">
+    <span>全国大学生FPGA创新设计竞赛 · 答辩与视频制作标准指南</span>
+    <span>Page 2 / 3 · 3分钟结构拆解与案例实战</span>
+  </div>
+</div>
+
+<!-- ================= PAGE 3 ================= -->
+<div class="page">
+  <div class="doc-header">
+    <div class="header-left">
+      <h1>🛠️ 拍摄现场规范、视觉技巧与必检清单</h1>
+      <div class="subtitle">实操避坑细则 · 演示素材精准甄选 · 录制前终极10项自查通行证</div>
+    </div>
+    <div class="header-badges">
+      <span class="badge badge-success">实拍规范</span>
+      <span class="badge badge-danger">次要扣分点</span>
+      <span class="badge badge-primary">自查清单</span>
+    </div>
+  </div>
+
+  <!-- 拍摄环境与画面技巧 -->
+  <div class="section-title">一、 拍摄现场环境与画面构图原则</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title primary">🏢 拍摄现场环境“三严禁与三必须”</div>
+      <ul class="clean-list">
+        <li><strong>场景严禁出现杂物：</strong>桌面严禁出现吃剩的外卖饭盒、零食袋、饮料瓶、散乱草稿纸或与实验无关的杂物。环境必须朴素、干净、整洁！</li>
+        <li><strong>严禁暴露违规与敏感隐私信息：</strong>背景黑板、电脑桌面、海报上绝不能出现涉密信息、无关不安全内容；<strong>严格规避指导教师姓名</strong>等违规身份信息。</li>
+        <li><strong>光线必须充足均匀：</strong>选择采光良好、无频闪日光灯的实验室。相机测光锁定，避免屏幕翻拍时因自动曝光造成忽明忽暗。</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title primary">🖼️ 同屏对比与画中画使用技巧</div>
+      <ul class="clean-list">
+        <li><strong>主次绝不能颠倒：</strong>画面的核心视觉重心<strong>必须是处理前与处理后的图像对比区域</strong>。文字标注只能充当点睛辅助，严禁大块文字遮挡核心显示区。</li>
+        <li><strong>画中画（PIP）与局部放大：</strong>既要保留整幅视频全局画面，又要开辟画中画放大关键细节（ROI），展现微观像素质量提升。</li>
+        <li><strong>转场与特效质朴极简：</strong>杜绝旋转、三维翻转等花哨特效；使用硬切或0.2秒极短淡入淡出，保持专业学术质感。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 次要扣分点合集 -->
+  <div class="section-title amber">二、 次要扣分点速查（容易被忽视、但会累积恶感的小毛病）</div>
+  <div class="grid-2">
+    <div class="card card-danger">
+      <div class="card-title danger">🛑 4 大隐蔽扣分细节</div>
+      <ul class="cross-list">
+        <li><strong>镜头抖动、频繁对焦变焦：</strong>手持手机拍摄晃动剧烈，让疲惫的评委产生生理眩晕感。<strong>对策：</strong>必须上三脚架或桌面固定支架。</li>
+        <li><strong>字幕文字“逐字打字机蹦出”：</strong>分散视线。<strong>对策：</strong>字幕以完整语义短句<strong>整行一次性呈现</strong>，方便一秒扫完。</li>
+        <li><strong>堆砌大段专业原理小论文：</strong>屏幕放满公式定义。<strong>对策：</strong>精简提炼为核心参数与性能指标（如 FPS、Latency、Loss）。</li>
+        <li><strong>冗长无聊的操作过程占满画面：</strong>如慢吞吞敲上位机指令、慢慢拧旋钮。<strong>对策：</strong>这类非核心操作直接切片或4倍速一带而过。</li>
+      </ul>
+    </div>
+
+    <div class="card card-success">
+      <div class="card-title success">💡 演示素材选择的精明心机</div>
+      <div style="font-size:8pt; color:#1E293B; margin-top:2px;">
+        <p style="margin-bottom:4px;"><strong>选错素材 = 满盘皆输！</strong>如果拿光照极好、无任何缺陷的完美图片来演示图像增强，再顶级的算法开启后也没有视觉变化！</p>
+        <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:4px; padding:6px 8px;">
+          <div style="font-weight:700; color:#0F172A; margin-bottom:2px;">针对性素材搭配指南：</div>
+          <table style="width:100%; font-size:7.5pt; border-collapse:collapse;">
+            <tr><td style="width:30%; font-weight:700; color:#2563EB;">降噪 / 滤波算法</td><td>选用<strong>暗光高噪点画面</strong>，开启后背景瞬间纯净平滑。</td></tr>
+            <tr><td style="font-weight:700; color:#2563EB;">Sobel 边缘检测</td><td>选用<strong>灰度对比弱、轮廓复杂的工件</strong>，开启后边缘如刀刻般分明。</td></tr>
+            <tr><td style="font-weight:700; color:#2563EB;">自动白平衡 (AWB)</td><td>选用<strong>强偏黄/偏蓝色温场景</strong>，开启后恢复标准中性灰。</td></tr>
+            <tr><td style="font-weight:700; color:#2563EB;">YOLO-tiny 目标检测</td><td>选用<strong>多目标密集排布、轻微遮挡、运动工件</strong>，体现高抗扰与稳定追踪。</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 录制前终极检查清单 -->
+  <div class="section-title green">三、 视频录制与交付前终极自查清单（10项打勾通行证）</div>
+  <table class="content-table" style="margin-bottom:4px;">
+    <thead>
+      <tr>
+        <th style="width:8%; text-align:center;">状态</th>
+        <th style="width:25%;">自查项目</th>
+        <th style="width:47%;">合格检验标准</th>
+        <th style="width:20%;">否决风险</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>1. 片头时限</strong></td>
+        <td>系统Logo与主题展示在 <strong>5 秒以内</strong>，绝不拖泥带水。</td>
+        <td>严重消耗评委耐心</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>2. 算法前后差异</strong></td>
+        <td>算法开与关，屏幕画面<strong>肉眼能立刻看出明确差异</strong>。</td>
+        <td><strong>一票否决(功能存疑)</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>3. 场景痛点交代</strong></td>
+        <td>清楚点明在何种<strong>恶劣工况</strong>下解决了问题，无假大空报菜名。</td>
+        <td>沦为及格边缘平庸分</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>4. 逐步递进演进</strong></td>
+        <td>展示从原始画面 → 逐步开启算法 → 画面逐步优化的递进过程。</td>
+        <td>技术深度展示不足</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>5. 镜头机位稳定性</strong></td>
+        <td>全流程使用固定支架或滑轨，<strong>无任何手抖晃动与虚焦</strong>。</td>
+        <td>视觉疲劳扣印象分</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>6. 拍摄环境整洁度</strong></td>
+        <td>无杂物、无外卖纸盒、桌面整洁、背景无无关敏感信息。</td>
+        <td>扣除风貌与严谨分</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>7. 字幕排版与呈现</strong></td>
+        <td>字幕整句一次性弹出，字号适中，重点词鲜明，不挡画面。</td>
+        <td>阅读体验差</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>8. 语速与倍速控制</strong></td>
+        <td>旁白咬字清晰，重点段落原速，快进段落<strong>倍速不超过1.5x</strong>。</td>
+        <td>信息听不清漏评</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>9. 辅助标记精准度</strong></td>
+        <td>具备编号进度提示，对比区域有箭头或画中画聚焦，主次分明。</td>
+        <td>观看抓不住重点</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>10. 综合结尾与总时限</strong></td>
+        <td>结尾全功能综合呈现，给出真实实测指标，<strong>视频总长严格在3分钟内</strong>。</td>
+        <td>超时扣分或无法上传</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer-meta">
+    <span>全国大学生FPGA创新设计竞赛 · 答辩与视频制作标准指南</span>
+    <span>Page 3 / 3 · 实操规范与自查清单</span>
+  </div>
+</div>
+
+</body>
+</html>
+"""
+
+# Write HTML file
+html_path = r"e:\Projects\FPGA\docs\video_guide\项目演示视频制作与评委高分指南.html"
+with open(html_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"HTML written to {html_path}")
+
+# Run headless Chrome to produce PDF
+pdf_path = r"e:\Projects\FPGA\docs\video_guide\项目演示视频制作与评委高分指南.pdf"
+chrome_cmd = [
+    r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+    "--headless=new",
+    "--disable-gpu",
+    "--no-pdf-header-footer",
+    f"--print-to-pdf={pdf_path}",
+    html_path
+]
+
+res = subprocess.run(chrome_cmd, capture_output=True, text=True)
+print(f"Chrome return code: {res.returncode}")
+if os.path.exists(pdf_path):
+    print(f"PDF successfully generated at: {pdf_path} (Size: {os.path.getsize(pdf_path)} bytes)")
+else:
+    print("PDF generation failed.")

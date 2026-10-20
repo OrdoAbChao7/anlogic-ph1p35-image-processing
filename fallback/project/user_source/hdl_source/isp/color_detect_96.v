@@ -3,7 +3,9 @@
 // SOF may precede data or accompany its first group. No backpressure.
 // Results publish only after a complete frame; valid_frame means target present.
 module color_detect_96 #(
-  parameter IMG_WIDTH=1280, parameter IMG_HEIGHT=720
+  parameter IMG_WIDTH=1280, parameter IMG_HEIGHT=720,
+  parameter [7:0] CB_MIN=8'd85, parameter [7:0] CB_MAX=8'd125,
+  parameter [7:0] CR_MIN=8'd135, parameter [7:0] CR_MAX=8'd200
 )(
   input wire I_clk,I_rst_n,I_tvalid,I_tlast,I_tuser,
   input wire [95:0] I_tdata,
@@ -33,8 +35,8 @@ module color_detect_96 #(
         cr[g]<=20'sd512*r-20'sd429*green-20'sd83*b+20'sd131072;
       end
     end
-    assign hit[g]=(cb[g][17:10]>8'd85)&&(cb[g][17:10]<8'd125)&&
-                  (cr[g][17:10]>8'd135)&&(cr[g][17:10]<8'd200);
+    assign hit[g]=(cb[g][17:10]>CB_MIN)&&(cb[g][17:10]<CB_MAX)&&
+                  (cr[g][17:10]>CR_MIN)&&(cr[g][17:10]<CR_MAX);
   end endgenerate
   always @(posedge I_clk or negedge I_rst_n) begin
     if(!I_rst_n) begin

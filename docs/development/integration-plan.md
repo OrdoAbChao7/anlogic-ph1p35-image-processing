@@ -1,5 +1,7 @@
 # FPGA 功能整合实施方案
 
+> 2026-10-20执行入口校正：本文P0–P8是设计工作包，不是功能通过记录。`work/integration/`现已存在，其根目录bit与B0恢复包相同；接手时检查差异与输入凭据，禁止按旧“待创建”描述覆盖重建。实际状态见[STATUS](../project/STATUS.md)，命令与脚本局限统一见[工具链](toolchain.md)，任务路由见[Agent工作流](agent-workflow.md)。后文2026-10-16审计事实保留日期边界。
+
 > 日期：2026-10-16。范围：只做工程审计和方案设计，不修改RTL、不运行TD、不生成或下载bit。以下新模块、阶段、预算分配均为计划，不能作为已实现证据。
 > 后续执行者使用 superpowers:executing-plans 逐项推进；项目阶段门与软件先行协议优先。本方案不授权跳过用户视觉验收。
 
@@ -26,7 +28,7 @@
 | L | `HX1P35A2026/lab_ex1-3_SC520/lab_ex3_osd_SC520/lab_ex3_osd/`，指定目录下实际工程，保留导入基线 |
 | F | `fallback/project/`，整合母工程；不直接在这里继续增加主线功能 |
 | R | `fallback/release/industrial-color-bbox-20261014/`及同名ZIP，可恢复构建候选，不是硬件稳定版 |
-| W（待创建） | `work/integration/`，从R源码、IP、约束、测试、脚本和build-inputs创建副本，工程仍在project/ |
+| W（现已存在） | `work/integration/`，现有R恢复候选的独立副本；工程仍在project/，继续前先核对差异 |
 | B0 | R中industrial_color_bbox.bit，SHA-256：C41714E9E960A4C393EAB0444B479F790114750B5E4B76CB9F2512806E7AA470 |
 
 ZIP SHA-256：AB7EBE83F56630D52B1628A732C87AF4E3C56A92D8FD69EE2428096F9D8EF4CA。
@@ -57,7 +59,7 @@ ZIP SHA-256：AB7EBE83F56630D52B1628A732C87AF4E3C56A92D8FD69EE2428096F9D8EF4CA�
 | E07 project | docs/build/industrial-repair/final/route.qor、final_timing.rpt:8,27–67,101–109、physical-warnings.txt；R reports/camera_to_dsi_display_phy.area:9–38 |
 | E08 project | fallback/README.md、test.ps1:15–40；docs/build/industrial-repair/build-summary.md；R manifest/build-summary.json |
 | E09 project | work/rtl/video_cartoon_luma.v:1–87；work/algorithm_lab/registry.json；docs/decisions/ADR-001-003-architecture-baseline.md |
-| E10 project/reference | work/rtl/yolo/conv_pe_int8.v、work/tests/tb_conv_pe_int8.v、work/yolo_fpga_feasibility/report.md、docs/experiments/2026-10-12-y2-microdet.md |
+| E10 project/reference | archive/legacy/yolo/rtl/conv_pe_int8.v、work/tests/tb_conv_pe_int8.v、archive/legacy/yolo/yolo_fpga_feasibility/report.md、docs/experiments/2026-10-12-y2-microdet.md |
 | E11 project | F design_top_wrapper.v:211–212,460–468,621–628,639,812–817；uiisp_beta/ae_set.v:73–120；R area报告的按键位置 |
 | E12 project | F td_project/import/edge_detect_96.v:27–52,83–145，实际成对采样Sobel，不能与其他同名文件混淆 |
 
@@ -391,7 +393,7 @@ P阶段是工作包，不替代G1–G8。视觉新增或变化严格执行A检�
 
 **前置**：工位类别/精度/误报/延迟指标冻结，数据按场景/拍摄批次隔离；模型VISUAL_APPROVED、逐层定点等价、算力/存储预算GO；G1/G2/G3和相关主线门通过。
 
-**文件**：新增W/models/yolo/模型描述、量化JSON、权重/校验、逐层向量；H/yolo/roi_resize_96.v、conv_engine.v、pool_engine.v、requantize.v、tensor_store.v、inference_fsm.v、box_decode.v、nms.v及W/tests对应算子/整网测试。评估并适配work/rtl/yolo/conv_pe_int8.v，不覆盖原候选；扩展Algorithm Lab及registry。
+**文件**：新增W/models/yolo/模型描述、量化JSON、权重/校验、逐层向量；H/yolo/roi_resize_96.v、conv_engine.v、pool_engine.v、requantize.v、tensor_store.v、inference_fsm.v、box_decode.v、nms.v及W/tests对应算子/整网测试。评估并适配archive/legacy/yolo/rtl/conv_pe_int8.v，不覆盖原候选；扩展Algorithm Lab及registry。
 
 - [ ] 软件效果先过门，冻结架构/训练/量化与独立测试；按5.3逐层预算。没有合格模型就停在软件研发，保留失败原因，不编写伪完整网络。
 - [ ] 隔离验证MAC、INT32累加、池化、激活/重定标、RAM端口和排空；其后TD最小实验确认DSP映射/ERAM/Fmax，不把孤立结果当视频并行通过。
@@ -426,7 +428,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\work\integration\test.ps1 
 powershell -NoProfile -ExecutionPolicy Bypass -File .\work\integration\build.ps1 -TdRoot 'E:/Projects/FPGA/.tools/td/app'
 ```
 
-W为新增副本，不能依赖脚本按父目录猜工具位置，实际安装路径在P0核验。每阶段先更新显式.al及输入清单，测试入口补入新增testbench并明确PASS断言；原9组覆盖继续保留。build.ps1会清理本副本Runs，必须确认目标在W内，不对L/F/R运行清理。测试、构建与导出都绑定同一输入；负WNS、非零TNS、测试失败或源变更拒绝导出。既有脚本时序门不足以代替视觉/关键告警/硬件门。
+W为独立整合副本，不能依赖脚本按父目录猜工具位置，实际安装路径在P0核验。每阶段先更新显式.al及输入清单，测试入口补入新增testbench并明确PASS断言；原9组覆盖继续保留。build.ps1会清理本副本Runs，必须确认目标在W内，不对L/F/R运行清理。测试、构建与导出都绑定同一输入；负WNS、非零TNS、测试失败或源变更拒绝导出。既有脚本时序门不足以代替视觉/关键告警/硬件门。
 
 ## 7. 最小演示、完整目标和未知项
 

@@ -1,5 +1,5 @@
 # Run with the project Python; versions used in the software reference audit.
--r ../y1_yolo/requirements.txt
+-r ../../archive/legacy/yolo/y1_yolo/requirements.txt
 ultralytics==8.4.175
 torchvision==0.29.1
 pycocotools==2.0.11

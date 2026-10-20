@@ -1,5 +1,7 @@
 # 软件先行（Software-First）算法研发与验证规范
 
+> Stage A–G是单个算法生命周期，不是主系统G1–G8。状态摘要见[STATUS](../project/STATUS.md)，系统前置见[PHASES](../project/PHASES.md)，可运行命令和现有脚本门禁局限见[工具链](toolchain.md)。历史登记的批准只覆盖绑定版本，不覆盖后续新效果。
+
 > **执行原则**：本项目所有涉及图像处理、目标检测、神经网络推理、视觉增强、OSD 等具有可观察输出的算法，在进入 FPGA RTL 开发之前，**原则上都必须先在 PC 软件端提供可交互、可运行的视觉效果预览，并获得用户明确验收确认（VISUAL_APPROVED）**。  
 > 未获确认前，严禁直接推进正式 RTL 综合或位流构建！
 
@@ -61,7 +63,7 @@
 3. **量化比对**：计算硬件等价模型与 Stage B 视觉参考模型的差异（PSNR/SSIM/MAE/像素差异图）。若出现不可接受的画质恶化（如严重色彩失真、噪点爆发），须在软件端重新调整量化与滤波方案。
 
 ### Stage E：RTL 实现与仿真 (RTL_SIM_PASS)
-1. **硬件实现**：编写纯 Verilog-2001 / SystemVerilog RTL，遵循 `AGENTS.md` 编码规范。
+1. **硬件实现**：编写纯 Verilog 应用 RTL（保留既有厂商 SystemVerilog/加密 IP；测试平台方言按工具支持选择），遵循 `AGENTS.md` 编码规范。
 2. **参考架构**：参考经过许可评估的开源流式结构（如通用 3×3 行缓存矩阵）。
 3. **自动化 Testbench**：
    - 编写 Icarus Verilog (`iverilog` + `vvp`) 或 Verilator 仿真脚本；

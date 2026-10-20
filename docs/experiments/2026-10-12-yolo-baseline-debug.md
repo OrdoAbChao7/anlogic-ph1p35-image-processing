@@ -8,12 +8,12 @@
 
 1. 页面默认模型为 YOLOv8n，但尺寸下拉框默认 352；首次打开没有执行模型切换函数。后端省略尺寸也固定为 352。同一公开图 563882 的手机置信度为 0.2908；恢复 640 后为 0.8364。这只证明尺寸影响，不把置信度当准确率。
 2. YOLOv8n 和 YOLO-FastestV2 的结果被标为 Y2 MicroDet；V2 请求 96 时实际仍跑 352，却把 96 写进导出参数。已修正模型名称，按模型默认尺寸推理，拒绝不支持的组合。
-3. 一键启动使用系统 python，实际报 ModuleNotFoundError: No module named 'ultralytics'。现固定使用已有 work/y1_yolo/.venv/Scripts/python.exe 并先检查依赖。
+3. 一键启动使用系统 python，实际报 ModuleNotFoundError: No module named 'ultralytics'。现固定使用已有 archive/legacy/yolo/y1_yolo/.venv/Scripts/python.exe 并先检查依赖。
 4. YOLOv8n 权重使用相对当前工作目录的路径，现固定为 work/algorithm_lab/yolov8n.pt，缺失时明确报错。
 
 ## 固定集对照（project）
 
-沿用 work/yolo_fpga_feasibility/data/frozen_eval_manifest.json 的全部 60 张图，134 个非 crowd 三类标注；同一 YOLOv8n 权重、置信度 0.25、IoU≥0.5 一对一匹配，仅改变输入尺寸。没有改标签、筛除失败图片或降低阈值。该集已被项目使用，只称公开诊断集，不称新的独立验收集；不使用 COCO mAP 名义。
+沿用 archive/legacy/yolo/yolo_fpga_feasibility/data/frozen_eval_manifest.json 的全部 60 张图，134 个非 crowd 三类标注；同一 YOLOv8n 权重、置信度 0.25、IoU≥0.5 一对一匹配，仅改变输入尺寸。没有改标签、筛除失败图片或降低阈值。该集已被项目使用，只称公开诊断集，不称新的独立验收集；不使用 COCO mAP 名义。
 
 | 类别 | 352 TP/FP/FN | 640 TP/FP/FN | 352→640 Recall | 640 Precision |
 |---|---|---|---|---|
@@ -38,7 +38,7 @@ Pop-Location
 
 交互入口：运行 work/algorithm_lab/run_lab.bat 后访问 http://127.0.0.1:8501/，选择“三类真实检测”。默认 YOLOv8n 640，公开图片已内置，可直接切换或上传。
 
-证据目录：work/algorithm_lab/exports/yolo_baseline_audit/：summary.json（权重/清单 SHA-256）、detections_352.json、detections_640.json（全部逐图预测与计分）、before_after.jpg、live_api.json、model_smoke.json、server.log。
+证据目录：archive/legacy/yolo/algorithm_lab/exports/yolo_baseline_audit/：summary.json（权重/清单 SHA-256）、detections_352.json、detections_640.json（全部逐图预测与计分）、before_after.jpg、live_api.json、model_smoke.json、server.log。
 
 ## 验证与边界
 

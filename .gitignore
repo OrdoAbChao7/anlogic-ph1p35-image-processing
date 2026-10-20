@@ -22,10 +22,14 @@ reference/
 *.whl
 work/y1_yolo/*.pth
 
+# Archived legacy model weights stay local with the historical experiment package.
+archive/legacy/yolo/**/*.pth
+
 # Generated outputs and local scratch data
 preboard/output/
 work/output/
 work/algorithm_lab/cache/
+work/fpga_loop/runs/
 preboard/inbox/*
 !preboard/inbox/README.md
 __pycache__/

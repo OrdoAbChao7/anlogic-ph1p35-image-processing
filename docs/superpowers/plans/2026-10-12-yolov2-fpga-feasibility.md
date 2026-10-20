@@ -4,7 +4,7 @@
 
 **Goal:** Reproduce the official pretrained detector, verify selected open RTL operators, and make an evidence backed PH1P35 research decision.
 
-**Architecture:** A clean snapshot of each pinned upstream repository lives under `work/yolo_fpga_feasibility/upstream/`. Independent scripts and tests use the existing Windows Python environment and available simulator. The resource model consumes measured network layer shapes and the historical area report, with explicit assumptions.
+**Architecture:** A clean snapshot of each pinned upstream repository lives under `archive/legacy/yolo/yolo_fpga_feasibility/upstream/`. Independent scripts and tests use the existing Windows Python environment and available simulator. The resource model consumes measured network layer shapes and the historical area report, with explicit assumptions.
 
 **Tech Stack:** Python/PyTorch/OpenCV, Git, Icarus or available Verilog simulator, Markdown/JSON/CSV.
 

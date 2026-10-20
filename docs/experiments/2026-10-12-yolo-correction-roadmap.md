@@ -5,7 +5,7 @@
 ## 0. 执行结论与阶段判定
 
 1. **路线纠偏明确**：先前研发中过早从零设计 6,988 参数的 `MicroDet` 网络，且试图在没有预训练权重的前提下直接训练出有效目标检测能力，属于**过早优化与自造轮子**。实验已经证明，成熟开源检测器（`Ultralytics YOLOv8n`、`FastestDet`、`YOLO-FastestV2`）在推荐分辨率下均能在 PC 端稳定、高准确率地检测**瓶子（bottle）、杯子（cup）、手机（cell phone）**。
-2. **失败实验完整保留**：`work/y2_micro/`（含源码、训练集划分、日志及权重）完整保留作为消融反面证据，禁止继续在其上盲目修补或发散。
+2. **失败实验完整保留**：`archive/legacy/yolo/y2_micro/`（含源码、训练集划分、日志及权重）完整保留作为消融反面证据，禁止继续在其上盲目修补或发散。
 3. **软件先行与 Algorithm Lab 接入**：已在 Algorithm Lab（运行于 `http://127.0.0.1:8503`）中成功接入 `Ultralytics YOLOv8n`、`FastestDet (352)`、`YOLO-FastestV2 (352)` 以及 `MicroDet (160)`，支持原图输入、框/类别/置信度实时渲染与指标对比。
 4. **FPGA 参考开源审计完成**：已对 `adamgallas/fpga_accelerator_yolov3tiny`、`dhm2013724/yolov2_xilinx_fpga`、`Xilinx/finn` 三个代表性硬件实现进行了深度代码与架构审查，提炼了可用于安路 PH1P35 的纯 Verilog 算子与分块调度方案。
 
@@ -13,7 +13,7 @@
 
 ## 第一部分：Y2 MicroDet 失败根因深度审查
 
-对 [`work/y2_micro/microdet.py`](../../work/y2_micro/microdet.py)、[`work/y2_micro/train.py`](../../work/y2_micro/train.py)、[`work/y2_micro/evaluate.py`](../../work/y2_micro/evaluate.py) 以及前序报告 [`docs/experiments/2026-10-12-y2-microdet.md`](2026-10-12-y2-microdet.md) 进行逐项核验：
+对 [`archive/legacy/yolo/y2_micro/microdet.py`](../../archive/legacy/yolo/y2_micro/microdet.py)、[`archive/legacy/yolo/y2_micro/train.py`](../../archive/legacy/yolo/y2_micro/train.py)、[`archive/legacy/yolo/y2_micro/evaluate.py`](../../archive/legacy/yolo/y2_micro/evaluate.py) 以及前序报告 [`docs/experiments/2026-10-12-y2-microdet.md`](2026-10-12-y2-microdet.md) 进行逐项核验：
 
 ### 1. 已证实的致命缺陷（Defects with Direct Evidence）
 - **模型容量与感受野断崖式不足（Model Capacity & Receptive Field）**：

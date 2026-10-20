@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>项目演示视频拍摄与制作要点总结（大字清晰版）</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 14mm 16mm 14mm 16mm;
+    @bottom-center {
+      content: "第 " counter(page) " 页 / 共 " counter(pages) " 页";
+      font-size: 9pt;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #555555;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    color: #111111;
+    background-color: #FFFFFF;
+    line-height: 1.6;
+    font-size: 10.5pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 100%;
+    height: 269mm;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page:last-child {
+    page-break-after: avoid;
+  }
+
+  /* Header */
+  .doc-header {
+    text-align: center;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+
+  .doc-title {
+    font-size: 17pt;
+    font-weight: 800;
+    color: #000000;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .doc-subtitle {
+    font-size: 10pt;
+    color: #444444;
+  }
+
+  /* Section Headings */
+  .sec-h1 {
+    font-size: 12pt;
+    font-weight: 800;
+    color: #000000;
+    border-bottom: 1.5px solid #000000;
+    padding-bottom: 3px;
+    margin-top: 10px;
+    margin-bottom: 7px;
+  }
+
+  .sec-h2 {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  /* Boxes */
+  .box-simple {
+    border: 1.5px solid #222222;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background-color: #FFFFFF;
+  }
+
+  .box-gray {
+    border: 1px solid #999999;
+    background-color: #F6F6F6;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+  }
+
+  /* Heavy bold emphasis */
+  strong, b {
+    font-weight: 800;
+    color: #000000;
+  }
+
+  .key-point {
+    background-color: #EEEEEE;
+    padding: 1px 4px;
+    font-weight: 800;
+    border-bottom: 1px solid #000000;
+  }
+
+  /* Lists */
+  ul.list-disc {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 6px;
+  }
+
+  ul.list-disc li {
+    margin-bottom: 4px;
+    color: #111111;
+  }
+
+  ol.list-num {
+    padding-left: 20px;
+    margin-bottom: 6px;
+  }
+
+  ol.list-num li {
+    margin-bottom: 4px;
+    color: #111111;
+  }
+
+  /* Tables */
+  table.simple-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+    font-size: 9.5pt;
+    line-height: 1.5;
+  }
+
+  table.simple-table th {
+    border: 1.5px solid #000000;
+    background-color: #E6E6E6;
+    color: #000000;
+    font-weight: 800;
+    padding: 6px 8px;
+    text-align: left;
+  }
+
+  table.simple-table td {
+    border: 1px solid #B0B0B0;
+    padding: 6px 8px;
+    vertical-align: top;
+    color: #111111;
+  }
+
+  table.simple-table tr:nth-child(even) td {
+    background-color: #FAFAFA;
+  }
+
+  /* Checkbox Table */
+  table.check-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 6px;
+    font-size: 9pt;
+    line-height: 1.45;
+  }
+
+  table.check-table th {
+    border: 1.5px solid #000000;
+    background-color: #E0E0E0;
+    padding: 5px 6px;
+    font-weight: 800;
+    text-align: left;
+  }
+
+  table.check-table td {
+    border: 1px solid #B0B0B0;
+    padding: 4px 6px;
+    color: #111111;
+  }
+
+  /* Footer */
+  .page-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #999999;
+    padding-top: 3px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.5pt;
+    color: #555555;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 ================= -->
+<div class="page">
+  <div class="doc-header">
+    <div class="doc-title">项目演示视频拍摄与制作要点总结</div>
+    <div class="doc-subtitle">竞赛评审培训内容汇总 · 评委心理与避坑指南 · 结构拆解与实操规范</div>
+  </div>
+
+  <!-- 一、评委评审逻辑 -->
+  <div class="sec-h1">一、 评委评审逻辑（核心心智与打分原则）</div>
+  <div class="box-simple">
+    <ol class="list-num" style="margin-bottom:0;">
+      <li><strong>评委熟悉赛道，不听原理科普：</strong>评委全是资深专家，<strong>不需要逐字念算法公式与课本定义</strong>；评委核心想看：<strong>“算法到底有没有效果？效果差距有多大？”</strong></li>
+      <li><strong>超负荷连续看片，视觉极易疲劳：</strong>连续评审数十个项目，<strong>画面晃动、冗长片头、逐字乱蹦字幕</strong>等小毛病越到评审后期扣分越狠。</li>
+      <li><strong>打分优先级铁律：</strong><br>
+        <span class="key-point">① 能否直观验证每个功能效果（最重要，决定及格与上限）</span> ＞ 
+        <span class="key-point">② 视频结构逻辑（总分总、层次清晰）</span> ＞ 
+        <span class="key-point">③ 画面、字幕、镜头等细节</span>。
+      </li>
+      <li><strong>比拼核心能力：</strong>同赛道算法名称高度雷同，<strong>比拼的绝不是“算法数量”，而是“效果优劣与解决实际问题的能力”</strong>。</li>
+    </ol>
+  </div>
+
+  <!-- 二、两大致命缺点与避坑方案 -->
+  <div class="sec-h1">二、 两大致命雷区与避坑方案（最优先规避的扣分大忌）</div>
+  
+  <div class="sec-h2">1. 致命缺点一：算法演示“看不到前后画面差异”（头号死穴）</div>
+  <div class="box-gray">
+    <p><strong>【现场惨剧】：</strong>队员嘴上滔滔不绝讲原理，按下开关，屏幕上<strong>肉眼看不出明显变化</strong>。评委无法验证功能是否真实跑通，说做了十几种算法也<strong>毫无说服力</strong>。</p>
+    <p style="margin-top:3px;"><strong>【解决办法】：</strong></p>
+    <ul class="list-disc" style="margin-bottom:0;">
+      <li><strong>精心挑选演示素材：</strong>场景必须能<strong>放大算法效果</strong>，加算法前后对比一眼就能看出差别（边缘、对比度、色彩、噪点等）。<strong>选错素材，再好算法也无法证明！</strong></li>
+      <li><strong>标准演示逻辑：</strong>固定相机机位 → <strong>先展示不加算法的劣质原图</strong> → <strong>开启算法</strong> → <strong>直观展现画面质变</strong>，重点展示差异，不单纯念定义。</li>
+    </ul>
+  </div>
+
+  <div class="sec-h2">2. 致命缺点二：只罗列“我实现了XX算法”，脱离实际恶劣工况</div>
+  <div class="box-gray" style="margin-bottom:5px;">
+    <p><strong>【问题本质】：</strong>同赛道大家报的功能名字基本一样，只报名称只能拿基础分。<strong>必须讲清楚：在何种恶劣条件（强光、暗光、半遮挡、偏色等）下，你的算法改善了画面，达到了什么指标效果。</strong></p>
+  </div>
+
+  <table class="simple-table">
+    <thead>
+      <tr>
+        <th style="width:20%;">功能类型</th>
+        <th style="width:40%;">【反面教材】（单纯报菜名 / 平庸扣分）</th>
+        <th style="width:40%;">【正面示范】（恶劣工况+直观效果 / 高分）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>边缘检测<br>&amp; 图像降噪</strong></td>
+        <td>“我们实现了Sobel边缘检测和图像降噪算法，效果良好。”<br><em>（评委：看不出改进在哪里，毫无说服力）</em></td>
+        <td>“在<strong>暗光高噪点恶劣环境</strong>下，开启算法后<strong>背景噪点显著压制，工件轮廓与微弱边缘清晰可辨</strong>（分屏对比）。”</td>
+      </tr>
+      <tr>
+        <td><strong>白平衡<br>&amp; 色彩校正</strong></td>
+        <td>“本系统支持按键切换自动白平衡算法与颜色量化功能。”<br><em>（评委：大家都有按键，没有工程价值）</em></td>
+        <td>“在<strong>车间强黄光杂散照射</strong>下原始图像严重偏色；开启白平衡后，<strong>标准色卡还原真实中性灰，大幅提升下游识别率</strong>。”</td>
+      </tr>
+      <tr>
+        <td><strong>目标检测<br>&amp; 智能定位</strong></td>
+        <td>“成功裁剪部署了YOLO-tiny网络，实现INT8量化推理。”<br><em>（评委：帧率多少？漏不漏检？稳不稳定？）</em></td>
+        <td>“针对<strong>工件高速移动、部分遮挡与逆光场景</strong>，系统保持<strong>实时满帧稳定检测，准确定位并输出实时总数统计</strong>。”</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <span>项目演示视频拍摄与制作要点总结</span>
+    <span>第 1 页 / 共 4 页</span>
+  </div>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="page">
+  <!-- 三、视频结构：推荐“总-分-总”标准框架 -->
+  <div class="sec-h1">三、 视频结构：推荐“总-分-总”标准框架（3分钟时间分配）</div>
+  
+  <table class="simple-table" style="margin-bottom:12px;">
+    <thead>
+      <tr>
+        <th style="width:22%;">阶段与推荐时长</th>
+        <th style="width:38%;">核心任务</th>
+        <th style="width:40%;">制作要点与注意事项</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. 开头引入</strong><br>前 40 秒为关键<br><em>（极限 1 分钟）</em></td>
+        <td><strong>5 秒内极速抓人眼球</strong>；40 秒内介绍系统整体架构、功能概况，交代项目核心主题。</td>
+        <td>
+          <ul class="list-disc" style="padding-left:14px; margin-bottom:0;">
+            <li><strong>片头严禁超过 5 秒</strong>，绝不可放冗长炫酷动画。</li>
+            <li>快速讲透<strong>“项目是什么、难度与应用价值”</strong>，不纠结底层代码细节。</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>2. 中间主体</strong><br>核心演示阶段<br><em>（约 110 秒）</em></td>
+        <td><strong>直观展示效果</strong>：对比开启/关闭算法后画面、灯光、声音、波形的变化。</td>
+        <td>
+          <ul class="list-disc" style="padding-left:14px; margin-bottom:0;">
+            <li>肉眼不易观察的效果（延迟、功耗），<strong>借助波形、声音等方式具象化可视化</strong>。</li>
+            <li><strong>精讲核心重点功能</strong>，简单外设（如按键单纯点亮LED）简要带过，<strong>切忌主次不分</strong>。</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>3. 结尾总结</strong><br>综合收官阶段<br><em>（最后 30 秒）</em></td>
+        <td><strong>全功能综合叠加展示</strong>，展示系统完整运行效果与实测指标。</td>
+        <td>
+          <ul class="list-disc" style="padding-left:14px; margin-bottom:0;">
+            <li>客观评价：说明在工业分拣等场景中<strong>解决了什么实际问题、有什么应用价值</strong>。</li>
+            <li><strong>态度求真务实，不夸大吹嘘</strong>。</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 四、优秀高分视频的进阶范式 -->
+  <div class="sec-h1">四、 优秀高分视频的进阶范式（参考范例2精髓）</div>
+  <div class="box-simple">
+    <ol class="list-num" style="margin-bottom:0;">
+      <li>
+        <strong>分模块清晰讲解（基础分 ＋ 拓展亮点分）：</strong><br>
+        明确划分为<strong>“基础功能模块”</strong>（保障赛题基础分全拿）与<strong>“特色拓展创新”</strong>（冲刺一等奖的加分亮点），结构层次清晰，评委更容易理解和按项打分。
+      </li>
+      <li>
+        <strong>逐步叠加递进演示（像“剥洋葱”一样展现技术实力）：</strong><br>
+        <strong>从原始较差的恶劣画面开始</strong> → <strong>逐个开启各级算法</strong> → <strong>画面同步逐步改善</strong>。直观体现每一个算法模块带来的画质提升，前后递进因果逻辑极其严密。
+      </li>
+      <li>
+        <strong>手术刀级精炼旁白（字字服务画面，零废话）：</strong><br>
+        <strong>每一句话都在解释屏幕上正在发生的变化</strong>，杜绝“众所周知”、“接下来我将介绍”等空洞口头禅，在 3 分钟内保持最高信息密度。
+      </li>
+      <li>
+        <strong>醒目标注与聚焦引导：</strong><br>
+        视频全程带有<strong>序号标注</strong>（如“模块一：自适应滤波”），画面对比区域<strong>用高对比度箭头或局部框选指出差异</strong>，引导评委一眼看到关键提升。
+      </li>
+    </ol>
+  </div>
+
+  <div class="page-footer">
+    <span>项目演示视频拍摄与制作要点总结</span>
+    <span>第 2 页 / 共 4 页</span>
+  </div>
+</div>
+
+<!-- ================= PAGE 3 ================= -->
+<div class="page">
+  <!-- 五、核心制作原则与画面技巧 -->
+  <div class="sec-h1">五、 核心制作原则与画面构图技巧</div>
+  
+  <div class="sec-h2">1. 核心制作原则（效果为王，拒绝空谈）</div>
+  <div class="box-gray">
+    <ul class="list-disc" style="margin-bottom:0;">
+      <li><strong>直观效果展示优先：</strong><strong>少干巴巴讲原理，不要长篇大论解释底层原因</strong>，观众与评委重点看实际变化。</li>
+      <li><strong>视频倍速处理控制：</strong>可适度加速讲解以提升信息密度，但<strong>语速倍速严禁超过 1.5 倍</strong>，必须确保评委听清。</li>
+      <li><strong>流程严格前置：</strong><strong>必须提前写好分镜脚本再开机拍摄</strong>；预留充足时间，根据视频展示思路提前反向优化项目演示效果。</li>
+      <li><strong>灵活变通：</strong>所有经验作为参考基准，结合自身硬件特点与作品风格灵活调整。</li>
+    </ul>
+  </div>
+
+  <div class="sec-h2">2. 画面形式与对比图使用技巧</div>
+  <div class="box-simple">
+    <ul class="list-disc" style="margin-bottom:0;">
+      <li><strong>多画面同屏与画中画（PIP）：</strong>同屏放置对照实验；<strong>同时保留全局视野 ＋ 画中画放大重点细节区域（ROI）</strong>。</li>
+      <li><strong>主次绝不能颠倒（铁律）：</strong><strong>画面的核心视觉重心必须放在处理前后的图像对比区域</strong>。文字标注只做辅助，<strong>绝不能遮挡核心对比画面</strong>。</li>
+      <li><strong>质朴简洁转场：</strong>技术讲解类视频风格应朴素利落，<strong>杜绝炫酷翻转花哨转场</strong>，避免分散评委注意力。</li>
+    </ul>
+  </div>
+
+  <!-- 六、案例复盘：从分区背光演示中吸取经验 -->
+  <div class="sec-h1">六、 案例视频深度复盘（分区背光演示案例）</div>
+  <div class="box-gray">
+    <p><strong>【值得发扬的 4 大优点】：</strong></p>
+    <ul class="list-disc">
+      <li><strong>直观对比演示：</strong>同屏放置“原始画面 vs 分区背光画面”，重点突出黑场差异，对比逻辑清晰。</li>
+      <li><strong>统筹同场景展示：</strong>对照实验放在同一画面，方便评委直接进行横向比对。</li>
+      <li><strong>视频倍速处理：</strong>适当加速平淡过程，在有限时长内承载高密度信息。</li>
+      <li><strong>带有进度条指示：</strong>方便评委快速跳转与定位关注内容。</li>
+    </ul>
+
+    <p style="margin-top:4px;"><strong>【存在不足与整改建议】：</strong></p>
+    <ul class="list-disc" style="margin-bottom:0;">
+      <li><strong>转场花哨：</strong>花哨特效分散注意力，<strong>整改：技术演示全篇采用硬切或短淡入</strong>。</li>
+      <li><strong>进度条配色辨识度差：</strong>黑底配暗蓝字，未播放文字不醒目。<strong>整改：提高重点文字鲜艳度与明暗对比</strong>。</li>
+      <li><strong>倍速失控：</strong>语速过快容易听不清。<strong>整改：语速上限死守 1.5 倍速以内</strong>。</li>
+      <li><strong>缺少明确序号标注：</strong>不同阶段界限模糊。<strong>整改：增加序号标注（功能1、功能2），便于理解阶段划分</strong>。</li>
+    </ul>
+  </div>
+
+  <div class="page-footer">
+    <span>项目演示视频拍摄与制作要点总结</span>
+    <span>第 3 页 / 共 4 页</span>
+  </div>
+</div>
+
+<!-- ================= PAGE 4 ================= -->
+<div class="page">
+  <!-- 七、拍摄环境规范与隐蔽扣分点 -->
+  <div class="sec-h1">七、 拍摄环境规范与隐蔽扣分点速查</div>
+  
+  <div class="sec-h2">1. 拍摄现场环境“三原则”</div>
+  <div class="box-simple">
+    <ul class="list-disc" style="margin-bottom:0;">
+      <li><strong>场景整洁干净：</strong>桌面<strong>严禁出现外卖饭盒、零食袋、杂乱纸张、水杯</strong>等杂物，环境朴素整洁。</li>
+      <li><strong>规避敏感与违规信息：</strong>背景不能出现不安全信息；<strong>严格规避指导教师姓名等违规身份信息</strong>。</li>
+      <li><strong>光线合适稳定：</strong>选择采光良好、无日光灯频闪的实验室，保证拍摄画面清晰不偏色。</li>
+    </ul>
+  </div>
+
+  <div class="sec-h2">2. 隐蔽次要扣分点（长时间评审会严重放大反感）</div>
+  <div class="box-gray">
+    <ul class="list-disc" style="margin-bottom:0;">
+      <li><strong>镜头抖动：</strong>手持手机拍摄晃动剧烈极易引起评委视觉疲劳。<strong>要求：全流程使用三脚架或固定支架</strong>。</li>
+      <li><strong>字幕排版错误：</strong><strong>严禁文字逐个打字机式弹出</strong>；<strong>要求：字幕整句整段一次性出现</strong>，文字简洁精炼，不堆砌大段原理。</li>
+      <li><strong>冗余操作占用时间：</strong>上位机输入指令、旋钮调节等操作过程需<strong>大幅倍速或直接切掉</strong>，评委只看图像对比。</li>
+      <li><strong>演示素材选择错误：</strong><strong>严禁随便挑选无缺陷素材！</strong>必须针对算法特性选用暗光噪点、弱边缘、强偏色、密集遮挡等<strong>极端恶劣工况画面</strong>，才能证明算法实力。</li>
+    </ul>
+  </div>
+
+  <!-- 八、录制前 10 项终极自查清单 -->
+  <div class="sec-h1">八、 演示视频录制前必检清单（10项终极自查通行证）</div>
+  <table class="check-table">
+    <thead>
+      <tr>
+        <th style="width:7%; text-align:center;">勾选</th>
+        <th style="width:20%;">检查项目</th>
+        <th style="width:53%;">合格验收标准</th>
+        <th style="width:20%;">风险后果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>1. 片头时限控制</strong></td>
+        <td>系统主题与Logo展示<strong>严格控制在 5 秒以内</strong>，迅速切入实物演示。</td>
+        <td>消耗评委耐心</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>2. 算法前后差异</strong></td>
+        <td>算法开关前后，<strong>屏幕画面肉眼清晰可辨差异</strong>；选用放大效果的恶劣素材。</td>
+        <td><strong>一票否决(真实性存疑)</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>3. 实际场景痛点</strong></td>
+        <td>讲清在强光/暗光/偏色/遮挡等<strong>恶劣工况下解决的实际问题</strong>，绝非纯报菜名。</td>
+        <td>沦为平庸及格分</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>4. 逐步递进演进</strong></td>
+        <td>遵循从劣质原图出发，<strong>逐步开启算法、画面逐步改善</strong>的递进逻辑。</td>
+        <td>技术深度展示不足</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>5. 镜头机位防抖</strong></td>
+        <td><strong>全流程使用固定三脚架或桌面支架</strong>，无手持晃动与反复拉焦虚焦。</td>
+        <td>视觉眩晕扣印象分</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>6. 现场环境整洁</strong></td>
+        <td>台面无外卖杂物；<strong>背景完全屏蔽涉密信息及指导教师姓名</strong>。</td>
+        <td>扣除风貌与合规分</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>7. 字幕呈现规范</strong></td>
+        <td><strong>字幕整句一次性呈现</strong>，简洁精炼，<strong>严禁遮挡画面核心对比区域</strong>。</td>
+        <td>阅读体验极差</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>8. 语速倍速上限</strong></td>
+        <td>旁白清晰无套话废话，<strong>快进片段语速严格控制在 1.5 倍速以内</strong>。</td>
+        <td>信息听不清漏评</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>9. 辅助标注主次</strong></td>
+        <td>画面重心保留在对比区，<strong>配模块序号标注与对比箭头聚焦</strong>，主次分明。</td>
+        <td>视线焦点分散</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">[ &nbsp; ]</td>
+        <td><strong>10. 综合收尾时限</strong></td>
+        <td>结尾全功能综合呈现并给出客观指标，<strong>视频总时长严格在 3 分钟以内</strong>。</td>
+        <td>超时扣分或无法上传</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <span>项目演示视频拍摄与制作要点总结</span>
+    <span>第 4 页 / 共 4 页</span>
+  </div>
+</div>
+
+</body>
+</html>

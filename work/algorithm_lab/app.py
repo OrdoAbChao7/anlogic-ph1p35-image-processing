@@ -31,10 +31,10 @@ SAMPLES_DIR = BASE_DIR / "samples"
 EXPORTS_DIR = BASE_DIR / "exports"
 REGISTRY_PATH = BASE_DIR / "registry.json"
 CACHE_DIR = BASE_DIR / "cache"
-Y1_DIR = BASE_DIR.parents[0] / "y1_yolo"
+Y1_DIR = BASE_DIR.parents[1] / "archive" / "legacy" / "yolo" / "y1_yolo"
 Y1_LAB_DIR = Y1_DIR / "results" / "lab"
 Y1_UPLOAD_DIR = Y1_LAB_DIR / "uploads"
-Y2_DIR = BASE_DIR.parents[0] / "y2_micro"
+Y2_DIR = BASE_DIR.parents[1] / "archive" / "legacy" / "yolo" / "y2_micro"
 Y2_LAB_DIR = Y2_DIR / "results" / "lab"
 
 CACHE_DIR.mkdir(exist_ok=True)

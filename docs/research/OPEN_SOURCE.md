@@ -204,7 +204,7 @@ License: **Apache-2.0** ✅
 
 ### 4. 2026-10-12 独立仿真后的适用范围修正
 
-上文“可直接参考”“完全对应”仅表示值得研究，**不表示可直接移植或与本项目量化数学等价**。隔离 Icarus 验证见 [`../../work/yolo_fpga_feasibility/report.md`](../../work/yolo_fpga_feasibility/report.md)：原 `cal_addtree_int16_x9.v` 的 18 位和在 9 个全幅 INT8 正乘积时发生回绕；19 位隔离候选通过同一组 305 向量。乘法打包 372 向量、scale/saturation 352 向量的稳定算术结果与独立模型一致，但逐拍时序、安路 DSP 推断和网络量化尚未验证。Yolo-FastestV2 官方权重 352 输入的三类抽样效果较差，且 16 MAC/100 MHz 的理想卷积下界为 66.49 ms/帧；原版 30 fps 部署判 NO-GO。
+上文“可直接参考”“完全对应”仅表示值得研究，**不表示可直接移植或与本项目量化数学等价**。隔离 Icarus 验证见 [`../../archive/legacy/yolo/yolo_fpga_feasibility/report.md`](../../archive/legacy/yolo/yolo_fpga_feasibility/report.md)：原 `cal_addtree_int16_x9.v` 的 18 位和在 9 个全幅 INT8 正乘积时发生回绕；19 位隔离候选通过同一组 305 向量。乘法打包 372 向量、scale/saturation 352 向量的稳定算术结果与独立模型一致，但逐拍时序、安路 DSP 推断和网络量化尚未验证。Yolo-FastestV2 官方权重 352 输入的三类抽样效果较差，且 16 MAC/100 MHz 的理想卷积下界为 66.49 ms/帧；原版 30 fps 部署判 NO-GO。
 
 ## 2026-10-12 YOLOv8 软件效果基准复核
 
@@ -212,7 +212,7 @@ License: **Apache-2.0** ✅
 - 权重：Ultralytics assets v8.4.0/yolov8m.pt，SHA-256 5d4a90cdc7a21786cc59cd19778e9eafff836df9e2da32524737c7ee6efe4fe5；代码运行实测 25,902,640 参数。
 - 定位：PC Visual Reference，640 默认、960 对照；COCO 80 类推理，仅显示 bottle/cup/cell phone。固定公开60图及不重叠55图均改善检出，但仍有漏检/误报。不得称三类效果门通过。
 - 硬件成本：仅按 INT8 每参数1字节已约25.9 MB，远大于既有视频工程名义空闲 ERAM；没有 PH1P35 整网综合/量化证据，不能作为直接上板模型。
-- 证据：work/algorithm_lab/exports/yolo_quality_comparison/，实验报告 docs/experiments/2026-10-12-yolo-quality-comparison.md。
+- 证据：archive/legacy/yolo/algorithm_lab/exports/yolo_quality_comparison/，实验报告 docs/experiments/2026-10-12-yolo-quality-comparison.md。
 
 ---
 

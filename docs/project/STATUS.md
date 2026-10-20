@@ -1,178 +1,70 @@
-# STATUS — 当前实现状态与阻塞
+# 当前状态与下一入口
 
-> **更新规则**：本文件可根据真实证据（构建报告、仿真、上板结果）持续更新。  
-> 修改 PROJECT_GOAL.md 中定义的目标或验收标准须提变更提案。  
-> 用户口头反馈记录为 `USER_REPORTED_ON_BOARD`，不等于硬件验证通过。
+文档核对：2026-10-20。最新整机候选构建证据为2026-10-14，独立颜色模块验证摘要为2026-10-16；2026-10-20 另完成隔离 AWB 等价仿真与模块 Gate 对照，未改生产 RTL、未运行整机 Place/Route/Bitgen，也不提升阶段状态。完整沿革见 [历史快照](status-history-20261016.md)。
 
-最后更新：2026-10-16（Lab3基础功能与集成范围复核）
+## 当前结论
 
----
+已有视频工程、部分算法仿真和可恢复的工业颜色检测构建候选；G1硬件闭环与G2接口冻结未通过，完整作品未验收。用户报告原图可显示、模式可切换属于 USER_REPORTED_ON_BOARD，不能替代绑定位流的复位、帧率和长稳记录。
 
-## 状态定义
+当前研发优先级：**G1/G2取证 + P1软件预览 → P2帧关联 → P3最小演示**。新算法严格执行软件先行；不直接继续整网YOLO硬件化。
 
-| 标签 | 含义 |
-|---|---|
-| `PLANNED` | 已纳入计划，未开始实现 |
-| `IMPLEMENTED_UNVERIFIED` | RTL 已编写，未经仿真或上板验证 |
-| `SIM_PASS` | 通过软件参考模型 + RTL 仿真比对 |
-| `BUILD_PASS` | TD 综合 + 布局布线 + 位流生成成功，时序收敛 |
-| `USER_REPORTED_ON_BOARD` | 用户报告上板现象，未绑定位流哈希/工程版本 |
-| `VERIFIED_ON_BOARD` | 已完成上板实测，有完整证据链 |
-| `FAIL` | 已知失败，有根因记录 |
-| `BLOCKED` | 依赖未就绪，无法推进 |
+## 工程身份与已知预算
 
----
-
-## 阶段状态总览
-
-| 阶段 | 内容 | 当前状态 | 关键证据 |
-|---|---|---|---|
-| **G1** | 视频采集与显示闭环 | `BUILD_PASS` / `USER_REPORTED_ON_BOARD` | 位流 SHA: `A311...6010`（Lab1）；用户报告原图可显示 |
-| **G2** | 接口 / 时钟 / ISP 基线审计 | `BLOCKED` | 待 G1 硬件闭环通过；接口草案存在 |
-| **G3** | 卡通化与基础模式 | `SIM_PASS`（部分）/ `BUILD_PASS`（候选） | 见下方 G3 详情 |
-| **G4** | Sobel 实时流水线 | `IMPLEMENTED_UNVERIFIED` | Sobel 算法研究已有；RTL 待仿真 |
-| **G5** | YOLO-tiny 检测 | `PLANNED` / `PE_SIM_PASS`；Y2 软件候选 `FAIL` | 单个 INT8 PE RTL 仿真通过；Y1 模型直接部署 NO-GO，Y2 微型模型仅 128 输入匹配 2 个瓶子且误报严重；整网/硬件均未通过 |
-| **G6** | OSD + 外设联动 | 基础OSD已接入 / 扩展 `PLANNED` | Lab3及当前候选含Logo与显示帧计数；模式/检测文字、目标总数及外设联动未接 |
-| **G7** | 优化与创新 | `PLANNED` | 待 G3–G6 稳定后 |
-| **G8** | 冻结 / 发布 / 答辩 | `PLANNED` | — |
-
----
-
-## G1 详情
-
-**目标**：SC520CS → MIPI → ISP → DDR2 → HDMI 原始视频闭环
-
-| 子项 | 状态 | 证据 |
+| 对象 | 路径 / 证据 | 状态 |
 |---|---|---|
-| SC520 Lab1 工程可定位 | `BUILD_PASS` | `.tools/td/work/lab_ex1_mipi_hdmi_sc520/` |
-| TD 综合 + 布局布线通过 | `BUILD_PASS` | Setup WNS 1242 ps，Hold WNS 20 ps；见 [`docs/build/goal-1-sc520-lab1/build-summary.md`](../build/goal-1-sc520-lab1/build-summary.md) |
-| 位流文件 | `BUILD_PASS` | `camera_to_dsi_display.bit`，SHA-256: `A3117B3CA6BB68326DA2B14914B713FD9DE49DCC4A2B9FDE8A8ABB19F9FF6010` |
-| 告警分类完成 | `BLOCKED` | PHY-5060、PHY-5079、PHY-5088 时钟告警待分类 |
-| 下载器识别 | `BLOCKED` | 2026-10-02 未发现设备；见 [`docs/evidence/goal-1/2026-10-02-bringup.md`](../evidence/goal-1/2026-10-02-bringup.md) |
-| SC520 I2C 初始化 | `USER_REPORTED_ON_BOARD` | 用户报告原图可显示；具体位流哈希未绑定 |
-| HDMI 实时原图 | `USER_REPORTED_ON_BOARD` | 同上 |
-| 冷启动 / 热复位 / 长稳 | `BLOCKED` | 未执行 |
-| **G1 阶段门** | **未通过** | 硬件闭环证据不完整 |
+| 原图基线 | [Lab1构建摘要](../build/goal-1-sc520-lab1/build-summary.md) | 一次可追溯构建；Setup +1242ps、Hold +20ps；G1未通过 |
+| 独立传统视觉候选 | fallback/project/；[修复构建摘要](../build/industrial-repair/build-summary.md) | 九组回归、整机候选构建通过；视觉与硬件未验收 |
+| 当前整合工作区 | work/integration/ | 已存在，不再是“待创建”；本次只核对现有bit身份，不能据副本存在宣称新增整合完成 |
+| 恢复包 | fallback/release/industrial-color-bbox-20261014/及ZIP | 保留恢复，不能原地开发 |
+| 自动验证工具 | [fpga_loop](../../work/fpga_loop/README.md)；[独立模块摘要](../evidence/fpga-loop/2026-10-16-color-detect.md) | 独立颜色模块8/8，100MHz构建摘要；不是整机或板卡验证，原始run已清理 |
 
----
+当前整合根目录bit与恢复包bit在2026-10-20重新计算的SHA-256一致：
 
-## G3 详情
+C41714E9E960A4C393EAB0444B479F790114750B5E4B76CB9F2512806E7AA470
 
-**目标**：三种显示模式 + 卡通化 RTL 经过仿真和上板验证
+这是同一个旧候选的身份核对，不是源码完整性、全部253项清单或新构建复验。其最终报告：16123/21216 Slice（75.99%）、39/108 ERAM、25/40 DSP；Setup +70ps、Hold +20ps、两项TNS=0。STA覆盖95.92%及关键PHY告警仍待关闭。保持Slice严格小于80%时最多净增849个Slice，不能用旧Lab1预算承诺新增功能可容纳。
 
-| 子项 | 状态 | 证据 |
+## 功能状态与阶段门
+
+| 阶段/功能 | 已有证据 | 尚缺 / 阶段判定 |
 |---|---|---|
-| 卡通化 RTL（组员版） | `FAIL` | WNS -1574 ps；源码有除法、行指针、握手问题；见 team-sync-2026-10-11.md |
-| `video_cartoon.v`（s1_color / s2_contour）| `BUILD_PASS` | 见 `work/td_cartoon/`；告警未完全分类 |
-| `video_cartoon_luma.v`（s3_luma 亮度量化） | `SIM_PASS` / `BUILD_PASS` | 仿真：5329 周期小尺寸 + 1188032 周期全尺寸通过；TD构建：Setup WNS +143ps, Hold WNS +20ps, 位流 `s3_luma.bit` (71c8...abc6) 生成 |
-| cartoon-release 位流 | `USER_REPORTED_ON_BOARD` | SHA-256: `8284e7a90d3c36c20440d6e989800b4912683c5157e153cb64b3722f33bdd9f3`；用户反馈视觉效果差 |
-| Sobel 轮廓融合 | `IMPLEMENTED_UNVERIFIED` | 阈值已验证软件模型，上板效果待确认 |
-| 区域连通填充 | `PLANNED` | 未实现 |
-| 按键模式切换上板 | `USER_REPORTED_ON_BOARD` | 用户报告切换可实现 |
-| **G3 阶段门** | **未通过** | 待用户对 s3_luma 候选位流进行上板测试与视觉验收 |
+| G1 视频闭环 | BUILD_PASS候选；用户报告画面和切换可用 | 成功位流关联、重复构建审计、告警、冷启动/复位/重下载、帧率、30min观察；未通过 |
+| G2 接口与ISP | [整合审计](../experiments/2026-10-16-lab3-integration-audit.md)及[接口账本](../development/integration-plan.md) | FIFO/ready、帧槽完成与覆盖、CDC、格式与延迟仍有unknown；未通过 |
+| G3 卡通与三模式 | 历史s3_luma部分SIM_PASS/BUILD_PASS；Algorithm Lab有候选预览 | 当前4ppc整合未完成；新效果未批准；区域填充未实现；未通过 |
+| G4 Sobel | 当前母工程已接入像素对平均后处理的Sobel；支路对齐修复 | 全算法/边界/空间偏移与硬件验收未齐；不能称完整1280横向采样；未通过 |
+| G5 检测网络 | 历史PE仿真、PC模型研究 | 整网未接入；Y2软件效果FAIL；YOLO研究在archive，当前不列入视频构建；未通过 |
+| G6 OSD/外设 | Logo和显示CNT已接；单颜色全局框有修复候选 | 模式/检测文字、真实类别/数量、LED、WM8978未完整实现；未通过 |
+| G7/G8 | 有规划和候选恢复包 | 量化创新、全功能验收、冻结包发布长稳未完成 |
+| 传统路线 F1/F5 | SIM_PASS/BUILD_PASS候选与导出包 | 工位视觉和硬件未通过；F2滤波、F3标定、F4缺陷判定仍PLANNED，见[备用状态](../fallback-status.md) |
 
----
+标签描述证据层级，不按“最高标签”推导整阶段通过。BUILD_PASS旧标签仅表示该次构建/时序结果，未关闭告警、约束或硬件门。VISUAL_APPROVED必须引用用户批准的具体版本；registry中cartoon v1.0-test不覆盖后续候选。
 
-## 当前阻塞清单
+## 当前阻塞与可执行下一步
 
-| 阻塞项 | 阻塞原因 | 解锁条件 |
+| 阻塞 | 下一项具体工作 | 关闭依据 |
 |---|---|---|
-| G1 硬件闭环 | 无可确认的下载+硬件证据链 | 实物接线 + 下载 + HDMI 观察 + 记录 |
-| G2 接口审计 | G1 未通过 | G1 通过后执行（可提前只读审计） |
-| 卡通效果上板通过 | 已有位流效果差；新候选待下载 | 新 s3_luma 构建通过 + 上板对比 |
-| PHY-5060/5079/5088 告警 | 时钟告警未分类 | 逐条记录来源 + 上板观察 |
-| OSD 安路 Logo | 已在Lab3及当前候选中接入；此前“RTL未实现”记录有误 | 同屏效果、同步和稳定性上板验收 |
-| YOLO Micro-CNN | Y2 候选权重与 x86 INT8 已固定，但独立测试仅 128 输入有 2 个瓶子 TP 且误报严重；工位数据和验收指标未冻结 | 工位分批数据 + 预设指标 → 重训并通过独立测试 → 视觉验收 |
-| WM8978 语音 | 管脚 / 时序 / Codec 配置未核对 | 原理图核对 + I2S 驱动 |
+| G1硬件链缺完整证据 | 重新核对今天的下载器/板卡与接线，按G1-B/G1-H绑定原图版本执行 | [验收矩阵](../verification/acceptance-matrix.md)逐项通过；历史未识别设备不等于今天未连接 |
+| G2帧/时钟/背压 | 按实际.al追踪接口、FIFO语义、四帧槽和整组CDC | 依赖路径无unknown，约束/波形有据；禁止用端口名推断握手 |
+| 首版效果未冻结 | P1在Algorithm Lab提供原图/边缘/颜色框及状态文字预览 | 用户批准 + 参数/样本/代码绑定，再做D阶段 |
+| 资源/时序余量紧 | 只使用当前母工程报告预算；逐模块增加并验证 | 同版最终报告与告警审计；不能合并不同版本资源估计 |
+| 帧率/延迟未知 | 分测捕获新帧、HDMI刷新、检测更新和整链延迟 | 约60.61Hz是配置推导，30fps与小于2ms仍是目标 |
+| 工位检测指标未冻结 | 整理目标、尺度、光照、空场/多目标、拍摄批次与测法 | 独立测试与数值验收线；单颜色框不等于类别/数量 |
+| 外设资料 | 核对A4/B4、现有增益键、LED、WM8978及音频预算 | 原理图/实物/协议证据后实现，不猜管脚 |
 
----
+## 目标与历史表述冲突
 
-## 关键文件与位流清单
+YOLO文件已移入 archive/legacy/yolo/ 是工作区事实，当前不接入视频构建。旧README/目录页曾据此写“已舍弃、不再是发布依赖”，但没有在docs/decisions找到取消长期目标的提案；PROJECT_GOAL与用户当前规则仍要求裁剪检测网络。本轮统一为“当前归档、硬件化暂停，长期目标保留”，不把归档当成验收目标删除授权。
 
-| 标识 | 路径 | SHA-256 | 状态 |
-|---|---|---|---|
-| Lab1 位流（原图） | `.tools/td/work/lab_ex1_mipi_hdmi_sc520/.../phy_1/camera_to_dsi_display.bit` | `A311...6010` | `BUILD_PASS`，待上板 |
-| cartoon-release 位流 | `work/output/cartoon-release/camera_to_dsi_display.bit` | `8284...dd9f3` | `USER_REPORTED_ON_BOARD`，效果差 |
-| 卡通组员版位流 | `HX1P35A2026/lab_ex1-3_SC520_add_cartoon/.../best_result/...bit` | `848a...fc78` | `FAIL`（时序失败） |
+WM8978按用户当前规则保留为完整交付项；不能沿用旧目标页的“可选”降低范围。旧ADR器件资源数字不作预算，实际资源见当前最终报告。历史原文保留以便追溯。
 
----
+## 2026-10-20 V2 独立 worktree 失败快照
 
-## 备选路线（传统工业检测）状态
+旧打包 V2 候选为 17,125 Route Slice、Setup WNS +104 ps；默认 inferred 的完整源码快照在 Placement 以 PHY-9053 失败，22,882 Slice、Gate WNS −7.560 ns；之后独立 R1 ERAM 完整路由候选为 19,749/21,216 Slice、Setup WNS/TNS −7,791/−307,321 ps、Hold +20/0 ps。三者输入与实现阶段不同，不拼接成同一版本；按用户批准的 90% Slice 预算，上限为 19,094，R1 仍超 655 Slice，且时序未收敛。既有实验中的 85% 是其当时预注册门槛，不追溯改写。精确身份与层级路径见 [G8 接管审计](../../work/g8_takeover_audit_20261020.md) 和 [V2 版本根因报告](../experiments/2026-10-20-v2-version-root-cause.md)。在单变量模块证据足以支撑资源与时序方向前，不启动新的完整 TD 构建。
 
-详见 [`../fallback-status.md`](../fallback-status.md)。  
-关键资产：`fallback/rtl/color_detect_96.v` 与独立 `fallback/project/`。F1 修复候选九组仿真通过、TD 构建通过；F2–F4 仍为 `PLANNED`，F5 可重建候选包已导出，均未获得完整工业效果或硬件验收。
+## 2026-10-20 AWB early-token 隔离探针
 
-## 2026-10-12 卡通效果重新评审
+精确 R1 源码的隔离候选通过定向 Icarus 回归及 25,231,360 组算术等价检查；一次匹配的模块 Gate 中 WNS −9.793→−0.994 ns、TNS −284.114→−16.696 ns，但仍未收敛，area `#slice*` +2、DSP 不变，且 TD 原始日志仍有未定位 wrapper 端口告警。该候选不晋级，未运行整机构建；完整输入、SHA、原始报告与退出门见 [实验记录](../../work/codex_awb_early_token_pipeline_20261020/EXPERIMENT.md)。R1 原始 Route 证据显示关键锥从 `fixed_mean` 的 Q32 `×1193047` 经 DSPMULT/DSPSIOU/DSPTADD、`fixed_average3` 的 `×683` 与 fanout-36 网络，再经过增益比较、步进/反馈算术到 `O_gain_r_reg[4]`；该 17.190 ns/16 级路径说明瓶颈是串接的帧级均值、目标均值和增益反馈计算，而非单个乘法器。下一包据此重新评估帧级 AWB 架构，不重复本探针，也不将模块 Gate 收益外推为整机收益。
 
-- `project`：Algorithm Lab 新增同图三方案即时对比接口；使用 `sample_city.png` 生成 A 保色亮度分层、B RGB 色阶量化、C 双边平滑与自适应描边效果。代码见 `work/algorithm_lab/app.py` 和 `static/index.html`。
-- `project`：`python -m unittest test_lab.py` 4 项通过，前端 JavaScript 语法检查通过，三方案样本生成成功；这只证明软件预览可运行。
-- 本轮新效果选择保持 `VISUAL_REVIEW_PENDING`。登记册中 `cartoon` 既有 `v1.0-test` 批准记录对应历史 s3_luma 参数，不代表本轮 A/B/C 已获用户选择，也不能作为新硬件化授权。
-- `unknown`：用户本轮效果选择、所选参数锁定、硬件等价模型复核、G1/G2 阶段门、当前板卡资源和时序余量。选择后才进入 Stage D；此前不改 RTL 和位流。
+## 更新方式
 
-## 2026-10-12 Y1 FastestDet 软件复现
-
-- `project`：Y1 研究交付 PASS，FastestDet 官方 COCO 80 类模型已在 Windows CPU 上复现，Algorithm Lab 可显示杯子、瓶子、手机检测框与置信度、调阈值、处理图片/视频并导出结果。源码与证据见 [Y1 报告](../experiments/2026-10-12-y1-fastestdet.md)。算法状态仍为 `VISUAL_REVIEW_PENDING`，不得据此启动 Stage D/E/F。
-- `project`：独立 COCO val2017 29 图在 352 输入、0.25 阈值下 bottle P/R 0.184/0.280，cup 0.216/0.170，cell phone 0.125/0.083；160/128/96 未重训时三类 IoU≥0.5 均无正确匹配。该结果限制在本次抽样，不代表总体 COCO mAP。
-- `project`：现有资源报告显示 32 DSP 和 69 ERAM 尚未占用；实际 FastestDet 卷积权重至少 236,112 B，超过 176,640 B 空闲 ERAM；352 输入最大单张 INT8 特征图 743,424 B。因此原模型直接部署 PH1P35 判 NO-GO。完整 INT8 模型和板级可行性仍未验证，G5 阶段门保持未通过。
-- 本轮未修改 FPGA 视频工程、`conv_pe_int8.v`、`micro_cnn_golden.py`、PROJECT_GOAL.md、PHASES.md 或验收条件；未运行 TD、未生成位流。Y2 最小入口是三类数据集隔离、微型模型重训、INT8 软件验证和重新预算。
-
-## 2026-10-12 Y2 三类微型检测软件预研
-
-- `project`：Y2 公开数据预研 **FAIL（检测效果门）**，详见 [Y2 报告](../experiments/2026-10-12-y2-microdet.md)。COCO train/tune/new test 按图像 ID 隔离为 580/120/55 张；Y1 曾用的 29 图另列开发诊断集。96/160 在新测试 0 TP；128 仅 2 个瓶子 TP、822 个 FP；杯子和手机三尺寸均 0 TP，空场误报明显。工位场景和拍摄批次隔离尚未完成。
-- `project`：三个模型 6,988 参数，PyTorch x86 静态 PTQ 后卷积 INT8 权重 6,436 B；量化后的新测试结论同样失败。逐层形状、MAC 和存储见 `work/y2_micro/results/`。160 输入的相邻完整特征峰值 153,600 B，紧贴本工程报告的 176,640 B 未占用 ERAM；这不是硬件综合或可用性证据。
-- `project`：Algorithm Lab 新版在本机 `http://127.0.0.1:8503/` 提供 Y1/Y2 图片、视频、阈值、检测框和 ZIP 导出；接口冒烟通过。Y2 登记为 `SOFTWARE_IMPLEMENTED`，未获 `VISUAL_APPROVED`。
-- `unknown`：用户稍后提供工位素材与验收数值。G1/G2 阶段门仍未通过；未改 FPGA 视频工程、核心 RTL 或长期目标，未运行 TD/生成位流。
-
-## 2026-10-12 YOLO-FastestV2 / 开源加速器隔离可行性验证
-
-- `project`：固定官方 YOLO-FastestV2 `ac2a5e3060bff76dd1e45f9b921dd77bfbeb194d` 与 COCO 80 类权重，三张指定图片官方 `test.py` 通过；独立 NumPy 解码对照通过。与现有 Y1/Y2 图像 ID 不重叠的 COCO val2017 60 图已冻结，352 输入 0.3 阈值下 bottle TP/GT 0/52、cup 3/60、cell phone 5/22。软件复现 PASS，三类效果 FAIL；见 [`../../work/yolo_fpga_feasibility/report.md`](../../work/yolo_fpga_feasibility/report.md)。
-- `project`：实际网络 243,095 唯一参数、106,382,232 卷积 MAC；16 MAC/100 MHz 理想下界 66.49 ms/帧，原版 352 输入 30 fps 路线 NO-GO。原版开源加速器 9 路 18 位求和在 305 个向量中 4 个发生整数溢出；隔离 19 位候选同组通过，未修改正式 RTL。
-- `unknown`：Yolo-FastestV2 仓库没有许可文件；INT8 网络精度、安路双乘 DSP 映射、完整活跃特征缓存、DDR2 实际带宽、综合时序和板级效果均未验证。`VISUAL_APPROVED`、G1/G2/G5 均未通过。本轮未运行 TD、未生成位流，也未改变长期目标或验收标准。
-
-## 2026-10-12 YOLO 软件测试入口修复
-
-- `project`：修复 Algorithm Lab 的 YOLOv8n 首次输入尺寸（352→640）、模型名称误标、V2 无效尺寸静默忽略、权重路径依赖和一键启动使用错误 Python 环境。7 项回归通过，实际四模型 HTTP 推理与导出通过。
-- `project`：固定公开 60 图、同权重/阈值，YOLOv8n 三类总 TP 44→63/134，FP 23→33；仍有漏检和误报，不声明效果达标。证据与复现见 [排错记录](../experiments/2026-10-12-yolo-baseline-debug.md)。
-- `unknown`：本次未获用户视觉验收，未做硬件验证；基本软件复现无需用户先提供工位素材。
-
-## 2026-10-12 YOLO 软件参考升级与计分复核
-
-- `project`：YOLOv8m 640 已接入 Algorithm Lab 默认检测页，状态 VISUAL_REVIEW_PENDING。60图正确检出63→89/134；不重叠55图63→89/131。官方crowd规则复核后60图FP26→31，55图FP21→35，不能称为效果达标。
-- `project`：修复简化计分器crowd错误，7组预测与官方COCOeval的TP/FP/FN一致；9项回归通过，新候选640/960真实HTTP推理及导出通过。见 [效果对照报告](../experiments/2026-10-12-yolo-quality-comparison.md)。
-- `unknown`：小目标、遮挡场景仍有漏检，未做用户视觉验收、INT8等价或硬件实现。25.9M参数模型仅为PC参考，G1/G2/G5阶段门不变。
-
-## 2026-10-13 安路工业视觉参考库建立与审计
-
-- `project`：建立本地参考库管理目录 `.tools/references/anlogic-vision/`，并通过可复现脚本 `scripts/sync-anlogic-vision-references.ps1` 幂等克隆完成 6 个已筛选安路参考工程（总计 538.38 MB）。详细清单见 `.tools/references/anlogic-vision/inventory.json`，来源元数据见 `docs/research/sources.yaml`，综合评测见 `docs/research/OPEN_SOURCE.md`。
-- `project`：完成六项目源码阅读与审计：
-  1. `01_video_processing_national_prize` (PH1A90, c8c0c18)：多模式视频切换与降采样架构；
-  2. `02_image_algorithm_library` (EG4S20, 0672ee8)：两级树比较 3×3 腐蚀膨胀流水线（无 License，严禁复制代码）；
-  3. `03_geometry_recognition` (EG4S20, 25ab494)：ROI 内 Sobel 边缘累加周长与二值前景累加面积；
-  4. `04_ph1p35_bbox_cnn` (**同款 PH1P35**, 60c11a2)：3×3 采样 Bitmap + 双 Bank 连通域多目标 BBox；`route_failure_notes.md` 披露其因 224KB ROM 展平组合逻辑导致 TD 布线 3 小时崩溃（重大避坑证据）；
-  5. `05_vision_bbox_template` (EG4S20, 5595d83, MIT)：流式单目标坐标极值统计与次帧蓝框叠加（推荐 F1/F4 最佳实践）；
-  6. `06_ph1p35_vision_baseline` (**同款 PH1P35**, 3ccd79f)：平台与应用严格解耦、无乘法器 BT.601 Y、倒数乘法自适应二值化、双 BRAM Sobel、3位色阶卡通化与 Logo OSD（推荐 Goal 3/4 架构基线）。
-- `unknown`：本轮工作属于开源技术审计与资料索引建立，**不代表任何工业视觉算法或硬件功能已经实现或上板**。F1~F5 状态保持不变。
-- **下一步最值得验证的模块**：基于 05/06 的高时序架构思路，在 PC 端 Algorithm Lab 优先验证**“二值化 → 单目标极值 Bounding Box → HDMI 框叠加”**的纯流式算法效果，获得用户视觉验收（`VISUAL_APPROVED`）后再推进硬件 RTL。
-
-
-## 2026-10-14 工业检测分支第一轮审查
-
-- `project`：Icarus 14.0 复现颜色通道符号错误、Lab3 四像素累加/左边界覆盖、fallback 19位面积溢出、帧结果未独立锁存/有效标志常高，以及检测器和绘框器帧头坐标问题。详见 [审查记录](../experiments/industrial-review-2026-10-14/review.md) 与同目录失败日志。
-- 原有单拍 fallback 测试 PASS；扩展审查 fallback 2/8通过、Lab3 1/8通过，绘框帧头测试失败。这些只表示本轮覆盖到的行为，不是完整算法验收。
-- 本轮仅追加审查证据和复现测试，未修复RTL、未运行TD、未生成位流或上板。F1保持未验证且存在已知缺陷，F2–F5状态不提升；实际工位效果仍未验收。
-
-## 2026-10-14 工业检测修复候选交付
-
-- `project`：修复颜色符号位、四像素统计、20位面积、完整帧发布与空场撤销、绘框坐标、AWB帧标记、原图/边缘对齐及打包停顿。九组回归通过；实际ISP接入三帧518400字比对通过（上游依赖模型）。
-- `project`：两轮修正版构建最终时序通过；独立无缓存目录最终Setup WNS +70ps、Hold WNS +20ps、TNS0，Slice75.99%、RAM39、DSP25。报告见 [构建摘要](../build/industrial-repair/build-summary.md)。
-- `project`：导出 `fallback/release/industrial-color-bbox-20261014.zip` 与包内 `industrial_color_bbox.bit`，SHA-256 `C41714E9E960A4C393EAB0444B479F790114750B5E4B76CB9F2512806E7AA470`。253项清单哈希/长度匹配、ZIP完整性PASS；源码/测试/位流/时序报告修改及输入新增删除均拒绝导出。
-- `unknown`：未识别当前下载器，未下载或真实上板；PHY-5060/5016/5079/5088平台告警仍待实测关闭。视觉验收、工位误报/漏检、尺寸标定、复位和长稳未通过。不得据此关闭G1/G2或工业F1–F5完整验收。
-- 删除旧单拍测试与旧.vvp；临时门禁夹具、独立重建目录和本轮大体积数据库在报告归档后清理。保留原Lab3工程、修复源、完整报告与首次失败证据。
-
-## 2026-10-16 Lab3与当前候选功能复核
-
-- `official`：正式题目PDF第16–18页的基础要求为MIPI/HDMI、至少一种算法、稳定输出和含安路Logo的OSD；YOLO、三模式、WM8978和<2ms不是官方基础必选，本项目长期目标不变。
-- `project`：原Lab3与导出包中的顶层、hdmi_mixer、Logo ROM、字库逐字节一致，且真实实例化和连接。此前答复遗漏Logo/CNT，“Logo RTL未实现”属于审计错误，本轮纠正；不改动或重新生成现有位流。
-- `project`：CNT按HDMI输出帧递增，不是目标数，也不是端到端延迟；ae_set为按键参数通路，没有图像亮度闭环，不能据名称宣称自动曝光。
-- `project`：基础功能已有代码覆盖；模式/检测信息OSD须补输入与帧关联CDC；多目标、卡通化、YOLO、LED/语音和测量仍有不同程度缺口。完整核对见 [整合审计](../experiments/2026-10-16-lab3-integration-audit.md)。
-- `unknown`：本轮只读源码/PDF核对，未新增硬件、性能或稳定性实测结论。
+新进展先写对应实验/构建/硬件记录，再更新本页相关行和下一步；失败保留首个证据。不要将所有实验全文追加进本页。关键未知项维护于 [known-gaps](../research/known-gaps.md)，工具命令维护于 [toolchain](../development/toolchain.md)。

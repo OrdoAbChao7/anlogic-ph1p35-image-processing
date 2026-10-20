@@ -34,7 +34,8 @@ class FastestDetAlgorithm(BaseAlgorithm):
         if self._detector is None:
             import sys
             from pathlib import Path
-            y1 = Path(__file__).resolve().parents[2] / "y1_yolo"
+            y1 = (Path(__file__).resolve().parents[3] / "archive" / "legacy" /
+                  "yolo" / "y1_yolo")
             sys.path.insert(0, str(y1))
             from fastestdet_runtime import FastestDet
             self._detector = FastestDet()

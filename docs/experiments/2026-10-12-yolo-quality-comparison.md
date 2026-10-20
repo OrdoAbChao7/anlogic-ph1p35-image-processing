@@ -48,7 +48,7 @@ m模型25,902,640参数，按INT8每参数1字节已约25.9MB。这里只作为P
 
 - plugins/yolo_reference.py：遵循BaseAlgorithm的官方m模型适配器，固定本地权重、CPU推理、NMS IoU=.7，640/960可选；没有伪造硬件等价输出。
 - app.py、static/index.html、registry.json：新增候选、正确模型元数据、默认页面选择m640、按模型限制尺寸；原模型继续可选。
-- work/y1_yolo/evaluate.py：非crowd先一对一匹配，剩余框按crowd intersection/detection area忽略；真实重复预测仍计FP；按置信度排序。
+- archive/legacy/yolo/y1_yolo/evaluate.py：非crowd先一对一匹配，剩余框按crowd intersection/detection area忽略；真实重复预测仍计FP；按置信度排序。
 - compare_yolo_models.py、rescore_yolo_coco.py：冻结配置、保存全部预测、官方复算及与简化计分器逐组断言。verify_yolo_baseline.py同步保留crowd对象传入评分。
 - 9项单元/集成回归通过，包括官方m模型逐框一致性、默认尺寸、权重定位、crowd/重复框计分。crowd回归先复现FP2/FN1，再修复为FP1/FN0。
 - 新候选640/960真实HTTP推理、标注图片和ZIP导出均200；前端JavaScript语法与本次软件diff空白检查通过。该检查不替代用户视觉验收。
@@ -69,7 +69,7 @@ Pop-Location
 
 重跑compare后summary将使用修复后的crowd规则；本次留存的原summary为修复前计分，coco_rescore.json为复核后事实。禁止混用口径。
 
-证据根目录 work/algorithm_lab/exports/yolo_quality_comparison/：原plan/summary、全部逐图预测、balanced_confirmation/、coco_rescore.json/log、comparison.jpg、gallery_selection.json、live_api.json、source_sha256.json。对照图按“TP增益最大的两图+剩余FN最多的一图”选取，仅供展示，不参与挑选评分样本。
+证据根目录 archive/legacy/yolo/algorithm_lab/exports/yolo_quality_comparison/：原plan/summary、全部逐图预测、balanced_confirmation/、coco_rescore.json/log、comparison.jpg、gallery_selection.json、live_api.json、source_sha256.json。对照图按“TP增益最大的两图+剩余FN最多的一图”选取，仅供展示，不参与挑选评分样本。
 
 ## 下一入口与退出条件
 

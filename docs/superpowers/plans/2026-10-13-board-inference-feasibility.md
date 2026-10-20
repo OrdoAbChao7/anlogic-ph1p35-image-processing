@@ -5,7 +5,7 @@
 目标：冻结软件参考，筛选成熟预训练模型，取得隔离 INT8 核的 PH1P35 综合证据；不接入正式视频、不生成最终 Bitstream。
 
 - [x] 读取项目阶段门、Y1/Y2/G5 报告；保存现有未提交状态、补丁、文件哈希与嵌套仓库状态。
-- [ ] 主任务：在 work/g5_board_feasibility/baseline/ 固定 YOLOv8m 权重、环境、输入和参数；导出 ONNX，checker、实际图形状/MAC/存储统计，真实图片 PyTorch/ORT 数值比较。
+- [ ] 主任务：在 archive/legacy/yolo/g5_board_feasibility/baseline/ 固定 YOLOv8m 权重、环境、输入和参数；导出 ONNX，checker、实际图形状/MAC/存储统计，真实图片 PyTorch/ORT 数值比较。
 - [ ] models 子任务：同一冻结 60 图及 55 图确认，官方预处理/解码/NMS和 COCO crowd 计分；比较 FastestDet、YOLO-FastestV2、其他成熟候选；记录许可与算子支持矩阵。
 - [ ] core 子任务：Golden→RTL 的复位/停顿/连续/极值回归；隔离 PH1P35 TD 综合与时序，核实 DSP 和 ERAM，不生成 bitstream。
 - [ ] board 子任务：只读审计各视频变体资源、DDR2 配置与容量、时钟、帧存储和带宽证据。

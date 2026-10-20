@@ -143,7 +143,7 @@
     "source_reference": "dog-qiuqiu/FastestDet@50473cd155cb088aa4a99e64ff6a4b3c24fa07e1",
     "license": "BSD-3-Clause",
     "user_approved_version": null,
-    "software_model_path": "work/y1_yolo/fastestdet_runtime.py",
+    "software_model_path": "archive/legacy/yolo/y1_yolo/fastestdet_runtime.py",
     "hardware_model_path": null,
     "rtl_source_path": null,
     "testbench_path": null,
@@ -167,7 +167,7 @@
     "source_reference": "Project Y2 COCO val2017 software study",
     "license": "Project-authored code; COCO annotations CC BY 4.0; images retain source licenses",
     "user_approved_version": null,
-    "software_model_path": "work/y2_micro/microdet.py",
+    "software_model_path": "archive/legacy/yolo/y2_micro/microdet.py",
     "hardware_model_path": null,
     "rtl_source_path": null,
     "testbench_path": null,
@@ -186,7 +186,7 @@
     "source_reference": "Ultralytics assets v8.4.0 / yolov8m.pt",
     "license": "AGPL-3.0",
     "status": "VISUAL_REVIEW_PENDING",
-    "software_model_path": "work/algorithm_lab/plugins/yolo_reference.py",
+    "software_model_path": "archive/legacy/yolo/algorithm_lab/yolo_reference.py",
     "default_params": {
       "resolution": 640,
       "confidence": 0.25

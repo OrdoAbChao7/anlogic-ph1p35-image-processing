@@ -1,0 +1,30 @@
+{
+  "config_id": "integration_v1",
+  "algorithm_id": "integration_preview",
+  "version": "v1.0",
+  "description": "P1 integration preview frozen parameters (Stage B). Source: docs/development/integration-plan.md P1. Visual reference + hardware-equivalent integer model.",
+  "stage": "B",
+  "visual_approved": false,
+  "source_reference": "docs/development/integration-plan.md",
+  "parameters": {
+    "mode": "raw",
+    "cb_min": 85,
+    "cb_max": 125,
+    "cr_min": 135,
+    "cr_max": 200,
+    "sobel_threshold": 80,
+    "min_area": 100,
+    "draw_box": "yes"
+  },
+  "tracker": {
+    "confirm_frames": 3,
+    "clear_frames": 3,
+    "min_area": 100,
+    "max_age": 30
+  },
+  "notes": [
+    "Color criterion 85<Cb<125 and 135<Cr<200 from integration-plan.md section 2 footnote; valid only for background-separable targets under controlled light/gain.",
+    "count_valid=0 in first integration version; object_count reserved but not displayed.",
+    "mode=raw default; edge mode uses Sobel on the grayscale of the same frame, box always drawn on original RGB."
+  ]
+}
