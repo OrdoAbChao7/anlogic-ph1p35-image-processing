@@ -1,0 +1,27 @@
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 18:13:56 on Oct 21,2026
+# vlog -work work "+define+MORPH_SIMULATION" morph_open_96.v color_detect_96_v2_baseline.v color_detect_96_v2_candidate.v tb_e4_detect_diff.v 
+# -- Compiling module morph_line_ram_4bit
+# -- Compiling module morph_filter_96
+# -- Compiling module morph_open_96
+# -- Compiling module color_detect_96_v2_baseline
+# -- Compiling module color_detect_96_v2_candidate
+# -- Compiling module tb_e4_detect_diff
+# 
+# Top level modules:
+# 	tb_e4_detect_diff
+# End time: 18:13:56 on Oct 21,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -c work.tb_e4_detect_diff 
+# Start time: 18:13:56 on Oct 21,2026
+# Loading work.tb_e4_detect_diff
+# Loading work.color_detect_96_v2_baseline
+# Loading work.morph_open_96
+# Loading work.morph_filter_96
+# Loading work.morph_line_ram_4bit
+# Loading work.color_detect_96_v2_candidate
+# TB_E4_DETECT_DIFF_PASS checks=701440 beats=691200 frame_syncs=3 detections=3 max_area=162327
+# ** Note: $finish    : tb_e4_detect_diff.v(145)
+#    Time: 7014435 ns  Iteration: 1  Instance: /tb_e4_detect_diff
+# End time: 18:14:19 on Oct 21,2026, Elapsed time: 0:00:23
+# Errors: 0, Warnings: 0

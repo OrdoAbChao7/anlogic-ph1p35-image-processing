@@ -1,0 +1,66 @@
+--- awblite_baseline/user_source/hdl_source/color_detect_96_v2.v	2026-10-20 16:10:42.970551400 +0800
++++ e4_detect_minmax/user_source/hdl_source/color_detect_96_v2.v	2026-10-21 18:11:51.251110000 +0800
+@@ -232,7 +232,35 @@
+   reg [19:0] stat_area_next;
+   reg [10:0] stat_xmin_next, stat_xmax_next, stat_ymin_next, stat_ymax_next;
+   reg        stat_invalid_next;
+-  integer j;
++
++  // E4: the four-pixel group is accumulated in parallel instead of as a
++  // four-iteration serial loop. The serial form chained four conditional
++  // increments and four comparator/select pairs into one combinational cone
++  // (12 levels, 8 adders); after E1 it was the MIPI limiter.
++  //
++  // Equivalence, for a group whose mask has set-bit set S subset of {0,1,2,3}:
++  //   area     += |S|                       (popcount)
++  //   xmin      = min(xmin, base + min S)
++  //   xmax      = max(xmax, base + max S)
++  //   ymin/ymax = min/max with out_y
++  // This is exactly the fixed point of the serial loop: min, max and the
++  // addition of a per-bit constant are associative/commutative, and out_y is
++  // constant within one group. An empty mask updates nothing.
++  wire        mask_b0 = morph_mask[0];
++  wire        mask_b1 = morph_mask[1];
++  wire        mask_b2 = morph_mask[2];
++  wire        mask_b3 = morph_mask[3];
++  wire        any_mask = |morph_mask;
++  wire [2:0]  mask_pop  = {2'd0, mask_b0} + {2'd0, mask_b1} +
++                          {2'd0, mask_b2} + {2'd0, mask_b3};
++  wire [1:0]  mask_low  = mask_b0 ? 2'd0 : mask_b1 ? 2'd1 : mask_b2 ? 2'd2 : 2'd3;
++  wire [1:0]  mask_high = mask_b3 ? 2'd3 : mask_b2 ? 2'd2 : mask_b1 ? 2'd1 : 2'd0;
++  // Widen before the shift and slice, so the truncation to 11 bits matches the
++  // original `out_group * 4 + j` integer expression for every parameterisation.
++  wire [OUT_GROUP_BITS+4:0] group_base_w = {5'd0, out_group, 2'b00};
++  wire [10:0]               group_base   = group_base_w[10:0];
++  wire [10:0]               group_low    = group_base + {9'd0, mask_low};
++  wire [10:0]               group_high   = group_base + {9'd0, mask_high};
+ 
+   always @* begin
+     stat_area_next = morph_user ? 20'd0 : acc_area;
+@@ -245,20 +273,12 @@
+     if (morph_invalid)
+       stat_invalid_next = 1'b1;
+ 
+-    if (morph_valid) begin
+-      for (j = 0; j < 4; j = j + 1) begin
+-        if (morph_mask[j]) begin
+-          stat_area_next = stat_area_next + 20'd1;
+-          if ((out_group * 4 + j) < stat_xmin_next)
+-            stat_xmin_next = out_group * 4 + j;
+-          if ((out_group * 4 + j) > stat_xmax_next)
+-            stat_xmax_next = out_group * 4 + j;
+-          if (out_y < stat_ymin_next)
+-            stat_ymin_next = out_y;
+-          if (out_y > stat_ymax_next)
+-            stat_ymax_next = out_y;
+-        end
+-      end
++    if (morph_valid && any_mask) begin
++      stat_area_next = stat_area_next + {17'd0, mask_pop};
++      if (group_low < stat_xmin_next)  stat_xmin_next = group_low;
++      if (group_high > stat_xmax_next) stat_xmax_next = group_high;
++      if (out_y < stat_ymin_next)      stat_ymin_next = out_y;
++      if (out_y > stat_ymax_next)      stat_ymax_next = out_y;
+     end
+   end
+ 

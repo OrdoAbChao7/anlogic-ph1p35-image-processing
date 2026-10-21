@@ -2,49 +2,59 @@
 
 Updated: 2026-10-21 (takeover session) — **TIMING_PASS + BITSTREAM_READY achieved**
 
-## Shipped candidate
+## Shipped candidate (r2, supersedes r1)
 
-`release/candidate-industrial-v2-timing-closed/`
+`release/candidate-industrial-v2-timing-closed-r2/`
 
 | Artifact | Value |
 |---|---|
 | Bitstream | `camera_to_dsi_display.bit`, 1,789,539 B |
-| Bitstream SHA-256 | `ADD2DC46403670C279CADCE2E051F79B83EA9F2BBD1F4E78E7FBB7EB5606BC8C` |
-| Compressed variant | `8F031B67A5F739C6BD5D42CB7180B293B1E8664BD9F1C7F0E2940169974F47AA` |
-| Routed DB | `7BCFEED69B469230B1515C6DA226917DD1C6CD65ACDD100C176B79D15F7B99B1` |
-| Build inputs | `INPUTS.sha256` (239 files) manifest `207B1AEF196FBD616AE51B788277A291A4976BCB63A2ACCC73F857A9F5C8FB89` |
-| Source tree | `work/e3_integrated/` |
+| Bitstream SHA-256 | `E6BA3DA87DABF82907F3DB1B4FAC18A9E8350A43917F3D5E6DA64A0A35617C36` |
+| Compressed variant | `1B7E853FAE95BE4E08029F37E5BAE7FD4C727F280D908BE6C56490FA5DCEE471` |
+| Routed DB | `C4217862BBD77A400A70CA7A036AEAFAACD566CC64342B7946571CDFE7F6966E` |
+| Build inputs | `INPUTS.sha256` (239 files) manifest `87683345FE2B38220F5FD2016CCF3E545A88DF97FB0AC4938747F16CF08BADA8` |
+| Source tree | `work/e5_detect_parallel/` |
+
+Also published at
+`E:\Projects\FPGA-v2\release\candidates\industrial-v2-timing-closed-r2\`
+(`SHA256SUMS` self-verified, 0 mismatches).
+
+r1 (`...-timing-closed/`, Setup +0.137 ns, bitstream `ADD2DC46...`) is kept as a
+rollback reference because r2 changes the detector.
 
 ## Version table
 
 | Id | Path | Contents | Setup WNS/TNS | Slices | Status |
 |---|---|---|---:|---:|---|
 | V0 | `work/awblite_baseline/` | frozen AWB-Lite input package | −2.539 / −14.705 ns (24 EP) | 18,421 | reference only, fails |
-| E1 | `work/e1_mipi_bbox_pipe/` | V0 + MIPI BBox pre-computation pipeline | +0.104 / 0 ns (0 EP) | 18,359 | TIMING_PASS (superseded) |
+| E1 | `work/e1_mipi_bbox_pipe/` | V0 + MIPI BBox pre-computation | +0.104 / 0 ns (0 EP) | 18,359 | superseded |
 | E2 | `work/e2_osd_pipe/` | V0 + OSD overlay pipeline | module Gate +3,189 ps | module only | module Gate PASS |
-| **E3** | `work/e3_integrated/` | **V0 + E1 + E2** | **+0.137 / 0 ns (0 EP)** | **18,248** | **BITSTREAM_READY** |
+| E3 | `work/e3_integrated/` | V0 + E1 + E2 | +0.137 / 0 ns (0 EP) | 18,248 | r1, rollback reference |
+| E4 | `work/e4_detect_minmax/` | V0 + parallel group statistics | module Gate +2,786 ps | module only | module Gate PASS |
+| **E5** | `work/e5_detect_parallel/` | **V0 + E1 + E2 + E4** | **+0.644 / 0 ns (0 EP)** | **18,233** | **shipped (r2)** |
 
-Route, E3: Setup WNS/TNS **+0.137 / 0 ps**, Hold **+0.020 / 0 ps**, 0 violating
-endpoints, 18,248/21,216 slices (86.01 %), ERAM 75/108, DSP 32/40, STA coverage
-96.56 %, TD 6.2.168116, `place seed 1`.
+Route, E5: Setup **+0.644 / 0 ps**, Hold **+0.021 / 0 ps**, 0 violating
+endpoints, 18,233/21,216 slices (85.94 %), ERAM 75/108, DSP 32/40,
+wire 4,912,048, STA coverage 96.54 %, TD 6.2.168116, `place seed 1`.
 
-Per clock: MIPI **+0.154 ns**, HDMI **+0.137 ns**, DDR usr_clk +1.428 ns,
-everything else ≥ +1.292 ns.
+Per clock: MIPI **+0.755 ns**, HDMI **+0.644 ns**, DDR usr_clk +2.628 ns,
+everything else ≥ +1.364 ns.
 
 ## Verified status ladder
 
 | Level | State |
 |---|---|
-| RTL_VERIFIED | **YES** — E1: 1,058 cycle checks; E2: 2,475,199 cycle checks; both 0 mismatches vs the frozen baseline |
+| RTL_VERIFIED | **YES** — E1: 1,058 checks; E2: 2,475,199 cycles; E4: 701,440 checks; all 0 mismatches |
 | TIMING_PASS | **YES** — full Route, both corners, CRPR on, 0 violating endpoints |
-| BITSTREAM_READY | **YES** — bitgen exit 0 from the routed DB |
-| READY_FOR_BOARD_TEST | **YES** — `release/candidate-industrial-v2-timing-closed/` |
+| BITSTREAM_READY | **YES** — bitgen exit 0 from the routed DB, gated on a clean route.qor |
+| READY_FOR_BOARD_TEST | **YES** — r2 package above |
 | HARDWARE_PASS | **NO** — never downloaded; no board connected |
 
 ## Residual risks (do not lose these)
 
-1. **Thin margins**: MIPI +0.154 ns (9.660 ns), HDMI +0.137 ns (13.333 ns).
-   Sign-off is legitimate but there is little headroom for follow-on edits.
+1. **Margins are healthy but finite**: MIPI +0.755 ns (9.660 ns), HDMI
+   +0.644 ns (13.333 ns). Inserting ChipWatcher debug logic still requires a
+   rebuild and re-timing.
 2. **Unconstrained 99 kHz I2C clock** `u_uicfgcs520/u_i2c/scl_clk`
    (24 MHz / 240 = 10.08 µs). Analytical, not measured: adding
    `create_clock` to the imported routed DB and re-timing crashed TD with
@@ -53,10 +63,13 @@ everything else ≥ +1.292 ns.
    Enumerated in `evidence/check_timing_route.txt`.
 4. **DDR PLL frequency-mismatch report** from `check_timing` (constraint says
    half the PLL setting for clkc[0..3]). Vendor DDR PHY 2× output-clock
-   reporting; unchanged from the frozen baseline (same vendor IP and SDC).
+   reporting; unchanged from the frozen baseline.
 5. **Pin assignment**: HX1P35A/HX1P35B document discrepancy never closed.
 6. **Provisional calibration constants** (0.5/0.25 mm/px, 60x20 mm, ±2 mm).
 7. **AWB off** (inherited AWB-Lite reduction), **sort actuator inhibited**.
+8. **Vendor ERAM model unusable in sim**: `PH1P_LOGIC_ERAM` cannot elaborate
+   under ModelSim Intel 2020.1 (`Unresolved reference to 'PH1P_PHY_GSR'`). All
+   post-detector simulations use the RTL's own `MORPH_SIMULATION` branch.
 
 ## Constraints honesty
 
@@ -64,6 +77,7 @@ everything else ≥ +1.292 ns.
 (`390DFE5F...`). The only timing exceptions are the vendor DDR2 gray-counter
 `set_max_delay -datapath_only` constraints, 100 % ignored by `set_clock_groups`.
 No false path, no multicycle, no period change was added at any point.
+
 
 ## Established facts (re-verify if the tree changes)
 

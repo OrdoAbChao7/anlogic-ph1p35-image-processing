@@ -1,0 +1,5 @@
+E4 parallel four-pixel group statistics — verification result
+============================================================
+ModelSim-Intel FPGA Starter Edition 2020.1 (+define+MORPH_SIMULATION)
+TB_E4_DETECT_DIFF_PASS checks=701440 beats=691200 frame_syncs=3 detections=3 max_area=162327
+Errors: 0, Warnings: 0

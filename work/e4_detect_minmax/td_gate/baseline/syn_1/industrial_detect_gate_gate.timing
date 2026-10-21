@@ -1,0 +1,1582 @@
+Created by          : Tang Dynasty v6.2.168116
+                    : Copyright (c) 2012-2025 Anlogic Inc.
+Generated           : Wed Oct 21 18:15:02 2026
+
+Top Model           : industrial_detect_gate_top
+Device              : PH1P35MDG324
+Speed               : 3
+STA coverage        : 99.99%
+Constraint File     : E:/Projects/FPGA-ds-timing/work/e4_detect_minmax/td_gate/industrial_detect_gate.sdc;
+Confidence          : Synthesized
+Check Corner        : Both (Slow and Fast)
+CRPR Enabled        : Yes
+Report Scheme       : 10 end point(s) per path group, 1 path(s) per end point
+
+
+Check Status
+-------------
+
+Corner   | Max      Min     
+------------------------------------
+Slow     | yes      yes     
+Fast     | yes      yes     
+
+
+Timing Status
+--------------------
+	SWNS: -1.096ns, STNS: -4.262ns
+	HWNS: 0.431ns, HTNS: 0.000ns
+	Period Check WNS: 0.000ns
+
+
+Clock Summary
+--------------------
+
+       Clock-Id:       C-Freq       Fanout   Clock-Name
+--------------------------------------------------------------------------------
+           clk0:      103.520          382   mipi_byte_clk
+--------------------------------------------------------------------------------
+
+       Name            Type         Rise(ns)   Fall(ns)          C-Period(ns)     C-Freq(MHz)          R-Period(ns)     R-Freq(MHz)         SWNS(ns)   STNS(ns)         HWNS(ns)   HTNS(ns)         Skew(ns)           Fanout        Max-Level        CC-From    CC-To
+       clk0           local            0.000      4.830                 9.660         103.520                10.756          92.971           -1.096     -4.262            0.431      0.000            0.000              382               13             no       no
+
+Notes
+----------
+C-Period  :  constraint period
+C-Freq    :  constraint freq
+R-Period  :  report min period
+R-Freq    :  report fmax
+CC-From   :  has path(s) from cross-domain clock
+CC-To     :  has path(s) to cross-domain clock
+
+
+*   Clock R-Period data only takes intra-clock timing. SWNS/STNS/HWNS/HTNS take both intra-clock and inter-clock timing.
+*   If there is mismatch between R-Period and SWNS, check inter-clock timing of this clock as capture clock.
+*   SWNS/STNS/HWNS/HTNS of timing exception (SMCP/SMD) only counted in global Timing Status, not counted in Clock Summary.
+
+Intra clock domain timing
+--------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+Path Group     :     mipi_byte_clk -> mipi_byte_clk
+Type           :     Self
+From Clock     :     mipi_byte_clk
+To Clock       :     mipi_byte_clk
+Min Period     :     10.756ns
+Fmax           :     92.971MHz
+
+Statistics:
+Max            : SWNS     -1.096ns, STNS     -4.262ns,         4 Viol Endpoints,      1201 Total Endpoints,      5117 Paths Analyzed
+Min            : HWNS      0.431ns, HTNS      0.000ns,         0 Viol Endpoints,      1201 Total Endpoints,      5117 Paths Analyzed
+----------------------------------------------------------------------------------------------------
+
+Max Paths
+----------------------------------------------------------------------------------------------------
+Slack               : -1.096ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/O_xmin_reg[0].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 10.692ns (cell 4.850ns (45%), net 5.842ns (55%))
+Clock Skew          : 0.000ns
+Logic Level         : 13 ( ADDER=8  LUT3=3  LUT6=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmin_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmin_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmin_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt22_syn_60.ib
+ADDER                                   0.544    f     2.555       2  pin: dut/lt22_syn_60.fco
+net (fo=1)                              0.000          2.555          net: dut/lt22_syn_51,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt22_syn_61.fci
+ADDER                                   0.220    r     2.775       3  pin: dut/lt22_syn_61.ofb
+net (fo=33)                             0.876          3.651          net: dut/stat_xmin_next_b9_n9,  NOFILE(0)
+                                                                      pin: dut/stat_xmin_next_b7[1]_syn_1.a
+LUT3                                    0.273    f     3.924       4  pin: dut/stat_xmin_next_b7[1]_syn_1.o
+net (fo=1)                              0.448          4.372          net: dut/stat_xmin_next_b7[1],  NOFILE(0)
+                                                                      pin: dut/lt26_syn_55.ib
+ADDER                                   0.544    f     4.916       5  pin: dut/lt26_syn_55.fco
+net (fo=1)                              0.000          4.916          net: dut/lt26_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_56.fci
+ADDER                                   0.052    r     4.968          pin: dut/lt26_syn_56.fco
+net (fo=1)                              0.000          4.968          net: dut/lt26_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_57.fci
+ADDER                                   0.052    r     5.020          pin: dut/lt26_syn_57.fco
+net (fo=1)                              0.000          5.020          net: dut/lt26_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_58.fci
+ADDER                                   0.052    r     5.072          pin: dut/lt26_syn_58.fco
+net (fo=1)                              0.000          5.072          net: dut/lt26_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_59.fci
+ADDER                                   0.052    r     5.124          pin: dut/lt26_syn_59.fco
+net (fo=1)                              0.000          5.124          net: dut/lt26_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_60.fci
+ADDER                                   0.220    r     5.344       6  pin: dut/lt26_syn_60.ofb
+net (fo=1)                              0.448          5.792          net: dut/stat_xmin_next_b8_n,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[0]_syn_3.a
+LUT3                                    0.273    f     6.065       7  pin: dut/O_xmin_b2[0]_syn_3.o
+net (fo=2)                              0.478          6.543          net: dut/stat_xmin_next_b5[0],  NOFILE(0)
+                                                                      pin: dut/lt30_syn_55.imf
+ADDER                                   0.299    f     6.842       8  pin: dut/lt30_syn_55.fco
+net (fo=1)                              0.000          6.842          net: dut/lt30_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_56.fci
+ADDER                                   0.052    r     6.894          pin: dut/lt30_syn_56.fco
+net (fo=1)                              0.000          6.894          net: dut/lt30_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_57.fci
+ADDER                                   0.052    r     6.946          pin: dut/lt30_syn_57.fco
+net (fo=1)                              0.000          6.946          net: dut/lt30_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_58.fci
+ADDER                                   0.052    r     6.998          pin: dut/lt30_syn_58.fco
+net (fo=1)                              0.000          6.998          net: dut/lt30_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_59.fci
+ADDER                                   0.052    r     7.050          pin: dut/lt30_syn_59.fco
+net (fo=1)                              0.000          7.050          net: dut/lt30_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_60.fci
+ADDER                                   0.220    r     7.270       9  pin: dut/lt30_syn_60.ofb
+net (fo=4)                              0.556          7.826          net: dut/stat_xmin_next_b6_n,  NOFILE(0)
+                                                                      pin: dut/stat_xmin_next_b3[1]_syn_1.a
+LUT3                                    0.273    f     8.099      10  pin: dut/stat_xmin_next_b3[1]_syn_1.o
+net (fo=1)                              0.448          8.547          net: dut/stat_xmin_next_b3[1],  NOFILE(0)
+                                                                      pin: dut/lt34_syn_55.ic
+ADDER                                   0.435    r     8.982      11  pin: dut/lt34_syn_55.fco
+net (fo=1)                              0.000          8.982          net: dut/lt34_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_56.fci
+ADDER                                   0.052    r     9.034          pin: dut/lt34_syn_56.fco
+net (fo=1)                              0.000          9.034          net: dut/lt34_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_57.fci
+ADDER                                   0.052    r     9.086          pin: dut/lt34_syn_57.fco
+net (fo=1)                              0.000          9.086          net: dut/lt34_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_58.fci
+ADDER                                   0.052    r     9.138          pin: dut/lt34_syn_58.fco
+net (fo=1)                              0.000          9.138          net: dut/lt34_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_59.fci
+ADDER                                   0.052    r     9.190          pin: dut/lt34_syn_59.fco
+net (fo=1)                              0.000          9.190          net: dut/lt34_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_60.fci
+ADDER                                   0.220    r     9.410      12  pin: dut/lt34_syn_60.ofb
+net (fo=2)                              0.478          9.888          net: dut/stat_xmin_next_b4_n,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[0]_syn_5.a
+LUT6                                    0.315    f    10.203      13  pin: dut/O_xmin_b2[0]_syn_5.o
+net (fo=1)                              0.448         10.651          net: dut/O_xmin_b2[0],  NOFILE(0)
+                                                                      pin: dut/O_xmin_reg[0].d
+SEQ (reg)                               0.041    f    10.692               
+--------------------------------------------------------------------  ---------------
+Arrival                                               10.692               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/O_xmin_reg[0].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                 -1.096               
+
+Slack               : -1.077ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/O_xmax_reg[0].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 10.673ns (cell 4.759ns (44%), net 5.914ns (56%))
+Clock Skew          : 0.000ns
+Logic Level         : 13 ( ADDER=8  LUT3=3  LUT6=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmax_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmax_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmax_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt23_syn_60.ia
+ADDER                                   0.538    f     2.549       2  pin: dut/lt23_syn_60.fco
+net (fo=1)                              0.000          2.549          net: dut/lt23_syn_51,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt23_syn_61.fci
+ADDER                                   0.220    r     2.769       3  pin: dut/lt23_syn_61.ofb
+net (fo=33)                             0.876          3.645          net: dut/stat_xmax_next_b10_n9,  NOFILE(0)
+                                                                      pin: dut/stat_xmax_next_b8[1]_syn_1.a
+LUT3                                    0.273    f     3.918       4  pin: dut/stat_xmax_next_b8[1]_syn_1.o
+net (fo=1)                              0.448          4.366          net: dut/stat_xmax_next_b8[1],  NOFILE(0)
+                                                                      pin: dut/lt27_syn_55.ib
+ADDER                                   0.544    f     4.910       5  pin: dut/lt27_syn_55.fco
+net (fo=1)                              0.000          4.910          net: dut/lt27_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_56.fci
+ADDER                                   0.052    r     4.962          pin: dut/lt27_syn_56.fco
+net (fo=1)                              0.000          4.962          net: dut/lt27_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_57.fci
+ADDER                                   0.052    r     5.014          pin: dut/lt27_syn_57.fco
+net (fo=1)                              0.000          5.014          net: dut/lt27_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_58.fci
+ADDER                                   0.052    r     5.066          pin: dut/lt27_syn_58.fco
+net (fo=1)                              0.000          5.066          net: dut/lt27_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_59.fci
+ADDER                                   0.052    r     5.118          pin: dut/lt27_syn_59.fco
+net (fo=1)                              0.000          5.118          net: dut/lt27_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_60.fci
+ADDER                                   0.220    r     5.338       6  pin: dut/lt27_syn_60.ofb
+net (fo=1)                              0.448          5.786          net: dut/stat_xmax_next_b9_n,  NOFILE(0)
+                                                                      pin: dut/O_xmax_b2[0]_syn_3.a
+LUT3                                    0.273    f     6.059       7  pin: dut/O_xmax_b2[0]_syn_3.o
+net (fo=2)                              0.478          6.537          net: dut/stat_xmax_next_b5[0],  NOFILE(0)
+                                                                      pin: dut/lt31_syn_55.ie
+ADDER                                   0.359    r     6.896       8  pin: dut/lt31_syn_55.fco
+net (fo=1)                              0.000          6.896          net: dut/lt31_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_56.fci
+ADDER                                   0.052    r     6.948          pin: dut/lt31_syn_56.fco
+net (fo=1)                              0.000          6.948          net: dut/lt31_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_57.fci
+ADDER                                   0.052    r     7.000          pin: dut/lt31_syn_57.fco
+net (fo=1)                              0.000          7.000          net: dut/lt31_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_58.fci
+ADDER                                   0.052    r     7.052          pin: dut/lt31_syn_58.fco
+net (fo=1)                              0.000          7.052          net: dut/lt31_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_59.fci
+ADDER                                   0.052    r     7.104          pin: dut/lt31_syn_59.fco
+net (fo=1)                              0.000          7.104          net: dut/lt31_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_60.fci
+ADDER                                   0.220    r     7.324       9  pin: dut/lt31_syn_60.ofb
+net (fo=4)                              0.556          7.880          net: dut/stat_xmax_next_b6_n,  NOFILE(0)
+                                                                      pin: dut/O_xmax_b2[0]_syn_4.a
+LUT3                                    0.273    f     8.153      10  pin: dut/O_xmax_b2[0]_syn_4.o
+net (fo=3)                              0.520          8.673          net: dut/stat_xmax_next_b3[0],  NOFILE(0)
+                                                                      pin: dut/lt35_syn_55.id
+ADDER                                   0.290    r     8.963      11  pin: dut/lt35_syn_55.fco
+net (fo=1)                              0.000          8.963          net: dut/lt35_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_56.fci
+ADDER                                   0.052    r     9.015          pin: dut/lt35_syn_56.fco
+net (fo=1)                              0.000          9.015          net: dut/lt35_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_57.fci
+ADDER                                   0.052    r     9.067          pin: dut/lt35_syn_57.fco
+net (fo=1)                              0.000          9.067          net: dut/lt35_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_58.fci
+ADDER                                   0.052    r     9.119          pin: dut/lt35_syn_58.fco
+net (fo=1)                              0.000          9.119          net: dut/lt35_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_59.fci
+ADDER                                   0.052    r     9.171          pin: dut/lt35_syn_59.fco
+net (fo=1)                              0.000          9.171          net: dut/lt35_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_60.fci
+ADDER                                   0.220    r     9.391      12  pin: dut/lt35_syn_60.ofb
+net (fo=2)                              0.478          9.869          net: dut/stat_xmax_next_b4_n,  NOFILE(0)
+                                                                      pin: dut/O_xmax_b2[0]_syn_5.a
+LUT6                                    0.315    f    10.184      13  pin: dut/O_xmax_b2[0]_syn_5.o
+net (fo=1)                              0.448         10.632          net: dut/O_xmax_b2[0],  NOFILE(0)
+                                                                      pin: dut/O_xmax_reg[0].d
+SEQ (reg)                               0.041    f    10.673               
+--------------------------------------------------------------------  ---------------
+Arrival                                               10.673               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/O_xmax_reg[0].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                 -1.077               
+
+Slack               : -1.054ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/acc_xmin_reg[0].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 10.650ns (cell 4.808ns (45%), net 5.842ns (55%))
+Clock Skew          : 0.000ns
+Logic Level         : 13 ( ADDER=8  LUT3=3  LUT4=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmin_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmin_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmin_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt22_syn_60.ib
+ADDER                                   0.544    f     2.555       2  pin: dut/lt22_syn_60.fco
+net (fo=1)                              0.000          2.555          net: dut/lt22_syn_51,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt22_syn_61.fci
+ADDER                                   0.220    r     2.775       3  pin: dut/lt22_syn_61.ofb
+net (fo=33)                             0.876          3.651          net: dut/stat_xmin_next_b9_n9,  NOFILE(0)
+                                                                      pin: dut/stat_xmin_next_b7[1]_syn_1.a
+LUT3                                    0.273    f     3.924       4  pin: dut/stat_xmin_next_b7[1]_syn_1.o
+net (fo=1)                              0.448          4.372          net: dut/stat_xmin_next_b7[1],  NOFILE(0)
+                                                                      pin: dut/lt26_syn_55.ib
+ADDER                                   0.544    f     4.916       5  pin: dut/lt26_syn_55.fco
+net (fo=1)                              0.000          4.916          net: dut/lt26_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_56.fci
+ADDER                                   0.052    r     4.968          pin: dut/lt26_syn_56.fco
+net (fo=1)                              0.000          4.968          net: dut/lt26_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_57.fci
+ADDER                                   0.052    r     5.020          pin: dut/lt26_syn_57.fco
+net (fo=1)                              0.000          5.020          net: dut/lt26_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_58.fci
+ADDER                                   0.052    r     5.072          pin: dut/lt26_syn_58.fco
+net (fo=1)                              0.000          5.072          net: dut/lt26_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_59.fci
+ADDER                                   0.052    r     5.124          pin: dut/lt26_syn_59.fco
+net (fo=1)                              0.000          5.124          net: dut/lt26_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_60.fci
+ADDER                                   0.220    r     5.344       6  pin: dut/lt26_syn_60.ofb
+net (fo=1)                              0.448          5.792          net: dut/stat_xmin_next_b8_n,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[0]_syn_3.a
+LUT3                                    0.273    f     6.065       7  pin: dut/O_xmin_b2[0]_syn_3.o
+net (fo=2)                              0.478          6.543          net: dut/stat_xmin_next_b5[0],  NOFILE(0)
+                                                                      pin: dut/lt30_syn_55.imf
+ADDER                                   0.299    f     6.842       8  pin: dut/lt30_syn_55.fco
+net (fo=1)                              0.000          6.842          net: dut/lt30_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_56.fci
+ADDER                                   0.052    r     6.894          pin: dut/lt30_syn_56.fco
+net (fo=1)                              0.000          6.894          net: dut/lt30_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_57.fci
+ADDER                                   0.052    r     6.946          pin: dut/lt30_syn_57.fco
+net (fo=1)                              0.000          6.946          net: dut/lt30_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_58.fci
+ADDER                                   0.052    r     6.998          pin: dut/lt30_syn_58.fco
+net (fo=1)                              0.000          6.998          net: dut/lt30_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_59.fci
+ADDER                                   0.052    r     7.050          pin: dut/lt30_syn_59.fco
+net (fo=1)                              0.000          7.050          net: dut/lt30_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_60.fci
+ADDER                                   0.220    r     7.270       9  pin: dut/lt30_syn_60.ofb
+net (fo=4)                              0.556          7.826          net: dut/stat_xmin_next_b6_n,  NOFILE(0)
+                                                                      pin: dut/stat_xmin_next_b3[1]_syn_1.a
+LUT3                                    0.273    f     8.099      10  pin: dut/stat_xmin_next_b3[1]_syn_1.o
+net (fo=1)                              0.448          8.547          net: dut/stat_xmin_next_b3[1],  NOFILE(0)
+                                                                      pin: dut/lt34_syn_55.ic
+ADDER                                   0.435    r     8.982      11  pin: dut/lt34_syn_55.fco
+net (fo=1)                              0.000          8.982          net: dut/lt34_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_56.fci
+ADDER                                   0.052    r     9.034          pin: dut/lt34_syn_56.fco
+net (fo=1)                              0.000          9.034          net: dut/lt34_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_57.fci
+ADDER                                   0.052    r     9.086          pin: dut/lt34_syn_57.fco
+net (fo=1)                              0.000          9.086          net: dut/lt34_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_58.fci
+ADDER                                   0.052    r     9.138          pin: dut/lt34_syn_58.fco
+net (fo=1)                              0.000          9.138          net: dut/lt34_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_59.fci
+ADDER                                   0.052    r     9.190          pin: dut/lt34_syn_59.fco
+net (fo=1)                              0.000          9.190          net: dut/lt34_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt34_syn_60.fci
+ADDER                                   0.220    r     9.410      12  pin: dut/lt34_syn_60.ofb
+net (fo=2)                              0.478          9.888          net: dut/stat_xmin_next_b4_n,  NOFILE(0)
+                                                                      pin: dut/acc_xmin_b1[0]_syn_1.a
+LUT4                                    0.273    f    10.161      13  pin: dut/acc_xmin_b1[0]_syn_1.o
+net (fo=1)                              0.448         10.609          net: dut/acc_xmin_b1[0],  NOFILE(0)
+                                                                      pin: dut/acc_xmin_reg[0].d
+SEQ (reg)                               0.041    f    10.650               
+--------------------------------------------------------------------  ---------------
+Arrival                                               10.650               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/acc_xmin_reg[0].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                 -1.054               
+
+Slack               : -1.035ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/acc_xmax_reg[0].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 10.631ns (cell 4.717ns (44%), net 5.914ns (56%))
+Clock Skew          : 0.000ns
+Logic Level         : 13 ( ADDER=8  LUT3=3  LUT4=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmax_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmax_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmax_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt23_syn_60.ia
+ADDER                                   0.538    f     2.549       2  pin: dut/lt23_syn_60.fco
+net (fo=1)                              0.000          2.549          net: dut/lt23_syn_51,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt23_syn_61.fci
+ADDER                                   0.220    r     2.769       3  pin: dut/lt23_syn_61.ofb
+net (fo=33)                             0.876          3.645          net: dut/stat_xmax_next_b10_n9,  NOFILE(0)
+                                                                      pin: dut/stat_xmax_next_b8[1]_syn_1.a
+LUT3                                    0.273    f     3.918       4  pin: dut/stat_xmax_next_b8[1]_syn_1.o
+net (fo=1)                              0.448          4.366          net: dut/stat_xmax_next_b8[1],  NOFILE(0)
+                                                                      pin: dut/lt27_syn_55.ib
+ADDER                                   0.544    f     4.910       5  pin: dut/lt27_syn_55.fco
+net (fo=1)                              0.000          4.910          net: dut/lt27_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_56.fci
+ADDER                                   0.052    r     4.962          pin: dut/lt27_syn_56.fco
+net (fo=1)                              0.000          4.962          net: dut/lt27_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_57.fci
+ADDER                                   0.052    r     5.014          pin: dut/lt27_syn_57.fco
+net (fo=1)                              0.000          5.014          net: dut/lt27_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_58.fci
+ADDER                                   0.052    r     5.066          pin: dut/lt27_syn_58.fco
+net (fo=1)                              0.000          5.066          net: dut/lt27_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_59.fci
+ADDER                                   0.052    r     5.118          pin: dut/lt27_syn_59.fco
+net (fo=1)                              0.000          5.118          net: dut/lt27_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_60.fci
+ADDER                                   0.220    r     5.338       6  pin: dut/lt27_syn_60.ofb
+net (fo=1)                              0.448          5.786          net: dut/stat_xmax_next_b9_n,  NOFILE(0)
+                                                                      pin: dut/O_xmax_b2[0]_syn_3.a
+LUT3                                    0.273    f     6.059       7  pin: dut/O_xmax_b2[0]_syn_3.o
+net (fo=2)                              0.478          6.537          net: dut/stat_xmax_next_b5[0],  NOFILE(0)
+                                                                      pin: dut/lt31_syn_55.ie
+ADDER                                   0.359    r     6.896       8  pin: dut/lt31_syn_55.fco
+net (fo=1)                              0.000          6.896          net: dut/lt31_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_56.fci
+ADDER                                   0.052    r     6.948          pin: dut/lt31_syn_56.fco
+net (fo=1)                              0.000          6.948          net: dut/lt31_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_57.fci
+ADDER                                   0.052    r     7.000          pin: dut/lt31_syn_57.fco
+net (fo=1)                              0.000          7.000          net: dut/lt31_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_58.fci
+ADDER                                   0.052    r     7.052          pin: dut/lt31_syn_58.fco
+net (fo=1)                              0.000          7.052          net: dut/lt31_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_59.fci
+ADDER                                   0.052    r     7.104          pin: dut/lt31_syn_59.fco
+net (fo=1)                              0.000          7.104          net: dut/lt31_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_60.fci
+ADDER                                   0.220    r     7.324       9  pin: dut/lt31_syn_60.ofb
+net (fo=4)                              0.556          7.880          net: dut/stat_xmax_next_b6_n,  NOFILE(0)
+                                                                      pin: dut/O_xmax_b2[0]_syn_4.a
+LUT3                                    0.273    f     8.153      10  pin: dut/O_xmax_b2[0]_syn_4.o
+net (fo=3)                              0.520          8.673          net: dut/stat_xmax_next_b3[0],  NOFILE(0)
+                                                                      pin: dut/lt35_syn_55.id
+ADDER                                   0.290    r     8.963      11  pin: dut/lt35_syn_55.fco
+net (fo=1)                              0.000          8.963          net: dut/lt35_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_56.fci
+ADDER                                   0.052    r     9.015          pin: dut/lt35_syn_56.fco
+net (fo=1)                              0.000          9.015          net: dut/lt35_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_57.fci
+ADDER                                   0.052    r     9.067          pin: dut/lt35_syn_57.fco
+net (fo=1)                              0.000          9.067          net: dut/lt35_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_58.fci
+ADDER                                   0.052    r     9.119          pin: dut/lt35_syn_58.fco
+net (fo=1)                              0.000          9.119          net: dut/lt35_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_59.fci
+ADDER                                   0.052    r     9.171          pin: dut/lt35_syn_59.fco
+net (fo=1)                              0.000          9.171          net: dut/lt35_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt35_syn_60.fci
+ADDER                                   0.220    r     9.391      12  pin: dut/lt35_syn_60.ofb
+net (fo=2)                              0.478          9.869          net: dut/stat_xmax_next_b4_n,  NOFILE(0)
+                                                                      pin: dut/acc_xmax_b1[0]_syn_1.a
+LUT4                                    0.273    f    10.142      13  pin: dut/acc_xmax_b1[0]_syn_1.o
+net (fo=1)                              0.448         10.590          net: dut/acc_xmax_b1[0],  NOFILE(0)
+                                                                      pin: dut/acc_xmax_reg[0].d
+SEQ (reg)                               0.041    f    10.631               
+--------------------------------------------------------------------  ---------------
+Arrival                                               10.631               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/acc_xmax_reg[0].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                 -1.035               
+
+Slack               : 0.912ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/O_xmax_reg[1].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 8.684ns (cell 3.768ns (43%), net 4.916ns (57%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( ADDER=6  LUT3=2  LUT6=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmax_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmax_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmax_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt23_syn_60.ia
+ADDER                                   0.538    f     2.549       2  pin: dut/lt23_syn_60.fco
+net (fo=1)                              0.000          2.549          net: dut/lt23_syn_51,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt23_syn_61.fci
+ADDER                                   0.220    r     2.769       3  pin: dut/lt23_syn_61.ofb
+net (fo=33)                             0.876          3.645          net: dut/stat_xmax_next_b10_n9,  NOFILE(0)
+                                                                      pin: dut/stat_xmax_next_b8[1]_syn_1.a
+LUT3                                    0.273    f     3.918       4  pin: dut/stat_xmax_next_b8[1]_syn_1.o
+net (fo=1)                              0.448          4.366          net: dut/stat_xmax_next_b8[1],  NOFILE(0)
+                                                                      pin: dut/lt27_syn_55.ib
+ADDER                                   0.544    f     4.910       5  pin: dut/lt27_syn_55.fco
+net (fo=1)                              0.000          4.910          net: dut/lt27_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_56.fci
+ADDER                                   0.052    r     4.962          pin: dut/lt27_syn_56.fco
+net (fo=1)                              0.000          4.962          net: dut/lt27_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_57.fci
+ADDER                                   0.052    r     5.014          pin: dut/lt27_syn_57.fco
+net (fo=1)                              0.000          5.014          net: dut/lt27_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_58.fci
+ADDER                                   0.052    r     5.066          pin: dut/lt27_syn_58.fco
+net (fo=1)                              0.000          5.066          net: dut/lt27_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_59.fci
+ADDER                                   0.052    r     5.118          pin: dut/lt27_syn_59.fco
+net (fo=1)                              0.000          5.118          net: dut/lt27_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_60.fci
+ADDER                                   0.220    r     5.338       6  pin: dut/lt27_syn_60.ofb
+net (fo=1)                              0.448          5.786          net: dut/stat_xmax_next_b9_n,  NOFILE(0)
+                                                                      pin: dut/O_xmax_b2[0]_syn_3.a
+LUT3                                    0.273    f     6.059       7  pin: dut/O_xmax_b2[0]_syn_3.o
+net (fo=2)                              0.478          6.537          net: dut/stat_xmax_next_b5[0],  NOFILE(0)
+                                                                      pin: dut/lt31_syn_55.ie
+ADDER                                   0.359    r     6.896       8  pin: dut/lt31_syn_55.fco
+net (fo=1)                              0.000          6.896          net: dut/lt31_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_56.fci
+ADDER                                   0.052    r     6.948          pin: dut/lt31_syn_56.fco
+net (fo=1)                              0.000          6.948          net: dut/lt31_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_57.fci
+ADDER                                   0.052    r     7.000          pin: dut/lt31_syn_57.fco
+net (fo=1)                              0.000          7.000          net: dut/lt31_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_58.fci
+ADDER                                   0.052    r     7.052          pin: dut/lt31_syn_58.fco
+net (fo=1)                              0.000          7.052          net: dut/lt31_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_59.fci
+ADDER                                   0.052    r     7.104          pin: dut/lt31_syn_59.fco
+net (fo=1)                              0.000          7.104          net: dut/lt31_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_60.fci
+ADDER                                   0.220    r     7.324       9  pin: dut/lt31_syn_60.ofb
+net (fo=4)                              0.556          7.880          net: dut/stat_xmax_next_b6_n,  NOFILE(0)
+                                                                      pin: dut/O_xmax_b2[1]_syn_3.a
+LUT6                                    0.315    f     8.195      10  pin: dut/O_xmax_b2[1]_syn_3.o
+net (fo=1)                              0.448          8.643          net: dut/O_xmax_b2[1],  NOFILE(0)
+                                                                      pin: dut/O_xmax_reg[1].d
+SEQ (reg)                               0.041    f     8.684               
+--------------------------------------------------------------------  ---------------
+Arrival                                                8.684               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/O_xmax_reg[1].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.912               
+
+Slack               : 0.954ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/acc_xmax_reg[1].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 8.642ns (cell 3.726ns (43%), net 4.916ns (57%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( ADDER=6  LUT3=2  LUT4=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmax_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmax_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmax_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt23_syn_60.ia
+ADDER                                   0.538    f     2.549       2  pin: dut/lt23_syn_60.fco
+net (fo=1)                              0.000          2.549          net: dut/lt23_syn_51,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt23_syn_61.fci
+ADDER                                   0.220    r     2.769       3  pin: dut/lt23_syn_61.ofb
+net (fo=33)                             0.876          3.645          net: dut/stat_xmax_next_b10_n9,  NOFILE(0)
+                                                                      pin: dut/stat_xmax_next_b8[1]_syn_1.a
+LUT3                                    0.273    f     3.918       4  pin: dut/stat_xmax_next_b8[1]_syn_1.o
+net (fo=1)                              0.448          4.366          net: dut/stat_xmax_next_b8[1],  NOFILE(0)
+                                                                      pin: dut/lt27_syn_55.ib
+ADDER                                   0.544    f     4.910       5  pin: dut/lt27_syn_55.fco
+net (fo=1)                              0.000          4.910          net: dut/lt27_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_56.fci
+ADDER                                   0.052    r     4.962          pin: dut/lt27_syn_56.fco
+net (fo=1)                              0.000          4.962          net: dut/lt27_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_57.fci
+ADDER                                   0.052    r     5.014          pin: dut/lt27_syn_57.fco
+net (fo=1)                              0.000          5.014          net: dut/lt27_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_58.fci
+ADDER                                   0.052    r     5.066          pin: dut/lt27_syn_58.fco
+net (fo=1)                              0.000          5.066          net: dut/lt27_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_59.fci
+ADDER                                   0.052    r     5.118          pin: dut/lt27_syn_59.fco
+net (fo=1)                              0.000          5.118          net: dut/lt27_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt27_syn_60.fci
+ADDER                                   0.220    r     5.338       6  pin: dut/lt27_syn_60.ofb
+net (fo=1)                              0.448          5.786          net: dut/stat_xmax_next_b9_n,  NOFILE(0)
+                                                                      pin: dut/O_xmax_b2[0]_syn_3.a
+LUT3                                    0.273    f     6.059       7  pin: dut/O_xmax_b2[0]_syn_3.o
+net (fo=2)                              0.478          6.537          net: dut/stat_xmax_next_b5[0],  NOFILE(0)
+                                                                      pin: dut/lt31_syn_55.ie
+ADDER                                   0.359    r     6.896       8  pin: dut/lt31_syn_55.fco
+net (fo=1)                              0.000          6.896          net: dut/lt31_syn_42,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_56.fci
+ADDER                                   0.052    r     6.948          pin: dut/lt31_syn_56.fco
+net (fo=1)                              0.000          6.948          net: dut/lt31_syn_44,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_57.fci
+ADDER                                   0.052    r     7.000          pin: dut/lt31_syn_57.fco
+net (fo=1)                              0.000          7.000          net: dut/lt31_syn_46,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_58.fci
+ADDER                                   0.052    r     7.052          pin: dut/lt31_syn_58.fco
+net (fo=1)                              0.000          7.052          net: dut/lt31_syn_48,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_59.fci
+ADDER                                   0.052    r     7.104          pin: dut/lt31_syn_59.fco
+net (fo=1)                              0.000          7.104          net: dut/lt31_syn_50,  ../color_detect_96_v2.v(254)
+                                                                      pin: dut/lt31_syn_60.fci
+ADDER                                   0.220    r     7.324       9  pin: dut/lt31_syn_60.ofb
+net (fo=4)                              0.556          7.880          net: dut/stat_xmax_next_b6_n,  NOFILE(0)
+                                                                      pin: dut/acc_xmax_b1[1]_syn_2.a
+LUT4                                    0.273    f     8.153      10  pin: dut/acc_xmax_b1[1]_syn_2.o
+net (fo=1)                              0.448          8.601          net: dut/acc_xmax_b1[1],  NOFILE(0)
+                                                                      pin: dut/acc_xmax_reg[1].d
+SEQ (reg)                               0.041    f     8.642               
+--------------------------------------------------------------------  ---------------
+Arrival                                                8.642               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/acc_xmax_reg[1].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.954               
+
+Slack               : 0.966ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/O_xmin_reg[1].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 8.630ns (cell 3.714ns (43%), net 4.916ns (57%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( ADDER=6  LUT3=2  LUT6=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmin_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmin_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmin_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt22_syn_60.ib
+ADDER                                   0.544    f     2.555       2  pin: dut/lt22_syn_60.fco
+net (fo=1)                              0.000          2.555          net: dut/lt22_syn_51,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt22_syn_61.fci
+ADDER                                   0.220    r     2.775       3  pin: dut/lt22_syn_61.ofb
+net (fo=33)                             0.876          3.651          net: dut/stat_xmin_next_b9_n9,  NOFILE(0)
+                                                                      pin: dut/stat_xmin_next_b7[1]_syn_1.a
+LUT3                                    0.273    f     3.924       4  pin: dut/stat_xmin_next_b7[1]_syn_1.o
+net (fo=1)                              0.448          4.372          net: dut/stat_xmin_next_b7[1],  NOFILE(0)
+                                                                      pin: dut/lt26_syn_55.ib
+ADDER                                   0.544    f     4.916       5  pin: dut/lt26_syn_55.fco
+net (fo=1)                              0.000          4.916          net: dut/lt26_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_56.fci
+ADDER                                   0.052    r     4.968          pin: dut/lt26_syn_56.fco
+net (fo=1)                              0.000          4.968          net: dut/lt26_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_57.fci
+ADDER                                   0.052    r     5.020          pin: dut/lt26_syn_57.fco
+net (fo=1)                              0.000          5.020          net: dut/lt26_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_58.fci
+ADDER                                   0.052    r     5.072          pin: dut/lt26_syn_58.fco
+net (fo=1)                              0.000          5.072          net: dut/lt26_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_59.fci
+ADDER                                   0.052    r     5.124          pin: dut/lt26_syn_59.fco
+net (fo=1)                              0.000          5.124          net: dut/lt26_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_60.fci
+ADDER                                   0.220    r     5.344       6  pin: dut/lt26_syn_60.ofb
+net (fo=1)                              0.448          5.792          net: dut/stat_xmin_next_b8_n,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[0]_syn_3.a
+LUT3                                    0.273    f     6.065       7  pin: dut/O_xmin_b2[0]_syn_3.o
+net (fo=2)                              0.478          6.543          net: dut/stat_xmin_next_b5[0],  NOFILE(0)
+                                                                      pin: dut/lt30_syn_55.imf
+ADDER                                   0.299    f     6.842       8  pin: dut/lt30_syn_55.fco
+net (fo=1)                              0.000          6.842          net: dut/lt30_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_56.fci
+ADDER                                   0.052    r     6.894          pin: dut/lt30_syn_56.fco
+net (fo=1)                              0.000          6.894          net: dut/lt30_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_57.fci
+ADDER                                   0.052    r     6.946          pin: dut/lt30_syn_57.fco
+net (fo=1)                              0.000          6.946          net: dut/lt30_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_58.fci
+ADDER                                   0.052    r     6.998          pin: dut/lt30_syn_58.fco
+net (fo=1)                              0.000          6.998          net: dut/lt30_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_59.fci
+ADDER                                   0.052    r     7.050          pin: dut/lt30_syn_59.fco
+net (fo=1)                              0.000          7.050          net: dut/lt30_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_60.fci
+ADDER                                   0.220    r     7.270       9  pin: dut/lt30_syn_60.ofb
+net (fo=4)                              0.556          7.826          net: dut/stat_xmin_next_b6_n,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[1]_syn_2.a
+LUT6                                    0.315    f     8.141      10  pin: dut/O_xmin_b2[1]_syn_2.o
+net (fo=1)                              0.448          8.589          net: dut/O_xmin_b2[1],  NOFILE(0)
+                                                                      pin: dut/O_xmin_reg[1].d
+SEQ (reg)                               0.041    f     8.630               
+--------------------------------------------------------------------  ---------------
+Arrival                                                8.630               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/O_xmin_reg[1].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.966               
+
+Slack               : 1.008ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/acc_xmin_reg[1].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 8.588ns (cell 3.672ns (42%), net 4.916ns (58%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( ADDER=6  LUT3=2  LUT4=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmin_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmin_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmin_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt22_syn_60.ib
+ADDER                                   0.544    f     2.555       2  pin: dut/lt22_syn_60.fco
+net (fo=1)                              0.000          2.555          net: dut/lt22_syn_51,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt22_syn_61.fci
+ADDER                                   0.220    r     2.775       3  pin: dut/lt22_syn_61.ofb
+net (fo=33)                             0.876          3.651          net: dut/stat_xmin_next_b9_n9,  NOFILE(0)
+                                                                      pin: dut/stat_xmin_next_b7[1]_syn_1.a
+LUT3                                    0.273    f     3.924       4  pin: dut/stat_xmin_next_b7[1]_syn_1.o
+net (fo=1)                              0.448          4.372          net: dut/stat_xmin_next_b7[1],  NOFILE(0)
+                                                                      pin: dut/lt26_syn_55.ib
+ADDER                                   0.544    f     4.916       5  pin: dut/lt26_syn_55.fco
+net (fo=1)                              0.000          4.916          net: dut/lt26_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_56.fci
+ADDER                                   0.052    r     4.968          pin: dut/lt26_syn_56.fco
+net (fo=1)                              0.000          4.968          net: dut/lt26_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_57.fci
+ADDER                                   0.052    r     5.020          pin: dut/lt26_syn_57.fco
+net (fo=1)                              0.000          5.020          net: dut/lt26_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_58.fci
+ADDER                                   0.052    r     5.072          pin: dut/lt26_syn_58.fco
+net (fo=1)                              0.000          5.072          net: dut/lt26_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_59.fci
+ADDER                                   0.052    r     5.124          pin: dut/lt26_syn_59.fco
+net (fo=1)                              0.000          5.124          net: dut/lt26_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt26_syn_60.fci
+ADDER                                   0.220    r     5.344       6  pin: dut/lt26_syn_60.ofb
+net (fo=1)                              0.448          5.792          net: dut/stat_xmin_next_b8_n,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[0]_syn_3.a
+LUT3                                    0.273    f     6.065       7  pin: dut/O_xmin_b2[0]_syn_3.o
+net (fo=2)                              0.478          6.543          net: dut/stat_xmin_next_b5[0],  NOFILE(0)
+                                                                      pin: dut/lt30_syn_55.imf
+ADDER                                   0.299    f     6.842       8  pin: dut/lt30_syn_55.fco
+net (fo=1)                              0.000          6.842          net: dut/lt30_syn_42,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_56.fci
+ADDER                                   0.052    r     6.894          pin: dut/lt30_syn_56.fco
+net (fo=1)                              0.000          6.894          net: dut/lt30_syn_44,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_57.fci
+ADDER                                   0.052    r     6.946          pin: dut/lt30_syn_57.fco
+net (fo=1)                              0.000          6.946          net: dut/lt30_syn_46,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_58.fci
+ADDER                                   0.052    r     6.998          pin: dut/lt30_syn_58.fco
+net (fo=1)                              0.000          6.998          net: dut/lt30_syn_48,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_59.fci
+ADDER                                   0.052    r     7.050          pin: dut/lt30_syn_59.fco
+net (fo=1)                              0.000          7.050          net: dut/lt30_syn_50,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt30_syn_60.fci
+ADDER                                   0.220    r     7.270       9  pin: dut/lt30_syn_60.ofb
+net (fo=4)                              0.556          7.826          net: dut/stat_xmin_next_b6_n,  NOFILE(0)
+                                                                      pin: dut/acc_xmin_b1[1]_syn_2.a
+LUT4                                    0.273    f     8.099      10  pin: dut/acc_xmin_b1[1]_syn_2.o
+net (fo=1)                              0.448          8.547          net: dut/acc_xmin_b1[1],  NOFILE(0)
+                                                                      pin: dut/acc_xmin_reg[1].d
+SEQ (reg)                               0.041    f     8.588               
+--------------------------------------------------------------------  ---------------
+Arrival                                                8.588               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/acc_xmin_reg[1].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  1.008               
+
+Slack               : 2.677ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/O_xmin_reg[2].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.919ns (cell 2.288ns (33%), net 4.631ns (67%))
+Clock Skew          : 0.000ns
+Logic Level         : 7 ( LUT4=2  ADDER=2  LUT6=1  LUT3=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmin_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmin_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmin_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt22_syn_60.ib
+ADDER                                   0.544    f     2.555       2  pin: dut/lt22_syn_60.fco
+net (fo=1)                              0.000          2.555          net: dut/lt22_syn_51,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt22_syn_61.fci
+ADDER                                   0.220    r     2.775       3  pin: dut/lt22_syn_61.ofb
+net (fo=33)                             0.876          3.651          net: dut/stat_xmin_next_b9_n9,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[10]_syn_2.a
+LUT3                                    0.273    f     3.924       4  pin: dut/O_xmin_b2[10]_syn_2.o
+net (fo=3)                              0.520          4.444          net: dut/O_xmin_b2[10]_syn_3,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[10]_syn_4.a
+LUT4                                    0.273    f     4.717       5  pin: dut/O_xmin_b2[10]_syn_4.o
+net (fo=9)                              0.677          5.394          net: dut/O_xmin_b2[10]_syn_5,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[2]_syn_2.a
+LUT4                                    0.273    f     5.667       6  pin: dut/O_xmin_b2[2]_syn_2.o
+net (fo=1)                              0.448          6.115          net: dut/O_xmin_b2[2]_syn_3,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[2]_syn_4.e
+LUT6                                    0.315    f     6.430       7  pin: dut/O_xmin_b2[2]_syn_4.o
+net (fo=1)                              0.448          6.878          net: dut/O_xmin_b2[2],  NOFILE(0)
+                                                                      pin: dut/O_xmin_reg[2].d
+SEQ (reg)                               0.041    f     6.919               
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.919               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/O_xmin_reg[2].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.677               
+
+Slack               : 2.677ns
+Begin Point         : dut/u_morph_open/u_dilate/O_tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/O_xmin_reg[3].d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.919ns (cell 2.288ns (33%), net 4.631ns (67%))
+Clock Skew          : 0.000ns
+Logic Level         : 7 ( LUT4=2  ADDER=2  LUT6=1  LUT3=1  LUT2=1 )
+Max Fanout          : 109
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/O_tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/O_tuser_reg.q
+net (fo=109)                            1.047          1.123          net: dut/morph_user,  ../color_detect_96_v2.v(212)
+                                                                      pin: dut/O_xmin_b2[9]_syn_1.a
+LUT2                                    0.273    f     1.396       1  pin: dut/O_xmin_b2[9]_syn_1.o
+net (fo=6)                              0.615          2.011          net: dut/stat_xmin_next_b[9],  NOFILE(0)
+                                                                      pin: dut/lt22_syn_60.ib
+ADDER                                   0.544    f     2.555       2  pin: dut/lt22_syn_60.fco
+net (fo=1)                              0.000          2.555          net: dut/lt22_syn_51,  ../color_detect_96_v2.v(252)
+                                                                      pin: dut/lt22_syn_61.fci
+ADDER                                   0.220    r     2.775       3  pin: dut/lt22_syn_61.ofb
+net (fo=33)                             0.876          3.651          net: dut/stat_xmin_next_b9_n9,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[10]_syn_2.a
+LUT3                                    0.273    f     3.924       4  pin: dut/O_xmin_b2[10]_syn_2.o
+net (fo=3)                              0.520          4.444          net: dut/O_xmin_b2[10]_syn_3,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[10]_syn_4.a
+LUT4                                    0.273    f     4.717       5  pin: dut/O_xmin_b2[10]_syn_4.o
+net (fo=9)                              0.677          5.394          net: dut/O_xmin_b2[10]_syn_5,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[3]_syn_2.a
+LUT4                                    0.273    f     5.667       6  pin: dut/O_xmin_b2[3]_syn_2.o
+net (fo=1)                              0.448          6.115          net: dut/O_xmin_b2[3]_syn_3,  NOFILE(0)
+                                                                      pin: dut/O_xmin_b2[3]_syn_4.e
+LUT6                                    0.315    f     6.430       7  pin: dut/O_xmin_b2[3]_syn_4.o
+net (fo=1)                              0.448          6.878          net: dut/O_xmin_b2[3],  NOFILE(0)
+                                                                      pin: dut/O_xmin_reg[3].d
+SEQ (reg)                               0.041    f     6.919               
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.919               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/O_xmin_reg[3].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.677               
+
+
+
+Min Paths
+----------------------------------------------------------------------------------------------------
+Slack               : 0.431ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[1].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[1] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.728ns (cell 0.069ns (9%), net 0.659ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 8
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[1].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[1].q
+net (fo=8)                              0.659          0.728          net: dut/u_morph_open/u_dilate/I_mask[1],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[1]
+ERAM (reg)                              0.000    f     0.728       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.728               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.431               
+
+Slack               : 0.431ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[2].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[2] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.728ns (cell 0.069ns (9%), net 0.659ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 8
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[2].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[2].q
+net (fo=8)                              0.659          0.728          net: dut/u_morph_open/u_dilate/I_mask[2],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[2]
+ERAM (reg)                              0.000    f     0.728       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.728               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.431               
+
+Slack               : 0.431ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[1].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[1] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.728ns (cell 0.069ns (9%), net 0.659ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 8
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[1].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[1].q
+net (fo=8)                              0.659          0.728          net: dut/u_morph_open/u_dilate/I_mask[1],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[1]
+ERAM (reg)                              0.000    f     0.728       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.728               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.431               
+
+Slack               : 0.431ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[2].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[2] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.728ns (cell 0.069ns (9%), net 0.659ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 8
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[2].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[2].q
+net (fo=8)                              0.659          0.728          net: dut/u_morph_open/u_dilate/I_mask[2],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[2]
+ERAM (reg)                              0.000    f     0.728       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.728               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.431               
+
+Slack               : 0.449ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[0] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.746ns (cell 0.069ns (9%), net 0.677ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 9
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[0].q
+net (fo=9)                              0.677          0.746          net: dut/u_morph_open/u_dilate/I_mask[0],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[0]
+ERAM (reg)                              0.000    f     0.746       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.746               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.449               
+
+Slack               : 0.449ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[0] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.746ns (cell 0.069ns (9%), net 0.677ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 9
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[0].q
+net (fo=9)                              0.677          0.746          net: dut/u_morph_open/u_dilate/I_mask[0],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[0]
+ERAM (reg)                              0.000    f     0.746       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.746               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.449               
+
+Slack               : 0.465ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[3].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[3] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.762ns (cell 0.069ns (9%), net 0.693ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 10
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[3].q
+net (fo=10)                             0.693          0.762          net: dut/u_morph_open/u_dilate/I_mask[3],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[3]
+ERAM (reg)                              0.000    f     0.762       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.762               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.465               
+
+Slack               : 0.465ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[3].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[3] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.762ns (cell 0.069ns (9%), net 0.693ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 10
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[3].q
+net (fo=10)                             0.693          0.762          net: dut/u_morph_open/u_dilate/I_mask[3],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[3]
+ERAM (reg)                              0.000    f     0.762       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.762               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.465               
+
+Slack               : 0.502ns
+Begin Point         : tlast_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/tlast_d1_reg.d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: tlast_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: tlast_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_tlast,  ../color_detect_96_v2.v(30)
+                                                                      pin: dut/tlast_d1_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/tlast_d1_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/tuser_d1_reg.d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: tuser_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_tuser,  ../color_detect_96_v2.v(31)
+                                                                      pin: dut/tuser_d1_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/tuser_d1_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+
+Inter clock domain timing
+--------------------------------------------------
+
+IP timing
+--------------------------------------------------

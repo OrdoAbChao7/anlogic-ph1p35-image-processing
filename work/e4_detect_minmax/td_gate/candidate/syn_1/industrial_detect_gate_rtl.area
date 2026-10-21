@@ -1,0 +1,44 @@
+standard
+***Report Model: industrial_detect_gate_top Device: PH1P35MDG324***
+
+IO Statistics
+#IO                        66
+  #input                    2
+  #output                  64
+  #inout                    0
+
+Gate Statistics
+#Basic gates              753
+  #and                    122
+  #nand                     0
+  #or                      58
+  #nor                      0
+  #xor                      3
+  #xnor                     0
+  #buf                      0
+  #not                     45
+  #bufif1                   0
+  #MX21                   155
+  #FADD                     0
+  #DFF                    370
+  #LATCH                    0
+#MACRO_ADD                 69
+#MACRO_EQ                  19
+#MACRO_MULT                16
+#MACRO_MUX                576
+#MACRO_OTHERS               4
+
+Report Hierarchy Area:
++-----------------------------------------------------------------------+
+|Instance           |Module                     |gates  |seq    |macros |
++-----------------------------------------------------------------------+
+|top                |industrial_detect_gate_top |383    |370    |108    |
+|  dut              |color_detect_96_v2         |369    |325    |102    |
+|    u_morph_open   |morph_open_96              |253    |95     |26     |
+|      u_dilate     |morph_filter_96            |115    |48     |13     |
+|        u_row_mem0 |morph_line_ram_4bit        |0      |0      |1      |
+|        u_row_mem1 |morph_line_ram_4bit        |0      |0      |1      |
+|      u_erode      |morph_filter_96            |137    |47     |13     |
+|        u_row_mem0 |morph_line_ram_4bit        |0      |0      |1      |
+|        u_row_mem1 |morph_line_ram_4bit        |0      |0      |1      |
++-----------------------------------------------------------------------+

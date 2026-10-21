@@ -1,0 +1,22 @@
+Location         : E:\Projects\FPGA-ds-timing\work\e4_detect_minmax\td_gate\candidate\syn_1
+Running with     : Tang Dynasty v6.2.168116
+                   Copyright (c) 2012-2025 Anlogic Inc.
+Top Model        : industrial_detect_gate_top
+Device           : PH1P35MDG324
+Speed            : 3
+
+Timing Mode      : basic
+Setup            : WNS  2786ps  TNS        0ps  NUM_FEPS     0
+Hold             : WNS   431ps  TNS        0ps  NUM_FEPS     0
+
+Flow Statistics  :
+--------------------------------------------------------------------------------------------------
+     command     |  #calls  |  wall time  |  cpu time(s)  |  used memory(mb)  |  peak memory(mb)  
+--------------------------------------------------------------------------------------------------
+  optimize_gate  |    1     |   3s(60%)   |    3(75%)     |        380        |        380        
+  import_device  |    1     |   1s(20%)   |    1(25%)     |        324        |        324        
+  optimize_rtl   |    1     |   1s(20%)   |     0(0%)     |        330        |        337        
+    read_sdc     |    1     |   0s(0%)    |     0(0%)     |        330        |        330        
+--------------------------------------------------------------------------------------------------
+      total      |    4     |     5s      |       4       |        380        |        380        
+--------------------------------------------------------------------------------------------------

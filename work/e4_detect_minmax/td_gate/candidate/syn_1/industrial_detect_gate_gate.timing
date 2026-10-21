@@ -1,0 +1,1234 @@
+Created by          : Tang Dynasty v6.2.168116
+                    : Copyright (c) 2012-2025 Anlogic Inc.
+Generated           : Wed Oct 21 18:15:09 2026
+
+Top Model           : industrial_detect_gate_top
+Device              : PH1P35MDG324
+Speed               : 3
+STA coverage        : 99.99%
+Constraint File     : E:/Projects/FPGA-ds-timing/work/e4_detect_minmax/td_gate/industrial_detect_gate.sdc;
+Confidence          : Synthesized
+Check Corner        : Both (Slow and Fast)
+CRPR Enabled        : Yes
+Report Scheme       : 10 end point(s) per path group, 1 path(s) per end point
+
+
+Check Status
+-------------
+
+Corner   | Max      Min     
+------------------------------------
+Slow     | yes      yes     
+Fast     | yes      yes     
+
+
+Timing Status
+--------------------
+	SWNS: 2.786ns, STNS: 0.000ns
+	HWNS: 0.431ns, HTNS: 0.000ns
+	Period Check WNS: 0.000ns
+
+
+Clock Summary
+--------------------
+
+       Clock-Id:       C-Freq       Fanout   Clock-Name
+--------------------------------------------------------------------------------
+           clk0:      103.520          382   mipi_byte_clk
+--------------------------------------------------------------------------------
+
+       Name            Type         Rise(ns)   Fall(ns)          C-Period(ns)     C-Freq(MHz)          R-Period(ns)     R-Freq(MHz)         SWNS(ns)   STNS(ns)         HWNS(ns)   HTNS(ns)         Skew(ns)           Fanout        Max-Level        CC-From    CC-To
+       clk0           local            0.000      4.830                 9.660         103.520                 6.874         145.476            2.786      0.000            0.431      0.000            0.000              382                8             no       no
+
+Notes
+----------
+C-Period  :  constraint period
+C-Freq    :  constraint freq
+R-Period  :  report min period
+R-Freq    :  report fmax
+CC-From   :  has path(s) from cross-domain clock
+CC-To     :  has path(s) to cross-domain clock
+
+
+*   Clock R-Period data only takes intra-clock timing. SWNS/STNS/HWNS/HTNS take both intra-clock and inter-clock timing.
+*   If there is mismatch between R-Period and SWNS, check inter-clock timing of this clock as capture clock.
+*   SWNS/STNS/HWNS/HTNS of timing exception (SMCP/SMD) only counted in global Timing Status, not counted in Clock Summary.
+
+Intra clock domain timing
+--------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+Path Group     :     mipi_byte_clk -> mipi_byte_clk
+Type           :     Self
+From Clock     :     mipi_byte_clk
+To Clock       :     mipi_byte_clk
+Min Period     :     6.874ns
+Fmax           :     145.476MHz
+
+Statistics:
+Max            : SWNS      2.786ns, STNS      0.000ns,         0 Viol Endpoints,      1201 Total Endpoints,      3285 Paths Analyzed
+Min            : HWNS      0.431ns, HTNS      0.000ns,         0 Viol Endpoints,      1201 Total Endpoints,      3285 Paths Analyzed
+----------------------------------------------------------------------------------------------------
+
+Max Paths
+----------------------------------------------------------------------------------------------------
+Slack               : 2.786ns
+Begin Point         : dut/u_morph_open/u_dilate/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[12] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.626ns (cell 2.029ns (30%), net 4.597ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 24
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/row_index_reg[0].q
+net (fo=24)                             0.828          0.904          net: dut/u_morph_open/u_dilate/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.a
+LUT4                                    0.273    f     1.177       1  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.o
+net (fo=2)                              0.478          1.655          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_8,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.a
+LUT3                                    0.273    f     1.928       2  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.o
+net (fo=1)                              0.448          2.376          net: dut/u_morph_open/u_dilate/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.a
+LUT6                                    0.315    f     2.691       3  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.o
+net (fo=1)                              0.448          3.139          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_11,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.a
+LUT3                                    0.273    f     3.412       4  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.o
+net (fo=17)                             0.776          4.188          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_13,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.a
+LUT2                                    0.273    f     4.461       5  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.o
+net (fo=10)                             0.693          5.154          net: dut/u_morph_open/u_dilate/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_2.a
+LUT2                                    0.273    f     5.427       6  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_2.o
+net (fo=2)                              0.478          5.905          net: dut/u_morph_open/u_dilate/u_row_mem1/I_write_addr[7],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_3.a
+LUT4                                    0.273    f     6.178       7  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_3.o
+net (fo=1)                              0.448          6.626          net: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[12]
+ERAM (reg)                              0.000    f     6.626       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.626               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.248          9.412               
+clock uncertainty                       0.000          9.412               
+clock pessimism                         0.000          9.412               
+--------------------------------------------------------------------  ---------------
+Required                                               9.412               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.786               
+
+Slack               : 2.790ns
+Begin Point         : dut/u_morph_open/u_dilate/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[8] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.626ns (cell 2.029ns (30%), net 4.597ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 24
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/row_index_reg[0].q
+net (fo=24)                             0.828          0.904          net: dut/u_morph_open/u_dilate/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.a
+LUT4                                    0.273    f     1.177       1  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.o
+net (fo=2)                              0.478          1.655          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_8,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.a
+LUT3                                    0.273    f     1.928       2  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.o
+net (fo=1)                              0.448          2.376          net: dut/u_morph_open/u_dilate/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.a
+LUT6                                    0.315    f     2.691       3  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.o
+net (fo=1)                              0.448          3.139          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_11,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.a
+LUT3                                    0.273    f     3.412       4  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.o
+net (fo=17)                             0.776          4.188          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_13,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.a
+LUT2                                    0.273    f     4.461       5  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.o
+net (fo=10)                             0.693          5.154          net: dut/u_morph_open/u_dilate/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[3]_syn_1.a
+LUT2                                    0.273    f     5.427       6  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[3]_syn_1.o
+net (fo=2)                              0.478          5.905          net: dut/u_morph_open/u_dilate/u_row_mem1/I_write_addr[3],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[3]_syn_2.a
+LUT4                                    0.273    f     6.178       7  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[3]_syn_2.o
+net (fo=1)                              0.448          6.626          net: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[3],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[8]
+ERAM (reg)                              0.000    f     6.626       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.626               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.244          9.416               
+clock uncertainty                       0.000          9.416               
+clock pessimism                         0.000          9.416               
+--------------------------------------------------------------------  ---------------
+Required                                               9.416               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.790               
+
+Slack               : 2.792ns
+Begin Point         : dut/u_morph_open/u_dilate/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[11] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.626ns (cell 2.029ns (30%), net 4.597ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 24
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/row_index_reg[0].q
+net (fo=24)                             0.828          0.904          net: dut/u_morph_open/u_dilate/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.a
+LUT4                                    0.273    f     1.177       1  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.o
+net (fo=2)                              0.478          1.655          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_8,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.a
+LUT3                                    0.273    f     1.928       2  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.o
+net (fo=1)                              0.448          2.376          net: dut/u_morph_open/u_dilate/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.a
+LUT6                                    0.315    f     2.691       3  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.o
+net (fo=1)                              0.448          3.139          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_11,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.a
+LUT3                                    0.273    f     3.412       4  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.o
+net (fo=17)                             0.776          4.188          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_13,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.a
+LUT2                                    0.273    f     4.461       5  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.o
+net (fo=10)                             0.693          5.154          net: dut/u_morph_open/u_dilate/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[6]_syn_1.a
+LUT2                                    0.273    f     5.427       6  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[6]_syn_1.o
+net (fo=2)                              0.478          5.905          net: dut/u_morph_open/u_dilate/u_row_mem1/I_write_addr[6],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[6]_syn_2.a
+LUT4                                    0.273    f     6.178       7  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[6]_syn_2.o
+net (fo=1)                              0.448          6.626          net: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[6],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[11]
+ERAM (reg)                              0.000    f     6.626       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.626               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.242          9.418               
+clock uncertainty                       0.000          9.418               
+clock pessimism                         0.000          9.418               
+--------------------------------------------------------------------  ---------------
+Required                                               9.418               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.792               
+
+Slack               : 2.800ns
+Begin Point         : dut/u_morph_open/u_dilate/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[7] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.626ns (cell 2.029ns (30%), net 4.597ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 24
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/row_index_reg[0].q
+net (fo=24)                             0.828          0.904          net: dut/u_morph_open/u_dilate/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.a
+LUT4                                    0.273    f     1.177       1  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.o
+net (fo=2)                              0.478          1.655          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_8,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.a
+LUT3                                    0.273    f     1.928       2  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.o
+net (fo=1)                              0.448          2.376          net: dut/u_morph_open/u_dilate/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.a
+LUT6                                    0.315    f     2.691       3  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.o
+net (fo=1)                              0.448          3.139          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_11,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.a
+LUT3                                    0.273    f     3.412       4  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.o
+net (fo=17)                             0.776          4.188          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_13,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.a
+LUT2                                    0.273    f     4.461       5  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.o
+net (fo=10)                             0.693          5.154          net: dut/u_morph_open/u_dilate/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[2]_syn_1.a
+LUT2                                    0.273    f     5.427       6  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[2]_syn_1.o
+net (fo=2)                              0.478          5.905          net: dut/u_morph_open/u_dilate/u_row_mem1/I_write_addr[2],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[2]_syn_2.a
+LUT4                                    0.273    f     6.178       7  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[2]_syn_2.o
+net (fo=1)                              0.448          6.626          net: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[2],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[7]
+ERAM (reg)                              0.000    f     6.626       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.626               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.234          9.426               
+clock uncertainty                       0.000          9.426               
+clock pessimism                         0.000          9.426               
+--------------------------------------------------------------------  ---------------
+Required                                               9.426               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.800               
+
+Slack               : 2.801ns
+Begin Point         : dut/u_morph_open/u_erode/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.addra[12] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.611ns (cell 2.029ns (30%), net 4.582ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 21
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_erode/row_index_reg[0].q
+net (fo=21)                             0.808          0.884          net: dut/u_morph_open/u_erode/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_2.a
+LUT4                                    0.273    f     1.157       1  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_2.o
+net (fo=2)                              0.478          1.635          net: dut/u_morph_open/u_erode/left_top_b[3]_syn_3,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_4.a
+LUT3                                    0.273    f     1.908       2  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_4.o
+net (fo=1)                              0.448          2.356          net: dut/u_morph_open/u_erode/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_5.a
+LUT6                                    0.315    f     2.671       3  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_5.o
+net (fo=1)                              0.448          3.119          net: dut/u_morph_open/u_erode/left_top_b[3]_syn_6,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_7.a
+LUT3                                    0.273    f     3.392       4  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_7.o
+net (fo=11)                             0.708          4.100          net: dut/u_morph_open/u_erode/mux56_syn_21,  ../morph_open_96.v(404)
+                                                                      pin: dut/u_morph_open/u_erode/prev_mid_b[0]_syn_1.a
+LUT2                                    0.273    f     4.373       5  pin: dut/u_morph_open/u_erode/prev_mid_b[0]_syn_1.o
+net (fo=16)                             0.766          5.139          net: dut/u_morph_open/u_erode/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[7]_syn_1.a
+LUT2                                    0.273    f     5.412       6  pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[7]_syn_1.o
+net (fo=2)                              0.478          5.890          net: dut/u_morph_open/u_erode/u_row_mem1/I_write_addr[7],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[7]_syn_2.a
+LUT4                                    0.273    f     6.163       7  pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[7]_syn_2.o
+net (fo=1)                              0.448          6.611          net: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[7],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.addra[12]
+ERAM (reg)                              0.000    f     6.611       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.611               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.248          9.412               
+clock uncertainty                       0.000          9.412               
+clock pessimism                         0.000          9.412               
+--------------------------------------------------------------------  ---------------
+Required                                               9.412               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.801               
+
+Slack               : 2.803ns
+Begin Point         : dut/u_morph_open/u_dilate/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[13] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.626ns (cell 2.029ns (30%), net 4.597ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 24
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/row_index_reg[0].q
+net (fo=24)                             0.828          0.904          net: dut/u_morph_open/u_dilate/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.a
+LUT4                                    0.273    f     1.177       1  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.o
+net (fo=2)                              0.478          1.655          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_8,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.a
+LUT3                                    0.273    f     1.928       2  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.o
+net (fo=1)                              0.448          2.376          net: dut/u_morph_open/u_dilate/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.a
+LUT6                                    0.315    f     2.691       3  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.o
+net (fo=1)                              0.448          3.139          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_11,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.a
+LUT3                                    0.273    f     3.412       4  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.o
+net (fo=17)                             0.776          4.188          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_13,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.a
+LUT2                                    0.273    f     4.461       5  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.o
+net (fo=10)                             0.693          5.154          net: dut/u_morph_open/u_dilate/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[8]_syn_1.a
+LUT2                                    0.273    f     5.427       6  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[8]_syn_1.o
+net (fo=2)                              0.478          5.905          net: dut/u_morph_open/u_dilate/u_row_mem1/I_write_addr[8],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[8]_syn_2.a
+LUT4                                    0.273    f     6.178       7  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[8]_syn_2.o
+net (fo=1)                              0.448          6.626          net: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[8],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[13]
+ERAM (reg)                              0.000    f     6.626       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.626               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.231          9.429               
+clock uncertainty                       0.000          9.429               
+clock pessimism                         0.000          9.429               
+--------------------------------------------------------------------  ---------------
+Required                                               9.429               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.803               
+
+Slack               : 2.805ns
+Begin Point         : dut/u_morph_open/u_erode/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.addra[8] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.611ns (cell 2.029ns (30%), net 4.582ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 21
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_erode/row_index_reg[0].q
+net (fo=21)                             0.808          0.884          net: dut/u_morph_open/u_erode/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_2.a
+LUT4                                    0.273    f     1.157       1  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_2.o
+net (fo=2)                              0.478          1.635          net: dut/u_morph_open/u_erode/left_top_b[3]_syn_3,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_4.a
+LUT3                                    0.273    f     1.908       2  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_4.o
+net (fo=1)                              0.448          2.356          net: dut/u_morph_open/u_erode/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_5.a
+LUT6                                    0.315    f     2.671       3  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_5.o
+net (fo=1)                              0.448          3.119          net: dut/u_morph_open/u_erode/left_top_b[3]_syn_6,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_7.a
+LUT3                                    0.273    f     3.392       4  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_7.o
+net (fo=11)                             0.708          4.100          net: dut/u_morph_open/u_erode/mux56_syn_21,  ../morph_open_96.v(404)
+                                                                      pin: dut/u_morph_open/u_erode/prev_mid_b[0]_syn_1.a
+LUT2                                    0.273    f     4.373       5  pin: dut/u_morph_open/u_erode/prev_mid_b[0]_syn_1.o
+net (fo=16)                             0.766          5.139          net: dut/u_morph_open/u_erode/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[3]_syn_1.a
+LUT2                                    0.273    f     5.412       6  pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[3]_syn_1.o
+net (fo=2)                              0.478          5.890          net: dut/u_morph_open/u_erode/u_row_mem1/I_write_addr[3],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[3]_syn_2.a
+LUT4                                    0.273    f     6.163       7  pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[3]_syn_2.o
+net (fo=1)                              0.448          6.611          net: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[3],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.addra[8]
+ERAM (reg)                              0.000    f     6.611       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.611               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.244          9.416               
+clock uncertainty                       0.000          9.416               
+clock pessimism                         0.000          9.416               
+--------------------------------------------------------------------  ---------------
+Required                                               9.416               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.805               
+
+Slack               : 2.807ns
+Begin Point         : dut/u_morph_open/u_erode/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.addra[11] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.611ns (cell 2.029ns (30%), net 4.582ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 21
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_erode/row_index_reg[0].q
+net (fo=21)                             0.808          0.884          net: dut/u_morph_open/u_erode/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_2.a
+LUT4                                    0.273    f     1.157       1  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_2.o
+net (fo=2)                              0.478          1.635          net: dut/u_morph_open/u_erode/left_top_b[3]_syn_3,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_4.a
+LUT3                                    0.273    f     1.908       2  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_4.o
+net (fo=1)                              0.448          2.356          net: dut/u_morph_open/u_erode/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_5.a
+LUT6                                    0.315    f     2.671       3  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_5.o
+net (fo=1)                              0.448          3.119          net: dut/u_morph_open/u_erode/left_top_b[3]_syn_6,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_7.a
+LUT3                                    0.273    f     3.392       4  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_7.o
+net (fo=11)                             0.708          4.100          net: dut/u_morph_open/u_erode/mux56_syn_21,  ../morph_open_96.v(404)
+                                                                      pin: dut/u_morph_open/u_erode/prev_mid_b[0]_syn_1.a
+LUT2                                    0.273    f     4.373       5  pin: dut/u_morph_open/u_erode/prev_mid_b[0]_syn_1.o
+net (fo=16)                             0.766          5.139          net: dut/u_morph_open/u_erode/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[6]_syn_1.a
+LUT2                                    0.273    f     5.412       6  pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[6]_syn_1.o
+net (fo=2)                              0.478          5.890          net: dut/u_morph_open/u_erode/u_row_mem1/I_write_addr[6],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[6]_syn_2.a
+LUT4                                    0.273    f     6.163       7  pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[6]_syn_2.o
+net (fo=1)                              0.448          6.611          net: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[6],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.addra[11]
+ERAM (reg)                              0.000    f     6.611       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.611               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.242          9.418               
+clock uncertainty                       0.000          9.418               
+clock pessimism                         0.000          9.418               
+--------------------------------------------------------------------  ---------------
+Required                                               9.418               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.807               
+
+Slack               : 2.809ns
+Begin Point         : dut/u_morph_open/u_dilate/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[5] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.626ns (cell 2.029ns (30%), net 4.597ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 24
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_dilate/row_index_reg[0].q
+net (fo=24)                             0.828          0.904          net: dut/u_morph_open/u_dilate/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.a
+LUT4                                    0.273    f     1.177       1  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_7.o
+net (fo=2)                              0.478          1.655          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_8,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.a
+LUT3                                    0.273    f     1.928       2  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_9.o
+net (fo=1)                              0.448          2.376          net: dut/u_morph_open/u_dilate/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.a
+LUT6                                    0.315    f     2.691       3  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_10.o
+net (fo=1)                              0.448          3.139          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_11,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.a
+LUT3                                    0.273    f     3.412       4  pin: dut/u_morph_open/u_dilate/O_invalid_n_syn_12.o
+net (fo=17)                             0.776          4.188          net: dut/u_morph_open/u_dilate/O_invalid_n_syn_13,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.a
+LUT2                                    0.273    f     4.461       5  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[7]_syn_1.o
+net (fo=10)                             0.693          5.154          net: dut/u_morph_open/u_dilate/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[0]_syn_1.a
+LUT2                                    0.273    f     5.427       6  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[0]_syn_1.o
+net (fo=2)                              0.478          5.905          net: dut/u_morph_open/u_dilate/u_row_mem1/I_write_addr[0],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[0]_syn_2.a
+LUT4                                    0.273    f     6.178       7  pin: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[0]_syn_2.o
+net (fo=1)                              0.448          6.626          net: dut/u_morph_open/u_dilate/u_row_mem0/I_write_addr[0],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.addra[5]
+ERAM (reg)                              0.000    f     6.626       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.626               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.225          9.435               
+clock uncertainty                       0.000          9.435               
+clock pessimism                         0.000          9.435               
+--------------------------------------------------------------------  ---------------
+Required                                               9.435               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.809               
+
+Slack               : 2.815ns
+Begin Point         : dut/u_morph_open/u_erode/row_index_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.addra[7] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { mipi_byte_clk rising@9.660ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 6.611ns (cell 2.029ns (30%), net 4.582ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( LUT4=2  LUT3=2  LUT2=2  LUT6=1  ERAM=1 )
+Max Fanout          : 21
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/row_index_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/u_morph_open/u_erode/row_index_reg[0].q
+net (fo=21)                             0.808          0.884          net: dut/u_morph_open/u_erode/row_index[0],  ../morph_open_96.v(145)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_2.a
+LUT4                                    0.273    f     1.157       1  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_2.o
+net (fo=2)                              0.478          1.635          net: dut/u_morph_open/u_erode/left_top_b[3]_syn_3,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_4.a
+LUT3                                    0.273    f     1.908       2  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_4.o
+net (fo=1)                              0.448          2.356          net: dut/u_morph_open/u_erode/lt0_syn_102,  ../morph_open_96.v(161)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_5.a
+LUT6                                    0.315    f     2.671       3  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_5.o
+net (fo=1)                              0.448          3.119          net: dut/u_morph_open/u_erode/left_top_b[3]_syn_6,  NOFILE(0)
+                                                                      pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_7.a
+LUT3                                    0.273    f     3.392       4  pin: dut/u_morph_open/u_erode/left_top_b[3]_syn_7.o
+net (fo=11)                             0.708          4.100          net: dut/u_morph_open/u_erode/mux56_syn_21,  ../morph_open_96.v(404)
+                                                                      pin: dut/u_morph_open/u_erode/prev_mid_b[0]_syn_1.a
+LUT2                                    0.273    f     4.373       5  pin: dut/u_morph_open/u_erode/prev_mid_b[0]_syn_1.o
+net (fo=16)                             0.766          5.139          net: dut/u_morph_open/u_erode/accept_transition_group,  ../morph_open_96.v(160)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[2]_syn_1.a
+LUT2                                    0.273    f     5.412       6  pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[2]_syn_1.o
+net (fo=2)                              0.478          5.890          net: dut/u_morph_open/u_erode/u_row_mem1/I_write_addr[2],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[2]_syn_2.a
+LUT4                                    0.273    f     6.163       7  pin: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[2]_syn_2.o
+net (fo=1)                              0.448          6.611          net: dut/u_morph_open/u_erode/u_row_mem0/I_write_addr[2],  ../morph_open_96.v(31)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.addra[7]
+ERAM (reg)                              0.000    f     6.611       8       
+--------------------------------------------------------------------  ---------------
+Arrival                                                6.611               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.234          9.426               
+clock uncertainty                       0.000          9.426               
+clock pessimism                         0.000          9.426               
+--------------------------------------------------------------------  ---------------
+Required                                               9.426               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.815               
+
+
+
+Min Paths
+----------------------------------------------------------------------------------------------------
+Slack               : 0.431ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[1].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[1] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.728ns (cell 0.069ns (9%), net 0.659ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 8
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[1].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[1].q
+net (fo=8)                              0.659          0.728          net: dut/u_morph_open/u_dilate/I_mask[1],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[1]
+ERAM (reg)                              0.000    f     0.728       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.728               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.431               
+
+Slack               : 0.431ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[2].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[2] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.728ns (cell 0.069ns (9%), net 0.659ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 8
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[2].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[2].q
+net (fo=8)                              0.659          0.728          net: dut/u_morph_open/u_dilate/I_mask[2],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[2]
+ERAM (reg)                              0.000    f     0.728       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.728               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.431               
+
+Slack               : 0.431ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[1].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[1] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.728ns (cell 0.069ns (9%), net 0.659ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 8
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[1].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[1].q
+net (fo=8)                              0.659          0.728          net: dut/u_morph_open/u_dilate/I_mask[1],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[1]
+ERAM (reg)                              0.000    f     0.728       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.728               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.431               
+
+Slack               : 0.431ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[2].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[2] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.728ns (cell 0.069ns (9%), net 0.659ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 8
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[2].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[2].q
+net (fo=8)                              0.659          0.728          net: dut/u_morph_open/u_dilate/I_mask[2],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[2]
+ERAM (reg)                              0.000    f     0.728       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.728               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.431               
+
+Slack               : 0.449ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[0] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.746ns (cell 0.069ns (9%), net 0.677ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 9
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[0].q
+net (fo=9)                              0.677          0.746          net: dut/u_morph_open/u_dilate/I_mask[0],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[0]
+ERAM (reg)                              0.000    f     0.746       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.746               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.449               
+
+Slack               : 0.449ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[3].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[3] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.746ns (cell 0.069ns (9%), net 0.677ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 9
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[3].q
+net (fo=9)                              0.677          0.746          net: dut/u_morph_open/u_dilate/I_mask[3],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.dia[3]
+ERAM (reg)                              0.000    f     0.746       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.746               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem0/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.449               
+
+Slack               : 0.449ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[0].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[0] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.746ns (cell 0.069ns (9%), net 0.677ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 9
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[0].q
+net (fo=9)                              0.677          0.746          net: dut/u_morph_open/u_dilate/I_mask[0],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[0]
+ERAM (reg)                              0.000    f     0.746       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.746               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.449               
+
+Slack               : 0.449ns
+Begin Point         : dut/u_morph_open/u_erode/O_mask_reg[3].clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[3] (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : slow_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.746ns (cell 0.069ns (9%), net 0.677ns (91%))
+Clock Skew          : 0.000ns
+Logic Level         : 1 ( ERAM=1 )
+Max Fanout          : 9
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_erode/O_mask_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.069    f     0.069          pin: dut/u_morph_open/u_erode/O_mask_reg[3].q
+net (fo=9)                              0.677          0.746          net: dut/u_morph_open/u_dilate/I_mask[3],  ../morph_open_96.v(121)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.dia[3]
+ERAM (reg)                              0.000    f     0.746       1       
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.746               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/u_morph_open/u_dilate/u_row_mem1/ram_inst_syn_2.clka
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.297          0.297               
+clock uncertainty                       0.000          0.297               
+clock pessimism                         0.000          0.297               
+--------------------------------------------------------------------  ---------------
+Required                                               0.297               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.449               
+
+Slack               : 0.502ns
+Begin Point         : tlast_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/tlast_d1_reg.d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: tlast_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: tlast_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_tlast,  ../color_detect_96_v2.v(30)
+                                                                      pin: dut/tlast_d1_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/tlast_d1_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : tuser_reg.clk (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/tuser_d1_reg.d (rising edge triggered by clock mipi_byte_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { mipi_byte_clk rising@0.000ns - mipi_byte_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: tuser_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: tuser_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_tuser,  ../color_detect_96_v2.v(31)
+                                                                      pin: dut/tuser_d1_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=382)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_detect_gate_top.v(9)
+                                                                      pin: dut/tuser_d1_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+
+Inter clock domain timing
+--------------------------------------------------
+
+IP timing
+--------------------------------------------------

@@ -320,6 +320,142 @@ unchanged.
 
 ---
 
+## E4 — MIPI: parallel four-pixel group statistics in `color_detect_96_v2`
+
+| Field | Value |
+|---|---|
+| Status | **COMPLETE — module Gate PASS, integrated as E5** |
+| Directory | `work/e4_detect_minmax/` |
+| Target | after E1/E3 the MIPI limiter was `color_detect_96_v2` `stat_*_next -> acc_*`, 12 levels / 8 ADDERs |
+
+### Question
+Can the four-iteration serial accumulation loop be replaced by an equivalent
+parallel form that shortens the cone without changing any detector output?
+
+### Verified premise
+The loop body updates `stat_area_next`, `stat_xmin_next`, `stat_xmax_next`,
+`stat_ymin_next`, `stat_ymax_next` once per set bit of `morph_mask[3:0]`.
+Over a group with set-bit set S:
+
+```
+area     += |S|                       (popcount)
+xmin      = min(xmin, base + min S)   (base = out_group*4)
+xmax      = max(xmax, base + max S)
+ymin/ymax = min/max with out_y        (out_y is constant within a group)
+```
+
+This is the exact fixed point of the serial loop because min, max and the
+addition of a per-bit constant are associative/commutative and `out_y` does not
+vary inside a group. An empty mask updates nothing in both forms.
+
+### Single change
+`color_detect_96_v2.v` only: replace `for (j = 0; j < 4; j = j + 1)` with
+popcount + lowest/highest-set-bit + one compare/select per statistic. The
+group base is widened before the shift and sliced, so the truncation to 11 bits
+matches the original integer expression for every parameterisation.
+
+### Results
+
+**Step 1 — ModelSim cycle-differential: PASS** (`+define+MORPH_SIMULATION`,
+the RTL's own behavioural branch for the row RAM; the vendor `PH1P_LOGIC_ERAM`
+simulation model cannot be elaborated under ModelSim Intel Edition 2020.1 —
+`Unresolved reference to 'PH1P_PHY_GSR'` even with a stub in scope).
+
+```
+TB_E4_DETECT_DIFF_PASS checks=701440 beats=691200 frame_syncs=3 detections=3 max_area=162327
+Errors: 0, Warnings: 0
+```
+
+Three full 1280x720 frames, 691,200 AXI-Stream beats: one moving rectangle, two
+rectangles, and one frame of pseudo-random per-pixel red/grey so the 4-bit mask
+takes arbitrary values. An explicit X-check guarantees the morphology model was
+actually behaving (`detections=3`, `max_area=162327`) rather than comparing X
+against X.
+
+**Step 2 — matched module Gate: PASS** (`work/e4_detect_minmax/td_gate`, 9.660 ns,
+wrappers and `.prj` byte-identical between arms, `INPUTS.sha256`).
+
+| Metric | Baseline | Candidate | Delta |
+|---|---:|---:|---:|
+| Setup WNS / TNS | −1096 / −4262 ps | **+2786 / 0 ps** | **+3882 ps** |
+| Setup violating endpoints | 4 | 0 | −4 |
+| Hold WNS / TNS | +431 / 0 ps | +431 / 0 ps | unchanged |
+| Critical path delay | 10.692 ns | **6.626 ns** | **−4.066 ns** |
+| Critical path levels | 13 (ADDER×8) | 8 | −5 |
+| Critical path endpoint | `dut/O_xmin_reg[0]` | `morph u_row_mem0.addra[12]` | statistic cone no longer limiting |
+| Area `#slice*` | 739 | **593** | **−146 (−19.8 %)** |
+| LUTs | 688 | 601 | −87 |
+| DSP / ERAM | 16 / 4 | 16 / 4 | unchanged |
+| STA coverage | 99.99 % | 99.99 % | — |
+
+### Integration
+`assemble_e5.sh` builds `work/e5_detect_parallel/` = E3 + this one file, and
+fails closed if `isp_top.v`, `motion_diff_160.v`, `morph_open_96.v`, the SDC or
+`pin.adc` differ from the frozen baseline.
+
+---
+
+## E5 — E3 + E4 integrated, full rebuild, bitgen (current deliverable)
+
+| Field | Value |
+|---|---|
+| Status | **COMPLETE — TIMING_PASS + BITSTREAM_READY (supersedes E3)** |
+| Directory | `work/e5_detect_parallel/` (assembled by `assemble_e5.sh`) |
+| Inputs | 239 files, manifest `87683345FE2B38220F5FD2016CCF3E545A88DF97FB0AC4938747F16CF08BADA8` |
+
+`assemble_e5.sh` copies E3 and replaces exactly one file
+(`color_detect_96_v2.v`); it fails closed if `isp_top.v`, `motion_diff_160.v`,
+`morph_open_96.v`, the SDC or `pin.adc` differ from the frozen baseline.
+
+### Full Route
+
+| Stage | Setup WNS | Setup TNS | Viol EP | Hold WNS |
+|---|---:|---:|---:|---:|
+| Gate (syn) | **+860 ps** | 0 | **0** | +114 ps |
+| Place | +1,587 ps | 0 | 0 | −298 ps (fixed by flow) |
+| Route | **+644 ps** | 0 | **0** | **+21 ps** |
+
+Slices **18,233 / 21,216 (85.94 %)**, ERAM 75/108, DSP 32/40,
+wire length 4,912,048, STA coverage 96.54 %.
+
+| Clock | Period | E3 Setup WNS | **E5 Setup WNS** |
+|---|---:|---:|---:|
+| MIPI_RX_BYTE_CLK | 9.660 ns | +0.154 | **+0.755** |
+| HDMI_PIXEL_CLK | 13.333 ns | +0.137 | **+0.644** |
+| ddr2/usr_clk | 15.000 ns | +1.428 | **+2.628** |
+| all others | — | ≥ +1.292 | **≥ +1.364** |
+
+The `color_detect_96_v2` statistic cone is gone from the MIPI path list; the new
+worst MIPI endpoint is `motion_diff_160/motion_seen_reg` at +0.755 ns. The worst
+HDMI endpoint is `industrial_osd/logo_pixel_s2_reg[21]` — the intended E2
+pipeline boundary, not a long chain.
+
+### Bitgen
+
+`run_bitgen.ps1` refuses to run unless `route.qor` reports WNS ≥ 0, TNS = 0,
+Hold ≥ 0 and 0 violating endpoints. It passed and produced:
+
+| Artifact | Bytes | SHA-256 |
+|---|---:|---|
+| `camera_to_dsi_display.bit` | 1,789,539 | `E6BA3DA87DABF82907F3DB1B4FAC18A9E8350A43917F3D5E6DA64A0A35617C36` |
+| `camera_to_dsi_display_compress.bit` | 1,504,689 | `1B7E853FAE95BE4E08029F37E5BAE7FD4C727F280D908BE6C56490FA5DCEE471` |
+
+Routed database `C4217862BBD77A400A70CA7A036AEAFAACD566CC64342B7946571CDFE7F6966E`.
+`check_timing -verbose` on it reproduces the E3 coverage enumeration exactly
+(1 unconstrained I2C clock, 34 inputs / 65 outputs without delays, 4 dummy
+nodes, 0 invalid constraints, 0 loops).
+
+### Deliverable
+
+`release/candidate-industrial-v2-timing-closed-r2/`, copied to
+`E:\Projects\FPGA-v2\release\candidates\industrial-v2-timing-closed-r2\`
+(21 files, `SHA256SUMS` self-verified, 0 mismatches).
+
+The E3 package (`...-timing-closed/`) is retained as a rollback reference
+because E5 changes the detector, the most safety-critical module.
+
+---
+
 ## Rejected earlier (inherited, do not repeat)
 
 | Direction | Evidence |
