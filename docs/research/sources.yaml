@@ -42,6 +42,17 @@
   accessed_at: 2026-09-21
   notes: 查找 PH1P、MIPI、视频接口、DDR 和 MCU 相关 IP 手册及参考设计。
 
+- id: anlogic_ph1p_ug1310_library_guide
+  title: SALPHOENIX 1P Series FPGA Libraries Guide for HDL Designs (UG1310_1.2)
+  url_or_path: "Tang Dynasty 6.2.168116 bundled documentation: doc/UG1310_PH1P_Libraries_Guide_for_HDL_Designs.pdf"
+  type: official
+  platform: PH1P35
+  related_goals: [2, 8]
+  priority: high
+  status: reviewed
+  accessed_at: 2026-10-19
+  notes: Printed pp.84/92 (PDF pp.103/111) define PH1P_PHY_MLCLK and PH1P_PHY_IOCLK; IOCLK inputs may come from same/adjacent-region MLCLK, same-region PLL, or GCLKIO. This supports only the MLCLK-to-IOCLK source class and does not close PHY-5016 or establish board-pin legality.
+
 - id: anlogic_camera_solution
   title: 安路 PH1A 4K 摄像头采集与实时显示方案
   url_or_path: https://www.anlogic.com/news/company-news/35.html

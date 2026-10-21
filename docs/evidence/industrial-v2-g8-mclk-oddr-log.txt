@@ -1,0 +1,26 @@
+Industrial V2 G8 MCLK ODDR-only candidate
+Date: 2026-10-19
+Worktree: E:/Projects/FPGA-v2
+Input: current seven-feature V2 TD package
+Flow: official DefaultFlow.tcl
+Placement seed: 1
+Top override: release/candidates/industrial-v2-mclk-oddr-seed1/design_top_wrapper_mclk_oddr.v
+Top override SHA-256: fd65440dc4dfaea1305f0dd31e42fcb79413628301106a87272cb3647ab2c3e0
+
+TD result:
+- synthesis/placement/routing/hold-fix/STA/Bitgen: PASS
+- Setup WNS +104 ps, TNS 0, violated endpoints 0
+- Hold WNS +20 ps, TNS 0, violated endpoints 0
+- Slice 18520/21216 (87.29%)
+- RAM 43, DSP 24, DRAMHARDCON 229
+- Bitstream size 1369201 bytes
+- Bitstream SHA-256 91a6c99b5d384a0291d48e6f9a19c7ec1261bbdafde18174854c17ccbee2c3b5
+
+Warning comparison:
+- O_cam_24m PHY-5060 mixed fanout: absent in this run
+- PHY-5079 local clock routing: absent in this run
+- I2C scl_clk PHY-5060: remains
+- PHY-5016: remains
+- PHY-5088: remains
+
+Decision: rejected because 87.29% exceeds the <=85% resource target. Formal V2 release package unchanged; no hardware conclusion.

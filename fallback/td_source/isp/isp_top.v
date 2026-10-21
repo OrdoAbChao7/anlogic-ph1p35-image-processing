@@ -7,6 +7,9 @@ module isp_top (
     input 			I_tvalid		,
     input [9:0] 	I_tdest			,
     input 			O_tready		,
+    input [15:0] I_awb_gain_r_q8_8,
+    input [15:0] I_awb_gain_g_q8_8,
+    input [15:0] I_awb_gain_b_q8_8,
     output [127:0] 	O_tdata			,
     output 			O_tlast			,
     output 			O_tuser			,
@@ -28,8 +31,30 @@ module isp_top (
     output wire         O_led_pass,
     output wire         O_led_ng,
     output wire         O_led_det,
-    output wire         O_ind_result_toggle
+    output wire         O_ind_result_toggle,
+    output wire [19:0]  O_ind_area,
+    // Post-AWB four-pixel stream exposed for source-domain V2 feature taps.
+    // The formal wrapper consumes this bus for motion sampling and frame
+    // statistics; it is the same stream used by the detector below.
+    output wire [95:0]  O_ind_awb_tdata,
+    output wire         O_ind_awb_tlast,
+    output wire         O_ind_awb_tuser,
+    output wire         O_ind_awb_tvalid
 );
+
+// Frozen v1 inspection ROI. Coordinates are half-open [x0,x1) x [y0,y1).
+// Until the camera/fixture is available for calibration, the approved
+// contract uses the complete 1280x720 raster as a fixed ROI. Keep the named
+// endpoints at the integration boundary so later calibration cannot silently
+// change detector semantics or OSD coordinates.
+localparam integer INDUSTRIAL_ROI_X0 = 0;
+localparam integer INDUSTRIAL_ROI_Y0 = 0;
+localparam integer INDUSTRIAL_ROI_X1 = 1280;
+localparam integer INDUSTRIAL_ROI_Y1 = 720;
+localparam integer INDUSTRIAL_ROI_X      = INDUSTRIAL_ROI_X0;
+localparam integer INDUSTRIAL_ROI_Y      = INDUSTRIAL_ROI_Y0;
+localparam integer INDUSTRIAL_ROI_WIDTH  = INDUSTRIAL_ROI_X1 - INDUSTRIAL_ROI_X0;
+localparam integer INDUSTRIAL_ROI_HEIGHT = INDUSTRIAL_ROI_Y1 - INDUSTRIAL_ROI_Y0;
 
 wire         m_aixs_tvalid;  //synthesis keep
   wire [127:0] m_aixs_tdata;  //synthesis keep
@@ -45,12 +70,17 @@ wire         m_aixs_tvalid;  //synthesis keep
   wire [ 95:0] awb_O_tdata;  //synthesis keep
   wire         awb_O_tvalid;  //synthesis keep
   wire         awb_O_tready;  //synthesis keep
+  wire         awb_gain_O_tready;
+  wire [95:0]  awb_gain_O_tdata;
+  wire         awb_gain_O_tlast;
+  wire         awb_gain_O_tuser;
+  wire         awb_gain_O_tvalid;
 
   wire         awb_O_tuser_128;  //synthesis keep
   wire         awb_O_tvalid_128;  //synthesis keep
   wire [127:0] awb_O_tdata_128;  //synthesis keep
 
-  assign awb_O_tready = O_tready;
+  assign awb_O_tready = awb_gain_O_tready;
   assign O_tdata  = awb_O_tdata_128;
   assign O_tlast  = awb_O_tlast    ;
   assign O_tuser  = awb_O_tuser_128    ;
@@ -109,13 +139,34 @@ awb #(
     .O_tready(awb_O_tready)
 );
 
+// Apply the frame-controller's Q8.8 correction to the vendor AWB stream.
+// The gain is captured at accepted frame start, so every pixel in one frame
+// uses the same three gains without adding latency or changing sideband timing.
+axis_gain_rgb96 u_axis_gain_rgb96 (
+    .I_clk       (axi4s_video_aclk),
+    .I_rst_n     (I_rst_n),
+    .I_tdata     (awb_O_tdata),
+    .I_tlast     (awb_O_tlast),
+    .I_tuser     (awb_O_tuser),
+    .I_tvalid    (awb_O_tvalid),
+    .I_tready    (O_tready),
+    .I_gain_r_q8_8(I_awb_gain_r_q8_8[9:0]),
+    .I_gain_g_q8_8(I_awb_gain_g_q8_8[9:0]),
+    .I_gain_b_q8_8(I_awb_gain_b_q8_8[9:0]),
+    .O_tready    (awb_gain_O_tready),
+    .O_tdata     (awb_gain_O_tdata),
+    .O_tlast     (awb_gain_O_tlast),
+    .O_tuser     (awb_gain_O_tuser),
+    .O_tvalid    (awb_gain_O_tvalid)
+);
+
     data_96bit_to_128bit u_data_96bit_to_128bit(
         .I_clk              ( axi4s_video_aclk  ),
         .I_rst_n            ( I_rst_n           ),
 
-        .I_96b_frame_start  ( awb_O_tuser       ),
-        .I_96b_valid        ( awb_O_tvalid      ),
-        .I_96b_data         ( awb_O_tdata       ),
+        .I_96b_frame_start  ( awb_gain_O_tuser  ),
+        .I_96b_valid        ( awb_gain_O_tvalid ),
+        .I_96b_data         ( awb_gain_O_tdata  ),
 
         .O_128b_frame_start ( awb_O_tuser_128  	),
         .O_128b_valid       ( awb_O_tvalid_128 	),
@@ -140,14 +191,18 @@ awb #(
         .CB_MAX     (125),
         .CR_MIN     (135),
         .CR_MAX     (200),
-        .MIN_AREA   (100)
+        .MIN_AREA   (100),
+        .ROI_X      (INDUSTRIAL_ROI_X),
+        .ROI_Y      (INDUSTRIAL_ROI_Y),
+        .ROI_WIDTH  (INDUSTRIAL_ROI_WIDTH),
+        .ROI_HEIGHT (INDUSTRIAL_ROI_HEIGHT)
     ) u_color_detect_96_v2 (
         .I_clk        (axi4s_video_aclk),
         .I_rst_n      (I_rst_n),
-        .I_tvalid     (awb_O_tvalid),
-        .I_tlast      (awb_O_tlast),
-        .I_tuser      (awb_O_tuser),
-        .I_tdata      (awb_O_tdata),
+        .I_tvalid     (awb_gain_O_tvalid),
+        .I_tlast      (awb_gain_O_tlast),
+        .I_tuser      (awb_gain_O_tuser),
+        .I_tdata      (awb_gain_O_tdata),
         .O_xmin       (ind_xmin),
         .O_xmax       (ind_xmax),
         .O_ymin       (ind_ymin),
@@ -206,8 +261,167 @@ awb #(
     assign O_ind_invalid  = ind_classifier_invalid;
     assign O_led_pass     = ind_led_pass;
     assign O_led_ng       = ind_led_ng;
+    assign O_led_det      = ind_led_det;
     assign O_ind_result_toggle = ind_result_toggle;
+    assign O_ind_area     = ind_area;
+    assign O_ind_awb_tdata  = awb_gain_O_tdata;
+    assign O_ind_awb_tlast  = awb_gain_O_tlast;
+    assign O_ind_awb_tuser  = awb_gain_O_tuser;
+    assign O_ind_awb_tvalid = awb_gain_O_tvalid;
 
+endmodule
+
+// Four-pixel RGB888 Q8.8 gain stage. Gains are snapshotted on an accepted SOF;
+// if the controller updates on that same edge, the frame uses the pre-edge
+// gains and the update first applies at the next accepted SOF strictly after
+// the update. This is deterministic and requires no minimum frame gap. The
+// elastic pipeline preserves AXI backpressure and keeps sidebands aligned.
+module axis_gain_rgb96 (
+    input  wire        I_clk,
+    input  wire        I_rst_n,
+    input  wire [95:0] I_tdata,
+    input  wire        I_tlast,
+    input  wire        I_tuser,
+    input  wire        I_tvalid,
+    input  wire        I_tready,
+    input  wire [9:0]  I_gain_r_q8_8,
+    input  wire [9:0]  I_gain_g_q8_8,
+    input  wire [9:0]  I_gain_b_q8_8,
+    output wire        O_tready,
+    output wire [95:0] O_tdata,
+    output wire        O_tlast,
+    output wire        O_tuser,
+    output wire        O_tvalid
+);
+    reg [9:0] active_gain_r_q8_8;
+    reg [9:0] active_gain_g_q8_8;
+    reg [9:0] active_gain_b_q8_8;
+    reg [95:0] raw_tdata;
+    reg        raw_tlast;
+    reg        raw_tuser;
+    reg        raw_tvalid;
+    reg [9:0]  raw_gain_r_q8_8;
+    reg [9:0]  raw_gain_g_q8_8;
+    reg [9:0]  raw_gain_b_q8_8;
+    reg [17:0] product_r0;
+    reg [17:0] product_g0;
+    reg [17:0] product_b0;
+    reg [17:0] product_r1;
+    reg [17:0] product_g1;
+    reg [17:0] product_b1;
+    reg [17:0] product_r2;
+    reg [17:0] product_g2;
+    reg [17:0] product_b2;
+    reg [17:0] product_r3;
+    reg [17:0] product_g3;
+    reg [17:0] product_b3;
+    reg        product_tlast;
+    reg        product_tuser;
+    reg        product_tvalid;
+
+    wire product_ready = !product_tvalid || I_tready;
+    wire raw_ready = !raw_tvalid || product_ready;
+    wire input_transfer = I_tvalid && raw_ready;
+    wire raw_transfer = raw_tvalid && product_ready;
+
+    function [17:0] multiply_channel;
+        input [7:0] pixel;
+        input [9:0] gain_q8_8;
+        begin
+            multiply_channel = {10'd0, pixel} * {8'd0, gain_q8_8};
+        end
+    endfunction
+
+    function [7:0] scale_product;
+        input [17:0] product;
+        reg [18:0] rounded_q8;
+        begin
+            rounded_q8 = {1'b0, product} + 19'd128;
+            rounded_q8 = rounded_q8 >> 8;
+            scale_product = (|rounded_q8[18:8]) ? 8'hff : rounded_q8[7:0];
+        end
+    endfunction
+
+    assign O_tready = raw_ready;
+    assign O_tvalid = product_tvalid;
+    assign O_tlast = product_tlast;
+    assign O_tuser = product_tuser;
+    assign O_tdata = {
+        scale_product(product_r0), scale_product(product_g0), scale_product(product_b0),
+        scale_product(product_r1), scale_product(product_g1), scale_product(product_b1),
+        scale_product(product_r2), scale_product(product_g2), scale_product(product_b2),
+        scale_product(product_r3), scale_product(product_g3), scale_product(product_b3)
+    };
+
+    always @(posedge I_clk or negedge I_rst_n) begin
+        if (!I_rst_n) begin
+            active_gain_r_q8_8 <= 10'd256;
+            active_gain_g_q8_8 <= 10'd256;
+            active_gain_b_q8_8 <= 10'd256;
+            raw_tdata <= 96'd0;
+            raw_tlast <= 1'b0;
+            raw_tuser <= 1'b0;
+            raw_tvalid <= 1'b0;
+            raw_gain_r_q8_8 <= 10'd256;
+            raw_gain_g_q8_8 <= 10'd256;
+            raw_gain_b_q8_8 <= 10'd256;
+            product_r0 <= 18'd0;
+            product_g0 <= 18'd0;
+            product_b0 <= 18'd0;
+            product_r1 <= 18'd0;
+            product_g1 <= 18'd0;
+            product_b1 <= 18'd0;
+            product_r2 <= 18'd0;
+            product_g2 <= 18'd0;
+            product_b2 <= 18'd0;
+            product_r3 <= 18'd0;
+            product_g3 <= 18'd0;
+            product_b3 <= 18'd0;
+            product_tlast <= 1'b0;
+            product_tuser <= 1'b0;
+            product_tvalid <= 1'b0;
+        end else begin
+            if (raw_ready) begin
+                raw_tvalid <= I_tvalid;
+                if (input_transfer) begin
+                    raw_tdata <= I_tdata;
+                    raw_tlast <= I_tlast;
+                    raw_tuser <= I_tuser;
+                    if (I_tuser) begin
+                        active_gain_r_q8_8 <= I_gain_r_q8_8;
+                        active_gain_g_q8_8 <= I_gain_g_q8_8;
+                        active_gain_b_q8_8 <= I_gain_b_q8_8;
+                        raw_gain_r_q8_8 <= I_gain_r_q8_8;
+                        raw_gain_g_q8_8 <= I_gain_g_q8_8;
+                        raw_gain_b_q8_8 <= I_gain_b_q8_8;
+                    end else begin
+                        raw_gain_r_q8_8 <= active_gain_r_q8_8;
+                        raw_gain_g_q8_8 <= active_gain_g_q8_8;
+                        raw_gain_b_q8_8 <= active_gain_b_q8_8;
+                    end
+                end
+            end
+            if (product_ready) begin
+                product_tvalid <= raw_tvalid;
+                if (raw_transfer) begin
+                    product_r0 <= multiply_channel(raw_tdata[95:88], raw_gain_r_q8_8);
+                    product_g0 <= multiply_channel(raw_tdata[87:80], raw_gain_g_q8_8);
+                    product_b0 <= multiply_channel(raw_tdata[79:72], raw_gain_b_q8_8);
+                    product_r1 <= multiply_channel(raw_tdata[71:64], raw_gain_r_q8_8);
+                    product_g1 <= multiply_channel(raw_tdata[63:56], raw_gain_g_q8_8);
+                    product_b1 <= multiply_channel(raw_tdata[55:48], raw_gain_b_q8_8);
+                    product_r2 <= multiply_channel(raw_tdata[47:40], raw_gain_r_q8_8);
+                    product_g2 <= multiply_channel(raw_tdata[39:32], raw_gain_g_q8_8);
+                    product_b2 <= multiply_channel(raw_tdata[31:24], raw_gain_b_q8_8);
+                    product_r3 <= multiply_channel(raw_tdata[23:16], raw_gain_r_q8_8);
+                    product_g3 <= multiply_channel(raw_tdata[15:8], raw_gain_g_q8_8);
+                    product_b3 <= multiply_channel(raw_tdata[7:0], raw_gain_b_q8_8);
+                    product_tlast <= raw_tlast;
+                    product_tuser <= raw_tuser;
+                end
+            end
+        end
+    end
 endmodule
 
 

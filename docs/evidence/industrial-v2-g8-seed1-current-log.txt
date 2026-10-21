@@ -1,0 +1,22 @@
+Industrial Vision V2 G8 current-source fixed-seed candidate
+============================================================
+TD: 6.2.168116
+Flow: official DefaultFlow.tcl
+Placement seed: 1
+Source commit: 98801ed381934ba665573fd6c15026c18c33a289
+
+Final QoR:
+  Slice: 17125 / 21216 (80.72%)
+  RAM: 43
+  DSP: 24
+  DRAMHARDCON: 229
+  Setup WNS/TNS/FEPS: +104 ps / 0 / 0
+  Hold WNS/TNS/FEPS: +20 ps / 0 / 0
+  Bitstream SHA-256: d6e6a7e12ef7558834904dcc8d2783d5fda827b7fe11c6e407b0119fc3ce1c0d
+
+Warnings retained:
+  PHY-5060: u_uicfgcs520/u_i2c/scl_clk mixed clock/data fanout
+  PHY-5060: O_cam_24m_syn_3 mixed clock/data fanout
+  PHY-5016: PLL clkc IO/clock-capable warning
+
+Conclusion: TD_PASS_CANDIDATE. Resource target met; fixed-seed byte identity, warning closure, hardware and long-run acceptance remain OPEN.

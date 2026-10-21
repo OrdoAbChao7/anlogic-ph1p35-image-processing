@@ -14,7 +14,7 @@
     "morphology_border": "replicate",
     "params_ok": true,
     "params_sha256_ok": true,
-    "plugin_sha256": "8341bb307de148a1e853c57bf512c6ae12d257cff6753b9aa11aa8580ac12205",
+    "plugin_sha256": "ef929f28a9a6790247df8c44b79fff74ddbd91aa152ea51bb3bf0a703f253713",
     "plugin_sha256_ok": true,
     "q10_bias": 131072,
     "q10_shift": 10,

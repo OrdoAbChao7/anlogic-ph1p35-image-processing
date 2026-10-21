@@ -20,7 +20,7 @@ class CartoonAlgorithm(BaseAlgorithm):
     display_name = "Cartoonization (卡通化算法套件)"
     category = "Stylization"
     description = "Compare bilateral/K-Means visual reference against FPGA hardware-equivalent models (Color Quantization + Sobel Overlay)."
-    source_reference = "amd/mini-isp / work/models/cartoon_reference.py / work/models/cartoon_luma_reference.py"
+    source_reference = "amd/mini-isp / archive/cartoon-legacy/models/cartoon_reference.py / archive/cartoon-legacy/models/cartoon_luma_reference.py"
     license = "MIT"
 
     def get_parameter_specs(self) -> list[dict]:

@@ -1,0 +1,40 @@
+Industrial V2 G8 single-thread fixed-seed determinism probe
+Date: 2026-10-19
+Worktree: E:/Projects/FPGA-v2
+Git commit before probe: 1cbee61df71612517198729261e525d5fcb76b5e
+Device: PH1P35MDG324
+
+Build A command:
+python -B scripts/build_industrial_td.py --td-exe E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe --flow-tcl work/flow_thread1_after_commit.tcl --place-seed 1 --input-package fallback/td_package --video-rtl fallback/rtl/video/video_cartoon_region_fill.v --release-dir release/candidates/industrial-v2-thread1-after-commit --work-project work/td_industrial_v2_thread1_after_commit
+
+Build B command:
+python -B scripts/build_industrial_td.py --td-exe E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe --flow-tcl work/flow_thread1_after_commit.tcl --place-seed 1 --input-package fallback/td_package --video-rtl fallback/rtl/video/video_cartoon_region_fill.v --release-dir release/candidates/industrial-v2-thread1-after-commit-2 --work-project work/td_industrial_v2_thread1_after_commit_2
+
+Flow evidence observed in both runs:
+- set_param flow thread 1
+- set_param place thread 1
+- set_param route thread 1
+- Global iterations in 1 thread
+
+Build A:
+- Bitstream: release/candidates/industrial-v2-thread1-after-commit/camera_to_dsi_display_compress.bit
+- Size: 1369777 bytes
+- SHA-256: 139499ea5e9bfd6bc99f7502d92ea81f53786b3d366631daf81a3c9f5da52dea
+- route.qor: Slice 18363/21216 (86.55%), Setup WNS 112 ps, Hold WNS 20 ps, TNS 0, violated endpoints 0
+- TD/STA/Bitgen: PASS
+
+Build B:
+- Bitstream: release/candidates/industrial-v2-thread1-after-commit-2/camera_to_dsi_display_compress.bit
+- Size: 1364145 bytes
+- SHA-256: da63492d7b8c28e29487c2087e847dc88589cc44f956547d02645fc0f75287b5
+- route.qor: Slice 18285/21216 (86.18%), Setup WNS 108 ps, Hold WNS 20 ps, TNS 0, violated endpoints 0
+- TD/STA/Bitgen: PASS
+
+Comparison:
+- SHA-256 equal: false
+- byte-for-byte equal: false
+- resource gate <=85%: FAIL for both builds
+- promotion to release/industrial-v2: NO
+
+Interpretation:
+Single-thread parameter application is evidenced, but deterministic Bitstream reproducibility is not achieved. This is a build-probe result only; no hardware evidence is implied.

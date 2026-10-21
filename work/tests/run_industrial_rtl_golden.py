@@ -1,6 +1,8 @@
 """Compare the real four-pixel detector RTL with the frozen Python HW model."""
 
 from pathlib import Path
+import os
+import shutil
 import subprocess
 import sys
 
@@ -10,6 +12,28 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "work" / "algorithm_lab"))
 from plugins.industrial_inspection import IndustrialInspectionAlgorithm
+
+
+def find_iverilog_root() -> Path:
+    candidates = []
+    if os.environ.get("FPGA_IVERILOG_ROOT"):
+        candidates.append(Path(os.environ["FPGA_IVERILOG_ROOT"]))
+    candidates.extend([ROOT / ".tools", ROOT.parent / ".tools"])
+    try:
+        candidates.extend(child / ".tools" for child in ROOT.parent.iterdir() if child.is_dir())
+    except OSError:
+        pass
+    for candidate in candidates:
+        if (candidate / "iverilog" / "bin" / "iverilog.exe").exists():
+            return candidate
+    iverilog = shutil.which("iverilog.exe") or shutil.which("iverilog")
+    if iverilog:
+        executable = Path(iverilog).resolve()
+        if executable.parent.name.lower() == "bin":
+            return executable.parent.parent.parent
+    raise FileNotFoundError(
+        "Icarus Verilog not found; set FPGA_IVERILOG_ROOT or place it under .tools/iverilog"
+    )
 
 
 W, H = 16, 8
@@ -81,7 +105,7 @@ def write_vectors(stimulus_path, expected_path, frames, params):
 
 
 def run_case(name, roi, frames=None):
-    output = ROOT / "work" / "output" / "industrial-golden"
+    output = ROOT / "work" / "generated" / "industrial-golden"
     output.mkdir(parents=True, exist_ok=True)
     stimulus = output / f"{name}.stimulus.txt"
     expected = output / f"{name}.expected.txt"
@@ -96,9 +120,7 @@ def run_case(name, roi, frames=None):
         frames = make_frames() if roi == (0, 0, 0, 0) else [make_frames()[0]]
     write_vectors(stimulus, expected, frames, params)
 
-    tool_root = ROOT / ".tools"
-    if not (tool_root / "iverilog" / "bin" / "iverilog.exe").exists():
-        tool_root = Path("E:/Projects/FPGA/.tools")
+    tool_root = find_iverilog_root()
     iverilog = tool_root / "iverilog" / "bin" / "iverilog.exe"
     vvp = tool_root / "iverilog" / "bin" / "vvp.exe"
     sim = output / f"{name}.vvp"
@@ -109,9 +131,9 @@ def run_case(name, roi, frames=None):
         f"-Ptb_color_detect_golden.ROI_W={roi[2]}",
         f"-Ptb_color_detect_golden.ROI_H={roi[3]}",
         f"-Ptb_color_detect_golden.EXPECTED_FRAMES={len(frames)}",
-        "-o", str(sim), str(ROOT / "fallback" / "tb_color_detect_golden.v"),
-        str(ROOT / "fallback" / "rtl" / "morph_open_96.v"),
-        str(ROOT / "fallback" / "rtl" / "color_detect_96_v2.v"),
+        "-o", str(sim), str(ROOT / "fallback" / "sim" / "inspection" / "tb_color_detect_golden.v"),
+        str(ROOT / "fallback" / "rtl" / "inspection" / "morph_open_96.v"),
+        str(ROOT / "fallback" / "rtl" / "inspection" / "color_detect_96_v2.v"),
     ], check=True)
     result = subprocess.run(
         [str(vvp), str(sim), f"+STIMULUS={stimulus.as_posix()}", f"+EXPECTED={expected.as_posix()}"],

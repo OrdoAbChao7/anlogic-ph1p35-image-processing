@@ -1,0 +1,35 @@
+Industrial V2 G8 MCLK ODDR-only placement seed=3 candidate
+Date: 2026-10-19
+Worktree: E:/Projects/FPGA-v2
+Input: current seven-feature V2 TD package
+Flow: official DefaultFlow.tcl
+TD version: 6.2.168116
+Target: PH1P35MDG324
+Placement seed: 3
+Top: release/candidates/industrial-v2-mclk-oddr-seed3/design_top_wrapper_mclk_oddr.v
+Top SHA-256: fd65440dc4dfaea1305f0dd31e42fcb79413628301106a87272cb3647ab2c3e0
+
+TD result:
+- synthesis/placement/routing/hold-fix/STA/Bitgen: PASS
+- Setup WNS +103 ps, TNS 0, violated endpoints 0
+- Hold WNS +20 ps, TNS 0, violated endpoints 0
+- Slice 17358/21216 (81.82%)
+- RAM 43, DSP 24, DRAMHARDCON 229
+- Bitstream size 1370801 bytes
+- Bitstream SHA-256 08da31a0f5fe2f9aadb7177e0794b4eb5438c74b97a32071b5ac592f856d2c25
+
+Warning comparison from the TD physical flow log:
+- O_cam_24m PHY-5060 mixed fanout: absent in this run
+- PHY-5079 local clock routing: absent in this run
+- I2C scl_clk PHY-5060: remains
+- PHY-5016 PLL-to-IO warnings: remain
+- PHY-5088 clock analyzer warnings: remain
+
+Artifacts:
+- release/candidates/industrial-v2-mclk-oddr-seed3/camera_to_dsi_display_compress.bit
+- release/candidates/industrial-v2-mclk-oddr-seed3/route.qor
+- release/candidates/industrial-v2-mclk-oddr-seed3/final_timing.rpt
+- release/candidates/industrial-v2-mclk-oddr-seed3/industrial-v1-manifest.json
+- release/candidates/industrial-v2-mclk-oddr-seed3/design_top_wrapper_mclk_oddr.v
+
+Decision: retain as a warning-reduction candidate; do not promote to formal release because PHY/CDC/hardware/reproducibility gates remain open.

@@ -1,0 +1,42 @@
+Industrial V2 G8 full work/tests regression
+Date: 2026-10-19
+Worktree: E:/Projects/FPGA-v2
+Command: python -B -m pytest -q -p no:cacheprovider work/tests
+
+Result:
+- exit code: 0
+- 162 passed in 1.40s
+
+Focused Icarus RTL benches (all exit code 0):
+- `TB_AXIS_GAIN_RGB96_PASS`
+- `TB_AWB_FRAME_GAIN_PASS`
+- `TB_AWB_FRAME_GAIN_FIXED_PASS`
+- `TB_DIMENSION_CALIBRATOR_PASS`
+- `TB_STREAM_ADAPTERS_96_PASS`
+- `TB_FRAME_STATS_FIXED_LUMA_PASS`
+- `TB_MOTION_DIFF_160_FULL_SCALE_PASS count=19200 width=15`
+- `TB_INDUSTRIAL_V2_RESULT_CDC_PASS`
+- `TB_INDUSTRIAL_OSD_TELEMETRY_PASS`
+- `TB_INDUSTRIAL_OSD_BCD_PASS`
+- `TB_RESET_RELEASE_SYNC_PASS`
+- `TB_FRAME_RESULT_TAG_QUEUE_PASS`
+- `TB_AWB_FRAME_GAIN_CADENCE_PASS`
+- `TB_INDUSTRIAL_V2_FEATURE_SPINE_PASS`
+- `TB_LATENCY_MONITOR_PASS`
+- `TB_FRAME_TAG_MONITOR_PASS`
+- `TB_LATENCY_MONITOR_FULL_FRAME_PASS cycles=921600`
+
+Final-follow-up directed reruns after the full-frame timeout and AWB fixed-point changes:
+- `TB_AWB_FRAME_GAIN_FIXED_PASS` (includes max legal channel sum and 763/764 target-mean boundaries)
+- `TB_LATENCY_MONITOR_PASS`
+- `TB_FRAME_TAG_MONITOR_PASS`
+- `TB_LATENCY_MONITOR_FULL_FRAME_PASS cycles=921600`
+
+`git diff --check` also returned exit code 0. TD physical design did not pass; see `docs/experiments/2026-10-19-industrial-v2-g8-live-telemetry.md` for isolated fix5–fix8 results.
+
+Scope:
+- V1 build/release contracts
+- V2 feature and release-audit contracts
+- RTL/software contract tests in work/tests
+
+The strict G8 verifier executes the full suite dynamically. This evidence does not imply hardware, PHY-warning, performance, reset/long-run, reproducibility, or actuator acceptance.

@@ -1,0 +1,15 @@
+# SDD ledger — plan: docs/superpowers/plans/2026-10-19-industrial-v2-g2-tracker.md
+
+Setup: continue in `E:/Projects/FPGA-v2` on `goal/industrial-v2-advanced`; G1 TD/hardware gates remain blocked, so only decoupled G2 software/RTL work is allowed.
+
+Ruling: no `/bin/bash`/WSL relay is available for `sdd-workspace`; this plan-scoped ledger follows the same manual path contract used by G0/G1.
+
+Task 1: software tracker model complete (RED missing-module collection failure; GREEN 6 passed).
+
+Task 2: RTL temporal tracker complete (RED unknown-module compile failure; GREEN TB_TEMPORAL_TRACKER_PASS; TD/top-level/hardware gates remain open).
+
+Task 3: RTL trajectory history complete (RED unknown-module compile failure; GREEN TB_TRAJECTORY_HISTORY_PASS; TD/top-level/hardware gates remain open).
+
+Task 4: RTL tracking overlay complete (RED unknown-module compile failure; GREEN TB_TRACKING_OVERLAY_PASS; top-level/TD/hardware gates remain open).
+
+Task 5: G2 gate complete (12 model tests, three G2 RTL tests and G1 regressions pass; full pytest 58/8 and Stage D SHA mismatch remain baseline blockers; status recorded as BLOCKED with SOFTWARE_PASS/RTL_PASS).

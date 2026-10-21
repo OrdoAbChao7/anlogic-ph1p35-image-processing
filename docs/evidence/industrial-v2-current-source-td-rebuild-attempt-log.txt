@@ -1,0 +1,12 @@
+Industrial Vision V2 current-source TD build
+===========================================
+Command: python -B scripts/build_industrial_td.py --td-exe E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe --flow-tcl E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl --input-package fallback/td_package --video-rtl fallback/rtl/video/video_cartoon_region_fill.v --release-dir release/candidates/industrial-v2-current --work-project work/td_industrial_v2_current
+
+Observed:
+  synthesis gate QoR: Setup WNS -1099 ps, TNS -6724 ps, FEPS 26; Hold WNS +114 ps, TNS 0
+  final route QoR: Slice 18484/21216 (87.12%), RAM 43, DSP 24, DRAMHARDCON 229
+  final timing QoR: Setup WNS +127 ps, Hold WNS +20 ps, TNS 0/0, violated endpoints 0/0
+  final Bitstream SHA-256: a39394977f8902f975ae74a4b8926bec4873fac9fc2065c16da48e79f5980c7c
+  final artifact directory: release/candidates/industrial-v2-current/
+
+Conclusion: TD_PASS_CANDIDATE. Resource, warning, reproducibility and hardware gates remain open.

@@ -23,9 +23,18 @@ from plugins.grayscale import GrayscaleAlgorithm
 from plugins.threshold import ThresholdAlgorithm
 from plugins.sobel import SobelAlgorithm
 from plugins.cartoon import CartoonAlgorithm
-from plugins.fastestdet import FastestDetAlgorithm
-from plugins.yolo_reference import YoloReferenceAlgorithm
+# Neural-network detection is archived for fixed-red v1. Keep the historical
+# endpoints importable without making the active lab depend on archived code.
+try:
+    from plugins.fastestdet import FastestDetAlgorithm
+except ImportError:
+    FastestDetAlgorithm = None
+try:
+    from plugins.yolo_reference import YoloReferenceAlgorithm
+except ImportError:
+    YoloReferenceAlgorithm = None
 from plugins.industrial_inspection import IndustrialInspectionAlgorithm
+from plugins.v2_telemetry_osd import V2TelemetryOSDAlgorithm
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
@@ -34,30 +43,30 @@ EXPORTS_DIR = BASE_DIR / "exports"
 PARAMS_DIR = BASE_DIR / "configs"
 REGISTRY_PATH = BASE_DIR / "registry.json"
 CACHE_DIR = BASE_DIR / "cache"
-Y1_DIR = BASE_DIR.parents[0] / "y1_yolo"
+ARCHIVE_YOLO_DIR = BASE_DIR.parents[1] / "archive" / "yolo"
+Y1_DIR = ARCHIVE_YOLO_DIR / "y1_yolo"
 Y1_LAB_DIR = Y1_DIR / "results" / "lab"
 Y1_UPLOAD_DIR = Y1_LAB_DIR / "uploads"
-Y2_DIR = BASE_DIR.parents[0] / "y2_micro"
+Y2_DIR = ARCHIVE_YOLO_DIR / "y2_micro"
 Y2_LAB_DIR = Y2_DIR / "results" / "lab"
 
 CACHE_DIR.mkdir(exist_ok=True)
 EXPORTS_DIR.mkdir(exist_ok=True)
 PARAMS_DIR.mkdir(exist_ok=True)
-Y1_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-Y2_LAB_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title="FPGA Algorithm Lab API")
 
 # Register available algorithm plugins
 PLUGIN_INSTANCES: Dict[str, BaseAlgorithm] = {
+    "v2_telemetry_osd": V2TelemetryOSDAlgorithm(),
     "industrial_inspection": IndustrialInspectionAlgorithm(),
     "cartoon": CartoonAlgorithm(),
     "sobel": SobelAlgorithm(),
     "threshold": ThresholdAlgorithm(),
     "grayscale": GrayscaleAlgorithm(),
 }
-DETECTION_PLUGIN = FastestDetAlgorithm()
-QUALITY_DETECTION_PLUGIN = YoloReferenceAlgorithm()
+DETECTION_PLUGIN = FastestDetAlgorithm() if FastestDetAlgorithm else None
+QUALITY_DETECTION_PLUGIN = YoloReferenceAlgorithm() if YoloReferenceAlgorithm else None
 Y2_MODELS = {}
 
 
@@ -229,6 +238,10 @@ def yolo_process(req: YoloProcessRequest):
     allowed_models = ("fastestdet_y1", "microdet_y2", "ultralytics_yolov8n", "ultralytics_yolov8m", "yolo_fastestv2")
     if not 0.01 <= req.confidence <= 0.99 or req.model not in allowed_models:
         raise HTTPException(status_code=400, detail="Invalid confidence or resolution")
+    raise HTTPException(
+        status_code=410,
+        detail="YOLO/Micro-CNN detection is archived and not part of fixed-red v1.",
+    )
     defaults = {"ultralytics_yolov8m": 640, "ultralytics_yolov8n": 640, "fastestdet_y1": 352,
                 "yolo_fastestv2": 352, "microdet_y2": 160}
     sizes = {"ultralytics_yolov8m": (640, 960), "ultralytics_yolov8n": (960, 640, 352, 160, 128, 96),
@@ -736,8 +749,13 @@ def process_video(req: Dict[str, Any]):
 # Serve static and cache files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.mount("/cache", StaticFiles(directory=CACHE_DIR), name="cache")
-app.mount("/y1-assets", StaticFiles(directory=Y1_LAB_DIR), name="y1-assets")
-app.mount("/y2-assets", StaticFiles(directory=Y2_LAB_DIR), name="y2-assets")
+# The YOLO/Micro-CNN labs are archived and are intentionally absent from the
+# active tree.  Keep their historical asset routes inert instead of requiring
+# archived result directories just to import the fixed-red Algorithm Lab.
+if Y1_LAB_DIR.exists():
+    app.mount("/y1-assets", StaticFiles(directory=Y1_LAB_DIR), name="y1-assets")
+if Y2_LAB_DIR.exists():
+    app.mount("/y2-assets", StaticFiles(directory=Y2_LAB_DIR), name="y2-assets")
 
 # Mount external output assets for candidate gallery
 candidates_dir = BASE_DIR.parents[0] / "output" / "cartoon_candidates"

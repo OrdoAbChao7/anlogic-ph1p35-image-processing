@@ -1,0 +1,34 @@
+Industrial V2 G8 I2C clock/data isolation probe
+Date: 2026-10-19
+Target: PH1P35MDG324
+TD: 6.2.168116
+Flow: release/industrial-v2/DefaultFlow.tcl
+Placement seed: 1
+
+Candidate change:
+- isolated copy of fallback/td_package/user_source/hdl_source/uics500_cfg/uii2c.v
+- separate scl_data_clk registered beside scl_clk
+- SCL output data path uses scl_data_clk; event-clock sensitivity remains scl_clk
+- candidate source SHA-256: 58742ebf12b2fe21ad63a6c77c4f2208405dd9d9ff323ba27a26f32f29f74556
+
+RTL:
+- TDD static contract: RED on missing transform, then GREEN 1 passed
+- Icarus directed write transaction: PASS busy=0 bus_error=0 scl_transitions=20
+
+TD:
+- synthesis/placement/routing/final STA/Bitgen: PASS
+- Setup WNS +103 ps, TNS 0, violated endpoints 0
+- Hold WNS +20 ps, TNS 0, violated endpoints 0
+- Slice 17247/21216 (81.29%)
+- RAM 43, DSP 24, DRAMHARDCON 229
+- compressed bitstream: 1366833 bytes
+- bitstream SHA-256: 0b54ad07d4413b4d7627d3af67fd4c9fd75af56cd8eff9d4f611800ee5125535
+
+Warning result:
+- PHY-5060 remains on u_uicfgcs520/u_i2c/scl_clk (1 clock + 1 data/ctrl) and O_cam_24m_syn_3
+- PHY-5016 remains on PLL clkc to IO
+- PHY-5079 remains on local clock routing
+- PHY-5088 remains in clock analyzer output
+
+Decision: REJECTED_WARNING_CLOSURE. Resource/timing pass is candidate-only; formal release and hardware status unchanged. TD logs and reports are retained under release/candidates/industrial-v2-i2c-data-isolation/.
+

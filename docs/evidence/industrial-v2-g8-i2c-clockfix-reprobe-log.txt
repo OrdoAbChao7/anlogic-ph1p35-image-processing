@@ -1,0 +1,28 @@
+Industrial V2 G8 I2C clock-enable re-probe
+Date: 2026-10-19
+Worktree: E:/Projects/FPGA-v2
+Candidate source: local SC520 clockfix uics500_cfg/uii2c.v
+Candidate source SHA-256: 03157619967fd339847ec3ffd4b191f90363ed0112950e8efb87acf2e25e528f
+
+RTL directed simulation:
+- Icarus compile: PASS
+- Transaction: single-byte write + repeated-start single-byte read
+- busy returned to 0: PASS
+- bus_error: 0
+- read data: 00
+- SCL transitions: 59
+
+TD command used an isolated input package and work project with:
+- DefaultFlow.tcl
+- place seed 1
+- full current seven-feature V2 source set
+
+Synthesis result:
+- Setup WNS: -1255 ps
+- Setup TNS: -14138 ps
+- Setup violated endpoints: 22
+- Hold WNS: +114 ps
+- TD did not reach a valid physical-design/Bitgen completion
+- no candidate Bitstream promoted
+
+Decision: REJECTED_SYNTH_TIMING. Formal V2 release package unchanged; no hardware conclusion.

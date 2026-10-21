@@ -1,0 +1,20 @@
+Industrial V2 G8 TD candidate attempt — extracted evidence
+
+Tool input:
+  td_exe  = E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe
+  flow    = E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl
+  project = work/td_industrial_formal_display
+
+Observed log markers:
+  SYN-1001 : End Stage 2.3 | Map Macro
+  SYN-1079 : finish stage Map Macro. Total instances: 98649, Total nets: 112628.
+  SYN-1001 : Stage 2.4 | Map Gate
+  SYN-3001 : Collect 10200 PI 7040 PO (119 timing unconstrained) for mapping
+
+Warnings observed before the run ended:
+  SYN-5011 WARNING: DDR PHY undriven pins in ph1p_ddrphy_init.v(73)
+  SYN-5025 WARNING: Using 0 for all undriven pins and nets
+
+No completion marker, exit-code line, route.qor, final_timing.rpt, or .bit
+artifact was produced. This extract records an incomplete attempt only; it is
+not TD, QoR, timing, or Bitstream acceptance evidence.

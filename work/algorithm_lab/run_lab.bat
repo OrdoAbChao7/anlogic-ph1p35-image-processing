@@ -3,11 +3,9 @@ chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
 
-set "LAB_PYTHON=%~dp0..\y1_yolo\.venv\Scripts\python.exe"
-if not exist "%LAB_PYTHON%" (
-  set "LAB_PYTHON=E:\Projects\FPGA\work\y1_yolo\.venv\Scripts\python.exe"
-)
-if not exist "%LAB_PYTHON%" (
+if defined FPGA_PYTHON (
+  set "LAB_PYTHON=%FPGA_PYTHON%"
+) else (
   set "LAB_PYTHON=python"
 )
 

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "project": "PH1P35 Industrial Vision V2 I2C clock/data isolation probe",
+  "status": "REJECTED_WARNING_CLOSURE",
+  "target": "PH1P35MDG324",
+  "td_version": "6.2.168116",
+  "flow": "release/industrial-v2/DefaultFlow.tcl",
+  "placement_seed": 1,
+  "input_package": "isolated copy of fallback/td_package/",
+  "candidate_source": "user_source/hdl_source/uics500_cfg/uii2c.v",
+  "candidate_source_sha256": "58742ebf12b2fe21ad63a6c77c4f2208405dd9d9ff323ba27a26f32f29f74556",
+  "qor": {
+    "setup_wns_ps": 103,
+    "setup_tns_ps": 0,
+    "hold_wns_ps": 20,
+    "hold_tns_ps": 0,
+    "slices": 17247,
+    "slice_percent": 81.29,
+    "rams": 43,
+    "dsps": 24,
+    "dramhardcon": 229
+  },
+  "artifacts": {
+    "bitstream": {
+      "path": "camera_to_dsi_display_compress.bit",
+      "bytes": 1366833,
+      "sha256": "0b54ad07d4413b4d7627d3af67fd4c9fd75af56cd8eff9d4f611800ee5125535"
+    },
+    "route_qor_sha256": "1925d1ad795bbcd78f6cafc5979e5b3753af0b6c535761ae3a429c618e3b5d1b",
+    "final_timing_sha256": "d66256a442fad174610d4ff7d1cc737ca02ea6bbd6bc1af2b6d60d1024706318"
+  },
+  "warnings_open": ["PHY-5016", "PHY-5060", "PHY-5079", "PHY-5088"],
+  "hardware": "NOT_RUN",
+  "formal_release_sha256": "d6e6a7e12ef7558834904dcc8d2783d5fda827b7fe11c6e407b0119fc3ce1c0d"
+}
+

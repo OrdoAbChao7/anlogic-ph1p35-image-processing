@@ -2,23 +2,18 @@
 
 module design_top_wrapper (
     input wire        I_sys_clk,
-    input wire        I_rst_n,
 
     output wire       O_cam_scl,
     inout  wire       IO_cam_sda,
     output wire       O_cam_24m,
     output wire       O_cam_rst,
 
-    // Board Industrial Inspection LEDs
-    output wire       O_led_pass,
-    output wire       O_led_ng,
-    output wire       O_led_det,
+    output wire       O_led1,
+    output wire       O_led2,
+    output wire       O_led3,
 
-    inout wire [1:0]  I_button,
-    inout wire        I_button2,   // SW: edge mode select (active low)
-    inout wire        I_button3,   // SW: cartoon mode select (active low)
+    input wire [1:0]  I_button,
 
-    output wire       O_screen_pwm,
     output wire       O_tmds_ch0_p,
     output wire       O_tmds_ch1_p,
     output wire       O_tmds_ch2_p,
@@ -46,6 +41,15 @@ module design_top_wrapper (
 );
 
 
+    // HX1P35A HDL manual: KEY1=D5 and KEY2=A9, both active-low.
+    // These inputs are pulled up by the board-level pin constraints.
+    wire I_mode_edge_n = I_button[0];
+    wire I_mode_cartoon_n = I_button[1];
+    (* keep = "true" *) wire O_led_pass;
+    (* keep = "true" *) wire O_led_ng;
+    (* keep = "true" *) wire O_led_det;
+
+
     wire        	S_100m_clk;
     wire        	S_24m_clk;
     wire        	S_aux_50m_clk;
@@ -53,6 +57,8 @@ module design_top_wrapper (
 
 	wire        	S_pll_lock;
     wire        	S_rst_n;
+	wire        	S_v2_src_rst_n;
+	wire        	S_v2_dst_rst_n;
 	reg  [17:0] 	S_cam_power_cnt;
 	reg         	S_cam_pwdnb;
 	reg         	S_cam_i2c_ready;
@@ -227,12 +233,23 @@ module design_top_wrapper (
     reg [3:0]   S_mipi_diag_status_sync2;
 
 
-    assign O_screen_pwm = 1'b1;
     assign S_video_out_vsync = ~S_hdmi_vsync;
 
 
     assign S_rst_n 		= S_pll_lock;
     assign S_hdmi_rst_n = S_pll_lock;
+
+    reset_release_sync u_v2_src_reset_release (
+        .I_clk          ( S_csi_rx_clk       ),
+        .I_async_rst_n  ( S_pll_lock         ),
+        .O_rst_n        ( S_v2_src_rst_n     )
+    );
+
+    reset_release_sync u_v2_dst_reset_release (
+        .I_clk          ( S_hdmi_pixel_clk   ),
+        .I_async_rst_n  ( S_pll_lock         ),
+        .O_rst_n        ( S_v2_dst_rst_n     )
+    );
 
     always @(posedge S_csi_rx_clk or negedge S_rst_n) begin
         if(!S_rst_n)
@@ -539,7 +556,10 @@ module design_top_wrapper (
 
     PLL u_PLL(
         .refclk      ( I_sys_clk         ),
-        .reset    	 ( ~I_rst_n          ),
+        // The HX1P35A manual does not expose a dedicated user-reset pin.
+        // Hold the PLL reset inactive and use its lock signal as the
+        // internally generated reset release for every clock domain.
+        .reset    	 ( 1'b0              ),
 
         .clk0_out    ( S_100m_clk        ),
         .clk1_out    ( S_24m_clk         ),
@@ -599,7 +619,8 @@ module design_top_wrapper (
         .I_data_lane2_in_delay ( 6'd0             ),
         .I_data_lane3_in_delay ( 6'd0             ),
 
-        .I_lane_invert         ( 4'b0000          ),
+        // LANE_NUM=2: keep the inversion vector width equal to the PHY port.
+        .I_lane_invert         ( 2'b00            ),
 
         .O_hs_rx_clk           ( S_csi_rx_clk     ),
         .O_hs_rx_valid         ( S_hs_rx_valid    ),
@@ -709,9 +730,53 @@ assign S_raw_tuser  = S_axis_tuser;
 
     wire [10:0] ind_xmin, ind_xmax, ind_ymin, ind_ymax;
     wire [10:0] ind_meas_w, ind_meas_h;
+    wire [19:0] ind_area;
     wire        ind_detected, ind_pass, ind_ng, ind_no_obj, ind_invalid;
     wire        ind_led_pass, ind_led_ng, ind_led_det;
     wire        ind_result_toggle;
+    wire [95:0] ind_awb_tdata;
+    wire        ind_awb_tlast, ind_awb_tuser, ind_awb_tvalid;
+    wire [15:0] v2_gain_r, v2_gain_g, v2_gain_b;
+    reg  [15:0] ind_v2_frame_id;
+    reg         ind_v2_toggle_d;
+    wire [15:0] ind_result_frame_id;
+    wire        ind_result_tag_valid;
+    reg  [15:0] v2_src_result_frame_id_hold;
+    reg         v2_src_result_tag_valid_hold;
+    wire [15:0] ind_source_frame_id = ind_v2_frame_id +
+                                      (S_ISP_O_tuser ? 16'd1 : 16'd0);
+    wire        ind_result_event = ind_result_toggle ^ ind_v2_toggle_d;
+    wire [11:0] ind_cx_sum = {1'b0, ind_xmin} + {1'b0, ind_xmax};
+    wire [11:0] ind_cy_sum = {1'b0, ind_ymin} + {1'b0, ind_ymax};
+    wire [10:0] ind_v2_cx = ind_cx_sum >> 1;
+    wire [10:0] ind_v2_cy = ind_cy_sum >> 1;
+
+    // Source-domain frame ID for the result toggle. This counter is only a
+    // protocol tag; it is not a measured camera frame-rate or latency value.
+    frame_result_tag_queue #(
+        .FRAME_ID_WIDTH ( 16 ),
+        .DEPTH          ( 4  )
+    ) u_v2_frame_result_tag_queue (
+        .I_clk              ( S_csi_rx_clk       ),
+        .I_rst_n            ( S_v2_src_rst_n     ),
+        .I_push             ( S_ISP_O_tuser && S_ISP_O_tvalid ),
+        .I_push_frame_id    ( ind_source_frame_id ),
+        .I_pop              ( ind_result_event    ),
+        .O_result_frame_id  ( ind_result_frame_id ),
+        .O_result_tag_valid ( ind_result_tag_valid ),
+        .O_tag_fault        (                     )
+    );
+
+    always @(posedge S_csi_rx_clk or negedge S_v2_src_rst_n) begin
+        if (!S_v2_src_rst_n) begin
+            ind_v2_frame_id <= 16'd0;
+            ind_v2_toggle_d <= 1'b0;
+        end else begin
+            if (S_ISP_O_tuser)
+                ind_v2_frame_id <= ind_v2_frame_id + 16'd1;
+            ind_v2_toggle_d <= ind_result_toggle;
+        end
+    end
 
     // ISP算法顶层模块 (集成工业目标定位与缺陷检测)
     isp_top u_isp_top (
@@ -723,6 +788,9 @@ assign S_raw_tuser  = S_axis_tuser;
         .I_tvalid         ( S_raw_tvalid         ),
         .I_tdest          (                      ),
         .O_tready         ( S_ISP_O_tready       ),
+        .I_awb_gain_r_q8_8 ( v2_gain_r             ),
+        .I_awb_gain_g_q8_8 ( v2_gain_g             ),
+        .I_awb_gain_b_q8_8 ( v2_gain_b             ),
         .O_tdata          ( S_ISP_O_tdata        ),
         .O_tlast          ( S_ISP_O_tlast        ),
         .O_tuser          ( S_ISP_O_tuser        ),
@@ -742,13 +810,26 @@ assign S_raw_tuser  = S_axis_tuser;
         .O_led_pass       ( ind_led_pass         ),
         .O_led_ng         ( ind_led_ng           ),
         .O_led_det         ( ind_led_det          ),
-        .O_ind_result_toggle ( ind_result_toggle )
+        .O_ind_result_toggle ( ind_result_toggle ),
+        .O_ind_area          ( ind_area           ),
+        .O_ind_awb_tdata     ( ind_awb_tdata      ),
+        .O_ind_awb_tlast     ( ind_awb_tlast      ),
+        .O_ind_awb_tuser     ( ind_awb_tuser      ),
+        .O_ind_awb_tvalid    ( ind_awb_tvalid     )
         );
 
-    // Direct LED assignments (Active High)
-    assign O_led_pass = ind_led_pass;
-    assign O_led_ng   = ind_led_ng;
-    assign O_led_det  = ind_led_det;
+    // LEDs consume the same HDMI-domain atomic result as the OSD and BBox.
+    // INVALID deliberately lights both result indicators, while the detected
+    // indicator remains low because the measurement is not trustworthy.
+    assign O_led_pass = (sync_hdmi_pass || sync_hdmi_invalid);
+    assign O_led_ng   = (sync_hdmi_ng   || sync_hdmi_invalid);
+    assign O_led_det  = sync_hdmi_detected;
+    // HX1P35A independent LEDs are high-active: LED1=D10, LED2=E10,
+    // LED3=C6.  Keep the logical status encoding unchanged and expose it
+    // through the physical board outputs.
+    assign O_led1 = O_led_pass;
+    assign O_led2 = O_led_ng;
+    assign O_led3 = O_led_det;
 
 
     video_in u_video_in(
@@ -940,8 +1021,8 @@ assign S_raw_tuser  = S_axis_tuser;
     ) u_mode_controller (
         .I_clk          ( S_hdmi_pixel_clk ),
         .I_rst_n        ( S_hdmi_rst_n     ),
-        .I_key_edge_n   ( I_button2        ),
-        .I_key_cartoon_n( I_button3        ),
+        .I_key_edge_n   ( I_mode_edge_n    ),
+        .I_key_cartoon_n( I_mode_cartoon_n ),
         .I_frame_start  ( S_hdmi_out_vsync ),
         .O_mode         ( S_display_mode   ),
         .O_edge_req     ( S_edge_req       ),
@@ -971,53 +1052,388 @@ assign S_raw_tuser  = S_axis_tuser;
         .o_mode         ( S_cartoon_mode       )
     );
 
-    // CDC for the frame-published inspection result.  The source bus is held
-    // stable by defect_classifier; the toggle is the event synchronizer.
-    reg        ind_toggle_meta, ind_toggle_sync, ind_toggle_seen;
-    reg [10:0] sync_hdmi_xmin, sync_hdmi_xmax, sync_hdmi_ymin, sync_hdmi_ymax;
-    reg [10:0] sync_hdmi_width, sync_hdmi_height;
-    reg        sync_hdmi_detected, sync_hdmi_pass, sync_hdmi_ng;
-    reg        sync_hdmi_invalid;
+    wire [10:0] sync_hdmi_xmin, sync_hdmi_xmax, sync_hdmi_ymin, sync_hdmi_ymax;
+    wire        sync_hdmi_detected, sync_hdmi_pass, sync_hdmi_ng;
+    wire        sync_hdmi_invalid;
+    wire        v2_hdmi_result_valid;
+    wire [15:0] v2_hdmi_frame_id;
+    wire [10:0] v2_hdmi_xmin, v2_hdmi_xmax, v2_hdmi_ymin, v2_hdmi_ymax;
+    wire [10:0] v2_hdmi_cx, v2_hdmi_cy;
+    wire        v2_hdmi_detected, v2_hdmi_pass, v2_hdmi_ng, v2_hdmi_invalid;
+    wire        v2_hdmi_dimension_valid, v2_hdmi_shape_valid;
+    wire [31:0] v2_hdmi_width_mm_q16_16, v2_hdmi_height_mm_q16_16;
+    wire        v2_hdmi_motion_valid;
+    wire        v2_hdmi_motion;
+    wire [23:0] v2_hdmi_motion_count;
+    wire [15:0] v2_hdmi_pass_count, v2_hdmi_ng_count;
+    wire        v2_hdmi_sort_pulse, v2_hdmi_safe_enable;
+    wire        v2_hdmi_proc_valid;
+    wire [31:0] v2_hdmi_proc_cycles;
+    wire [10:0] v2_hdmi_pixel_width = v2_hdmi_detected && (v2_hdmi_xmax >= v2_hdmi_xmin) ?
+                                        (v2_hdmi_xmax - v2_hdmi_xmin + 11'd1) : 11'd0;
+    wire [10:0] v2_hdmi_pixel_height = v2_hdmi_detected && (v2_hdmi_ymax >= v2_hdmi_ymin) ?
+                                         (v2_hdmi_ymax - v2_hdmi_ymin + 11'd1) : 11'd0;
 
-    always @(posedge S_hdmi_pixel_clk or negedge S_hdmi_rst_n) begin
-        if (!S_hdmi_rst_n) begin
-            ind_toggle_meta     <= 1'b0;
-            ind_toggle_sync     <= 1'b0;
-            ind_toggle_seen     <= 1'b0;
-            sync_hdmi_xmin      <= 11'd0;
-            sync_hdmi_xmax      <= 11'd0;
-            sync_hdmi_ymin      <= 11'd0;
-            sync_hdmi_ymax      <= 11'd0;
-            sync_hdmi_width     <= 11'd0;
-            sync_hdmi_height    <= 11'd0;
-            sync_hdmi_detected  <= 1'b0;
-            sync_hdmi_pass      <= 1'b0;
-            sync_hdmi_ng        <= 1'b0;
-            sync_hdmi_invalid   <= 1'b1;
-        end else begin
-            ind_toggle_meta <= ind_result_toggle;
-            ind_toggle_sync <= ind_toggle_meta;
-            if (ind_toggle_sync != ind_toggle_seen) begin
-                ind_toggle_seen    <= ind_toggle_sync;
-                sync_hdmi_xmin     <= ind_xmin;
-                sync_hdmi_xmax     <= ind_xmax;
-                sync_hdmi_ymin     <= ind_ymin;
-                sync_hdmi_ymax     <= ind_ymax;
-                sync_hdmi_width    <= ind_meas_w;
-                sync_hdmi_height   <= ind_meas_h;
-                sync_hdmi_detected <= ind_detected;
-                sync_hdmi_pass     <= ind_pass;
-                sync_hdmi_ng       <= ind_ng;
-                sync_hdmi_invalid  <= ind_invalid;
-            end
+    // ------------------------------------------------------------------
+    // V2 source-domain feature integration.
+    //
+    // The ISP exposes the post-AWB 4-pixel stream used by the detector.  The
+    // motion and statistics adapters therefore observe the same raster and
+    // clock domain instead of reconstructing a second video path.  The
+    // feature spine publishes a staged result toggle only after its registered
+    // result fields have settled; the result CDC below then transports one
+    // atomic frame result into the HDMI clock domain.
+    // ------------------------------------------------------------------
+    wire        v2_motion_frame_start;
+    wire        v2_motion_frame_end;
+    wire        v2_motion_sample_valid;
+    wire [15:0] v2_motion_frame_id;
+    wire [7:0]  v2_motion_sample_x;
+    wire [6:0]  v2_motion_sample_y;
+    wire [7:0]  v2_motion_y_value;
+    wire        v2_motion_adapter_invalid;
+
+    motion_grid_adapter_96 #(
+        .INPUT_WIDTH    ( 1280 ),
+        .INPUT_HEIGHT   ( 720  ),
+        .GRID_WIDTH     ( 160  ),
+        .GRID_HEIGHT    ( 120  ),
+        .X_STEP         ( 8    ),
+        .Y_STEP         ( 6    ),
+        .FRAME_ID_WIDTH ( 16   )
+    ) u_v2_motion_grid_adapter (
+        .I_clk          ( S_csi_rx_clk       ),
+        .I_rst_n        ( S_v2_src_rst_n      ),
+        .I_tuser        ( ind_awb_tuser       ),
+        .I_tlast        ( ind_awb_tlast       ),
+        .I_tvalid       ( ind_awb_tvalid      ),
+        .I_frame_id     ( ind_source_frame_id ),
+        .I_tdata        ( ind_awb_tdata       ),
+        .O_frame_start  ( v2_motion_frame_start ),
+        .O_frame_end    ( v2_motion_frame_end   ),
+        .O_sample_valid ( v2_motion_sample_valid ),
+        .O_frame_id     ( v2_motion_frame_id    ),
+        .O_sample_x     ( v2_motion_sample_x    ),
+        .O_sample_y     ( v2_motion_sample_y    ),
+        .O_y_value      ( v2_motion_y_value     ),
+        .O_invalid      ( v2_motion_adapter_invalid )
+    );
+
+    wire        v2_stats_valid;
+    wire [15:0] v2_stats_frame_id;
+    wire [31:0] v2_stats_sum_r, v2_stats_sum_g, v2_stats_sum_b;
+    wire [31:0] v2_stats_pixel_count;
+    wire [7:0]  v2_stats_mean_luma;
+    wire        v2_stats_invalid;
+
+    frame_stats_96 #(
+        .INPUT_WIDTH    ( 1280 ),
+        .INPUT_HEIGHT   ( 720  ),
+        .FRAME_ID_WIDTH ( 16   ),
+        .USE_FIXED_FRAME_SIZE ( 1 )
+    ) u_v2_frame_stats (
+        .I_clk          ( S_csi_rx_clk       ),
+        .I_rst_n        ( S_v2_src_rst_n      ),
+        .I_tuser        ( ind_awb_tuser       ),
+        .I_tlast        ( ind_awb_tlast       ),
+        .I_tvalid       ( ind_awb_tvalid      ),
+        .I_frame_id     ( ind_source_frame_id ),
+        .I_tdata        ( ind_awb_tdata       ),
+        .O_stats_valid  ( v2_stats_valid      ),
+        .O_frame_id     ( v2_stats_frame_id    ),
+        .O_sum_r        ( v2_stats_sum_r       ),
+        .O_sum_g        ( v2_stats_sum_g       ),
+        .O_sum_b        ( v2_stats_sum_b       ),
+        .O_pixel_count  ( v2_stats_pixel_count ),
+        .O_mean_luma    ( v2_stats_mean_luma   ),
+        .O_invalid      ( v2_stats_invalid     )
+    );
+
+    wire        v2_gain_update_valid;
+    wire        v2_scene_protected;
+    wire        v2_src_dimension_valid, v2_src_shape_valid;
+    wire        v2_src_calibration_invalid;
+    wire [31:0] v2_src_width_mm_q16_16, v2_src_height_mm_q16_16;
+    wire [8:0]  v2_src_occupancy_q8;
+    wire [15:0] v2_src_aspect_q8;
+    wire        v2_src_safe_enable, v2_src_sort_request, v2_src_sort_pulse;
+    wire        v2_src_sort_busy, v2_src_sort_accepted, v2_src_sort_rejected;
+    wire        v2_src_sort_timeout;
+    wire [15:0] v2_src_pass_count, v2_src_ng_count;
+    wire        v2_src_track_valid, v2_src_track_enter, v2_src_track_exit;
+    wire [1:0]  v2_src_tracking_state;
+    wire [10:0] v2_src_track_cx, v2_src_track_cy;
+    wire        v2_src_motion_valid, v2_src_motion;
+    wire [23:0] v2_src_motion_count;
+    wire        v2_src_latency_proc_valid, v2_src_latency_video_valid;
+    wire        v2_src_latency_e2e_valid, v2_src_frame_gap, v2_src_tag_mismatch;
+    wire [31:0] v2_src_latency_proc_cycles, v2_src_latency_video_cycles;
+    wire [31:0] v2_src_latency_e2e_cycles;
+    reg         v2_src_toggle;
+
+    // Candidate-only calibration values from the software contract.  These
+    // constants are deliberately documented as provisional until a physical
+    // workcell calibration is captured; they keep the RTL result path active
+    // without changing the sensor or board configuration.
+    localparam [31:0] V2_SCALE_X_Q16_16       = 32'd32768;
+    localparam [31:0] V2_SCALE_Y_Q16_16       = 32'd16384;
+    localparam [31:0] V2_NOMINAL_WIDTH_Q16_16 = 32'd3932160;
+    localparam [31:0] V2_NOMINAL_HEIGHT_Q16_16= 32'd1310720;
+    localparam [31:0] V2_TOL_WIDTH_Q16_16     = 32'd131072;
+    localparam [31:0] V2_TOL_HEIGHT_Q16_16    = 32'd131072;
+
+    industrial_v2_feature_spine #(
+        .USE_STATIC_CAL_CONFIG              ( 1 ),
+        .STATIC_SCALE_X_Q16_16               ( V2_SCALE_X_Q16_16 ),
+        .STATIC_SCALE_Y_Q16_16               ( V2_SCALE_Y_Q16_16 ),
+        .STATIC_NOMINAL_WIDTH_Q16_16         ( V2_NOMINAL_WIDTH_Q16_16 ),
+        .STATIC_NOMINAL_HEIGHT_Q16_16        ( V2_NOMINAL_HEIGHT_Q16_16 ),
+        .STATIC_TOLERANCE_WIDTH_Q16_16       ( V2_TOL_WIDTH_Q16_16 ),
+        .STATIC_TOLERANCE_HEIGHT_Q16_16      ( V2_TOL_HEIGHT_Q16_16 ),
+        .STATIC_OCCUPANCY_MIN_Q8             ( 9'd200 ),
+        .STATIC_ASPECT_MIN_Q8                ( 16'd320 ),
+        .STATIC_ASPECT_MAX_Q8                ( 16'd448 ),
+        .USE_FIXED_AWB_PIXEL_COUNT           ( 1 ),
+        .FIXED_AWB_PIXEL_COUNT               ( 32'd921600 )
+    ) u_industrial_v2_feature_spine (
+        .I_clk                    ( S_csi_rx_clk       ),
+        .I_rst_n                  ( S_v2_src_rst_n      ),
+        .I_frame_start            ( S_ISP_O_tuser       ),
+        .I_frame_valid            ( S_ISP_O_tuser       ),
+        .I_frame_id               ( ind_source_frame_id ),
+        .I_result_valid           ( ind_result_event    ),
+        .I_result_tag_valid       ( ind_result_tag_valid ),
+        .I_result_frame_id        ( ind_result_frame_id ),
+        .I_video_frame_id         ( 16'd0                ),
+        .I_detected               ( ind_detected        ),
+        .I_invalid                ( ind_invalid || v2_motion_adapter_invalid || v2_stats_invalid ),
+        .I_xmin                   ( ind_xmin            ),
+        .I_xmax                   ( ind_xmax            ),
+        .I_ymin                   ( ind_ymin            ),
+        .I_ymax                   ( ind_ymax            ),
+        .I_cx                     ( ind_v2_cx           ),
+        .I_cy                     ( ind_v2_cy           ),
+        .I_area                   ( ind_area            ),
+        .I_verdict_valid          ( ind_result_event    ),
+        .I_verdict_pass           ( ind_pass            ),
+        .I_verdict_invalid        ( ind_invalid         ),
+        .I_motion_frame_start     ( v2_motion_frame_start ),
+        .I_motion_frame_end       ( v2_motion_frame_end   ),
+        .I_motion_sample_valid    ( v2_motion_sample_valid ),
+        .I_motion_frame_id        ( v2_motion_frame_id    ),
+        .I_motion_sample_x        ( v2_motion_sample_x    ),
+        .I_motion_sample_y        ( v2_motion_sample_y    ),
+        .I_motion_y_value         ( v2_motion_y_value     ),
+        .I_video_valid            ( 1'b0                ),
+        .I_video_de               ( 1'b0                ),
+        .I_video_hsync            ( 1'b0                ),
+        .I_video_vsync            ( 1'b0                ),
+        .I_video_rgb              ( 24'd0               ),
+        .I_video_x                ( 11'd0               ),
+        .I_video_y                ( 11'd0               ),
+        .O_video_de               (                     ),
+        .O_video_hsync            (                     ),
+        .O_video_vsync            (                     ),
+        .O_video_rgb              (                     ),
+        .I_frame_stats_valid      ( v2_stats_valid && !v2_stats_invalid ),
+        .I_sum_r                  ( v2_stats_sum_r       ),
+        .I_sum_g                  ( v2_stats_sum_g       ),
+        .I_sum_b                  ( v2_stats_sum_b       ),
+        .I_pixel_count            ( v2_stats_pixel_count ),
+        .I_mean_luma              ( v2_stats_mean_luma   ),
+        .O_gain_r                 ( v2_gain_r             ),
+        .O_gain_g                 ( v2_gain_g             ),
+        .O_gain_b                 ( v2_gain_b             ),
+        .O_gain_update_valid      ( v2_gain_update_valid ),
+        .O_scene_protected        ( v2_scene_protected   ),
+        .I_calibration_valid      ( 1'b1                 ),
+        .I_scale_x_q16_16         ( V2_SCALE_X_Q16_16    ),
+        .I_scale_y_q16_16         ( V2_SCALE_Y_Q16_16    ),
+        .I_nominal_width_q16_16   ( V2_NOMINAL_WIDTH_Q16_16 ),
+        .I_nominal_height_q16_16  ( V2_NOMINAL_HEIGHT_Q16_16 ),
+        .I_tolerance_width_q16_16 ( V2_TOL_WIDTH_Q16_16  ),
+        .I_tolerance_height_q16_16( V2_TOL_HEIGHT_Q16_16 ),
+        .I_occupancy_min_q8       ( 9'd200              ),
+        .I_aspect_min_q8           ( 16'd320             ),
+        .I_aspect_max_q8           ( 16'd448             ),
+        .O_dimension_valid         ( v2_src_dimension_valid ),
+        .O_shape_valid             ( v2_src_shape_valid     ),
+        .O_calibration_invalid     ( v2_src_calibration_invalid ),
+        .O_width_mm_q16_16         ( v2_src_width_mm_q16_16  ),
+        .O_height_mm_q16_16        ( v2_src_height_mm_q16_16 ),
+        .O_occupancy_q8            ( v2_src_occupancy_q8     ),
+        .O_aspect_q8               ( v2_src_aspect_q8        ),
+        .I_arm                    ( 1'b0                 ),
+        .I_external_fault         ( 1'b0                 ),
+        .I_clear_fault            ( 1'b0                 ),
+        .O_safe_enable            ( v2_src_safe_enable   ),
+        .O_sort_request           ( v2_src_sort_request  ),
+        .O_sort_pulse             ( v2_src_sort_pulse    ),
+        .O_sort_busy              ( v2_src_sort_busy     ),
+        .O_sort_accepted          ( v2_src_sort_accepted ),
+        .O_sort_rejected          ( v2_src_sort_rejected ),
+        .O_sort_timeout           ( v2_src_sort_timeout  ),
+        .O_pass_count             ( v2_src_pass_count    ),
+        .O_ng_count               ( v2_src_ng_count      ),
+        .O_track_valid            ( v2_src_track_valid   ),
+        .O_tracking_state         ( v2_src_tracking_state ),
+        .O_track_cx               ( v2_src_track_cx       ),
+        .O_track_cy               ( v2_src_track_cy       ),
+        .O_track_enter            ( v2_src_track_enter    ),
+        .O_track_exit             ( v2_src_track_exit     ),
+        .O_motion_valid           ( v2_src_motion_valid   ),
+        .O_motion                 ( v2_src_motion         ),
+        .O_motion_count           ( v2_src_motion_count   ),
+        .O_latency_proc_valid     ( v2_src_latency_proc_valid ),
+        .O_latency_proc_cycles    ( v2_src_latency_proc_cycles ),
+        .O_latency_video_valid    ( v2_src_latency_video_valid ),
+        .O_latency_video_cycles   ( v2_src_latency_video_cycles ),
+        .O_latency_e2e_valid      ( v2_src_latency_e2e_valid ),
+        .O_latency_e2e_cycles     ( v2_src_latency_e2e_cycles ),
+        .O_frame_gap              ( v2_src_frame_gap ),
+        .O_tag_mismatch           ( v2_src_tag_mismatch )
+    );
+
+    always @(posedge S_csi_rx_clk or negedge S_v2_src_rst_n) begin
+        if (!S_v2_src_rst_n) begin
+            v2_src_toggle <= 1'b0;
+            v2_src_result_frame_id_hold <= 16'd0;
+            v2_src_result_tag_valid_hold <= 1'b0;
+        end else if (ind_result_event) begin
+            v2_src_toggle <= ~v2_src_toggle;
+            v2_src_result_frame_id_hold <= ind_result_tag_valid ?
+                                           ind_result_frame_id : 16'd0;
+            v2_src_result_tag_valid_hold <= ind_result_tag_valid;
         end
     end
+
+    industrial_v2_result_cdc u_industrial_v2_result_cdc (
+        .I_src_clk             ( S_csi_rx_clk       ),
+        .I_dst_clk             ( S_hdmi_pixel_clk   ),
+        .I_src_rst_n           ( S_v2_src_rst_n     ),
+        .I_dst_rst_n           ( S_v2_dst_rst_n     ),
+        .I_src_toggle          ( v2_src_toggle       ),
+        .I_src_frame_id        ( v2_src_result_frame_id_hold ),
+        .I_src_xmin            ( ind_xmin            ),
+        .I_src_xmax            ( ind_xmax            ),
+        .I_src_ymin            ( ind_ymin            ),
+        .I_src_ymax            ( ind_ymax            ),
+        .I_src_cx              ( ind_v2_cx           ),
+        .I_src_cy              ( ind_v2_cy           ),
+        .I_src_width_mm_q16_16 ( v2_src_width_mm_q16_16  ),
+        .I_src_height_mm_q16_16( v2_src_height_mm_q16_16 ),
+        .I_src_detected        ( ind_detected        ),
+        .I_src_pass            ( ind_pass             ),
+        .I_src_ng              ( ind_ng               ),
+        .I_src_invalid         ( ind_invalid          ),
+        .I_src_dimension_valid ( v2_src_dimension_valid ),
+        .I_src_shape_valid     ( v2_src_shape_valid     ),
+        .I_src_motion_valid    ( v2_src_motion_valid    ),
+        .I_src_motion          ( v2_src_motion           ),
+        .I_src_motion_count    ( v2_src_motion_count     ),
+        .I_src_pass_count      ( v2_src_pass_count       ),
+        .I_src_ng_count        ( v2_src_ng_count         ),
+        .I_src_sort_pulse      ( v2_src_sort_pulse       ),
+        .I_src_safe_enable     ( v2_src_safe_enable      ),
+        .I_src_proc_valid      ( v2_src_latency_proc_valid &&
+                                 v2_src_result_tag_valid_hold ),
+        .I_src_proc_cycles     ( v2_src_latency_proc_cycles ),
+        .O_dst_valid           ( v2_hdmi_result_valid),
+        .O_dst_frame_id        ( v2_hdmi_frame_id    ),
+        .O_dst_xmin            ( v2_hdmi_xmin        ),
+        .O_dst_xmax            ( v2_hdmi_xmax        ),
+        .O_dst_ymin            ( v2_hdmi_ymin        ),
+        .O_dst_ymax            ( v2_hdmi_ymax        ),
+        .O_dst_cx              ( v2_hdmi_cx          ),
+        .O_dst_cy              ( v2_hdmi_cy          ),
+        .O_dst_width_mm_q16_16( v2_hdmi_width_mm_q16_16 ),
+        .O_dst_height_mm_q16_16( v2_hdmi_height_mm_q16_16 ),
+        .O_dst_detected        ( v2_hdmi_detected    ),
+        .O_dst_pass            ( v2_hdmi_pass        ),
+        .O_dst_ng              ( v2_hdmi_ng          ),
+        .O_dst_invalid         ( v2_hdmi_invalid     ),
+        .O_dst_dimension_valid ( v2_hdmi_dimension_valid ),
+        .O_dst_shape_valid     ( v2_hdmi_shape_valid ),
+        .O_dst_motion_valid    ( v2_hdmi_motion_valid ),
+        .O_dst_motion          ( v2_hdmi_motion      ),
+        .O_dst_motion_count    ( v2_hdmi_motion_count),
+        .O_dst_pass_count      ( v2_hdmi_pass_count  ),
+        .O_dst_ng_count        ( v2_hdmi_ng_count    ),
+        .O_dst_sort_pulse      ( v2_hdmi_sort_pulse  ),
+        .O_dst_safe_enable     ( v2_hdmi_safe_enable ),
+        .O_dst_proc_valid      ( v2_hdmi_proc_valid ),
+        .O_dst_proc_cycles     ( v2_hdmi_proc_cycles ),
+        .O_dst_overflow        (                     )
+    );
+
+    // The result CDC holds a newly published source-domain result pending
+    // until the HDMI frame boundary.  BBox, OSD and status therefore consume
+    // one atomic result for the entire displayed frame.
+    inspection_result_cdc u_inspection_result_cdc (
+        .I_src_clk      ( S_csi_rx_clk       ),
+        .I_dst_clk      ( S_hdmi_pixel_clk   ),
+        .I_rst_n        ( S_hdmi_rst_n       ),
+        .I_frame_start  ( S_hdmi_out_vsync   ),
+        .I_src_toggle   ( ind_result_toggle  ),
+        .I_src_xmin     ( ind_xmin            ),
+        .I_src_xmax     ( ind_xmax            ),
+        .I_src_ymin     ( ind_ymin            ),
+        .I_src_ymax     ( ind_ymax            ),
+        .I_src_width    ( ind_meas_w          ),
+        .I_src_height   ( ind_meas_h          ),
+        .I_src_detected ( ind_detected        ),
+        .I_src_pass     ( ind_pass             ),
+        .I_src_ng       ( ind_ng               ),
+        .I_src_no_obj   ( ind_no_obj           ),
+        .I_src_invalid  ( ind_invalid          ),
+        .O_xmin         ( sync_hdmi_xmin       ),
+        .O_xmax         ( sync_hdmi_xmax       ),
+        .O_ymin         ( sync_hdmi_ymin       ),
+        .O_ymax         ( sync_hdmi_ymax       ),
+        .O_width        (                       ),
+        .O_height       (                       ),
+        .O_detected     ( sync_hdmi_detected   ),
+        .O_pass         ( sync_hdmi_pass       ),
+        .O_ng           ( sync_hdmi_ng         ),
+        .O_no_obj       (                       ),
+        .O_invalid      ( sync_hdmi_invalid    )
+    );
 
     // --- Industrial Inspection Bounding Box Overlay ---
     wire        S_bbox_out_vsync;
     wire        S_bbox_out_hsync;
     wire        S_bbox_out_de;
     wire [23:0] S_bbox_out_data;
+    wire        S_tracking_out_vsync;
+    wire        S_tracking_out_hsync;
+    wire        S_tracking_out_de;
+    wire [23:0] S_tracking_out_data;
+    wire        S_tracking_valid;
+
+    industrial_v2_display_tracking u_industrial_v2_display_tracking (
+        .I_clk          ( S_hdmi_pixel_clk       ),
+        .I_rst_n        ( S_hdmi_rst_n           ),
+        .I_frame_valid  ( v2_hdmi_result_valid   ),
+        .I_frame_id     ( v2_hdmi_frame_id       ),
+        .I_detected     ( v2_hdmi_detected       ),
+        .I_invalid      ( v2_hdmi_invalid        ),
+        .I_cx           ( v2_hdmi_cx              ),
+        .I_cy           ( v2_hdmi_cy              ),
+        .I_de           ( S_cartoon_out_de       ),
+        .I_hsync        ( S_cartoon_out_hsync    ),
+        .I_vsync        ( S_cartoon_out_vsync    ),
+        .I_rgb          ( S_cartoon_out_data     ),
+        .O_de           ( S_tracking_out_de      ),
+        .O_hsync        ( S_tracking_out_hsync   ),
+        .O_vsync        ( S_tracking_out_vsync   ),
+        .O_rgb          ( S_tracking_out_data    ),
+        .O_track_valid  ( S_tracking_valid      ),
+        .O_track_enter  (                     ),
+        .O_track_exit   (                     ),
+        .O_tracking_state(                    ),
+        .O_track_cx     (                     ),
+        .O_track_cy     (                     )
+    );
 
     bbox_draw_overlay #(
         .IMG_WIDTH          ( 1280 ),
@@ -1029,10 +1445,10 @@ assign S_raw_tuser  = S_axis_tuser;
     ) u_bbox_draw_overlay (
         .I_clk        ( S_hdmi_pixel_clk     ),
         .I_rst_n      ( S_hdmi_rst_n         ),
-        .I_de         ( S_cartoon_out_de     ),
-        .I_hsync      ( S_cartoon_out_hsync  ),
-        .I_vsync      ( S_cartoon_out_vsync  ),
-        .I_rgb        ( S_cartoon_out_data   ),
+        .I_de         ( S_tracking_out_de    ),
+        .I_hsync      ( S_tracking_out_hsync ),
+        .I_vsync      ( S_tracking_out_vsync ),
+        .I_rgb        ( S_tracking_out_data  ),
         .I_x          ( 11'd0                ),
         .I_y          ( 11'd0                ),
         .I_detected   ( sync_hdmi_detected   ),
@@ -1067,12 +1483,26 @@ assign S_raw_tuser  = S_axis_tuser;
         .I_de        ( S_bbox_out_de      ),
         .I_rgb       ( S_bbox_out_data    ),
         .I_mode      ( S_display_mode     ),
-        .I_detected  ( sync_hdmi_detected ),
-        .I_pass      ( sync_hdmi_pass     ),
-        .I_ng        ( sync_hdmi_ng       ),
-        .I_invalid   ( sync_hdmi_invalid  ),
-        .I_width     ( sync_hdmi_width    ),
-        .I_height    ( sync_hdmi_height   ),
+        .I_detected  ( v2_hdmi_detected ),
+        .I_pass      ( v2_hdmi_pass     ),
+        .I_ng        ( v2_hdmi_ng       ),
+        .I_invalid   ( v2_hdmi_invalid  ),
+        .I_width     ( v2_hdmi_pixel_width ),
+        .I_height    ( v2_hdmi_pixel_height ),
+        .I_proc_valid ( v2_hdmi_proc_valid ),
+        .I_proc_cycles( v2_hdmi_proc_cycles ),
+        .I_motion_valid( v2_hdmi_motion_valid ),
+        .I_motion     ( v2_hdmi_motion ),
+        .I_motion_count( v2_hdmi_motion_count ),
+        .I_pass_count ( v2_hdmi_pass_count ),
+        .I_ng_count   ( v2_hdmi_ng_count ),
+        .I_sort_pulse ( v2_hdmi_sort_pulse ),
+        .I_safe_enable( v2_hdmi_safe_enable ),
+        .I_dimension_valid ( v2_hdmi_dimension_valid ),
+        .I_shape_valid ( v2_hdmi_shape_valid ),
+        .I_scale_provisional ( 1'b1 ),
+        .I_width_mm_q16_16 ( v2_hdmi_width_mm_q16_16 ),
+        .I_height_mm_q16_16 ( v2_hdmi_height_mm_q16_16 ),
         .O_vsync     ( S_osd_out_vsync    ),
         .O_hsync     ( S_osd_out_hsync    ),
         .O_de        ( S_osd_out_de        ),

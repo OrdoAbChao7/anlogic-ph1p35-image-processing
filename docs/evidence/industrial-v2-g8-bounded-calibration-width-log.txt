@@ -1,0 +1,32 @@
+Industrial V2 bounded calibration width trial — extracted TD evidence
+====================================================================
+
+Input worktree: E:/Projects/FPGA-v2
+Flow: DefaultFlow.tcl with derived fixed-seed flow
+Placement seed: 1
+
+[Synthesis (syn_1)] Finished in 199.1s, exit code: 0
+[Physical Design (phy_1)] Finished in 272.4s, exit code: 0
+
+Final QoR:
+  Setup WNS:              102 ps
+  Setup TNS:              0
+  Setup violated EP:      0
+  Hold WNS:               20 ps
+  Hold TNS:               0
+  Hold violated EP:       0
+  #slices:                18432
+  slices percentage:      86.88%
+  #RAMs:                  43
+  #DSPs:                  24
+  #DRAMHARDCON:           229
+  Bitstream size:         1,371,633 bytes
+  SHA-256:                e269eacbae8e605c2217ef3ec2958291785e2ef9afbd2daa0a8bd1ae105dd450
+  QoR gate:               PASS
+
+First failed attempt and root cause:
+  HDL-8007: index 63 is out of range [43:0] for width_product
+  HDL-8007: index 63 is out of range [43:0] for height_product
+
+The failed [63:32] overflow slices were changed to
+[SCALE_PRODUCT_WIDTH-1:32], then the complete flow was rerun successfully.
