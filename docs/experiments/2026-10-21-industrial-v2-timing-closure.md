@@ -156,3 +156,53 @@ STA coverage 96.54 % 已用 `check_timing -file … -verbose` 在 Routed DB 上�
 `RTL_VERIFIED` / `TIMING_PASS` / `BITSTREAM_READY` / `READY_FOR_BOARD_TEST` 成立；
 `HARDWARE_PASS` **不成立**——本会话没有开发板，未做下载、视频链路、稳定性与
 功能验收。上板步骤见交付包 `BOARD_TEST.md`。
+
+---
+
+## 追加（2026-10-21 晚）：板测结果与根因调查冻结
+
+R2 上板后**未通过**：画面严重闪烁、拼接、错位。同一套硬件上 industrial-v1 正常，
+R1 与 R2 现象相同，Logo 与 OSD 可显示。因此 **R2 不得标记 `HARDWARE_PASS`**。
+
+调查已冻结在 tag `industrial-v2-video-rootcause-freeze-20261021`
+（分支 `ds/industrial-v2-timing-closure`，入口 `INDEX.md`）。
+
+### 当前位流状态
+
+| 编号 | 文件 | 整机时序 | 板测 |
+|---|---|---|---|
+| V1 | industrial-v1 冻结包 | +103 ps | 正常（参照） |
+| R1 | `camera_to_dsi_display_R1.bit` | +137 ps | 闪烁 |
+| R2 | `camera_to_dsi_display.bit`（r2 包） | +644 ps | 闪烁 |
+| D0 | `camera_to_dsi_display_d0.bit` | +103 ps | **不闪**；遥测 N/A；字体缺陷 |
+| D1 | `camera_to_dsi_display_d1.bit` | +121 ps | 未测 |
+
+诊断位流在 `release/diagnostics/` 下，各自独立目录、含 `SHA256SUMS` 与完整 TD 时序。
+
+### 差异审计结论
+
+按 V1 **实际编译**的源文件集（`industrial-v1-manifest.json` 的 `sources[]`，
+使用 `td_source` 的 guard 覆盖版）重建映射后比对：非 HDL 文件、DDR2 IP、
+`ddr2.adc`/`ddr2.sdc`、PLL、`pin.adc`、`settings.cfg` 全部逐字节相同；
+视频链 12 个模块及其顶层接线全部逐字节相同。
+
+> 视频数据通路上 V2 相对 V1 **只多了一个元件**：`isp_top` 内的 `axis_gain_rgb96`。
+
+静态推演该级应当透明（增益 256 为单位增益、`S_ISP_O_tready` 恒 1 不产生气泡、
+下游齿轮箱相位只由 valid 游程决定）。因此**闪烁机制尚未证实**，布局因素也未排除。
+
+### 已定位的三个缺陷
+
+1. **闪烁** —— D0 旁路增益级后消失（强证据，单点，机制未定）。待 D0c2 对照。
+2. **遥测 N/A** —— `design_top_wrapper.v:1231-1237` 把 feature spine 的整个 HDMI
+   视频契约接零，`VIDEO`/`E2E` 结构性恒为 N/A。修复安全，但**语义待定**
+   （设计中无显示侧帧标签）。
+3. **文字缺笔画 + 错位** —— `industrial_osd_overlay.v` 的 `text_col` 只取 0..3，
+   字形 bit0 永不选中。**V1 同样存在，非 V2 回归**；Logo 走独立 ROM 不受影响。
+   D1 已修复：字格 8→10 像素，5 列各 2 像素，黄金测试逐行精确相符
+   （未修版 7 行全部短缺，对照组证明测试有效）。
+
+### 复工入口
+
+分支 `ds/industrial-v2-timing-closure` 下 `INDEX.md` → `CURRENT_STATE.md` →
+`NEXT_ACTION.md`（硬件可用后先测 D1，再做 D0c2 归因，最后处理 D2 遥测设计决定）。
