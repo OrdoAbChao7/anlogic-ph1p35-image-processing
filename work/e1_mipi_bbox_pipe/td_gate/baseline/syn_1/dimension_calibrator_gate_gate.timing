@@ -1,0 +1,1041 @@
+Created by          : Tang Dynasty v6.2.168116
+                    : Copyright (c) 2012-2025 Anlogic Inc.
+Generated           : Wed Oct 21 17:36:19 2026
+
+Top Model           : dimension_calibrator_gate_top
+Device              : PH1P35MDG324
+Speed               : 3
+STA coverage        : 95.54%
+Constraint File     : E:/Projects/FPGA-ds-timing/work/e1_mipi_bbox_pipe/td_gate/dimension_calibrator_gate.sdc;
+Confidence          : Synthesized
+Check Corner        : Both (Slow and Fast)
+CRPR Enabled        : Yes
+Report Scheme       : 10 end point(s) per path group, 1 path(s) per end point
+
+
+Check Status
+-------------
+
+Corner   | Max      Min     
+------------------------------------
+Slow     | yes      yes     
+Fast     | yes      yes     
+
+
+Timing Status
+--------------------
+	SWNS: -0.403ns, STNS: -0.403ns
+	HWNS: 0.502ns, HTNS: 0.000ns
+	Period Check WNS: 0.000ns
+
+
+Clock Summary
+--------------------
+
+       Clock-Id:       C-Freq       Fanout   Clock-Name
+--------------------------------------------------------------------------------
+           clk0:      103.520           68   cal_clk
+--------------------------------------------------------------------------------
+
+       Name            Type         Rise(ns)   Fall(ns)          C-Period(ns)     C-Freq(MHz)          R-Period(ns)     R-Freq(MHz)         SWNS(ns)   STNS(ns)         HWNS(ns)   HTNS(ns)         Skew(ns)           Fanout        Max-Level        CC-From    CC-To
+       clk0           local            0.000      4.830                 9.660         103.520                10.063          99.374           -0.403     -0.403            0.502      0.000            0.000               68                9             no       no
+
+Notes
+----------
+C-Period  :  constraint period
+C-Freq    :  constraint freq
+R-Period  :  report min period
+R-Freq    :  report fmax
+CC-From   :  has path(s) from cross-domain clock
+CC-To     :  has path(s) to cross-domain clock
+
+
+*   Clock R-Period data only takes intra-clock timing. SWNS/STNS/HWNS/HTNS take both intra-clock and inter-clock timing.
+*   If there is mismatch between R-Period and SWNS, check inter-clock timing of this clock as capture clock.
+*   SWNS/STNS/HWNS/HTNS of timing exception (SMCP/SMD) only counted in global Timing Status, not counted in Clock Summary.
+
+Intra clock domain timing
+--------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+Path Group     :     cal_clk -> cal_clk
+Type           :     Self
+From Clock     :     cal_clk
+To Clock       :     cal_clk
+Min Period     :     10.063ns
+Fmax           :     99.374MHz
+
+Statistics:
+Max            : SWNS     -0.403ns, STNS     -0.403ns,         1 Viol Endpoints,        69 Total Endpoints,        84 Paths Analyzed
+Min            : HWNS      0.502ns, HTNS      0.000ns,         0 Viol Endpoints,        69 Total Endpoints,        84 Paths Analyzed
+----------------------------------------------------------------------------------------------------
+
+Max Paths
+----------------------------------------------------------------------------------------------------
+Slack               : -0.403ns
+Begin Point         : xmax_r_reg[0].clk (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : dut/O_shape_valid_reg.d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 9.999ns (cell 6.205ns (62%), net 3.794ns (38%))
+Clock Skew          : 0.000ns
+Logic Level         : 8 ( DSPMULT=2  ADDER=2  unknown=1  LUT6=1  LUT3=1  LUT2=1 )
+Max Fanout          : 4
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: xmax_r_reg[0].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: xmax_r_reg[0].q
+net (fo=4)                              0.556          0.632          net: dut/I_xmax[0],  ../dimension_calibrator.v(25)
+                                                                      pin: dut/add1_syn_25.b
+LUT3                                    0.273    f     0.905       1  pin: dut/add1_syn_25.o
+net (fo=1)                              0.448          1.353          net: dut/add1_syn_63[0],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/add1_syn_147.imc
+ADDER                                   0.212    r     1.565       2  pin: dut/add1_syn_147.fco
+net (fo=1)                              0.000          1.565          net: dut/add1_syn_88[2],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/add1_syn_148.fci
+ADDER                                   0.052    r     1.617          pin: dut/add1_syn_148.fco
+net (fo=1)                              0.000          1.617          net: dut/add1_syn_88[3],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/add1_syn_149.fci
+ADDER                                   0.052    r     1.669          pin: dut/add1_syn_149.fco
+net (fo=1)                              0.000          1.669          net: dut/add1_syn_88[4],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/add1_syn_150.fci
+ADDER                                   0.052    r     1.721          pin: dut/add1_syn_150.fco
+net (fo=1)                              0.000          1.721          net: dut/add1_syn_88[5],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/add1_syn_151.fci
+ADDER                                   0.052    r     1.773          pin: dut/add1_syn_151.fco
+net (fo=1)                              0.000          1.773          net: dut/add1_syn_88[6],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/add1_syn_152.fci
+ADDER                                   0.052    r     1.825          pin: dut/add1_syn_152.fco
+net (fo=1)                              0.000          1.825          net: dut/add1_syn_88[7],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/add1_syn_153.fci
+ADDER                                   0.052    r     1.877          pin: dut/add1_syn_153.fco
+net (fo=1)                              0.000          1.877          net: dut/add1_syn_88[8],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/add1_syn_154.fci
+ADDER                                   0.220    r     2.097       3  pin: dut/add1_syn_154.ofb
+net (fo=3)                              0.520          2.617          net: dut/add1_syn_4[8],  ../dimension_calibrator.v(83)
+                                                                      pin: dut/O_shape_valid_n_syn_8.a
+LUT2                                    0.273    f     2.890       4  pin: dut/O_shape_valid_n_syn_8.o
+net (fo=2)                              0.478          3.368          net: dut/width_px[8],  ../dimension_calibrator.v(82)
+                                                                      pin: dut/mult0_syn_59.xa[8]
+DSPSIOU                                 0.432    r     3.800          pin: dut/mult0_syn_59.mult_x[8]
+net (fo=1)                              0.000          3.800          net: dut/mult0_syn_61[8],  ../dimension_calibrator.v(94)
+                                                                      pin: dut/mult0_syn_60.x[8]
+DSPMULT                                 1.076    r     4.876       5  pin: dut/mult0_syn_60.p[17]
+net (fo=1)                              0.000          4.876          net: dut/mult0_syn_107[17],  ../dimension_calibrator.v(94)
+                                                                      pin: dut/mult0_syn_59.mult_p[17]
+DSPSIOU                                 0.455    f     5.331          pin: dut/mult0_syn_59.p[17]
+net (fo=1)                              0.448          5.779          net: dut/mult0_syn_5[17],  ../dimension_calibrator.v(94)
+                                                                      pin: dut/mult4_syn_59.xa[17]
+DSPSIOU                                 0.475    r     6.254          pin: dut/mult4_syn_59.mult_x[17]
+net (fo=1)                              0.000          6.254          net: dut/mult4_syn_61[17],  ../dimension_calibrator.v(128)
+                                                                      pin: dut/mult4_syn_60.x[17]
+DSPMULT                                 1.074    r     7.328       6  pin: dut/mult4_syn_60.p[28]
+net (fo=1)                              0.000          7.328          net: dut/mult4_syn_107[28],  ../dimension_calibrator.v(128)
+                                                                      pin: dut/mult4_syn_59.mult_p[28]
+DSPSIOU                                 0.363    f     7.691          pin: dut/mult4_syn_59.p[28]
+net (fo=1)                              0.448          8.139          net: dut/mult4_syn_5[28],  ../dimension_calibrator.v(128)
+                                                                      pin: dut/lt7_syn_146.ib
+                                        0.608    f     8.747       7  pin: dut/lt7_syn_146.ofa
+net (fo=1)                              0.448          9.195          net: dut/occupancy_min_met_n2,  NOFILE(0)
+                                                                      pin: dut/O_shape_valid_n_syn_40.a
+LUT6                                    0.315    f     9.510       8  pin: dut/O_shape_valid_n_syn_40.o
+net (fo=1)                              0.448          9.958          net: dut/O_shape_valid_n,  NOFILE(0)
+                                                                      pin: dut/O_shape_valid_reg.d
+SEQ (reg)                               0.041    f     9.999               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.999               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: dut/O_shape_valid_reg.clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                 -0.403               
+
+Slack               : 5.912ns
+Begin Point         : dut/O_shape_valid_reg.clk (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : O_shape_valid (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 3.748ns (cell 3.300ns (88%), net 0.448ns (12%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( PAD=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: dut/O_shape_valid_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/O_shape_valid_reg.q
+net (fo=1)                              0.448          0.524          net: O_shape_valid_dup_3,  ../dimension_calibrator_gate_top.v(21)
+                                                                      pin: O_shape_valid_syn_4.doq[0]
+PAD                                     0.526    r     1.050       1  pin: O_shape_valid_syn_4.sg09_do
+PAD                                     2.698    r     3.748       2  pin: O_shape_valid_syn_4.opad
+net (fo=1)                              0.000          3.748          net: O_shape_valid,  ../dimension_calibrator_gate_top.v(21)
+                                                                      pin: O_shape_valid
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.748               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+output                                  0.000          9.660               
+clock uncertainty                       0.000          9.660               
+clock pessimism                         0.000          9.660               
+--------------------------------------------------------------------  ---------------
+Required                                               9.660               
+--------------------------------------------------------------------  ---------------
+Slack                                                  5.912               
+
+Slack               : 7.707ns
+Begin Point         : I_calibration_valid (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : calibration_valid_r_reg.d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 1.889ns (cell 1.441ns (76%), net 0.448ns (24%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_calibration_valid
+net (fo=1)                              0.000          0.000          net: I_calibration_valid,  ../dimension_calibrator_gate_top.v(18)
+                                                                      pin: I_calibration_valid_syn_4.ipad
+HDIO                                    1.400    f     1.400       1  pin: I_calibration_valid_syn_4.sg09_di
+HDIO                                    0.000    f     1.400       2  pin: I_calibration_valid_syn_4.di
+net (fo=1)                              0.448          1.848          net: I_calibration_valid_dup_3,  ../dimension_calibrator_gate_top.v(18)
+                                                                      pin: calibration_valid_r_reg.d
+SEQ (reg)                               0.041    f     1.889               
+--------------------------------------------------------------------  ---------------
+Arrival                                                1.889               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: calibration_valid_r_reg.clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  7.707               
+
+Slack               : 7.707ns
+Begin Point         : I_result_valid (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : result_valid_r1_reg.d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 1.889ns (cell 1.441ns (76%), net 0.448ns (24%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_result_valid
+net (fo=1)                              0.000          0.000          net: I_result_valid,  ../dimension_calibrator_gate_top.v(17)
+                                                                      pin: I_result_valid_syn_4.ipad
+HDIO                                    1.400    f     1.400       1  pin: I_result_valid_syn_4.sg09_di
+HDIO                                    0.000    f     1.400       2  pin: I_result_valid_syn_4.di
+net (fo=1)                              0.448          1.848          net: I_result_valid_dup_3,  ../dimension_calibrator_gate_top.v(17)
+                                                                      pin: result_valid_r1_reg.d
+SEQ (reg)                               0.041    f     1.889               
+--------------------------------------------------------------------  ---------------
+Arrival                                                1.889               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: result_valid_r1_reg.clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  7.707               
+
+Slack               : 7.707ns
+Begin Point         : I_area[0] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[0].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 1.889ns (cell 1.441ns (76%), net 0.448ns (24%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[0]
+net (fo=1)                              0.000          0.000          net: I_area[0],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[0]_syn_4.ipad
+HDIO                                    1.400    f     1.400       1  pin: I_area[0]_syn_4.sg09_di
+HDIO                                    0.000    f     1.400       2  pin: I_area[0]_syn_4.di
+net (fo=1)                              0.448          1.848          net: I_area[0]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[0].d
+SEQ (reg)                               0.041    f     1.889               
+--------------------------------------------------------------------  ---------------
+Arrival                                                1.889               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[0].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  7.707               
+
+Slack               : 7.707ns
+Begin Point         : I_area[1] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[1].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 1.889ns (cell 1.441ns (76%), net 0.448ns (24%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[1]
+net (fo=1)                              0.000          0.000          net: I_area[1],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[1]_syn_4.ipad
+HDIO                                    1.400    f     1.400       1  pin: I_area[1]_syn_4.sg09_di
+HDIO                                    0.000    f     1.400       2  pin: I_area[1]_syn_4.di
+net (fo=1)                              0.448          1.848          net: I_area[1]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[1].d
+SEQ (reg)                               0.041    f     1.889               
+--------------------------------------------------------------------  ---------------
+Arrival                                                1.889               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[1].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  7.707               
+
+Slack               : 7.707ns
+Begin Point         : I_area[2] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[2].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 1.889ns (cell 1.441ns (76%), net 0.448ns (24%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[2]
+net (fo=1)                              0.000          0.000          net: I_area[2],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[2]_syn_4.ipad
+HDIO                                    1.400    f     1.400       1  pin: I_area[2]_syn_4.sg09_di
+HDIO                                    0.000    f     1.400       2  pin: I_area[2]_syn_4.di
+net (fo=1)                              0.448          1.848          net: I_area[2]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[2].d
+SEQ (reg)                               0.041    f     1.889               
+--------------------------------------------------------------------  ---------------
+Arrival                                                1.889               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[2].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  7.707               
+
+Slack               : 7.707ns
+Begin Point         : I_area[3] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[3].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 1.889ns (cell 1.441ns (76%), net 0.448ns (24%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[3]
+net (fo=1)                              0.000          0.000          net: I_area[3],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[3]_syn_4.ipad
+HDIO                                    1.400    f     1.400       1  pin: I_area[3]_syn_4.sg09_di
+HDIO                                    0.000    f     1.400       2  pin: I_area[3]_syn_4.di
+net (fo=1)                              0.448          1.848          net: I_area[3]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[3].d
+SEQ (reg)                               0.041    f     1.889               
+--------------------------------------------------------------------  ---------------
+Arrival                                                1.889               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[3].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  7.707               
+
+Slack               : 7.707ns
+Begin Point         : I_area[4] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[4].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 1.889ns (cell 1.441ns (76%), net 0.448ns (24%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[4]
+net (fo=1)                              0.000          0.000          net: I_area[4],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[4]_syn_4.ipad
+HDIO                                    1.400    f     1.400       1  pin: I_area[4]_syn_4.sg09_di
+HDIO                                    0.000    f     1.400       2  pin: I_area[4]_syn_4.di
+net (fo=1)                              0.448          1.848          net: I_area[4]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[4].d
+SEQ (reg)                               0.041    f     1.889               
+--------------------------------------------------------------------  ---------------
+Arrival                                                1.889               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[4].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  7.707               
+
+Slack               : 7.707ns
+Begin Point         : I_area[5] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[5].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 9.660ns { cal_clk rising@9.660ns - cal_clk rising@0.000ns }
+Data Path Delay     : 1.889ns (cell 1.441ns (76%), net 0.448ns (24%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[5]
+net (fo=1)                              0.000          0.000          net: I_area[5],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[5]_syn_4.ipad
+HDIO                                    1.400    f     1.400       1  pin: I_area[5]_syn_4.sg09_di
+HDIO                                    0.000    f     1.400       2  pin: I_area[5]_syn_4.di
+net (fo=1)                              0.448          1.848          net: I_area[5]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[5].d
+SEQ (reg)                               0.041    f     1.889               
+--------------------------------------------------------------------  ---------------
+Arrival                                                1.889               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[5].clk
+capture edge                            9.660    r     9.660               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064          9.596               
+clock uncertainty                       0.000          9.596               
+clock pessimism                         0.000          9.596               
+--------------------------------------------------------------------  ---------------
+Required                                               9.596               
+--------------------------------------------------------------------  ---------------
+Slack                                                  7.707               
+
+
+
+Min Paths
+----------------------------------------------------------------------------------------------------
+Slack               : 0.502ns
+Begin Point         : result_valid_r1_reg.clk (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : result_valid_r_reg.d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: result_valid_r1_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: result_valid_r1_reg.q
+net (fo=1)                              0.448          0.501          net: result_valid_r1,  ../dimension_calibrator_gate_top.v(23)
+                                                                      pin: result_valid_r_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: result_valid_r_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.909ns
+Begin Point         : I_calibration_valid (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : calibration_valid_r_reg.d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_calibration_valid
+net (fo=1)                              0.000          0.000          net: I_calibration_valid,  ../dimension_calibrator_gate_top.v(18)
+                                                                      pin: I_calibration_valid_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_calibration_valid_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_calibration_valid_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_calibration_valid_dup_3,  ../dimension_calibrator_gate_top.v(18)
+                                                                      pin: calibration_valid_r_reg.d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: calibration_valid_r_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+Slack               : 0.909ns
+Begin Point         : I_result_valid (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : result_valid_r1_reg.d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_result_valid
+net (fo=1)                              0.000          0.000          net: I_result_valid,  ../dimension_calibrator_gate_top.v(17)
+                                                                      pin: I_result_valid_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_result_valid_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_result_valid_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_result_valid_dup_3,  ../dimension_calibrator_gate_top.v(17)
+                                                                      pin: result_valid_r1_reg.d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: result_valid_r1_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+Slack               : 0.909ns
+Begin Point         : I_area[0] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[0].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[0]
+net (fo=1)                              0.000          0.000          net: I_area[0],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[0]_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_area[0]_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_area[0]_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_area[0]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[0].d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[0].clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+Slack               : 0.909ns
+Begin Point         : I_area[1] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[1].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[1]
+net (fo=1)                              0.000          0.000          net: I_area[1],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[1]_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_area[1]_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_area[1]_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_area[1]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[1].d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[1].clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+Slack               : 0.909ns
+Begin Point         : I_area[2] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[2].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[2]
+net (fo=1)                              0.000          0.000          net: I_area[2],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[2]_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_area[2]_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_area[2]_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_area[2]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[2].d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[2].clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+Slack               : 0.909ns
+Begin Point         : I_area[3] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[3].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[3]
+net (fo=1)                              0.000          0.000          net: I_area[3],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[3]_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_area[3]_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_area[3]_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_area[3]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[3].d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[3].clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+Slack               : 0.909ns
+Begin Point         : I_area[4] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[4].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[4]
+net (fo=1)                              0.000          0.000          net: I_area[4],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[4]_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_area[4]_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_area[4]_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_area[4]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[4].d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[4].clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+Slack               : 0.909ns
+Begin Point         : I_area[5] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[5].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[5]
+net (fo=1)                              0.000          0.000          net: I_area[5],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[5]_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_area[5]_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_area[5]_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_area[5]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[5].d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[5].clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+Slack               : 0.909ns
+Begin Point         : I_area[6] (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+End Point           : area_r_reg[6].d (rising edge triggered by clock cal_clk  { rise@0.000000ns  fall@4.830000ns  period=9.660000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { cal_clk rising@0.000ns - cal_clk rising@0.000ns }
+Data Path Delay     : 0.923ns (cell 0.475ns (51%), net 0.448ns (49%))
+Clock Skew          : 0.000ns
+Logic Level         : 2 ( HDIO=2 )
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+input                                   0.000          0.000          pin: I_area[6]
+net (fo=1)                              0.000          0.000          net: I_area[6],  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: I_area[6]_syn_4.ipad
+HDIO                                    0.460    r     0.460       1  pin: I_area[6]_syn_4.sg09_di
+HDIO                                    0.000    f     0.460       2  pin: I_area[6]_syn_4.di
+net (fo=1)                              0.448          0.908          net: I_area[6]_dup_3,  ../dimension_calibrator_gate_top.v(20)
+                                                                      pin: area_r_reg[6].d
+SEQ (reg)                               0.015    f     0.923               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.923               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=68)                             0.000          0.000          net: I_clk_dup_1,  ../dimension_calibrator_gate_top.v(15)
+                                                                      pin: area_r_reg[6].clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.909               
+
+
+Inter clock domain timing
+--------------------------------------------------
+
+IP timing
+--------------------------------------------------

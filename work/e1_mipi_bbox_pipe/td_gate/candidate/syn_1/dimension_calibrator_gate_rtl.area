@@ -1,0 +1,35 @@
+standard
+***Report Model: dimension_calibrator_gate_top Device: PH1P35MDG324***
+
+IO Statistics
+#IO                        69
+  #input                   68
+  #output                   1
+  #inout                    0
+
+Gate Statistics
+#Basic gates              205
+  #and                     10
+  #nand                     0
+  #or                       1
+  #nor                      0
+  #xor                      0
+  #xnor                     0
+  #buf                      0
+  #not                      3
+  #bufif1                   0
+  #MX21                     1
+  #FADD                     0
+  #DFF                    190
+  #LATCH                    0
+#MACRO_ADD                 13
+#MACRO_MULT                 7
+#MACRO_MUX                 24
+
+Report Hierarchy Area:
++----------------------------------------------------------------+
+|Instance |Module                        |gates  |seq    |macros |
++----------------------------------------------------------------+
+|top      |dimension_calibrator_gate_top |15     |190    |20     |
+|  dut    |dimension_calibrator          |15     |123    |20     |
++----------------------------------------------------------------+

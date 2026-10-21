@@ -1,0 +1,6 @@
+E1 MIPI BBox pre-computation pipeline — verification result
+==========================================================
+ModelSim-Intel FPGA Starter Edition 2020.1
+TB_E1_BBOX_PIPE_DIFF_PASS checks=1058 frames=528
+PROVE_PIPELINE_IS_REAL base=100800000004000000000100 cand_pipe=160078000000280000c80180 (differ as expected)
+Errors: 0, Warnings: 0

@@ -1,0 +1,21 @@
+# AWB-Lite full-project candidate, derived only from the staged R1 input set.
+# Parent manifest: 455 captured files; 236 staged-project files rechecked.
+731FF493EF607ED20909D4C72A60E28B85A21F76AC75C10015797096FEDC5ED1  R1-input-manifest.json
+62F98AB9ABACFB9921F734E6864905EA692B7D9AA235BE82B6DD32AA861BA8EB  R1 original design_top_wrapper.v
+8D9E119E58C64F6D152501C9B13CF02A27ECC4DD57DF62D880C9590626E44DB8  user_source/hdl_source/design_top_wrapper.v (only ENABLE_V2_FRAME_AWB=0 added)
+07E140DFDFE81DD5F2C0443CAC9AA3B6796D3F39639A66CF6D7CA031EBC2B47A  R1 original industrial_v2_feature_spine.v
+D88E109CF9E07925EC009CA5D080DC4C92C5E31618C01D92D3022CFB3C620DAF  user_source/hdl_source/industrial_v2_feature_spine.v (default Full=1; compile-time Lite branch)
+1975559F2D4ABA92775E9359F0E5230F3CE2AC9BC46D39C22A397FD84CB3A08  user_source/hdl_source/isp/isp_top.v (unchanged)
+EC26C54A253C7DDB3502E0AAB06486CB03E1EE39B23709C0A82C8F5ACCB0FE18  user_source/hdl_source/motion_diff_160.v (unchanged)
+AEE8F1CB88042DB5155A24A9698766E8F85C0AE916BD6BA9691245799184F2AE  user_source/constraints_source/pin.adc (unchanged)
+390DFE5FA12669AFC5E8DB01E893300132605FFB6BFB962EC40DA5BE022B068F  td_project/camera_to_dsi_display.sdc (unchanged)
+7E41F2B65DEAEE47D5A21B7B259D1E06070C2BBB6ECEFED1659A6C30D507A30F  td_project/camera_to_dsi_display_Runs/syn_1/camera_to_dsi_display.prj
+0EDB3A700629EDE8B9F436782036851E07146991899BD2533622EE221E70C149  td_project/camera_to_dsi_display_Runs/syn_1/settings.cfg
+AA7502B01565C13F4F271902134AF6E63169195C1C05B4A543B3FCE939E87C59  td_project/camera_to_dsi_display_Runs/phy_1/camera_to_dsi_display.prj
+4D336FB06C228732831CEC0E1FC9CE1107B09ABCDD0C845BE50161E0F84E3019  td_project/camera_to_dsi_display_Runs/phy_1/settings.cfg (stop after opt_route; no QoR bypass)
+1F07F9A70F7F2D328D2193EBA84FA261BD81C9762DFB71EE307102DE763F325B  industrial_v2_fixed_seed.tcl (R1 flow, place seed 1)
+63049C76AABA824E2D0E46B0132C59E1013B83B65B293F92007722E8926930BE  run_flow_exit.tcl (exit-status wrapper only)
+E2E04ADA5E256DCCD017240C0F4DCFACE7F96DCA67CDE0E56E606AC0E02F827A  E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe
+D1A5D4291706DAC224CC33008D8945E79ED2EB1ADF8CE86CCA46BE564975BADE  E:/Projects/FPGA/.tools/td/app/doc/scripts/DefaultFlow.tcl
+# Flow: TD 6.2.168116; PH1P35MDG324 speed 3; place seed 1; all R1 SDC/ADC unchanged.
+# Pre-build validation: all 236 staged paths accounted for; only the 2 RTL files and PHY end_step differ.

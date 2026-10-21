@@ -1,0 +1,1324 @@
+Created by          : Tang Dynasty v6.2.168116
+                    : Copyright (c) 2012-2025 Anlogic Inc.
+Generated           : Wed Oct 21 17:52:15 2026
+
+Top Model           : industrial_osd_gate_top
+Device              : PH1P35MDG324
+Speed               : 3
+STA coverage        : 100.00%
+Constraint File     : E:/Projects/FPGA-ds-timing/work/e2_osd_pipe/td_gate/industrial_osd_gate.sdc;
+Confidence          : Synthesized
+Check Corner        : Both (Slow and Fast)
+CRPR Enabled        : Yes
+Report Scheme       : 10 end point(s) per path group, 1 path(s) per end point
+
+
+Check Status
+-------------
+
+Corner   | Max      Min     
+------------------------------------
+Slow     | yes      yes     
+Fast     | yes      yes     
+
+
+Timing Status
+--------------------
+	SWNS: 3.189ns, STNS: 0.000ns
+	HWNS: 0.502ns, HTNS: 0.000ns
+	Period Check WNS: 0.000ns
+
+
+Clock Summary
+--------------------
+
+       Clock-Id:       C-Freq       Fanout   Clock-Name
+--------------------------------------------------------------------------------
+           clk0:       75.002          327   hdmi_pixel_clk
+--------------------------------------------------------------------------------
+
+       Name            Type         Rise(ns)   Fall(ns)          C-Period(ns)     C-Freq(MHz)          R-Period(ns)     R-Freq(MHz)         SWNS(ns)   STNS(ns)         HWNS(ns)   HTNS(ns)         Skew(ns)           Fanout        Max-Level        CC-From    CC-To
+       clk0           local            0.000      6.666                13.333          75.002                10.144          98.580            3.189      0.000            0.502      0.000            0.000              327               10             no       no
+
+Notes
+----------
+C-Period  :  constraint period
+C-Freq    :  constraint freq
+R-Period  :  report min period
+R-Freq    :  report fmax
+CC-From   :  has path(s) from cross-domain clock
+CC-To     :  has path(s) to cross-domain clock
+
+
+*   Clock R-Period data only takes intra-clock timing. SWNS/STNS/HWNS/HTNS take both intra-clock and inter-clock timing.
+*   If there is mismatch between R-Period and SWNS, check inter-clock timing of this clock as capture clock.
+*   SWNS/STNS/HWNS/HTNS of timing exception (SMCP/SMD) only counted in global Timing Status, not counted in Clock Summary.
+
+Intra clock domain timing
+--------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+Path Group     :     hdmi_pixel_clk -> hdmi_pixel_clk
+Type           :     Self
+From Clock     :     hdmi_pixel_clk
+To Clock       :     hdmi_pixel_clk
+Min Period     :     10.144ns
+Fmax           :     98.580MHz
+
+Statistics:
+Max            : SWNS      3.189ns, STNS      0.000ns,         0 Viol Endpoints,       768 Total Endpoints,     29956 Paths Analyzed
+Min            : HWNS      0.502ns, HTNS      0.000ns,         0 Viol Endpoints,       768 Total Endpoints,     29956 Paths Analyzed
+----------------------------------------------------------------------------------------------------
+
+Max Paths
+----------------------------------------------------------------------------------------------------
+Slack               : 3.189ns
+Begin Point         : dut/logo_addr_s1_reg[9].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[4].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 10.080ns (cell 3.183ns (31%), net 6.897ns (69%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=8  LUT5=1  LUT2=1 )
+Max Fanout          : 693
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[9].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[9].q
+net (fo=693)                            1.296          1.372          net: dut/u_logo_rom/I_addr[9],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_28836.c
+LUT6                                    0.315    f     1.687       1  pin: dut/u_logo_rom/sel0_syn_28836.o
+net (fo=16)                             0.766          2.453          net: dut/u_logo_rom/sel0_syn_28837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_28851.c
+LUT6                                    0.315    f     2.768       2  pin: dut/u_logo_rom/sel0_syn_28851.o
+net (fo=3)                              0.520          3.288          net: dut/u_logo_rom/sel0_syn_28852,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_28857.a
+LUT6                                    0.315    f     3.603       3  pin: dut/u_logo_rom/sel0_syn_28857.o
+net (fo=1)                              0.448          4.051          net: dut/u_logo_rom/sel0_syn_28858,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_28861.a
+LUT6                                    0.315    f     4.366       4  pin: dut/u_logo_rom/sel0_syn_28861.o
+net (fo=1)                              0.448          4.814          net: dut/u_logo_rom/sel0_syn_28862,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_28867.b
+LUT6                                    0.315    f     5.129       5  pin: dut/u_logo_rom/sel0_syn_28867.o
+net (fo=1)                              0.448          5.577          net: dut/u_logo_rom/sel0_syn_28868,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_28894.c
+LUT6                                    0.315    f     5.892       6  pin: dut/u_logo_rom/sel0_syn_28894.o
+net (fo=230)                            1.149          7.041          net: dut/u_logo_rom/I_addr[4]_syn_5286,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30982.a
+LUT2                                    0.273    f     7.314       7  pin: dut/u_logo_rom/sel0_syn_30982.o
+net (fo=2)                              0.478          7.792          net: dut/u_logo_rom/sel0_syn_30983,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30984.b
+LUT6                                    0.315    f     8.107       8  pin: dut/u_logo_rom/sel0_syn_30984.o
+net (fo=1)                              0.448          8.555          net: dut/u_logo_rom/sel0_syn_30985,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30988.c
+LUT5                                    0.273    f     8.828       9  pin: dut/u_logo_rom/sel0_syn_30988.o
+net (fo=1)                              0.448          9.276          net: dut/u_logo_rom/sel0_syn_30989,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30998.c
+LUT6                                    0.315    f     9.591      10  pin: dut/u_logo_rom/sel0_syn_30998.o
+net (fo=1)                              0.448         10.039          net: dut/u_logo_rom/sel0_syn_15030[4],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[4].d
+SEQ (reg)                               0.041    f    10.080               
+--------------------------------------------------------------------  ---------------
+Arrival                                               10.080               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[4].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.189               
+
+Slack               : 3.325ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[12].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.944ns (cell 3.099ns (31%), net 6.845ns (69%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=6  LUT2=2  LUT4=1  LUT3=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30728.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_30728.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_30729,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30734.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_30734.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/sel0_syn_30735,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30752.a
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_30752.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/sel0_syn_30753,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30754.a
+LUT3                                    0.273    f     4.913       5  pin: dut/u_logo_rom/sel0_syn_30754.o
+net (fo=1)                              0.448          5.361          net: dut/u_logo_rom/sel0_syn_30755,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30789.b
+LUT6                                    0.315    f     5.676       6  pin: dut/u_logo_rom/sel0_syn_30789.o
+net (fo=1)                              0.448          6.124          net: dut/u_logo_rom/I_addr[14]_syn_140,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30790.c
+LUT4                                    0.273    f     6.397       7  pin: dut/u_logo_rom/sel0_syn_30790.o
+net (fo=59)                             0.961          7.358          net: dut/u_logo_rom/sel0_syn_30791,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30836.b
+LUT2                                    0.273    f     7.631       8  pin: dut/u_logo_rom/sel0_syn_30836.o
+net (fo=14)                             0.746          8.377          net: dut/u_logo_rom/sel0_syn_30837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30856.b
+LUT6                                    0.315    f     8.692       9  pin: dut/u_logo_rom/sel0_syn_30856.o
+net (fo=1)                              0.448          9.140          net: dut/u_logo_rom/sel0_syn_30857,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30868.b
+LUT6                                    0.315    f     9.455      10  pin: dut/u_logo_rom/sel0_syn_30868.o
+net (fo=1)                              0.448          9.903          net: dut/u_logo_rom/sel0_syn_15030[12],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[12].d
+SEQ (reg)                               0.041    f     9.944               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.944               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[12].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.325               
+
+Slack               : 3.367ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[3].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.902ns (cell 3.057ns (30%), net 6.845ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=5  LUT2=2  LUT5=1  LUT4=1  LUT3=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30728.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_30728.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_30729,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30734.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_30734.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/sel0_syn_30735,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30752.a
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_30752.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/sel0_syn_30753,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30754.a
+LUT3                                    0.273    f     4.913       5  pin: dut/u_logo_rom/sel0_syn_30754.o
+net (fo=1)                              0.448          5.361          net: dut/u_logo_rom/sel0_syn_30755,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30789.b
+LUT6                                    0.315    f     5.676       6  pin: dut/u_logo_rom/sel0_syn_30789.o
+net (fo=1)                              0.448          6.124          net: dut/u_logo_rom/I_addr[14]_syn_140,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30790.c
+LUT4                                    0.273    f     6.397       7  pin: dut/u_logo_rom/sel0_syn_30790.o
+net (fo=59)                             0.961          7.358          net: dut/u_logo_rom/sel0_syn_30791,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30836.b
+LUT2                                    0.273    f     7.631       8  pin: dut/u_logo_rom/sel0_syn_30836.o
+net (fo=14)                             0.746          8.377          net: dut/u_logo_rom/sel0_syn_30837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31149.a
+LUT6                                    0.315    f     8.692       9  pin: dut/u_logo_rom/sel0_syn_31149.o
+net (fo=1)                              0.448          9.140          net: dut/u_logo_rom/sel0_syn_31150,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31166.a
+LUT5                                    0.273    f     9.413      10  pin: dut/u_logo_rom/sel0_syn_31166.o
+net (fo=1)                              0.448          9.861          net: dut/u_logo_rom/sel0_syn_15030[3],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[3].d
+SEQ (reg)                               0.041    f     9.902               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.902               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[3].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.367               
+
+Slack               : 3.367ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[6].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.902ns (cell 3.057ns (30%), net 6.845ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=5  LUT2=2  LUT5=1  LUT4=1  LUT3=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30728.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_30728.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_30729,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30734.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_30734.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/sel0_syn_30735,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30752.a
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_30752.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/sel0_syn_30753,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30754.a
+LUT3                                    0.273    f     4.913       5  pin: dut/u_logo_rom/sel0_syn_30754.o
+net (fo=1)                              0.448          5.361          net: dut/u_logo_rom/sel0_syn_30755,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30789.b
+LUT6                                    0.315    f     5.676       6  pin: dut/u_logo_rom/sel0_syn_30789.o
+net (fo=1)                              0.448          6.124          net: dut/u_logo_rom/I_addr[14]_syn_140,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30790.c
+LUT4                                    0.273    f     6.397       7  pin: dut/u_logo_rom/sel0_syn_30790.o
+net (fo=59)                             0.961          7.358          net: dut/u_logo_rom/sel0_syn_30791,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30836.b
+LUT2                                    0.273    f     7.631       8  pin: dut/u_logo_rom/sel0_syn_30836.o
+net (fo=14)                             0.746          8.377          net: dut/u_logo_rom/sel0_syn_30837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31267.a
+LUT5                                    0.273    f     8.650       9  pin: dut/u_logo_rom/sel0_syn_31267.o
+net (fo=1)                              0.448          9.098          net: dut/u_logo_rom/sel0_syn_31268,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31276.d
+LUT6                                    0.315    f     9.413      10  pin: dut/u_logo_rom/sel0_syn_31276.o
+net (fo=1)                              0.448          9.861          net: dut/u_logo_rom/sel0_syn_15030[6],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[6].d
+SEQ (reg)                               0.041    f     9.902               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.902               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[6].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.367               
+
+Slack               : 3.367ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[14].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.902ns (cell 3.057ns (30%), net 6.845ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=5  LUT2=2  LUT5=1  LUT4=1  LUT3=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30728.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_30728.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_30729,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30734.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_30734.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/sel0_syn_30735,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30752.a
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_30752.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/sel0_syn_30753,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30754.a
+LUT3                                    0.273    f     4.913       5  pin: dut/u_logo_rom/sel0_syn_30754.o
+net (fo=1)                              0.448          5.361          net: dut/u_logo_rom/sel0_syn_30755,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30789.b
+LUT6                                    0.315    f     5.676       6  pin: dut/u_logo_rom/sel0_syn_30789.o
+net (fo=1)                              0.448          6.124          net: dut/u_logo_rom/I_addr[14]_syn_140,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30790.c
+LUT4                                    0.273    f     6.397       7  pin: dut/u_logo_rom/sel0_syn_30790.o
+net (fo=59)                             0.961          7.358          net: dut/u_logo_rom/sel0_syn_30791,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30836.b
+LUT2                                    0.273    f     7.631       8  pin: dut/u_logo_rom/sel0_syn_30836.o
+net (fo=14)                             0.746          8.377          net: dut/u_logo_rom/sel0_syn_30837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31298.a
+LUT5                                    0.273    f     8.650       9  pin: dut/u_logo_rom/sel0_syn_31298.o
+net (fo=1)                              0.448          9.098          net: dut/u_logo_rom/sel0_syn_31299,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31300.d
+LUT6                                    0.315    f     9.413      10  pin: dut/u_logo_rom/sel0_syn_31300.o
+net (fo=1)                              0.448          9.861          net: dut/u_logo_rom/sel0_syn_15030[14],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[14].d
+SEQ (reg)                               0.041    f     9.902               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.902               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[14].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.367               
+
+Slack               : 3.367ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[17].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.902ns (cell 3.057ns (30%), net 6.845ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=5  LUT2=3  LUT4=1  LUT3=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30728.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_30728.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_30729,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30734.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_30734.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/sel0_syn_30735,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30752.a
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_30752.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/sel0_syn_30753,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30754.a
+LUT3                                    0.273    f     4.913       5  pin: dut/u_logo_rom/sel0_syn_30754.o
+net (fo=1)                              0.448          5.361          net: dut/u_logo_rom/sel0_syn_30755,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30789.b
+LUT6                                    0.315    f     5.676       6  pin: dut/u_logo_rom/sel0_syn_30789.o
+net (fo=1)                              0.448          6.124          net: dut/u_logo_rom/I_addr[14]_syn_140,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30790.c
+LUT4                                    0.273    f     6.397       7  pin: dut/u_logo_rom/sel0_syn_30790.o
+net (fo=59)                             0.961          7.358          net: dut/u_logo_rom/sel0_syn_30791,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30836.b
+LUT2                                    0.273    f     7.631       8  pin: dut/u_logo_rom/sel0_syn_30836.o
+net (fo=14)                             0.746          8.377          net: dut/u_logo_rom/sel0_syn_30837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31062.a
+LUT2                                    0.273    f     8.650       9  pin: dut/u_logo_rom/sel0_syn_31062.o
+net (fo=1)                              0.448          9.098          net: dut/u_logo_rom/sel0_syn_31063,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31085.a
+LUT6                                    0.315    f     9.413      10  pin: dut/u_logo_rom/sel0_syn_31085.o
+net (fo=1)                              0.448          9.861          net: dut/u_logo_rom/sel0_syn_15030[17],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[17].d
+SEQ (reg)                               0.041    f     9.902               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.902               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[17].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.367               
+
+Slack               : 3.404ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[0].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.865ns (cell 3.057ns (30%), net 6.808ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=5  LUT5=2  LUT2=2  LUT4=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_29636.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_29636.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_29637,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_29644.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_29644.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/I_addr[5]_syn_112,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_29654.b
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_29654.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/I_addr[12]_syn_14,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_29655.d
+LUT6                                    0.315    f     4.955       5  pin: dut/u_logo_rom/sel0_syn_29655.o
+net (fo=1)                              0.448          5.403          net: dut/u_logo_rom/sel0_syn_29656,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_29775.c
+LUT6                                    0.315    f     5.718       6  pin: dut/u_logo_rom/sel0_syn_29775.o
+net (fo=232)                            1.150          6.868          net: dut/u_logo_rom/sel0_syn_29776,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30854.a
+LUT2                                    0.273    f     7.141       7  pin: dut/u_logo_rom/sel0_syn_30854.o
+net (fo=3)                              0.520          7.661          net: dut/u_logo_rom/sel0_syn_30855,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31044.b
+LUT4                                    0.273    f     7.934       8  pin: dut/u_logo_rom/sel0_syn_31044.o
+net (fo=1)                              0.448          8.382          net: dut/u_logo_rom/sel0_syn_31045,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31046.c
+LUT5                                    0.273    f     8.655       9  pin: dut/u_logo_rom/sel0_syn_31046.o
+net (fo=1)                              0.448          9.103          net: dut/u_logo_rom/sel0_syn_31047,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31060.a
+LUT5                                    0.273    f     9.376      10  pin: dut/u_logo_rom/sel0_syn_31060.o
+net (fo=1)                              0.448          9.824          net: dut/u_logo_rom/sel0_syn_15030[0],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[0].d
+SEQ (reg)                               0.041    f     9.865               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.865               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[0].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.404               
+
+Slack               : 3.409ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[2].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.860ns (cell 3.015ns (30%), net 6.845ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=4  LUT3=2  LUT2=2  LUT5=1  LUT4=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30728.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_30728.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_30729,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30734.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_30734.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/sel0_syn_30735,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30752.a
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_30752.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/sel0_syn_30753,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30754.a
+LUT3                                    0.273    f     4.913       5  pin: dut/u_logo_rom/sel0_syn_30754.o
+net (fo=1)                              0.448          5.361          net: dut/u_logo_rom/sel0_syn_30755,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30789.b
+LUT6                                    0.315    f     5.676       6  pin: dut/u_logo_rom/sel0_syn_30789.o
+net (fo=1)                              0.448          6.124          net: dut/u_logo_rom/I_addr[14]_syn_140,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30790.c
+LUT4                                    0.273    f     6.397       7  pin: dut/u_logo_rom/sel0_syn_30790.o
+net (fo=59)                             0.961          7.358          net: dut/u_logo_rom/sel0_syn_30791,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30836.b
+LUT2                                    0.273    f     7.631       8  pin: dut/u_logo_rom/sel0_syn_30836.o
+net (fo=14)                             0.746          8.377          net: dut/u_logo_rom/sel0_syn_30837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31117.a
+LUT3                                    0.273    f     8.650       9  pin: dut/u_logo_rom/sel0_syn_31117.o
+net (fo=1)                              0.448          9.098          net: dut/u_logo_rom/sel0_syn_31118,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31126.c
+LUT5                                    0.273    f     9.371      10  pin: dut/u_logo_rom/sel0_syn_31126.o
+net (fo=1)                              0.448          9.819          net: dut/u_logo_rom/sel0_syn_15030[2],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[2].d
+SEQ (reg)                               0.041    f     9.860               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.860               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[2].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.409               
+
+Slack               : 3.409ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[5].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.860ns (cell 3.015ns (30%), net 6.845ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=4  LUT4=2  LUT2=2  LUT5=1  LUT3=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30728.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_30728.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_30729,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30734.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_30734.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/sel0_syn_30735,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30752.a
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_30752.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/sel0_syn_30753,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30754.a
+LUT3                                    0.273    f     4.913       5  pin: dut/u_logo_rom/sel0_syn_30754.o
+net (fo=1)                              0.448          5.361          net: dut/u_logo_rom/sel0_syn_30755,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30789.b
+LUT6                                    0.315    f     5.676       6  pin: dut/u_logo_rom/sel0_syn_30789.o
+net (fo=1)                              0.448          6.124          net: dut/u_logo_rom/I_addr[14]_syn_140,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30790.c
+LUT4                                    0.273    f     6.397       7  pin: dut/u_logo_rom/sel0_syn_30790.o
+net (fo=59)                             0.961          7.358          net: dut/u_logo_rom/sel0_syn_30791,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30836.b
+LUT2                                    0.273    f     7.631       8  pin: dut/u_logo_rom/sel0_syn_30836.o
+net (fo=14)                             0.746          8.377          net: dut/u_logo_rom/sel0_syn_30837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31172.b
+LUT4                                    0.273    f     8.650       9  pin: dut/u_logo_rom/sel0_syn_31172.o
+net (fo=1)                              0.448          9.098          net: dut/u_logo_rom/sel0_syn_31173,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31189.b
+LUT5                                    0.273    f     9.371      10  pin: dut/u_logo_rom/sel0_syn_31189.o
+net (fo=1)                              0.448          9.819          net: dut/u_logo_rom/sel0_syn_15030[5],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[5].d
+SEQ (reg)                               0.041    f     9.860               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.860               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[5].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.409               
+
+Slack               : 3.409ns
+Begin Point         : dut/logo_addr_s1_reg[3].clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/logo_pixel_s2_reg[8].d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : setup
+Process             : slow_125c
+Budget              : 13.333ns { hdmi_pixel_clk rising@13.333ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 9.860ns (cell 3.015ns (30%), net 6.845ns (70%))
+Clock Skew          : 0.000ns
+Logic Level         : 10 ( LUT6=4  LUT5=2  LUT2=2  LUT4=1  LUT3=1 )
+Max Fanout          : 681
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_addr_s1_reg[3].clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.076    f     0.076          pin: dut/logo_addr_s1_reg[3].q
+net (fo=681)                            1.294          1.370          net: dut/u_logo_rom/I_addr[3],  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_27383.b
+LUT2                                    0.273    f     1.643       1  pin: dut/u_logo_rom/sel0_syn_27383.o
+net (fo=11)                             0.708          2.351          net: dut/u_logo_rom/sel0_syn_27384,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30728.a
+LUT6                                    0.315    f     2.666       2  pin: dut/u_logo_rom/sel0_syn_30728.o
+net (fo=1)                              0.448          3.114          net: dut/u_logo_rom/sel0_syn_30729,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30734.a
+LUT6                                    0.315    f     3.429       3  pin: dut/u_logo_rom/sel0_syn_30734.o
+net (fo=1)                              0.448          3.877          net: dut/u_logo_rom/sel0_syn_30735,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30752.a
+LUT6                                    0.315    f     4.192       4  pin: dut/u_logo_rom/sel0_syn_30752.o
+net (fo=1)                              0.448          4.640          net: dut/u_logo_rom/sel0_syn_30753,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30754.a
+LUT3                                    0.273    f     4.913       5  pin: dut/u_logo_rom/sel0_syn_30754.o
+net (fo=1)                              0.448          5.361          net: dut/u_logo_rom/sel0_syn_30755,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30789.b
+LUT6                                    0.315    f     5.676       6  pin: dut/u_logo_rom/sel0_syn_30789.o
+net (fo=1)                              0.448          6.124          net: dut/u_logo_rom/I_addr[14]_syn_140,  ../anlogic_logo_rom.v(2)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30790.c
+LUT4                                    0.273    f     6.397       7  pin: dut/u_logo_rom/sel0_syn_30790.o
+net (fo=59)                             0.961          7.358          net: dut/u_logo_rom/sel0_syn_30791,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_30836.b
+LUT2                                    0.273    f     7.631       8  pin: dut/u_logo_rom/sel0_syn_30836.o
+net (fo=14)                             0.746          8.377          net: dut/u_logo_rom/sel0_syn_30837,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31199.a
+LUT5                                    0.273    f     8.650       9  pin: dut/u_logo_rom/sel0_syn_31199.o
+net (fo=1)                              0.448          9.098          net: dut/u_logo_rom/sel0_syn_31200,  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/u_logo_rom/sel0_syn_31208.b
+LUT5                                    0.273    f     9.371      10  pin: dut/u_logo_rom/sel0_syn_31208.o
+net (fo=1)                              0.448          9.819          net: dut/u_logo_rom/sel0_syn_15030[8],  ../anlogic_logo_rom.v(7)
+                                                                      pin: dut/logo_pixel_s2_reg[8].d
+SEQ (reg)                               0.041    f     9.860               
+--------------------------------------------------------------------  ---------------
+Arrival                                                9.860               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/logo_pixel_s2_reg[8].clk
+capture edge                           13.333    r    13.333               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.064         13.269               
+clock uncertainty                       0.000         13.269               
+clock pessimism                         0.000         13.269               
+--------------------------------------------------------------------  ---------------
+Required                                              13.269               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.409               
+
+
+
+Min Paths
+----------------------------------------------------------------------------------------------------
+Slack               : 0.502ns
+Begin Point         : dut/hs_s2_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/O_hsync_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/hs_s2_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: dut/hs_s2_reg.q
+net (fo=1)                              0.448          0.501          net: dut/hs_s2,  ../industrial_osd_overlay.v(942)
+                                                                      pin: dut/O_hsync_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/O_hsync_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : dut/vs_s2_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/O_vsync_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/vs_s2_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: dut/vs_s2_reg.q
+net (fo=1)                              0.448          0.501          net: dut/vs_s2,  ../industrial_osd_overlay.v(942)
+                                                                      pin: dut/O_vsync_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/O_vsync_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : dut/de_s1_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/de_s2_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/de_s1_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: dut/de_s1_reg.q
+net (fo=1)                              0.448          0.501          net: dut/de_s1,  ../industrial_osd_overlay.v(930)
+                                                                      pin: dut/de_s2_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/de_s2_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : dut/hs_s1_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/hs_s2_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/hs_s1_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: dut/hs_s1_reg.q
+net (fo=1)                              0.448          0.501          net: dut/hs_s1,  ../industrial_osd_overlay.v(930)
+                                                                      pin: dut/hs_s2_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/hs_s2_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : dut/in_logo_s1_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/in_logo_s2_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/in_logo_s1_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: dut/in_logo_s1_reg.q
+net (fo=1)                              0.448          0.501          net: dut/in_logo_s1,  ../industrial_osd_overlay.v(921)
+                                                                      pin: dut/in_logo_s2_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/in_logo_s2_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : inv_r_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/invalid_snapshot_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: inv_r_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: inv_r_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_invalid,  ../industrial_osd_overlay.v(27)
+                                                                      pin: dut/invalid_snapshot_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/invalid_snapshot_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : mo_r_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/motion_snapshot_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: mo_r_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: mo_r_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_motion,  ../industrial_osd_overlay.v(33)
+                                                                      pin: dut/motion_snapshot_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/motion_snapshot_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : ng_r_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/ng_snapshot_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: ng_r_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: ng_r_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_ng,  ../industrial_osd_overlay.v(26)
+                                                                      pin: dut/ng_snapshot_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/ng_snapshot_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : pass_r_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/pass_snapshot_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: pass_r_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: pass_r_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_pass,  ../industrial_osd_overlay.v(25)
+                                                                      pin: dut/pass_snapshot_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/pass_snapshot_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+Slack               : 0.502ns
+Begin Point         : pv_r_reg.clk (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+End Point           : dut/proc_valid_snapshot_reg.d (rising edge triggered by clock hdmi_pixel_clk  { rise@0.000000ns  fall@6.666000ns  period=13.333000 })
+Check Type          : hold
+Process             : fast_125c
+Budget              : 0.000ns { hdmi_pixel_clk rising@0.000ns - hdmi_pixel_clk rising@0.000ns }
+Data Path Delay     : 0.516ns (cell 0.068ns (13%), net 0.448ns (87%))
+Clock Skew          : 0.000ns
+Logic Level         : 0
+Max Fanout          : 1
+Clock Uncertainty   : 0.000ns (sdc uncertainty: 0.000ns, default uncertainty: 0.000ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: pv_r_reg.clk
+launch edge                             0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+SEQ (clk2q)                             0.053    f     0.053          pin: pv_r_reg.q
+net (fo=1)                              0.448          0.501          net: dut/I_proc_valid,  ../industrial_osd_overlay.v(30)
+                                                                      pin: dut/proc_valid_snapshot_reg.d
+SEQ (reg)                               0.015    f     0.516               
+--------------------------------------------------------------------  ---------------
+Arrival                                                0.516               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: I_clk
+hierarchy                               0.000          0.000          pin: I_clk_syn_2.ipad
+PAD                                     0.000          0.000          pin: I_clk_syn_2.sg09_di
+PAD                                     0.000          0.000          pin: I_clk_syn_2.di
+net (fo=327)                            0.000          0.000          net: I_clk_dup_1,  ../industrial_osd_gate_top.v(5)
+                                                                      pin: dut/proc_valid_snapshot_reg.clk
+capture edge                            0.000    r     0.000               
+--------------------------------------------------------------------  ---------------
+hold                                    0.014          0.014               
+clock uncertainty                       0.000          0.014               
+clock pessimism                         0.000          0.014               
+--------------------------------------------------------------------  ---------------
+Required                                               0.014               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.502               
+
+
+Inter clock domain timing
+--------------------------------------------------
+
+IP timing
+--------------------------------------------------

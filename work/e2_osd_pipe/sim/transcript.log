@@ -1,0 +1,23 @@
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:39:10 on Oct 21,2026
+# vlog -work work anlogic_logo_rom.v industrial_osd_overlay_baseline.v industrial_osd_overlay_candidate.v tb_osd_pipe_diff.v 
+# -- Compiling module anlogic_logo_rom
+# -- Compiling module industrial_osd_overlay_baseline
+# -- Compiling module industrial_osd_overlay_candidate
+# -- Compiling module tb_osd_pipe_diff
+# 
+# Top level modules:
+# 	tb_osd_pipe_diff
+# End time: 17:39:10 on Oct 21,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -c work.tb_osd_pipe_diff 
+# Start time: 17:39:10 on Oct 21,2026
+# Loading work.tb_osd_pipe_diff
+# Loading work.industrial_osd_overlay_baseline
+# Loading work.anlogic_logo_rom
+# Loading work.industrial_osd_overlay_candidate
+# TB_OSD_PIPE_DIFF_PASS checks=2475199 de_pixels=1843397 logo=50397 text_region=368660 vsync_rises=2
+# ** Note: $finish    : tb_osd_pipe_diff.v(151)
+#    Time: 24752045 ns  Iteration: 1  Instance: /tb_osd_pipe_diff
+# End time: 17:39:28 on Oct 21,2026, Elapsed time: 0:00:18
+# Errors: 0, Warnings: 0

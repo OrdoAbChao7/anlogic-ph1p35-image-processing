@@ -1,0 +1,36 @@
+standard
+***Report Model: industrial_osd_gate_top Device: PH1P35MDG324***
+
+IO Statistics
+#IO                        29
+  #input                    2
+  #output                  27
+  #inout                    0
+
+Gate Statistics
+#Basic gates            39503
+  #and                  21397
+  #nand                     0
+  #or                     258
+  #nor                      0
+  #xor                      8
+  #xnor                     0
+  #buf                      0
+  #not                  17246
+  #bufif1                   0
+  #MX21                   393
+  #FADD                     0
+  #DFF                    201
+  #LATCH                    0
+#MACRO_ADD                140
+#MACRO_EQ                  39
+#MACRO_MUX               2442
+
+Report Hierarchy Area:
++----------------------------------------------------------------+
+|Instance       |Module                  |gates  |seq    |macros |
++----------------------------------------------------------------+
+|top            |industrial_osd_gate_top |39302  |201    |179    |
+|  dut          |industrial_osd_overlay  |39204  |136    |165    |
+|    u_logo_rom |anlogic_logo_rom        |38521  |0      |0      |
++----------------------------------------------------------------+

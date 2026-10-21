@@ -1,0 +1,12 @@
+--- awblite_baseline/user_source/hdl_source/design_top_wrapper.v	2026-10-21 11:54:20.398218200 +0800
++++ e1_mipi_bbox_pipe/user_source/hdl_source/design_top_wrapper.v	2026-10-21 17:33:49.222138800 +0800
+@@ -1197,7 +1197,8 @@
+         .STATIC_ASPECT_MAX_Q8                ( 16'd448 ),
+         .USE_FIXED_AWB_PIXEL_COUNT           ( 1 ),
+         .FIXED_AWB_PIXEL_COUNT               ( 32'd921600 ),
+-        .ENABLE_V2_FRAME_AWB                 ( 0 )
++        .ENABLE_V2_FRAME_AWB              ( 0 ),
++        .USE_BBOX_PIPELINE                ( 1 )
+     ) u_industrial_v2_feature_spine (
+         .I_clk                    ( S_csi_rx_clk       ),
+         .I_rst_n                  ( S_v2_src_rst_n      ),

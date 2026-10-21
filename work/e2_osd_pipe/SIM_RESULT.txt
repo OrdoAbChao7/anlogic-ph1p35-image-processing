@@ -1,0 +1,5 @@
+E2 OSD overlay pipeline — verification result
+=============================================
+ModelSim-Intel FPGA Starter Edition 2020.1
+TB_OSD_PIPE_DIFF_PASS checks=2475199 de_pixels=1843397 logo=50397 text_region=368660 vsync_rises=2
+Errors: 0, Warnings: 0

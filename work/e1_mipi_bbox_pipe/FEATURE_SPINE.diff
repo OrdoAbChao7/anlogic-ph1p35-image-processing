@@ -1,0 +1,24 @@
+--- awblite_baseline/user_source/hdl_source/industrial_v2_feature_spine.v	2026-10-21 11:43:07.403563100 +0800
++++ e1_mipi_bbox_pipe/user_source/hdl_source/industrial_v2_feature_spine.v	2026-10-21 17:33:44.548696300 +0800
+@@ -32,7 +32,12 @@
+   parameter [15:0] STATIC_ASPECT_MAX_Q8 = 16'hffff,
+   parameter integer USE_FIXED_AWB_PIXEL_COUNT = 0,
+   parameter [31:0] FIXED_AWB_PIXEL_COUNT = 32'd921600,
+-  parameter integer ENABLE_V2_FRAME_AWB = 1
++  parameter integer ENABLE_V2_FRAME_AWB = 1,
++  // 1 = register the BBox geometry cone one cycle ahead of I_result_valid.
++  // The producer (color_detect_96_v2 -> defect_classifier) always supplies the
++  // final BBox one clock before the result toggle, so this keeps the original
++  // publication edge while shortening the MIPI critical path.
++  parameter integer USE_BBOX_PIPELINE = 0
+ )(
+   input  wire        I_clk,
+   input  wire        I_rst_n,
+@@ -354,6 +359,7 @@
+ 
+   dimension_calibrator #(
+     .USE_STATIC_CONFIG              (USE_STATIC_CAL_CONFIG),
++    .USE_BBOX_PIPELINE              (USE_BBOX_PIPELINE),
+     .STATIC_SCALE_X_Q16_16           (STATIC_SCALE_X_Q16_16),
+     .STATIC_SCALE_Y_Q16_16           (STATIC_SCALE_Y_Q16_16),
+     .STATIC_NOMINAL_WIDTH_Q16_16     (STATIC_NOMINAL_WIDTH_Q16_16),

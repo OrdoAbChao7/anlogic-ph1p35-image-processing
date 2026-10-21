@@ -1,0 +1,24 @@
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:34:39 on Oct 21,2026
+# vlog -work work dimension_calibrator_baseline.v dimension_calibrator_candidate.v tb_e1_bbox_pipe_diff.v 
+# -- Compiling module dimension_calibrator_baseline
+# -- Compiling module dimension_calibrator_candidate
+# -- Compiling module cal_probe
+# -- Compiling module tb_e1_bbox_pipe_diff
+# 
+# Top level modules:
+# 	tb_e1_bbox_pipe_diff
+# End time: 17:34:39 on Oct 21,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -c work.tb_e1_bbox_pipe_diff 
+# Start time: 17:34:39 on Oct 21,2026
+# Loading work.tb_e1_bbox_pipe_diff
+# Loading work.cal_probe
+# Loading work.dimension_calibrator_baseline
+# Loading work.dimension_calibrator_candidate
+# PROVE_PIPELINE_IS_REAL base=100800000004000000000100 cand_pipe=160078000000280000c80180 (differ as expected)
+# TB_E1_BBOX_PIPE_DIFF_PASS checks=1058 frames=528
+# ** Note: $finish    : tb_e1_bbox_pipe_diff.v(272)
+#    Time: 21225 ns  Iteration: 1  Instance: /tb_e1_bbox_pipe_diff
+# End time: 17:34:40 on Oct 21,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0

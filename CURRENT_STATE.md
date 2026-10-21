@@ -1,0 +1,104 @@
+# CURRENT_STATE
+
+Updated: 2026-10-21 (takeover session) — **TIMING_PASS + BITSTREAM_READY achieved**
+
+## Shipped candidate
+
+`release/candidate-industrial-v2-timing-closed/`
+
+| Artifact | Value |
+|---|---|
+| Bitstream | `camera_to_dsi_display.bit`, 1,789,539 B |
+| Bitstream SHA-256 | `ADD2DC46403670C279CADCE2E051F79B83EA9F2BBD1F4E78E7FBB7EB5606BC8C` |
+| Compressed variant | `8F031B67A5F739C6BD5D42CB7180B293B1E8664BD9F1C7F0E2940169974F47AA` |
+| Routed DB | `7BCFEED69B469230B1515C6DA226917DD1C6CD65ACDD100C176B79D15F7B99B1` |
+| Build inputs | `INPUTS.sha256` (239 files) manifest `207B1AEF196FBD616AE51B788277A291A4976BCB63A2ACCC73F857A9F5C8FB89` |
+| Source tree | `work/e3_integrated/` |
+
+## Version table
+
+| Id | Path | Contents | Setup WNS/TNS | Slices | Status |
+|---|---|---|---:|---:|---|
+| V0 | `work/awblite_baseline/` | frozen AWB-Lite input package | −2.539 / −14.705 ns (24 EP) | 18,421 | reference only, fails |
+| E1 | `work/e1_mipi_bbox_pipe/` | V0 + MIPI BBox pre-computation pipeline | +0.104 / 0 ns (0 EP) | 18,359 | TIMING_PASS (superseded) |
+| E2 | `work/e2_osd_pipe/` | V0 + OSD overlay pipeline | module Gate +3,189 ps | module only | module Gate PASS |
+| **E3** | `work/e3_integrated/` | **V0 + E1 + E2** | **+0.137 / 0 ns (0 EP)** | **18,248** | **BITSTREAM_READY** |
+
+Route, E3: Setup WNS/TNS **+0.137 / 0 ps**, Hold **+0.020 / 0 ps**, 0 violating
+endpoints, 18,248/21,216 slices (86.01 %), ERAM 75/108, DSP 32/40, STA coverage
+96.56 %, TD 6.2.168116, `place seed 1`.
+
+Per clock: MIPI **+0.154 ns**, HDMI **+0.137 ns**, DDR usr_clk +1.428 ns,
+everything else ≥ +1.292 ns.
+
+## Verified status ladder
+
+| Level | State |
+|---|---|
+| RTL_VERIFIED | **YES** — E1: 1,058 cycle checks; E2: 2,475,199 cycle checks; both 0 mismatches vs the frozen baseline |
+| TIMING_PASS | **YES** — full Route, both corners, CRPR on, 0 violating endpoints |
+| BITSTREAM_READY | **YES** — bitgen exit 0 from the routed DB |
+| READY_FOR_BOARD_TEST | **YES** — `release/candidate-industrial-v2-timing-closed/` |
+| HARDWARE_PASS | **NO** — never downloaded; no board connected |
+
+## Residual risks (do not lose these)
+
+1. **Thin margins**: MIPI +0.154 ns (9.660 ns), HDMI +0.137 ns (13.333 ns).
+   Sign-off is legitimate but there is little headroom for follow-on edits.
+2. **Unconstrained 99 kHz I2C clock** `u_uicfgcs520/u_i2c/scl_clk`
+   (24 MHz / 240 = 10.08 µs). Analytical, not measured: adding
+   `create_clock` to the imported routed DB and re-timing crashed TD with
+   `0xC0000005`. Minidump preserved. Shipped artifacts re-hashed and intact.
+3. **Unconstrained I/O**: MIPI/DDR hard-IP pads, TMDS pads, I2C, LEDs, buttons.
+   Enumerated in `evidence/check_timing_route.txt`.
+4. **DDR PLL frequency-mismatch report** from `check_timing` (constraint says
+   half the PLL setting for clkc[0..3]). Vendor DDR PHY 2× output-clock
+   reporting; unchanged from the frozen baseline (same vendor IP and SDC).
+5. **Pin assignment**: HX1P35A/HX1P35B document discrepancy never closed.
+6. **Provisional calibration constants** (0.5/0.25 mm/px, 60x20 mm, ±2 mm).
+7. **AWB off** (inherited AWB-Lite reduction), **sort actuator inhibited**.
+
+## Constraints honesty
+
+`camera_to_dsi_display.sdc` is byte-identical to the frozen baseline
+(`390DFE5F...`). The only timing exceptions are the vendor DDR2 gray-counter
+`set_max_delay -datapath_only` constraints, 100 % ignored by `set_clock_groups`.
+No false path, no multicycle, no period change was added at any point.
+
+## Established facts (re-verify if the tree changes)
+
+- MIPI pre-computation window: exactly one cycle. `color_detect_96_v2` commits
+  BBox/area at edge T; `defect_classifier` toggles `O_result_toggle` at T+1;
+  `ind_v2_toggle_d` delays it so `ind_result_event` is high only in cycle T+1;
+  the calibrator samples at edge T+2. Cycle T is free for pre-computation.
+- Production spine instance: `USE_STATIC_CAL_CONFIG=1`,
+  `STATIC_OCCUPANCY_MIN_Q8=200`, `STATIC_ASPECT_MIN_Q8=320`,
+  `STATIC_ASPECT_MAX_Q8=448`, `I_calibration_valid=1'b1`,
+  `ENABLE_V2_FRAME_AWB=0`, `USE_BBOX_PIPELINE=1` (E1/E3 only).
+- `731FF493...` is the SHA-256 of `R1-input-manifest.json` (shared R1 baseline),
+  not a cross-version misreference. `IDENTITY_UNRESOLVED` is closed.
+- Warning profile of the shipped build is byte-identical to the baseline:
+  SYN-5013 x789, HDL-5317 x79, SYN-5011 x54, HDL-5007 x38, HDL-5314 x20,
+  HDL-5323 x7, SYN-5041 x6, HDL-5373 x5, HDL-5001 x5, SYN-5025 x3, HDL-5106 x2,
+  SYN-5065 x1, HDL-5369 x1.
+
+## Rejected directions (do not repeat)
+
+| Direction | Measured result | Verdict |
+|---|---|---|
+| AWB D=N−M×G reformulation | Gate WNS still −2.588 ns, DSP cost up | rejected |
+| Static Q8=200 occupancy comparator | +0.837 ns < 1.0 ns gate; `#slice*` +57.1 % | rejected |
+| OSD RGB mux reorder (no pipeline) | +49 ps; `#slice*` +6.29 % | rejected |
+| Blind `RAM_STYLE` on cartoon cache | repeated `SYN-5041` | rejected |
+| Synchronous palette ROM (isolated) | unresolved `HDL-5314`/`SYN-5025`/`SYN-5105`, 2 unexplained ERAMs | not integrated |
+
+## Tool / process state
+
+- Worktree `E:\Projects\FPGA-ds-timing`, branch `ds/industrial-v2-timing-closure`.
+- No TD process running.
+- `check_timing` succeeds on a routed DB; it crashes (0xC0000005) on a Gate DB
+  and on any attempt to *modify* constraints after `import_db`. Do not retry
+  those two variants.
+- Runners: `run_full_route.ps1 -Exp <dir> [-RequireClean]`, `assemble_e3.sh`.
+  Experiment dirs are full copies of `work/awblite_baseline/`; never edit the
+  baseline.

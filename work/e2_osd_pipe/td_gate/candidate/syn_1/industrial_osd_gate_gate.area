@@ -1,0 +1,55 @@
+standard
+***Report Model: industrial_osd_gate_top Device: PH1P35MDG324***
+
+Design Statistics
+#IO                        29   out of    160   18.12%
+  #input                    2
+  #output                  27
+  #inout                    0
+#lut                     2846
+  #lut1                     8
+  #lut2                   196
+  #lut3                   136
+  #lut4                   185
+  #lut5                   346
+  #lut6                  1975
+#reg                      327
+  #slice reg              327   out of  42432    0.77%
+  #pad reg                  0
+
+Utilization Statistics
+#slice*                  2512   out of  21216   11.84%
+  #used ram                 0
+    #dram lut               0
+    #shifter lut            0
+  #used logic            2512
+    #with luts*          2432
+    #with adder            48
+    #reg only*             32
+#f7mux                      0   out of  10608    0.00%
+#f8mux                      0   out of   5304    0.00%
+#eram                       0   out of    108    0.00%
+  #eram20k                  0
+  #fifo20k                  0
+#dsp                        0   out of     40    0.00%
+#ddr_byte                   0   out of     12    0.00%
+#mipi_tx                    0   out of      2    0.00%
+#mipi_rx                    0   out of      2    0.00%
+#pad                       29   out of    160   18.12%
+#pll                        0   out of      6    0.00%
+#gclk                       0   out of     32    0.00%
+#lclk                       0   out of     12    0.00%
+#sclk                       0   out of     48    0.00%
+#mlclk                      0   out of      6    0.00%
+#ioclk                      0   out of     18    0.00%
+
+* Note! The LUT and Slice count after Optimize-Gate is not the final value, Run Optimize-place for a more realistic count.
+
+Report Hierarchy Area:
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+|Instance       |Module                  |logic lut |ripple  |seq     |eram    |dsp     |dram lut |shifter lut |f7mux   |f8mux   |pll     |ddr     |
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+|top            |industrial_osd_gate_top |2432      |48      |327     |0       |0       |0        |0           |0       |0       |0       |0       |
+|  dut          |industrial_osd_overlay  |2401      |24      |262     |0       |0       |0        |0           |0       |0       |0       |0       |
+|    u_logo_rom |anlogic_logo_rom        |2006      |0       |0       |0       |0       |0        |0           |0       |0       |0       |0       |
++--------------------------------------------------------------------------------------------------------------------------------------------------+

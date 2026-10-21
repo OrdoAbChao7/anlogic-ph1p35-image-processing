@@ -1,0 +1,362 @@
+`timescale 1ns/1ps
+
+// Fixed-point dimension and single-target shape checker.
+// Inputs are inclusive pixel BBox endpoints and a calibrated Q16.16 mm/pixel
+// scale. Results are published only on I_result_valid and are explicitly
+// invalid when calibration or geometry is unavailable.
+//
+// USE_BBOX_PIPELINE:
+//   0 (default) - purely combinational geometry cone; identical to the frozen
+//                 AWB-Lite baseline elaboration.
+//   1           - add one register stage that captures every BBox-derived
+//                 operand on the rising edge *before* I_result_valid, and let
+//                 the result stage consume those registered copies.
+//
+// Contract for USE_BBOX_PIPELINE=1 (supplied by the producer in this design):
+// the BBox endpoints / area / calibration configuration presented in cycle T
+// are the ones I_result_valid refers to in cycle T+1. `defect_classifier`
+// toggles O_result_toggle exactly one clock after color_detect_96_v2 commits
+// the BBox, so this window always exists and result publication still happens
+// on the original edge.
+module dimension_calibrator #(
+  parameter integer COORD_WIDTH = 11,
+  parameter integer USE_STATIC_CONFIG = 0,
+  parameter integer USE_BBOX_PIPELINE = 0,
+  parameter [31:0] STATIC_SCALE_X_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_SCALE_Y_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_NOMINAL_WIDTH_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_NOMINAL_HEIGHT_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_TOLERANCE_WIDTH_Q16_16 = 32'd0,
+  parameter [31:0] STATIC_TOLERANCE_HEIGHT_Q16_16 = 32'd0,
+  parameter [8:0]  STATIC_OCCUPANCY_MIN_Q8 = 9'd0,
+  parameter [15:0] STATIC_ASPECT_MIN_Q8 = 16'd0,
+  parameter [15:0] STATIC_ASPECT_MAX_Q8 = 16'hffff
+)(
+  input  wire                     I_clk,
+  input  wire                     I_rst_n,
+  input  wire                     I_result_valid,
+  input  wire                     I_calibration_valid,
+  input  wire [COORD_WIDTH-1:0]   I_xmin,
+  input  wire [COORD_WIDTH-1:0]   I_xmax,
+  input  wire [COORD_WIDTH-1:0]   I_ymin,
+  input  wire [COORD_WIDTH-1:0]   I_ymax,
+  input  wire [19:0]              I_area,
+  input  wire [31:0]              I_scale_x_q16_16,
+  input  wire [31:0]              I_scale_y_q16_16,
+  input  wire [31:0]              I_nominal_width_q16_16,
+  input  wire [31:0]              I_nominal_height_q16_16,
+  input  wire [31:0]              I_tolerance_width_q16_16,
+  input  wire [31:0]              I_tolerance_height_q16_16,
+  input  wire [8:0]               I_occupancy_min_q8,
+  input  wire [15:0]              I_aspect_min_q8,
+  input  wire [15:0]              I_aspect_max_q8,
+  output reg                      O_valid,
+  output reg                      O_invalid,
+  output reg                      O_dimension_valid,
+  output reg                      O_shape_valid,
+  output reg  [31:0]              O_width_mm_q16_16,
+  output reg  [31:0]              O_height_mm_q16_16,
+  output reg  [8:0]               O_occupancy_q8,
+  output reg  [15:0]              O_aspect_q8
+);
+
+  // The detector contract uses 11-bit coordinates and a 20-bit area. Keep
+  // the frame-result arithmetic at the widths required by those contracts;
+  // widening every operand to 64 bits creates unnecessarily large
+  // combinational multipliers/dividers in the TD implementation.
+  localparam integer PIXEL_WIDTH = COORD_WIDTH + 1;
+  localparam integer BBOX_AREA_WIDTH = PIXEL_WIDTH * 2;
+  localparam integer SCALE_PRODUCT_WIDTH = PIXEL_WIDTH + 32;
+  localparam integer OCCUPANCY_PRODUCT_WIDTH = 20 + 9;
+  localparam integer ASPECT_PRODUCT_WIDTH = PIXEL_WIDTH + 9;
+  localparam integer OCCUPANCY_COMPARE_WIDTH = BBOX_AREA_WIDTH + 9;
+  localparam integer ASPECT_COMPARE_WIDTH = PIXEL_WIDTH + 17;
+
+  // The formal PH1P35 candidate may specialize its provisional fixture values
+  // at elaboration time. Generic instances retain the runtime configuration
+  // interface used by unit tests and future calibrated builds.
+  wire [31:0] scale_x_q16_16 = USE_STATIC_CONFIG ?
+                                STATIC_SCALE_X_Q16_16 : I_scale_x_q16_16;
+  wire [31:0] scale_y_q16_16 = USE_STATIC_CONFIG ?
+                                STATIC_SCALE_Y_Q16_16 : I_scale_y_q16_16;
+  wire [31:0] nominal_width_q16_16 = USE_STATIC_CONFIG ?
+                                      STATIC_NOMINAL_WIDTH_Q16_16 : I_nominal_width_q16_16;
+  wire [31:0] nominal_height_q16_16 = USE_STATIC_CONFIG ?
+                                       STATIC_NOMINAL_HEIGHT_Q16_16 : I_nominal_height_q16_16;
+  wire [31:0] tolerance_width_q16_16 = USE_STATIC_CONFIG ?
+                                        STATIC_TOLERANCE_WIDTH_Q16_16 : I_tolerance_width_q16_16;
+  wire [31:0] tolerance_height_q16_16 = USE_STATIC_CONFIG ?
+                                         STATIC_TOLERANCE_HEIGHT_Q16_16 : I_tolerance_height_q16_16;
+  wire [8:0] occupancy_min_q8 = USE_STATIC_CONFIG ?
+                                  STATIC_OCCUPANCY_MIN_Q8 : I_occupancy_min_q8;
+  wire [15:0] aspect_min_q8 = USE_STATIC_CONFIG ?
+                                STATIC_ASPECT_MIN_Q8 : I_aspect_min_q8;
+  wire [15:0] aspect_max_q8 = USE_STATIC_CONFIG ?
+                                STATIC_ASPECT_MAX_Q8 : I_aspect_max_q8;
+
+  // ----------------------------------------------------------------------
+  // Combinational geometry (stage 1 inputs)
+  // ----------------------------------------------------------------------
+  wire [PIXEL_WIDTH-1:0] width_px = (I_xmax >= I_xmin) ?
+                                     ({1'b0, I_xmax} - {1'b0, I_xmin} +
+                                      {{COORD_WIDTH{1'b0}}, 1'b1}) : 0;
+  wire [PIXEL_WIDTH-1:0] height_px = (I_ymax >= I_ymin) ?
+                                      ({1'b0, I_ymax} - {1'b0, I_ymin} +
+                                       {{COORD_WIDTH{1'b0}}, 1'b1}) : 0;
+  wire bbox_valid = (I_xmax >= I_xmin) && (I_ymax >= I_ymin) &&
+                    (width_px != 0) && (height_px != 0);
+  wire [BBOX_AREA_WIDTH-1:0] width_px_bbox =
+      {{(BBOX_AREA_WIDTH-PIXEL_WIDTH){1'b0}}, width_px};
+  wire [BBOX_AREA_WIDTH-1:0] height_px_bbox =
+      {{(BBOX_AREA_WIDTH-PIXEL_WIDTH){1'b0}}, height_px};
+  wire [BBOX_AREA_WIDTH-1:0] bbox_area = width_px_bbox * height_px_bbox;
+
+  wire [SCALE_PRODUCT_WIDTH-1:0] width_px_scale =
+      {{(SCALE_PRODUCT_WIDTH-PIXEL_WIDTH){1'b0}}, width_px};
+  wire [SCALE_PRODUCT_WIDTH-1:0] height_px_scale =
+      {{(SCALE_PRODUCT_WIDTH-PIXEL_WIDTH){1'b0}}, height_px};
+  wire [SCALE_PRODUCT_WIDTH-1:0] scale_x_ext =
+      {{(SCALE_PRODUCT_WIDTH-32){1'b0}}, scale_x_q16_16};
+  wire [SCALE_PRODUCT_WIDTH-1:0] scale_y_ext =
+      {{(SCALE_PRODUCT_WIDTH-32){1'b0}}, scale_y_q16_16};
+  wire [SCALE_PRODUCT_WIDTH-1:0] width_product = width_px_scale * scale_x_ext;
+  wire [SCALE_PRODUCT_WIDTH-1:0] height_product = height_px_scale * scale_y_ext;
+
+  wire [OCCUPANCY_PRODUCT_WIDTH-1:0] area_ext =
+      {{(OCCUPANCY_PRODUCT_WIDTH-20){1'b0}}, I_area};
+  wire [OCCUPANCY_PRODUCT_WIDTH-1:0] occupancy_scale =
+      {{(OCCUPANCY_PRODUCT_WIDTH-9){1'b0}}, 9'd256};
+  wire [OCCUPANCY_PRODUCT_WIDTH-1:0] occupancy_product = area_ext * occupancy_scale;
+
+  wire [ASPECT_PRODUCT_WIDTH-1:0] width_px_aspect =
+      {{(ASPECT_PRODUCT_WIDTH-PIXEL_WIDTH){1'b0}}, width_px};
+  wire [ASPECT_PRODUCT_WIDTH-1:0] aspect_scale =
+      {{(ASPECT_PRODUCT_WIDTH-9){1'b0}}, 9'd256};
+  wire [ASPECT_PRODUCT_WIDTH-1:0] aspect_product = width_px_aspect * aspect_scale;
+  wire [ASPECT_PRODUCT_WIDTH-1:0] height_px_aspect =
+      {{(ASPECT_PRODUCT_WIDTH-PIXEL_WIDTH){1'b0}}, height_px};
+
+  wire [ASPECT_COMPARE_WIDTH-1:0] width_scaled_aspect =
+      {{(ASPECT_COMPARE_WIDTH-PIXEL_WIDTH){1'b0}}, width_px} << 8;
+  wire [ASPECT_COMPARE_WIDTH-1:0] height_px_ext_aspect =
+      {{(ASPECT_COMPARE_WIDTH-PIXEL_WIDTH){1'b0}}, height_px};
+  wire [ASPECT_COMPARE_WIDTH-1:0] aspect_min_ext =
+      {{(ASPECT_COMPARE_WIDTH-16){1'b0}}, aspect_min_q8};
+  wire [16:0] aspect_max_exclusive = {1'b0, aspect_max_q8} + 17'd1;
+  wire [ASPECT_COMPARE_WIDTH-1:0] height_aspect_min_product =
+      height_px_ext_aspect * aspect_min_ext;
+  wire [ASPECT_COMPARE_WIDTH-1:0] height_aspect_max_product =
+      height_px_ext_aspect * aspect_max_exclusive;
+  wire aspect_max_unbounded = (aspect_max_q8 == 16'hffff);
+
+  wire [31:0] width_low = (nominal_width_q16_16 >= tolerance_width_q16_16) ?
+                           (nominal_width_q16_16 - tolerance_width_q16_16) : 0;
+  wire [31:0] width_high = nominal_width_q16_16 + tolerance_width_q16_16;
+  wire [31:0] height_low = (nominal_height_q16_16 >= tolerance_height_q16_16) ?
+                            (nominal_height_q16_16 - tolerance_height_q16_16) : 0;
+  wire [31:0] height_high = nominal_height_q16_16 + tolerance_height_q16_16;
+  wire occupancy_min_in_range = (occupancy_min_q8 <= 9'd256);
+
+  // ----------------------------------------------------------------------
+  // Optional one-cycle pre-computation stage
+  // ----------------------------------------------------------------------
+  wire [BBOX_AREA_WIDTH-1:0]       e_bbox_area;
+  wire [SCALE_PRODUCT_WIDTH-1:0]   e_width_product;
+  wire [SCALE_PRODUCT_WIDTH-1:0]   e_height_product;
+  wire [OCCUPANCY_PRODUCT_WIDTH-1:0] e_occupancy_product;
+  wire [ASPECT_PRODUCT_WIDTH-1:0]  e_aspect_product;
+  wire [ASPECT_PRODUCT_WIDTH-1:0]  e_height_px_aspect;
+  wire [ASPECT_COMPARE_WIDTH-1:0]  e_width_scaled_aspect;
+  wire [ASPECT_COMPARE_WIDTH-1:0]  e_height_aspect_min_product;
+  wire [ASPECT_COMPARE_WIDTH-1:0]  e_height_aspect_max_product;
+  wire [8:0]                       e_occupancy_min_q8;
+  wire [31:0]                      e_width_low;
+  wire [31:0]                      e_width_high;
+  wire [31:0]                      e_height_low;
+  wire [31:0]                      e_height_high;
+  wire                             e_bbox_valid;
+  wire                             e_cal_valid;
+  wire                             e_aspect_max_unbounded;
+  wire                             e_occupancy_min_in_range;
+
+  generate
+    if (USE_BBOX_PIPELINE != 0) begin : gen_bbox_pipeline
+      reg [BBOX_AREA_WIDTH-1:0]        s1_bbox_area;
+      reg [SCALE_PRODUCT_WIDTH-1:0]    s1_width_product;
+      reg [SCALE_PRODUCT_WIDTH-1:0]    s1_height_product;
+      reg [OCCUPANCY_PRODUCT_WIDTH-1:0] s1_occupancy_product;
+      reg [ASPECT_PRODUCT_WIDTH-1:0]   s1_aspect_product;
+      reg [ASPECT_PRODUCT_WIDTH-1:0]   s1_height_px_aspect;
+      reg [ASPECT_COMPARE_WIDTH-1:0]   s1_width_scaled_aspect;
+      reg [ASPECT_COMPARE_WIDTH-1:0]   s1_height_aspect_min_product;
+      reg [ASPECT_COMPARE_WIDTH-1:0]   s1_height_aspect_max_product;
+      reg [8:0]                        s1_occupancy_min_q8;
+      reg [31:0]                       s1_width_low;
+      reg [31:0]                       s1_width_high;
+      reg [31:0]                       s1_height_low;
+      reg [31:0]                       s1_height_high;
+      reg                              s1_bbox_valid;
+      reg                              s1_cal_valid;
+      reg                              s1_aspect_max_unbounded;
+      reg                              s1_occupancy_min_in_range;
+
+      // Every operand derived from the frame committed in this cycle is
+      // captured together, so the result stage never mixes two frames.
+      always @(posedge I_clk or negedge I_rst_n) begin
+        if (!I_rst_n) begin
+          s1_bbox_area                <= {BBOX_AREA_WIDTH{1'b0}};
+          s1_width_product            <= {SCALE_PRODUCT_WIDTH{1'b0}};
+          s1_height_product           <= {SCALE_PRODUCT_WIDTH{1'b0}};
+          s1_occupancy_product        <= {OCCUPANCY_PRODUCT_WIDTH{1'b0}};
+          s1_aspect_product           <= {ASPECT_PRODUCT_WIDTH{1'b0}};
+          s1_height_px_aspect         <= {ASPECT_PRODUCT_WIDTH{1'b0}};
+          s1_width_scaled_aspect      <= {ASPECT_COMPARE_WIDTH{1'b0}};
+          s1_height_aspect_min_product<= {ASPECT_COMPARE_WIDTH{1'b0}};
+          s1_height_aspect_max_product<= {ASPECT_COMPARE_WIDTH{1'b0}};
+          s1_occupancy_min_q8         <= 9'd0;
+          s1_width_low                <= 32'd0;
+          s1_width_high               <= 32'd0;
+          s1_height_low               <= 32'd0;
+          s1_height_high              <= 32'd0;
+          s1_bbox_valid               <= 1'b0;
+          s1_cal_valid                <= 1'b0;
+          s1_aspect_max_unbounded     <= 1'b0;
+          s1_occupancy_min_in_range   <= 1'b0;
+        end else begin
+          s1_bbox_area                <= bbox_area;
+          s1_width_product            <= width_product;
+          s1_height_product           <= height_product;
+          s1_occupancy_product        <= occupancy_product;
+          s1_aspect_product           <= aspect_product;
+          s1_height_px_aspect         <= height_px_aspect;
+          s1_width_scaled_aspect      <= width_scaled_aspect;
+          s1_height_aspect_min_product<= height_aspect_min_product;
+          s1_height_aspect_max_product<= height_aspect_max_product;
+          s1_occupancy_min_q8         <= occupancy_min_q8;
+          s1_width_low                <= width_low;
+          s1_width_high               <= width_high;
+          s1_height_low               <= height_low;
+          s1_height_high              <= height_high;
+          s1_bbox_valid               <= bbox_valid;
+          s1_cal_valid                <= I_calibration_valid;
+          s1_aspect_max_unbounded     <= aspect_max_unbounded;
+          s1_occupancy_min_in_range   <= occupancy_min_in_range;
+        end
+      end
+
+      assign e_bbox_area                 = s1_bbox_area;
+      assign e_width_product             = s1_width_product;
+      assign e_height_product            = s1_height_product;
+      assign e_occupancy_product         = s1_occupancy_product;
+      assign e_aspect_product            = s1_aspect_product;
+      assign e_height_px_aspect          = s1_height_px_aspect;
+      assign e_width_scaled_aspect       = s1_width_scaled_aspect;
+      assign e_height_aspect_min_product = s1_height_aspect_min_product;
+      assign e_height_aspect_max_product = s1_height_aspect_max_product;
+      assign e_occupancy_min_q8          = s1_occupancy_min_q8;
+      assign e_width_low                 = s1_width_low;
+      assign e_width_high                = s1_width_high;
+      assign e_height_low                = s1_height_low;
+      assign e_height_high               = s1_height_high;
+      assign e_bbox_valid                = s1_bbox_valid;
+      assign e_cal_valid                 = s1_cal_valid;
+      assign e_aspect_max_unbounded      = s1_aspect_max_unbounded;
+      assign e_occupancy_min_in_range    = s1_occupancy_min_in_range;
+    end else begin : gen_bbox_comb
+      assign e_bbox_area                 = bbox_area;
+      assign e_width_product             = width_product;
+      assign e_height_product            = height_product;
+      assign e_occupancy_product         = occupancy_product;
+      assign e_aspect_product            = aspect_product;
+      assign e_height_px_aspect          = height_px_aspect;
+      assign e_width_scaled_aspect       = width_scaled_aspect;
+      assign e_height_aspect_min_product = height_aspect_min_product;
+      assign e_height_aspect_max_product = height_aspect_max_product;
+      assign e_occupancy_min_q8          = occupancy_min_q8;
+      assign e_width_low                 = width_low;
+      assign e_width_high                = width_high;
+      assign e_height_low                = height_low;
+      assign e_height_high               = height_high;
+      assign e_bbox_valid                = bbox_valid;
+      assign e_cal_valid                 = I_calibration_valid;
+      assign e_aspect_max_unbounded      = aspect_max_unbounded;
+      assign e_occupancy_min_in_range    = occupancy_min_in_range;
+    end
+  endgenerate
+
+  // ----------------------------------------------------------------------
+  // Result stage (unchanged publication edge)
+  // ----------------------------------------------------------------------
+  wire [OCCUPANCY_PRODUCT_WIDTH-1:0] occupancy_denominator = e_bbox_area;
+  wire [OCCUPANCY_PRODUCT_WIDTH-1:0] occupancy_raw =
+      (e_bbox_area != 0) ? (e_occupancy_product / occupancy_denominator) : 0;
+
+  // For the pass/fail predicate, compare cross-products directly. This is
+  // exactly equivalent to comparing floor(numerator / denominator) with the
+  // integer threshold, and lets synthesis discard the variable dividers when
+  // the optional numeric telemetry outputs are not consumed.
+  wire [OCCUPANCY_COMPARE_WIDTH-1:0] bbox_area_ext_occ =
+      {{(OCCUPANCY_COMPARE_WIDTH-BBOX_AREA_WIDTH){1'b0}}, e_bbox_area};
+  wire [OCCUPANCY_COMPARE_WIDTH-1:0] occupancy_min_ext =
+      {{(OCCUPANCY_COMPARE_WIDTH-9){1'b0}}, e_occupancy_min_q8};
+  wire [OCCUPANCY_COMPARE_WIDTH-1:0] occupancy_product_ext =
+      {{(OCCUPANCY_COMPARE_WIDTH-OCCUPANCY_PRODUCT_WIDTH){1'b0}}, e_occupancy_product};
+  wire [OCCUPANCY_COMPARE_WIDTH-1:0] bbox_occupancy_min_product =
+      bbox_area_ext_occ * occupancy_min_ext;
+  wire occupancy_min_met = e_occupancy_min_in_range &&
+                           (occupancy_product_ext >= bbox_occupancy_min_product);
+
+  wire [ASPECT_PRODUCT_WIDTH-1:0] aspect_raw =
+      (e_height_px_aspect != 0) ? (e_aspect_product / e_height_px_aspect) : 0;
+  wire aspect_min_met = e_width_scaled_aspect >= e_height_aspect_min_product;
+  wire aspect_max_met = e_aspect_max_unbounded ||
+                        (e_width_scaled_aspect < e_height_aspect_max_product);
+
+  wire [8:0] occupancy_calc = (occupancy_raw > 256) ?
+                               9'd256 : occupancy_raw[8:0];
+  wire [15:0] aspect_calc = (aspect_raw > 65535) ?
+                             16'hffff : aspect_raw[15:0];
+
+  wire dimension_valid_now = e_bbox_valid &&
+                             (e_width_product >= e_width_low) &&
+                             (e_width_product <= e_width_high) &&
+                             (e_height_product >= e_height_low) &&
+                             (e_height_product <= e_height_high) &&
+                             !(|e_width_product[SCALE_PRODUCT_WIDTH-1:32]) &&
+                             !(|e_height_product[SCALE_PRODUCT_WIDTH-1:32]);
+  wire shape_valid_now = dimension_valid_now &&
+                         occupancy_min_met && aspect_min_met && aspect_max_met;
+
+  always @(posedge I_clk or negedge I_rst_n) begin
+    if (!I_rst_n) begin
+      O_valid            <= 1'b0;
+      O_invalid          <= 1'b0;
+      O_dimension_valid  <= 1'b0;
+      O_shape_valid      <= 1'b0;
+      O_width_mm_q16_16  <= 32'd0;
+      O_height_mm_q16_16 <= 32'd0;
+      O_occupancy_q8     <= 9'd0;
+      O_aspect_q8        <= 16'd0;
+    end else begin
+      O_valid           <= 1'b0;
+      O_invalid         <= 1'b0;
+      O_dimension_valid <= 1'b0;
+      O_shape_valid     <= 1'b0;
+      if (I_result_valid) begin
+        if (!e_cal_valid || !e_bbox_valid ||
+            (|e_width_product[SCALE_PRODUCT_WIDTH-1:32]) ||
+            (|e_height_product[SCALE_PRODUCT_WIDTH-1:32])) begin
+          O_invalid <= 1'b1;
+        end else begin
+          O_valid           <= 1'b1;
+          O_dimension_valid <= dimension_valid_now;
+          O_shape_valid     <= shape_valid_now;
+          O_width_mm_q16_16 <= e_width_product[31:0];
+          O_height_mm_q16_16 <= e_height_product[31:0];
+          O_occupancy_q8     <= occupancy_calc;
+          O_aspect_q8        <= aspect_calc;
+        end
+      end
+    end
+  end
+endmodule
