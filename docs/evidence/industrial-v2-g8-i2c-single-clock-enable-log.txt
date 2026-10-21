@@ -1,0 +1,49 @@
+Industrial V2 G8 — I2C single-I_clk + edge-enable probe
+Date: 2026-10-19
+Disposition: candidate-only; not promoted; no hardware download.
+
+Functional comparison
+  Reference: fallback/td_package/user_source/hdl_source/uics500_cfg/uii2c.v
+  Candidate: fallback/sim/config/uii2c_single_clock_candidate.v
+  Testbench: fallback/sim/config/tb_i2c_single_clock_equivalence.v
+  Simulator: E:/Projects/FPGA/.tools/iverilog/bin/iverilog.exe and vvp.exe
+  Result: 12 parameter configurations PASS.
+    ACK-low: CLK_DIV 0,1,2,3,6,7,49,50,499
+    NACK:     CLK_DIV 7,49,499
+  Each run compared two I2C transactions and all checked external/status/data signals cycle by cycle.
+
+Isolated Tang Dynasty build
+  Input package: work/td_i2c_single_clock_input
+  Work project: work/td_i2c_single_clock_enable_seed1_build
+  Release: release/candidates/industrial-v2-i2c-single-clock-enable-seed1
+  Device: PH1P35MDG324; TD 6.2.168116; placement seed 1.
+  Result: synthesis, placement, route, final STA and Bitgen completed.
+  Final route.qor: setup WNS/TNS/violations = +112 ps / 0 / 0;
+                  hold WNS/TNS/violations = +20 ps / 0 / 0.
+  Resource: Slice 18209/21216 = 85.83%; RAM 43; DSP 24.
+  Bitstream: 1,370,225 bytes; SHA-256
+    03bfb4bc820ef4e9e3b9727d05e8e6ddb2ca0be972fbf0b31dd78fec8fe296b5
+  Resource gate: FAIL (>85%). Clock-warning gate: OPEN.
+
+Clock analysis
+  Candidate raw flow log records PHY-5016 x4, PHY-5060 x1, PHY-5079 x1, PHY-5088 x4.
+  analyze_clock -detail on the completed candidate database reports the O_cam_24m_syn_3
+  SCLK branch with 125 clock sinks + 1 data/other sink; place_clock_utilization.txt
+  identifies the top-level HD pad, and the physical log marks the clock branch as using
+  local routing resources (3 local wires; PHY-5079).
+  A read-only analyze_clock -detail on the previous same-seed MCLK/ODDR candidate database
+  did not report O_cam_24m_syn_3, PHY-5060, or PHY-5079; it did retain other PHY-5088
+  clock-buffer/cascade messages. This is a run-to-run project comparison, not proof of
+  a vendor-tool root cause.
+
+Evidence paths
+  work/td_i2c_single_clock_enable_seed1_build-launch.log
+  work/td_i2c_single_clock_enable_seed1_build/td_project/camera_to_dsi_display_Runs/syn_1/flow_exec.log
+  work/td_i2c_single_clock_enable_seed1_build/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log
+  work/td_i2c_single_clock_enable_seed1_build/td_project/camera_to_dsi_display_Runs/phy_1/place_clock_utilization.txt
+  work/td_i2c_single_clock_enable_seed1_build/td_project/camera_to_dsi_display_Runs/phy_1/analyze_clock_detail.tcl
+  release/candidates/industrial-v2-i2c-single-clock-enable-seed1/route.qor
+  release/candidates/industrial-v2-i2c-single-clock-enable-seed1/final_timing.rpt
+  release/candidates/industrial-v2-i2c-single-clock-enable-seed1/industrial-v1-manifest.json
+  work/td_i2c_counter_mclk_oddr_seed1_build/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log
+

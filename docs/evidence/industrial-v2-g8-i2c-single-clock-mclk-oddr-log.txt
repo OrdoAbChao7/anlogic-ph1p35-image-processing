@@ -1,0 +1,41 @@
+Industrial V2 G8 — I2C single-clock + MCLK ODDR combination
+Date: 2026-10-19
+Worktree: E:\Projects\FPGA-v2
+Base commit: 3314966f675473039e804e8515f9844c4ba287c3
+
+Combination inputs:
+  I2C input package: work/td_i2c_single_clock_input
+  I2C RTL SHA-256: 9184ee498d25278afec0305e7322331d459f6dcaaf0a38e058337ca4d54ddf5a
+  Top override: release/candidates/industrial-v2-mclk-oddr-seed3/design_top_wrapper_mclk_oddr.v
+  Top SHA-256: fd65440dc4dfaea1305f0dd31e42fcb79413628301106a87272cb3647ab2c3e0
+  Prior source check: transformed current V2 wrapper exactly equals the saved ODDR wrapper.
+  30 tracked V2 source hashes match between seed=1 and seed=3 manifests.
+  Both synthesis and physical .prj files reference uii2c_single_clock.v.
+
+TD build command template (seed 1/3):
+  python scripts/build_industrial_td.py --td-exe E:\Projects\FPGA\.tools\td\app\bin\td_commands_prompt.exe --flow-tcl E:\Projects\FPGA\.tools\td\app\doc\scripts\DefaultFlow.tcl --input-package work\td_i2c_single_clock_input --top-rtl release\candidates\industrial-v2-mclk-oddr-seed3\design_top_wrapper_mclk_oddr.v --release-dir release\candidates\industrial-v2-i2c-single-clock-oddr-seedN --work-project work\td_i2c_single_clock_oddr_seedN_build --place-seed N
+  Both builds exited 0 after synthesis, placement, routing, Hold Fix, STA and Bitgen.
+
+Final QoR:
+  seed=1: WNS +105/+20 ps, TNS 0/0, zero violated endpoints; Slice 18426/21216 (86.85%); RAM/DSP/DRAMHARDCON 43/24/229.
+  Bitstream SHA-256 75ebfa15f0adb277326b57951dce8a25c6d1c96f50d9b1796ab95836dff6ab0f.
+  seed=3: WNS +113/+20 ps, TNS 0/0, zero violated endpoints; Slice 18318/21216 (86.34%); RAM/DSP/DRAMHARDCON 43/24/229.
+  Bitstream SHA-256 d55657aab467e71cfbdde80635caae17ae2bde156881f873c27bf1bb3a3d1bf0.
+
+Warnings in each raw run:
+  SYN-5011 x13; SYN-5025 x3; PHY-5016 x4; PHY-5060 x0;
+  PHY-5079 x0; PHY-5088 x1.
+  The candidate removes PHY-5060/5079 only. PHY-5016 and PHY-5088 remain open.
+
+Clock detail (seed=3):
+  Command script: work/td_i2c_single_clock_oddr_seed3_build/td_project/camera_to_dsi_display_Runs/phy_1/analyze_clock_detail_only.tcl
+  TD output: work/td_i2c_single_clock_oddr_seed3_build/td_project/camera_to_dsi_display_Runs/phy_1/td_20261019_190845.log
+  PHY-5088 identifies DDR PHY AL_PHY_SCLK -> AL_PHY_PLL u_pll1 -> slave u_pll1/clkc[0] -> AL_PHY_GCLK cascade.
+  PHY-5016 correlation: DDR PLL0 clkc[1:2] feed pll0_clk_1/2 -> u_mlclk_1/2 -> pll0_mlclk_1/2 -> DDR IOCLK; final route table places the two MLCLK nets at X0Y59Z0/Z1. Four warning lines (two repeated warning classes) occur in the MLCLK placement section. This is a project-source/report inference, not a unique sink or pad assignment; PHY-5016 remains OPEN pending authoritative IP/pin and hardware closure.
+  Official guide check: Anlogic UG1310_1.2, printed p.92 (PDF p.111), states PH1P_PHY_IOCLK clkin may be driven by same/adjacent-region MLCLK, same-region PLL, or GCLKIO. This supports the implemented MLCLK-to-IOCLK source class, but does not identify the PHY-5016 DRC sink/pad; warning remains OPEN.
+  route_clock_utilization.txt records pll_clk_24m / PLL clkc[1] at 42ns driving u_ae_set/I_clk.
+
+Disposition: REJECTED_RESOURCE_AND_WARNING_GATE; neither candidate promoted or flashed.
+Frozen V1 SHA-256: b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef.
+Formal V2 package SHA-256: d6e6a7e12ef7558834904dcc8d2783d5fda827b7fe11c6e407b0119fc3ce1c0d.
+

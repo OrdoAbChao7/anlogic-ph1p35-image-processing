@@ -1,0 +1,40 @@
+Industrial V2 G8 I2C counter-width probe
+Date: 2026-10-19
+Worktree: E:/Projects/FPGA-v2
+Branch: goal/industrial-v2-advanced
+TD: 6.2.168116
+Device: PH1P35MDG324
+Placement seed: 1
+
+Source transform:
+- script: scripts/prepare_i2c_counter_width.py
+- input: fallback/td_package/
+- isolated input: work/td_i2c_counter_width_input/
+- transformed source: work/td_i2c_counter_width_input/user_source/hdl_source/uics500_cfg/uii2c.v
+- transformed source SHA-256: da507aae17f1a464566bf741323da8b782ff4d7b46c30e676d9b8ed7d124da58
+- change: parameter-specialized CLKDIV_WIDTH, SC520 SCL_DIV=118 uses 8 bits; legacy SCL_DIV=499 retains 16-bit branch
+
+Verification:
+- python -B -m pytest -q work/tests/test_v2_i2c_counter_width.py
+- result: 1 passed in 0.02s
+- Icarus command: E:/Projects/FPGA/.tools/iverilog/bin/iverilog.exe -g2012 -Wall -s uii2c -Puii2c.WMEN_LEN=1 -Puii2c.RMEN_LEN=1 -Puii2c.CLK_DIV=237
+- Icarus result: exit 0; temporary compile output removed
+
+TD artifacts:
+- isolated build: work/td_i2c_counter_width_build/td_project/camera_to_dsi_display_Runs/
+- route.qor SHA-256: 571fa443d2b8892a87be0b771cb7d30c07fd6eadffc13ffcc0352fbd528fd9ac
+- final_timing.rpt SHA-256: e2e26e6a766afa03f00d53486f78255417f71795e90e88e0936dfa0a317c8635
+- route Setup WNS/TNS/violated S-EP: +107 ps / 0 / 0
+- route Hold WNS/TNS/violated H-EP: +20 ps / 0 / 0
+- Slice/RAM/DSP/DRAMHARDCON: 18295/21216 (86.23%) / 43 / 24 / 229
+- bitstream: release/candidates/industrial-v2-i2c-counter-width/camera_to_dsi_display_compress.bit
+- bitstream size: 1369923 bytes
+- bitstream SHA-256: 4c85e27006742452c80d7aba475169b95b7ad13572565bc7228514777662c767
+
+Warnings retained in the physical log:
+- PHY-5060: u_uicfgcs520/u_i2c/scl_clk mixed fanouts and O_cam_24m_syn_3 mixed fanouts
+- PHY-5016: PLL clkc driving IO without location / not clock-capable IO
+- PHY-5088: clock analyzer non-clock sinks and clock-net cascade
+
+Decision: REJECTED_RESOURCE_GATE. Formal candidate unchanged. Hardware NOT_RUN.
+

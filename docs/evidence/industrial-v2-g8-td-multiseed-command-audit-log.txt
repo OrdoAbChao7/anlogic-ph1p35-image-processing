@@ -1,0 +1,27 @@
+Industrial V2 G8 TD MultiSeed command audit
+Date: 2026-10-19
+TD: 6.2.168116
+Executable: E:/Projects/FPGA/.tools/td/app/bin/td_commands_prompt.exe
+
+Read-only Tcl command:
+  report_seed_param
+
+Observed output:
+  Minimum Seed 0
+  Number of Seeds 10
+  Save Number 1
+  Run Jobs 3
+  End Step bitgen
+  Seed Step 10
+  set_seed_param -num 10 -init 0 -step 10 -jobs 3 -save 1 -endStep route -genBit on -random off -filter off -rwns 0 -pwns 0 -congestion 100 -farm off -ip -queue
+
+Official MultiSeed.tcl:
+  prepare() executes: set_param place seed $seed
+  opt_place executes: place
+  opt_route executes: route
+  bitgen executes: bitgen -bit $prj_name.bit
+
+Conclusion:
+  No separate documented or observed gate/route/bitgen seed interface was found.
+  The existing reproducibility blocker remains open. No formal source or Bitstream was changed.
+

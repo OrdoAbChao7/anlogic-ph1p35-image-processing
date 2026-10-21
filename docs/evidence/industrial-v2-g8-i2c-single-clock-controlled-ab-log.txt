@@ -1,0 +1,46 @@
+Industrial V2 G8 I2C single-clock controlled A/B evidence
+Date: 2026-10-19
+Device: PH1P35MDG324
+Tang Dynasty: 6.2.168116
+Flow: official DefaultFlow.tcl, derived placement seed 1
+
+Input comparison:
+  Baseline package: fallback/td_package
+  Baseline I2C SHA-256: 032df05881f9bd7c7cf86cc1381adcb739a18f8a8744ed06b1160ac294a6dc0d
+  Candidate package: work/td_i2c_single_clock_ab_candidate_input
+  Candidate I2C SHA-256: 9184ee498d25278afec0305e7322331d459f6dcaaf0a38e058337ca4d54ddf5a
+  Pre-build package hash comparison: exactly one changed file, user_source/hdl_source/uics500_cfg/uii2c.v
+  Post-setup work-source comparison: 219 files each, exactly the same one changed file
+
+Commands:
+  python scripts/build_industrial_td.py --td-exe E:\Projects\FPGA\.tools\td\app\bin\td_commands_prompt.exe --flow-tcl E:\Projects\FPGA\.tools\td\app\doc\scripts\DefaultFlow.tcl --place-seed 1 --input-package fallback\td_package --release-dir release\candidates\industrial-v2-single-clock-ab-baseline --work-project work\td_i2c_single_clock_ab_baseline
+  python scripts/build_industrial_td.py --td-exe E:\Projects\FPGA\.tools\td\app\bin\td_commands_prompt.exe --flow-tcl E:\Projects\FPGA\.tools\td\app\doc\scripts\DefaultFlow.tcl --place-seed 1 --input-package work\td_i2c_single_clock_ab_candidate_input --release-dir release\candidates\industrial-v2-single-clock-ab-candidate --work-project work\td_i2c_single_clock_ab_candidate
+  python scripts/build_industrial_td.py --td-exe E:\Projects\FPGA\.tools\td\app\bin\td_commands_prompt.exe --flow-tcl E:\Projects\FPGA\.tools\td\app\doc\scripts\DefaultFlow.tcl --place-seed 1 --input-package work\td_i2c_single_clock_ab_candidate_input --release-dir release\candidates\industrial-v2-single-clock-ab-candidate-repeat --work-project work\td_i2c_single_clock_ab_candidate_repeat
+
+Final route.qor:
+  baseline: Slice 18404/21216 = 86.75%, Setup +112 ps, Hold +20 ps, TNS 0
+  candidate 1: Slice 17181/21216 = 80.98%, Setup +105 ps, Hold +20 ps, TNS 0
+  candidate 2: Slice 18347/21216 = 86.48%, Setup +127 ps, Hold +20 ps, TNS 0
+  RAM/DSP: 43/24 in all three runs
+
+Warnings:
+  baseline PHY-5060 includes u_uicfgcs520/u_i2c/scl_clk and O_cam_24m_syn_3
+  both candidates have no scl_clk diagnostic and no SCL-specific PHY-5060
+  baseline and both candidates retain O_cam_24m_syn_3 PHY-5060 and PHY-5079
+  PHY-5016 and PHY-5088 remain in all runs
+
+Build evidence:
+  baseline work log: work/td_i2c_single_clock_ab_baseline/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log
+  baseline release report/manifest: release/candidates/industrial-v2-single-clock-ab-baseline/
+  candidate 1 work log: work/td_i2c_single_clock_ab_candidate/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log
+  candidate 1 release report/manifest: release/candidates/industrial-v2-single-clock-ab-candidate/
+  candidate 2 work log: work/td_i2c_single_clock_ab_candidate_repeat/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log
+  candidate 2 release report/manifest: release/candidates/industrial-v2-single-clock-ab-candidate-repeat/
+
+Bitstream SHA-256:
+  baseline d6ce820c481df32dbae519a48351b93da3e56104ef6fbc61d3042e3192a87b03
+  candidate 1 d698e05ec86480e47868087e4e2ebe615a667165e34d62263bff490de228c2c5
+  candidate 2 a9cc6f1264033c63723f7087da451d185200802cd4ff8613d01f7cbdc91a7f8b
+
+No candidate was downloaded. Formal release package and frozen V1 artifacts were not changed.
+
