@@ -1,0 +1,27 @@
+--- work/d0b_gain_bypass_on_r2/user_source/hdl_source/industrial_osd_overlay.v	2026-10-21 21:01:10.604343000 +0800
++++ work/d1_osd_font_fix/user_source/hdl_source/industrial_osd_overlay.v	2026-10-21 22:48:53.639962400 +0800
+@@ -877,6 +877,9 @@
+   integer text_pos_c;
+   integer text_row_c;
+   integer text_col_c;
++  // D1: unsigned horizontal offset from the text origin. The character cell is
++  // 10 px wide so that all five glyph columns are drawn at an even 2 px each.
++  wire [11:0] text_off_c = x - 12'd180;
+   reg     text_active_c;
+ 
+   always @* begin
+@@ -911,9 +914,12 @@
+       else if (y < 240) text_line_c=9;
+       else if (y < 264) text_line_c=10;
+       else text_line_c=11;
+-      text_pos_c = (x - 180) >> 3;
++      // D1: 10 px cell / 5 glyph columns. The previous 8 px cell mapped
++      // ((x-180)&7)>>1 into 0..3, so glyph bit 0 was never selected and every
++      // character lost its rightmost stroke column.
++      text_pos_c = text_off_c / 12'd10;
+       text_row_c = (y - (8 + text_line_c*24)) >> 1;
+-      text_col_c = ((x - 180) & 7) >> 1;
++      text_col_c = (text_off_c % 12'd10) >> 1;
+     end
+   end
+ 

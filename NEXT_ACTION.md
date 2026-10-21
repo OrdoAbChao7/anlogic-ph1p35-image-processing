@@ -1,48 +1,81 @@
 # NEXT_ACTION
 
-## Immediate: board download and acceptance (blocked on hardware access)
+复工时从这里开始。硬件可用后按 A → B → C 顺序；硬件不可用时只做 D。
 
-Use `release/candidate-industrial-v2-timing-closed-r2/`.
+---
 
-1. Verify
-   `camera_to_dsi_display.bit` SHA-256 =
-   `E6BA3DA87DABF82907F3DB1B4FAC18A9E8350A43917F3D5E6DA64A0A35617C36`.
-2. Follow `BOARD_TEST.md` end to end and fill in the B1–B14 table. Record
-   failures with the observed symptom; do not relax constraints or force `PASS`
-   to make a check go green.
-3. If anything behaves unexpectedly, `../candidate-industrial-v2-timing-closed/`
-   (r1, Setup +0.137 ns, bitstream `ADD2DC46...`) is a drop-in rollback: it
-   shares E1 and E2 and differs only in the detector implementation.
-4. Replace the provisional calibration constants only after a real workcell
-   calibration is captured, then rebuild and re-time.
+## A. 上板测 D1（最优先，硬件一可用就做）
 
-## Timing margin status
+```
+E:\Projects\FPGA-v2\release\diagnostics\d1-osd-font-fix\camera_to_dsi_display_d1.bit
+SHA-256  031F5DAB2828EA5856EEC3B234116A56A87711F5B031252DFBCD449CB34DE9B6
+```
 
-Both critical clocks are now comfortably positive and the limiters are benign:
+对照顺序：V1（确认台面）→ D0（确认不闪）→ D1。
 
-| Clock | WNS | Limiting endpoint | Nature |
-|---|---:|---|---|
-| MIPI 9.660 ns | +0.755 ns | `motion_diff_160/motion_seen_reg` | pre-existing counter logic |
-| HDMI 13.333 ns | +0.644 ns | `industrial_osd/logo_pixel_s2_reg[21]` | the E2 pipeline boundary itself |
-
-No further structural timing work is warranted before hardware results. In
-particular:
-
-- Do **not** start another margin experiment to chase the `motion_diff_160`
-  counter path; it is a pre-existing design, it is not blocking, and every
-  change there carries detector-adjacent risk.
-- ChipWatcher debug insertion still requires a rebuild and a full re-route; at
-  +0.644 ns there is room, but it must be measured, not assumed.
-
-## If the board test fails
-
-| Symptom | First thing to check |
+| 看点 | 期望 |
 |---|---|
-| No configuration | Cable/JTAG wiring, power sequencing, device ID in TD |
-| Config OK, no HDMI | Monitor 720p support; TMDS pin assignment vs `pin.adc` |
-| HDMI OK, no camera image | MIPI lane polarity/termination; `S_cam_i2c_ready`; I2C pull-ups |
-| Image but no boxes | Segmentation thresholds under the actual lighting; AWB is off |
-| Boxes but wrong verdict | Provisional calibration constants; occupancy/aspect gates |
-| Intermittent corruption | The HX1P35A/HX1P35B pin-document discrepancy first |
+| 右竖笔（B/D/O/P/R/S/U/数字） | 恢复 |
+| 字符比例 | 不再横向拉伸 |
+| 每行字数 | 32 → 25（最长行用第 21 位，放得下） |
+| 画面稳定性 | 与 D0 一致，不闪 |
+| `PROC/VIDEO/E2E` | **仍是 N/A，预期如此**，不是回归 |
 
-Re-open an experiment directory per change; never edit `work/awblite_baseline/`.
+**判读**：字体恢复 → 3.3 缺陷闭环；字体仍异常 → 记录现象并回到 D0 对比，说明还有第二个字形问题。
+
+---
+
+## B. D0c2 —— 闪烁归因（硬件可用即可做，一次构建）
+
+目的：判定 D0 消除闪烁是"流水形状"还是"算术通路"。
+
+构造：以 `work/d0b_gain_bypass_on_r2/` 为基线，把旁路换成**保留两级 AXI 形状、
+去掉乘法**的寄存器切片：
+
+```verilog
+// ~2 拍延迟，tlast/tuser 同步，无乘法器
+```
+
+- 仍闪烁 → 问题在**两级流水/延迟本身**
+- 不闪   → 问题在**乘法/舍入数据通路**，下一步查综合网表里该级实际形态
+
+做完仍不能排除布局因素时，再加一次"同逻辑、微扰布局"的对照，才可下机制结论。
+**在 B 有结论前，不得把"删掉增益级"写进任何发布版本。**
+
+---
+
+## C. D2 —— 遥测接线（需要你先做一个设计决定）
+
+确定性缺陷已在 `design_top_wrapper.v:1231-1237` 定位，但接线前必须回答：
+
+> **屏上当前显示的是第几帧？**
+
+现有设计里没有这个信息。三个选项：
+
+| 选项 | 含义 | 代价 |
+|---|---|---|
+| C1 | 用 `v2_hdmi_result_valid` 当视频事件 | 一行改动；但 `VIDEO/E2E` 测的是"结果跨域"而非端到端，**指标名不副实** |
+| C2 | 在 HDMI 域加帧计数器，DDR 读出侧打帧标签 | 需要改 DDR 读路径，工作量中等，指标真实 |
+| C3 | 保持 N/A，把 OSD 上这三项改成显式的"未接入" | 最诚实，零风险 |
+
+**我的建议是 C2 或 C3。** C1 会让 N/A 变成一列看起来权威但含义错误的数字，
+比 N/A 更糟。等你定。
+
+---
+
+## D. 无需硬件的收尾（随时可做）
+
+1. `industrial_osd_overlay.v` 的字格从 8→10 像素会让一行容量从 32 降到 25；
+   检查是否有任何模式下文本会被截断（当前最长行用到第 21 位，安全）。
+2. 若决定采用 C2，先写一个只读的帧标签设计说明，再动 RTL。
+3. 重新审视 `PROC` 的单拍脉冲问题（CDC 后 vsync 快照漏采），这可能是
+   一个独立的脉冲宽度缺陷，与 C 无关。
+
+---
+
+## 纪律（不要破）
+
+- 每个诊断位流独立目录 + `SHA256SUMS` + 完整 TD 时序结果，**不覆盖 V1/R1/R2**
+- `run_bitgen.ps1` 的时序门禁不得绕过
+- 约束不得放宽（SDC 与冻结基线逐字节相同）
+- 未上板不得标记 `HARDWARE_PASS`

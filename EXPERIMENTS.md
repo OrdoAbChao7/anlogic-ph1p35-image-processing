@@ -456,6 +456,54 @@ because E5 changes the detector, the most safety-critical module.
 
 ---
 
+## 板级故障诊断 — D0 / D0b / D1
+
+用户实测：V1 正常，R1 与 R2 均严重闪烁、拼接、错位；Logo 与 OSD 可显示。
+详见 `docs/evidence/industrial-v2-board-video-failure-freeze.md`。
+
+### 差异审计结论
+
+按 V1 实际编译集（`industrial-v1-manifest.json` 的 `sources[]`，含 td_source guard
+覆盖）重建映射后比对：非 HDL 文件、DDR IP、`ddr2.adc`/`ddr2.sdc`、PLL、`pin.adc`、
+`settings.cfg` **全部逐字节相同**；视频链 12 个模块及其顶层接线**全部逐字节相同**。
+
+> 视频数据通路上 V2 相对 V1 只多了一个元件：`isp_top` 内的 `axis_gain_rgb96`。
+
+### D0（首版，作废）
+
+`work/d0_gain_bypass/` 基于时序未收敛的 V0：`Setup −2.191 ns / 40 违例`。
+未 bitgen、未上板，仅存证据。教训：诊断位流必须先自身时序收敛，否则无法区分
+逻辑错误与时序错误。
+
+### D0b —— 增益级旁路（即台面上的 D0）
+
+`work/d0b_gain_bypass_on_r2/` = R2 + 删除 `axis_gain_rgb96`，用 5 条 `assign`
+把 `awb` 直连齿轮箱。相对 R2 只有 `isp_top.v` 一个文件改变。
+
+| 项 | 值 |
+|---|---|
+| Setup / Hold | +103 ps / +21 ps，0 违例 |
+| Slice | 17,943（84.57 %） |
+| 位流 | `BFAA29F9…22BEC` |
+| 板测 | **闪烁消失**；遥测 N/A；文字缺笔画 |
+
+### D1 —— OSD 字形修复
+
+`work/d1_osd_font_fix/` = D0b + 字格 8→10 像素、`text_col=(off%10)>>1`。
+相对 D0b 只有 `industrial_osd_overlay.v` 一个文件改变（27 行）。
+
+| 项 | 值 |
+|---|---|
+| Setup / Hold | +121 ps / +20 ps，0 违例 |
+| Slice | 18,091（85.27 %） |
+| 位流 | `031F5DAB…DE9B6` |
+| 板测 | 未测 |
+
+黄金测试（带对照组）：未修版 7 个字形行全部短缺且差值恰为丢失的第 0 列；
+修复版逐行精确相符。见 `work/d1_osd_font_fix/SIM_RESULT.txt`。
+
+---
+
 ## Rejected earlier (inherited, do not repeat)
 
 | Direction | Evidence |

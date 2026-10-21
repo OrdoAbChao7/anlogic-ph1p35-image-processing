@@ -1,0 +1,44 @@
+--- ../e5_detect_parallel/user_source/hdl_source/isp/isp_top.v	2026-10-21 18:15:21.637608300 +0800
++++ user_source/hdl_source/isp/isp_top.v	2026-10-21 21:01:15.820505900 +0800
+@@ -80,7 +80,7 @@
+   wire         awb_O_tvalid_128;  //synthesis keep
+   wire [127:0] awb_O_tdata_128;  //synthesis keep
+ 
+-  assign awb_O_tready = awb_gain_O_tready;
++  // D0b: awb_O_tready is driven directly by O_tready (see bypass block).
+   assign O_tdata  = awb_O_tdata_128;
+   assign O_tlast  = awb_O_tlast    ;
+   assign O_tuser  = awb_O_tuser_128    ;
+@@ -142,23 +142,15 @@
+ // Apply the frame-controller's Q8.8 correction to the vendor AWB stream.
+ // The gain is captured at accepted frame start, so every pixel in one frame
+ // uses the same three gains without adding latency or changing sideband timing.
+-axis_gain_rgb96 u_axis_gain_rgb96 (
+-    .I_clk       (axi4s_video_aclk),
+-    .I_rst_n     (I_rst_n),
+-    .I_tdata     (awb_O_tdata),
+-    .I_tlast     (awb_O_tlast),
+-    .I_tuser     (awb_O_tuser),
+-    .I_tvalid    (awb_O_tvalid),
+-    .I_tready    (O_tready),
+-    .I_gain_r_q8_8(I_awb_gain_r_q8_8[9:0]),
+-    .I_gain_g_q8_8(I_awb_gain_g_q8_8[9:0]),
+-    .I_gain_b_q8_8(I_awb_gain_b_q8_8[9:0]),
+-    .O_tready    (awb_gain_O_tready),
+-    .O_tdata     (awb_gain_O_tdata),
+-    .O_tlast     (awb_gain_O_tlast),
+-    .O_tuser     (awb_gain_O_tuser),
+-    .O_tvalid    (awb_gain_O_tvalid)
+-);
++// D0b isolation build (on the timing-clean R2 tree): bypass the AWB gain
++// stage that V2 inserted between the vendor AWB block and the 96->128 gearbox.
++// This restores exactly the V1 video datapath (awb -> data_96bit_to_128bit)
++// while leaving every other module, connection and constraint untouched.
++  assign awb_O_tready      = O_tready;
++  assign awb_gain_O_tdata  = awb_O_tdata;
++  assign awb_gain_O_tlast  = awb_O_tlast;
++  assign awb_gain_O_tuser  = awb_O_tuser;
++  assign awb_gain_O_tvalid = awb_O_tvalid;
+ 
+     data_96bit_to_128bit u_data_96bit_to_128bit(
+         .I_clk              ( axi4s_video_aclk  ),

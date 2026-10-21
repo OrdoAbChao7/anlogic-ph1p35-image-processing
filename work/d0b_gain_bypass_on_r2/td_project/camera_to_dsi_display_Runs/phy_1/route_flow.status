@@ -1,0 +1,23 @@
+Location         : E:\Projects\FPGA-ds-timing\work\d0b_gain_bypass_on_r2\td_project\camera_to_dsi_display_Runs\phy_1
+Running with     : Tang Dynasty v6.2.168116
+                   Copyright (c) 2012-2025 Anlogic Inc.
+Top Model        : design_top_wrapper
+Device           : PH1P35MDG324
+Speed            : 3
+
+Timing Mode      : final
+Setup            : WNS   103ps  TNS        0ps  NUM_FEPS     0
+Hold             : WNS    21ps  TNS        0ps  NUM_FEPS     0
+
+Flow Statistics  :
+---------------------------------------------------------------------------------------------------
+     command     |  #calls  |  wall time   |  cpu time(s)  |  used memory(mb)  |  peak memory(mb)  
+---------------------------------------------------------------------------------------------------
+      place      |    1     |  2m39s(54%)  |   202(46%)    |       1621        |       1621        
+      route      |    1     |  2m3s(41%)   |   221(50%)    |       2353        |       2353        
+    fix_hold     |    1     |   10s(3%)    |    10(2%)     |       2353        |       2353        
+    import_db    |    1     |    1s(0%)    |     0(0%)     |        642        |        642        
+  import_device  |    1     |    1s(0%)    |     1(0%)     |        323        |        323        
+---------------------------------------------------------------------------------------------------
+      total      |    5     |    4m54s     |      434      |       2353        |       2353        
+---------------------------------------------------------------------------------------------------

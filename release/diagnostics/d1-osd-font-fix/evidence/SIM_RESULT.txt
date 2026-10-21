@@ -1,0 +1,23 @@
+D1 OSD glyph rendering — gold test (ModelSim-Intel FPGA Starter Edition 2020.1)
+==============================================================================
+Test: 1280x720 raster, I_mode=ORIGINAL, all snapshot inputs 0, I_rgb=0.
+Line 0 renders "MODE:ORIGINAL". For each of the 7 glyph rows the test counts
+lit pixels inside the text band and compares with the count implied by the
+glyph table, computed inside the testbench. Alignment-free.
+
+FIXED (10 px cell, text_col=(off%10)>>1 -> 0..4, all five glyph columns drawn)
+  ROW 0..6 actual == expected  ->  TB_D1_OSD_FONT_PASS
+  Errors: 0, Warnings: 0
+
+PREVIOUS / UNFIXED (8 px cell, text_col=(off&7)>>1 -> 0..3, glyph bit 0 lost)
+  ROW 0 actual=140 expected=164
+  ROW 1 actual=64  expected=92
+  ROW 2 actual=60  expected=88
+  ROW 3 actual=100 expected=128
+  ROW 4 actual=56  expected=84
+  ROW 5 actual=56  expected=84
+  ROW 6 actual=132 expected=168
+  ->  GLYPH RENDER MISMATCH: 7 of 7 rows short by the missing column-0 pixels
+
+The control run proves the test actually detects the defect; the fixed run
+proves the defect is gone.
