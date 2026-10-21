@@ -1,7 +1,16 @@
 # Industrial V2 — 整机时序收敛与首个可上板 Bitstream
 
 日期：2026-10-21。结论：AWB-Lite 整机从 Setup `−2.539 ns / 24 违例` 收敛到
-`+0.137 ns / 0 违例`，生成 Bitstream。**未上板**，`HARDWARE_PASS` 仍为否。
+`+0.644 ns / 0 违例`，生成 Bitstream。**未上板**，`HARDWARE_PASS` 仍为否。
+
+> **本版本已冻结。**
+> 冻结标识：`industrial-v2-timing-closed-freeze-20261021`
+> 冻结分支：`ds/industrial-v2-timing-closure`
+> 冻结报告：该分支下 `docs/evidence/industrial-v2-timing-closed-freeze.md`
+> 位流 SHA-256：`E6BA3DA87DABF82907F3DB1B4FAC18A9E8350A43917F3D5E6DA64A0A35617C36`
+>
+> 冻结后的任何 RTL、约束、阈值或 TD 输入包变更都必须新建候选目录与新的冻结 tag，
+> 不得覆盖冻结包。本文件余下内容是该版本的实验记录，不是继续演进的入口。
 
 ## 版本衔接
 
