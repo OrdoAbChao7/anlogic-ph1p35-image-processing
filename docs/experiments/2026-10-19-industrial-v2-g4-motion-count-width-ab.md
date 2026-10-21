@@ -61,4 +61,3 @@ TB_MOTION_DIFF_160_PASS
 两边保留相同的综合/实现告警类别。关键时钟告警仍包括 `PHY-5060`（`scl_clk` 和 `O_cam_24m_syn_3` 混合时钟/数据扇出）、`PHY-5079`（一个时钟网使用 local routing）、`PHY-5016` 和 `PHY-5088`；没有屏蔽或关闭告警。两边完整 `build.log`、`syn_flow_exec.log`、`phy_flow_exec.log`、`camera_to_dsi_display_rtl.area` 和 route/final timing 报告均保存在各自候选目录。
 
 这是同 seed、单次/每臂的受控顶层 A/B。工具的布局布线存在运行敏感性，因此 226 slices 是本次实测差值，不作为可重复性或最终发布收益保证；当前 15 位 Bitstream 仅是 G4 对照候选，没有替换 `release/industrial-v2/` 或冻结 V1，也没有上板。冷启动、真实运动场景、HDMI 显示和长稳仍待硬件验收。
-

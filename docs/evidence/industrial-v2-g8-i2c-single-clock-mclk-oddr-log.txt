@@ -38,4 +38,3 @@ Clock detail (seed=3):
 Disposition: REJECTED_RESOURCE_AND_WARNING_GATE; neither candidate promoted or flashed.
 Frozen V1 SHA-256: b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef.
 Formal V2 package SHA-256: d6e6a7e12ef7558834904dcc8d2783d5fda827b7fe11c6e407b0119fc3ce1c0d.
-

@@ -46,4 +46,3 @@ Evidence paths
   release/candidates/industrial-v2-i2c-single-clock-enable-seed1/final_timing.rpt
   release/candidates/industrial-v2-i2c-single-clock-enable-seed1/industrial-v1-manifest.json
   work/td_i2c_counter_mclk_oddr_seed1_build/td_project/camera_to_dsi_display_Runs/phy_1/flow_exec.log
-

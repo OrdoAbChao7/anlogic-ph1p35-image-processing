@@ -47,4 +47,3 @@ Disposition: REJECTED_RESOURCE_GATE; not promoted or flashed.
 Post-trial strict release audit: docs/experiments/2026-10-19-industrial-v2-g8-release-audit-post-width.json; BLOCKED, 7/13 gates pass and the same six gates remain blocked.
 Frozen V1 hash remains b483a1ffc30d0b7ae9e8ebef4f31f617d33a53d6784ded8007d5443c51ad80ef.
 Formal V2 package hash remains d6e6a7e12ef7558834904dcc8d2783d5fda827b7fe11c6e407b0119fc3ce1c0d.
-

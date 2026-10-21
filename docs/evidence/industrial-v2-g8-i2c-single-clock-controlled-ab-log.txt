@@ -43,4 +43,3 @@ Bitstream SHA-256:
   candidate 2 a9cc6f1264033c63723f7087da451d185200802cd4ff8613d01f7cbdc91a7f8b
 
 No candidate was downloaded. Formal release package and frozen V1 artifacts were not changed.
-

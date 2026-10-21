@@ -37,4 +37,3 @@ Warnings retained in the physical log:
 - PHY-5088: clock analyzer non-clock sinks and clock-net cascade
 
 Decision: REJECTED_RESOURCE_GATE. Formal candidate unchanged. Hardware NOT_RUN.
-
